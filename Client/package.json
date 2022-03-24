@@ -21,6 +21,7 @@
     "make": "electron-forge make"
   },
   "dependencies": {
+    "electron-reloader": "^1.2.3",
     "electron-squirrel-startup": "^1.0.0"
   },
   "config": {

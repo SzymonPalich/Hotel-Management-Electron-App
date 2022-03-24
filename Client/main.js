@@ -1,15 +1,16 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow } from 'electron'
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 1000,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    resizable: false
   })
 
   // and load the index.html of the app.
@@ -41,3 +42,8 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// Umożliwienie hot reloadu podczas produkcji
+try {
+  require('electron-reloader')(module);
+} catch {}
