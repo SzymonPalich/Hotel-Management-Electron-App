@@ -12,8 +12,13 @@
 ```PowerShell
 # Instalacja zależności
 yarn
-# Odpalanie projektu
+
+# Odpalanie projektu (Hot reload)
 yarn dev
+
+# Praca z Tailwind UI
+yarn tailwind
+
 # Budowanie pliku wykonywalnego
 yarn run make
 ```

@@ -8,13 +8,12 @@ const createWindow = () => {
     width: 1200,
     height: 1000,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
     },
     resizable: false
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('views/login.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -46,4 +45,4 @@ app.on('window-all-closed', () => {
 // Umożliwienie hot reloadu podczas produkcji
 try {
   require('electron-reloader')(module);
-} catch {}
+} catch { }
