@@ -14,11 +14,11 @@
 yarn
 
 # Odpalanie projektu (Hot reload)
-yarn dev
+yarn serve
 
-# Praca z Tailwind UI
+# Praca z Tailwind UI (Hot reload)
 yarn tailwind
 
-# Budowanie pliku wykonywalnego
-yarn run make
+# Budowanie
+vue-cli-service electron:build
 ```
