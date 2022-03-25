@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <title>Logowanie</title>
-
-  <link rel="stylesheet" type="text/css" href="../css/tailwind.css">
-  <link rel="stylesheet" type="text/css" href="../css/styles.css">
-</head>
-
-<body>
-
-  <!-- Okno logowania -->
+<template>
   <div class="max-w-xs grid min-w-full min-h-screen place-items-center">
     <form class="bg-neutral-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/3">
       <div class="mb-4">
@@ -34,7 +19,7 @@
         <p class="text-red-500 text-xs italic">Błędne hasło</p>
       </div>
       <div class="grid place-items-center md:divide-y-8">
-        <button
+        <button @click="$router.push('about')"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
           type="button">
           Zaloguj się
@@ -48,5 +33,10 @@
       </div>
     </form>
   </div>
+</template>
 
-</html>
+<script lang="ts">
+import { Vue } from "vue-class-component";
+
+export default class LoginView extends Vue { }
+</script>
