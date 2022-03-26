@@ -1,11 +1,11 @@
+// maidnance
 <template>
   <div class="cleaning">
     <body class="font-family-karla flex">
       <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
         <div class="w-full h-screen overflow-x-hidden flex flex-col">
           <div class="w-full flex-grow p-6">
-            <h1 class="text-4xl text-white pb-6 text-center">Sprzątanie</h1>
-
+            <h2 class="text-4xl text-white pb-6 text-center">Sprzątanie</h2>
             <div class="w-full mt-6">
               <div class="overflow-auto rounded-xl">
                 <table id="cleaning_table" class="min-w-full">
@@ -40,12 +40,15 @@
                     </tr>
                   </thead>
                   <tbody class="text-gray-700">
-                    <tr v-for="item in results" :key="item.nr" class="bg-white">
-                      <td class="w-1/3 text-left py-3 px-4">
-                        {{ item.nr }}
-                      </td>
+                    <tr
+                      v-for="room in results"
+                      :key="room.nr"
+                      @click="clean(room)"
+                      class="bg-white"
+                    >
+                      <td class="w-1/3 text-left py-3 px-4">{{ room.nr }}</td>
                       <td class="w-1/3 text-center py-3 px-4">
-                        {{ item.minibar }}
+                        {{ room.minibar }}
                       </td>
                     </tr>
                   </tbody>
@@ -64,6 +67,13 @@
 import { Vue } from "vue-class-component";
 
 export default class CleaningView extends Vue {
+  clean(room) {
+    if (room.minibar == "Tak") {
+      this.$router.push({ name: "minibar", params: { nr: room.nr } });
+    } else {
+      console.log("czysto");
+    }
+  }
   data() {
     return {
       results: [
@@ -96,3 +106,10 @@ export default class CleaningView extends Vue {
     }
 }
 </script>
+
+<style scoped>
+tbody tr:hover {
+  background-color: rgb(100, 100, 100);
+  color: white;
+}
+</style>

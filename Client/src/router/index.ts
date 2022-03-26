@@ -4,6 +4,7 @@ import LoginView from '../views/LoginView.vue'
 import AboutView from '../views/AboutView.vue'
 import CleaningView from '../views/CleaningView.vue'
 import TestView from '../views/TestView.vue'
+import MinibarView from '../views/MinibarView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +35,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/testview',
     name: 'testview',
     component: TestView
+  },
+  {
+    path: '/cleaning/minibar',
+    name: 'minibar',
+    component: MinibarView
   },
 ]
 
