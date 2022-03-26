@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import AboutView from '../views/AboutView.vue'
 import CleaningView from '../views/CleaningView.vue'
+import TestView from '../views/TestView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/cleaning',
     name: 'cleaning',
     component: CleaningView
+  },
+  {
+    path: '/testview',
+    name: 'testview',
+    component: TestView
   },
 ]
 

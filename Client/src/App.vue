@@ -3,9 +3,11 @@
     <router-link to="/login">LogOut</router-link> |
     <router-link to="/home">About</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link to="/cleaning">Cleaning</router-link>
+    <router-link to="/cleaning">Cleaning</router-link> |
+    <router-link to="/testview">TestView</router-link>
   </nav>
   <router-view/>
+  
 </template>
 
 <script lang="ts">

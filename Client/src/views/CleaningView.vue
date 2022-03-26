@@ -41,7 +41,9 @@
                   </thead>
                   <tbody class="text-gray-700">
                     <tr v-for="item in results" :key="item.nr" class="bg-white">
-                      <td class="w-1/3 text-left py-3 px-4">{{ item.nr }}</td>
+                      <td class="w-1/3 text-left py-3 px-4">
+                        {{ item.nr }}
+                      </td>
                       <td class="w-1/3 text-center py-3 px-4">
                         {{ item.minibar }}
                       </td>
