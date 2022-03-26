@@ -93,6 +93,6 @@ export default class CleaningView extends Vue {
         },
       ],
     };
-  }
+    }
 }
 </script>
