@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import AboutView from '../views/AboutView.vue'
 import RepairsView from '../views/RepairsView.vue'
-import AddRepairsView from '../views/AddRepairsView.vue'
+import PreviewRepairsView from '../views/PreviewRepairsView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,9 +31,9 @@ const routes: Array<RouteRecordRaw> = [
     component: RepairsView
   },
   {
-    path: '/add',
-    name: 'add',
-    component: AddRepairsView
+    path: '/repairs/preview',
+    name: 'preview_repair',
+    component: PreviewRepairsView
   },
 ]
 

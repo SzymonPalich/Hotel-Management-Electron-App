@@ -3,8 +3,7 @@
     <router-link to="/login">LogOut</router-link> |
     <router-link to="/home">About</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link to="/repairs">Naprawy</router-link> |
-    <router-link to="/add">Add</router-link>
+    <router-link to="/repairs">Naprawy</router-link>
   </nav>
   <router-view/>
 </template>

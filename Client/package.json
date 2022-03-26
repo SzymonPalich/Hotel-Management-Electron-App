@@ -22,7 +22,8 @@
     "ts-loader": "~8.2.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue-sweetalert2": "^5.0.2"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.2.0",
