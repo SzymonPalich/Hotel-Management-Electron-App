@@ -57,28 +57,32 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
   import { Vue } from "vue-class-component";
+  import Swal from "sweetalert2"
 
   export default class RepairsView extends Vue {
-    alertDisplay() {
-        this.$swal({
-          title: 'Jesteś pewien?',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Tak',
-          confirmButtonColor: '#FF2D00',
-          cancelButtonText: 'Nie',
-          cancelButtonColor: '#187800',
-          showLoaderOnConfirm: true
-        }).then((result) => {
-          if(result.value) {
-            this.$swal('Usunięte', 'Pomyślnie usunąłeś rekord', 'success');
-          }
-        })
-    }
-    przejdz(arg1, arg2, arg3) {
-        this.$router.push({name: 'preview_repair', params: { id: arg1, issue: arg2, room_nr: arg3 } });
-    }
+  alertDisplay() {
+    Swal.fire({
+      title: "Jesteś pewien?",
+      showCancelButton: true,
+      confirmButtonText: "Tak",
+      confirmButtonColor: "#FF2D00",
+      cancelButtonText: "Nie",
+      cancelButtonColor: "#187800",
+      showLoaderOnConfirm: true
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire("Usunięte", "Pomyślnie usunąłeś rekord", "success");
+      }
+    });
   }
+
+  przejdz(arg1: number, arg2: string, arg3: number) {
+    this.$router.push({
+      name: "preview_repair",
+      params: { id: arg1, issue: arg2, room_nr: arg3 },
+    });
+  }
+}
 </script>
