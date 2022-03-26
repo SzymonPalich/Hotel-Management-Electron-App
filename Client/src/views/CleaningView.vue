@@ -40,10 +40,10 @@
                     </tr>
                   </thead>
                   <tbody class="text-gray-700">
-                    <tr v-for="item in results" :key="item.nr" class="bg-white">
-                      <td class="w-1/3 text-left py-3 px-4">{{ item.nr }}</td>
+                    <tr v-for="room in results" :key="room.nr" @click="clean(room)" class="bg-white">
+                      <td class="w-1/3 text-left py-3 px-4">{{ room.nr }}</td>
                       <td class="w-1/3 text-center py-3 px-4">
-                        {{ item.minibar }}
+                        {{ room.minibar }}
                       </td>
                     </tr>
                   </tbody>
@@ -62,6 +62,13 @@
 import { Vue } from "vue-class-component";
 
 export default class CleaningView extends Vue {
+  clean(room) {
+      if (room.minibar == "Tak") {
+          this.$router.push({name:'minibar', params: {nr: room.nr}});
+      } else{
+          console.log("czysto");
+      }
+  }
   data() {
     return {
       results: [
@@ -94,3 +101,10 @@ export default class CleaningView extends Vue {
   }
 }
 </script>
+
+<style scoped>
+    tbody tr:hover {
+        background-color: rgb(100, 100, 100);
+        color: white;
+    }
+</style>
