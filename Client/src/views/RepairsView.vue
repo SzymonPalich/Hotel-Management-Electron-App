@@ -20,7 +20,6 @@
                         <td class="w-1/3 text-center py-3 px-4">113</td>
                         <td class="w-1/3 text-center py-3 px-4">
                             <i class="material-icons" @click="przejdz(1,'Telewizor',113, 'Zniszczona matryca')">description</i>
-                            <i class="material-icons">edit</i>
                             <i class="material-icons text-red-500" @click="alertDisplay">delete</i>
                         </td>
                     </tr>
@@ -29,7 +28,6 @@
                         <td class="w-1/3 text-center py-3 px-4">53</td>
                         <td class="w-1/3 text-center py-3 px-4">
                             <i class="material-icons" @click="przejdz(2,'Cieknący kran',53, 'Woda cieknie z kranu')">description</i>
-                            <i class="material-icons">edit</i>
                             <i class="material-icons text-red-500" @click="alertDisplay">delete</i>
                         </td>
                     </tr>
@@ -38,7 +36,6 @@
                         <td class="w-1/3 text-center py-3 px-4">22</td>
                         <td class="w-1/3 text-center py-3 px-4">
                             <i class="material-icons" @click="przejdz(3,'Wybita szyba',22,'Szyba przy balkonie wybita')">description</i>
-                            <i class="material-icons">edit</i>
                             <i class="material-icons text-red-500" @click="alertDisplay">delete</i>
                         </td>
                     </tr>
@@ -47,7 +44,6 @@
                         <td class="w-1/3 text-center py-3 px-4">9</td>
                         <td class="w-1/3 text-center py-3 px-4">
                             <i class="material-icons" @click="przejdz(4,'Wyrwana klamka',9, 'Klamka do garderoby wyrwana')">description</i>
-                            <i class="material-icons">edit</i>
                             <i class="material-icons text-red-500" @click="alertDisplay">delete</i>
                         </td>
                     </tr>
