@@ -7,6 +7,7 @@
       </div>
     </div>
     <ul class="nav_list">
+      
       <li>
         <a href="#">
           <i class="bx bx-user-circle"></i>
@@ -70,9 +71,8 @@
       </div>
     </div>
   </div>
-  <div class="home_content">
-    <div class="text">Dashboard</div>
-  </div>
+
+  
 </template>
 
 <script lang="ts">
