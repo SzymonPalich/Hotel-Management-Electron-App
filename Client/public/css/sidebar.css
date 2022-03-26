@@ -10,8 +10,12 @@
     background: var(--black-color);
 }
 
-.sidebar {
+#cont {
+    display: flex;
+    max-width: 15rem;
+}
 
+.sidebar {
     width: 100%;
     overflow: hidden;
     margin: 0;

@@ -1,4 +1,5 @@
 <template>
+<div class="container" id="cont">
   <div class="sidebar">
     <div class="logo_content">
       <div class="logo">
@@ -71,6 +72,8 @@
       </div>
     </div>
   </div>
+</div>
+
 
   
 </template>
