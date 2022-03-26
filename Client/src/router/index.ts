@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView.vue'
 import AboutView from '../views/AboutView.vue'
 import RepairsView from '../views/RepairsView.vue'
 import PreviewRepairsView from '../views/PreviewRepairsView.vue'
+import CleaningView from '../views/CleaningView.vue'
+import TestView from '../views/TestView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +36,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/repairs/preview',
     name: 'preview_repair',
     component: PreviewRepairsView
+  },
+  {
+    path: '/cleaning',
+    name: 'cleaning',
+    component: CleaningView
+  },
+  {
+    path: '/testview',
+    name: 'testview',
+    component: TestView
   },
 ]
 

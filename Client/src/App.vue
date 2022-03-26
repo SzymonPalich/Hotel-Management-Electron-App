@@ -1,29 +1,34 @@
 <template>
-  <nav v-if="!checkIfLogin()">
-    <router-link to="/login">LogOut</router-link> |
-    <router-link to="/home">About</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/repairs">Naprawy</router-link>
-  </nav>
+  <div class="flex flex-row">
+   <side-bar v-if="!this.checkIfLoginPage()"/>
+  <div class="w-screen">
   <router-view/>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from 'vue-class-component';
+import SideBar from './components/Sidebar.vue'
 
-export default class App extends Vue { 
-  checkIfLogin(){
-    return this.$router.currentRoute.value.name === "login"
+@Options({
+  components: {
+    SideBar
   }
+})
+export default class App extends Vue { 
+
+  private checkIfLoginPage() : boolean
+  {
+    return this.$router.currentRoute.value.name === "login";
+  }
+
 }
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: white;
+  color: #2c3e50;
 }
 
 nav {

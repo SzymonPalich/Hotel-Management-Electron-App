@@ -2,7 +2,7 @@
  <div class="w-full h-screen80 mt-12">
     <h1 class="text-4xl text-white pb-6 text-center">Naprawy</h1>
     <div class="w-full mt-6">
-        <div class="overflow-auto rounded-xl mx-72">
+        <div class="overflow-auto rounded-xl mx-48">
             <table class="min-w-full">
                 <thead class="bg-gray-800 text-white">
                     <tr>

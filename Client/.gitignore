@@ -1,12 +1,12 @@
 node_modules/
-yarn-error.log
-yarn.lock
+dist/
 out/
 
+yarn-error.log
+yarn.lock
+package-lock.json
 .DS_Store
-node_modules
-/dist
-
+public/css/tailwind.css
 
 # local env files
 .env.local
