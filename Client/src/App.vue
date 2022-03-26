@@ -2,7 +2,8 @@
   <nav v-if="!checkIfLogin()">
     <router-link to="/login">LogOut</router-link> |
     <router-link to="/home">About</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/cleaning">Cleaning</router-link>
   </nav>
   <router-view/>
 </template>
