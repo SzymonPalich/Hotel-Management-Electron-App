@@ -2,7 +2,9 @@
   <nav v-if="!checkIfLogin()">
     <router-link to="/login">LogOut</router-link> |
     <router-link to="/home">About</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/repairs">Naprawy</router-link> |
+    <router-link to="/add">Add</router-link>
   </nav>
   <router-view/>
 </template>
@@ -12,7 +14,7 @@ import { Vue } from "vue-class-component";
 
 export default class App extends Vue { 
   checkIfLogin(){
-    return this.$router.currentRoute.value.name === "login";
+    return this.$router.currentRoute.value.name === "login"
   }
 }
 </script>
