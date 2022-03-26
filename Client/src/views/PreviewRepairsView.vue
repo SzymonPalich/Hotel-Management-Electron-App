@@ -17,11 +17,11 @@
                     </div>
                     <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">Opis</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Jakiś opis</dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ desc }}</dd>
                     </div>
                     </dl>
                     <div class="text-center px-4 py-5">
-                        <button class="bg-gray-800 rounded-xl px-2 py-2 text-white border-2 border-black hover:">Zatwierdź</button>
+                        <button class="bg-gray-800 rounded-xl px-2 py-2 text-white border-2 border-black hover:" @click="$router.push({name:'repairs'})">Zatwierdź</button>
                     </div>
                 
             </div>
@@ -37,13 +37,15 @@
             return {
                 id: 0,
                 issue: "",
-                room_nr: ""
+                room_nr: "",
+                desc: ""
             }   
         },
         created() {
             this.id = this.$route.params.id;
             this.issue = this.$route.params.issue;
             this.room_nr = this.$route.params.room_nr;
+            this.desc = this.$route.params.desc;
         }
     }
 </script>
