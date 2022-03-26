@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
     component: CleaningView
   },
   {
-    path: '/cleaning/minibar/:nr',
+    path: '/cleaning/minibar',
     name: 'minibar',
     component: MinibarView
   },
