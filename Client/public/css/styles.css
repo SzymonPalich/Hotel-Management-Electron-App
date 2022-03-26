@@ -1,4 +1,9 @@
 body {
     background-color: #1b2845;
     background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
+    height: 100%;
+}
+
+.h-screen80 {
+    height: 85.9vh;
 }

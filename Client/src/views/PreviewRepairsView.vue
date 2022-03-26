@@ -1,13 +1,31 @@
 <template>
-<div class="relative w-full flex flex-col h-screen overflow-y-hidden">
-    <div class="w-full h-screen overflow-x-hidden flex flex-col">
-        <div class="w-full flex-grow p-6">
-            <div class="w-full mt-6">
-                <div class="overflow-auto rounded-xl ml-12 mr-12">
-                    <div class="w-1/2 h-full bg-white border-2 border-solid border-black rounded-xl justify-center">
-                        <h1 class="text-xl">Podgląd</h1>
+<div class="relative w-full flex flex-col h-screen80 overflow-hidden">
+    <div class="rounded-xl mx-48 mt-6">
+        <div class="bg-gray-800 border-4 border-solid border-gray-800 rounded-xl text-white">
+            <div class="px-4 py-5 sm:px-6 mt-2">
+                <h1 class="text-2xl leading-6 font-medium text-white text-center">Podgląd</h1>
+            </div>
+            <div class="bg-white h-full rounded-b-xl text-black">
+                <dl>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Usterka</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ issue }}</dd>
                     </div>
-                </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{{ room_nr }}</dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Opis</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">Jakiś opis</dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 rounded-b-xl">
+                        <dt class="text-sm font-medium text-gray-500">Attachments</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+
+                        </dd>
+                    </div>
+                </dl>
             </div>
         </div>
     </div>
