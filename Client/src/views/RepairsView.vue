@@ -1,8 +1,8 @@
 <template>
- <div class="w-full h-screen80 mt-12">
-    <h1 class="text-4xl text-white pb-6 text-center">Naprawy</h1>
-    <div class="w-full mt-6">
-        <div class="overflow-auto rounded-xl mx-48">
+<div class="relative w-full flex flex-col h-full overflow-hidden">
+    <h1 class="text-4xl text-white mt-6 text-center">Naprawy</h1>
+    <div class="w-full mt-6 p-6">
+        <div class="overflow-auto rounded-xl">
             <table class="min-w-full">
                 <thead class="bg-gray-800 text-white">
                     <tr>
@@ -57,13 +57,11 @@
   </div>
 </template>
 
-<script lang="ts">
-  export default {
-    data() {
-      return {}
-    },
-    methods: {
-      alertDisplay() {
+<script>
+  import { Vue } from "vue-class-component";
+
+  export default class RepairsView extends Vue {
+    alertDisplay() {
         this.$swal({
           title: 'Jesteś pewien?',
           type: 'warning',
@@ -75,13 +73,12 @@
           showLoaderOnConfirm: true
         }).then((result) => {
           if(result.value) {
-            this.$swal('Usunięte', 'Pomyślnie usunąłeś rekord', 'success')
+            this.$swal('Usunięte', 'Pomyślnie usunąłeś rekord', 'success');
           }
         })
-      },
-      przejdz(arg1, arg2, arg3) {
+    }
+    przejdz(arg1, arg2, arg3) {
         this.$router.push({name: 'preview_repair', params: { id: arg1, issue: arg2, room_nr: arg3 } });
-      }
     }
   }
 </script>
