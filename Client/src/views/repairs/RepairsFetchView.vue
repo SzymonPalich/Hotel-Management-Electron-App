@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full flex flex-col h-full overflow-hidden">
+  <div class="relative w-full flex flex-col h-screen overflow-hidden">
     <div class="rounded-xl mx-48 mt-20">
       <div
         class="
