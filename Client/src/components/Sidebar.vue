@@ -28,13 +28,13 @@
         </a>
       </li>
       <li>
-        <router-link to="cleaning">
+        <router-link to="/cleaning">
             <i class="bx bx-brush-alt"></i>
             <span class="links_name">Pokojówka</span>
         </router-link>
       </li>
       <li>
-        <router-link to="home">
+        <router-link to="/repairs">
           <i class="bx bx-wrench"></i>
           <span class="links_name">Naprawy</span>
         </router-link>
@@ -66,7 +66,7 @@
             <div class="job">Menadżer</div>
           </div>
         </div>
-        <router-link to="/login">
+        <router-link to="/">
             <i class="bx bx-log-out" id="log_out"></i>
         </router-link>
       </div>
