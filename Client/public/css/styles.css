@@ -2,3 +2,12 @@ body {
     background-color: #1b2845;
     background-image: linear-gradient(315deg, #1b2845 0%, #274060 74%);
 }
+
+tr:nth-child(even) {
+    background: rgb(219, 218, 218);
+}
+
+tbody tr:hover {
+    background-color: rgb(100, 100, 100);
+    color: white;
+}

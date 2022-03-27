@@ -116,10 +116,3 @@ export default class CleaningView extends Vue {
   }
 }
 </script>
-
-<style scoped>
-tbody tr:hover {
-  background-color: rgb(100, 100, 100);
-  color: white;
-}
-</style>
