@@ -76,21 +76,27 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
+  // id: string|string[];
+  // issue: string|string[];
+  // room_nr: string|string[];
+  // desc: string|string[];
+  
+  // constructor() {
+  //   super();
+  //   this.id = this.$route.params.id;
+  //   this.issue = this.$route.params.issue;
+  //   this.room_nr = this.$route.params.room_nr;
+  //   this.desc = this.$route.params.desc;
+  // }
+
 export default class RepirsFetchView extends Vue {
   data() {
     return {
-      id: 0,
-      issue: "",
-      room_nr: "",
-      desc: "",
+      id: this.$route.params.id,
+      issue: this.$route.params.issue,
+      room_nr: this.$route.params.room_nr,
+      desc: this.$route.params.desc
     };
-  }
-
-  created() {
-    this.id = this.$route.params.id;
-    this.issue = this.$route.params.issue;
-    this.room_nr = this.$route.params.room_nr;
-    this.desc = this.$route.params.desc;
   }
 }
 </script>
