@@ -3,11 +3,7 @@
     <h1 class="text-4xl text-white mt-6 text-center">Naprawy</h1>
     <div class="w-full mt-6 p-6">
       <div class="text-right text-white mb-2 rounded-xl">
-        <i
-          class="px-2 py-2 rounded-xl bg-gray-800 material-icons"
-          @click="$router.push({ name: 'repairs-create' })"
-          >add</i
-        >
+        
       </div>
       <div class="overflow-auto rounded-xl">
         <table class="min-w-full">
