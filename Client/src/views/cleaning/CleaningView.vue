@@ -1,4 +1,3 @@
-// maidnance
 <template>
   <div class="cleaning">
     <body class="font-family-karla flex">
@@ -46,7 +45,9 @@
                       @click="clean(room)"
                       class="bg-white"
                     >
-                      <td class="w-1/3 text-left py-3 px-4">{{ room.nr }}</td>
+                      <td class="w-1/3 text-left py-3 px-4">
+                        {{ room.nr }}
+                      </td>
                       <td class="w-1/3 text-center py-3 px-4">
                         {{ room.minibar }}
                       </td>
@@ -63,47 +64,56 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue } from "vue-class-component";
+import { IRoom } from "../../services/CleaningService";
+
+let temp_room_results: Array<IRoom> = [
+  {
+    id: 1,
+    nr: 1231,
+    minibar: "Tak",
+  },
+  {
+    id: 2,
+    nr: 531,
+    minibar: "Tak",
+  },
+  {
+    id: 3,
+    nr: 21,
+    minibar: "Nie",
+  },
+  {
+    id: 4,
+    nr: 37,
+    minibar: "Tak",
+  },
+  {
+    id: 5,
+    nr: 67,
+    minibar: "Nie",
+  },
+  {
+    id: 6,
+    nr: 701,
+    minibar: "Tak",
+  },
+];
 
 export default class CleaningView extends Vue {
-  clean(room) {
+  clean(room: IRoom) {
     if (room.minibar == "Tak") {
-      this.$router.push({ name: "minibar", params: { nr: room.nr } });
+      this.$router.push({ name: "cleaning-finish", params: { id: room.nr } });
     } else {
       console.log("czysto");
     }
   }
   data() {
     return {
-      results: [
-        {
-          nr: 1231,
-          minibar: "Tak",
-        },
-        {
-          nr: 531,
-          minibar: "Tak",
-        },
-        {
-          nr: 21,
-          minibar: "Nie",
-        },
-        {
-          nr: 37,
-          minibar: "Tak",
-        },
-        {
-          nr: 67,
-          minibar: "Nie",
-        },
-        {
-          nr: 701,
-          minibar: "Tak",
-        },
-      ],
+      results: temp_room_results,
     };
-    }
+  }
 }
 </script>
 

@@ -1,17 +1,3 @@
-<script lang="ts">
-import { Vue } from "vue-class-component";
-
-export default class MinibarView extends Vue {
-  data() {
-    return {
-      nr: this.$route.params.nr,
-    };
-  }
-  swap() {
-    this.$router.push({ name: "cleaning" });
-  }
-}
-</script>
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
     <div class="rounded-xl mx-80 mt-6">
@@ -25,7 +11,7 @@ export default class MinibarView extends Vue {
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Pokój: {{ nr }}
+            Pokój: {{ id }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -68,7 +54,9 @@ export default class MinibarView extends Vue {
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-lg font-medium text-gray-500 text-right">Whisky</dt>
+              <dt class="text-lg font-medium text-gray-500 text-right">
+                Whisky
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -98,7 +86,9 @@ export default class MinibarView extends Vue {
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-lg font-medium text-gray-500 text-right">Wódka</dt>
+              <dt class="text-lg font-medium text-gray-500 text-right">
+                Wódka
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -128,7 +118,9 @@ export default class MinibarView extends Vue {
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-lg font-medium text-gray-500 text-right">Tequila</dt>
+              <dt class="text-lg font-medium text-gray-500 text-right">
+                Tequila
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -182,15 +174,39 @@ export default class MinibarView extends Vue {
             </div>
           </dl>
           <div class="text-center text-white rounded-xl pb-4">
-              <button @click="swap()" class="border-2 px-2 py-2 rounded-xl bg-red-800 mr-3">
-                Anuluj
-              </button>
-              <button @click="swap()" class="border-2 px-2 py-2 rounded-xl bg-purple-800">
-                Akceptuj
-              </button>
-            </div>
+            <button
+              @click="swap()"
+              class="border-2 px-2 py-2 rounded-xl bg-red-800 mr-3"
+            >
+              Anuluj
+            </button>
+            <button
+              @click="swap()"
+              class="border-2 px-2 py-2 rounded-xl bg-purple-800"
+            >
+              Akceptuj
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { Vue } from "vue-class-component";
+import { IRoom } from "../../services/CleaningService";
+
+export default class CleaningFinishView extends Vue {
+  data() {
+    return {
+      id: this.$route.params.id,
+      room: this.$route.params.room
+    };
+  }
+  swap() {
+    this.$router.push({ name: "cleaning" });
+  }
+}
+
+</script>

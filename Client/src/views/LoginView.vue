@@ -6,22 +6,65 @@
           Adres email
         </label>
         <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="email" type="text" placeholder="p.plizga@spurva.go">
+          class="
+            shadow
+            appearance-none
+            border
+            rounded
+            w-full
+            py-2
+            px-3
+            text-gray-700
+            leading-tight
+            focus:outline-none focus:shadow-outline
+          "
+          id="email"
+          type="text"
+          placeholder="p.plizga@spurva.go"
+        />
       </div>
       <div class="mb-6">
-        <label class="block text-gray-700 text-base font-bold mb-2" for="password">
+        <label
+          class="block text-gray-700 text-base font-bold mb-2"
+          for="password"
+        >
           Hasło
         </label>
         <input
-          class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-          id="password" type="password" placeholder="********">
+          class="
+            shadow
+            appearance-none
+            border border-red-500
+            rounded
+            w-full
+            py-2
+            px-3
+            text-gray-700
+            mb-3
+            leading-tight
+            focus:outline-none focus:shadow-outline
+          "
+          id="password"
+          type="password"
+          placeholder="********"
+        />
         <p class="text-red-500 text-xs italic">Błędne hasło</p>
       </div>
       <div class="grid place-items-center md:divide-y-8">
-        <button @click="$router.push('about')"
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline "
-          type="button">
+        <button
+          @click="logIn()"
+          class="
+            bg-blue-500
+            hover:bg-blue-700
+            text-white
+            font-bold
+            py-2
+            px-4
+            rounded
+            focus:outline-none focus:shadow-outline
+          "
+          type="button"
+        >
           Nie loguj się
         </button>
         <hr />
@@ -38,5 +81,9 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-export default class LoginView extends Vue { }
+export default class LoginView extends Vue {
+  private logIn(): void {
+    this.$router.push({ path: "cleaning" });
+  }
+}
 </script>
