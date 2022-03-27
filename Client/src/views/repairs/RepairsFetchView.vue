@@ -76,20 +76,8 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-  // id: string|string[];
-  // issue: string|string[];
-  // room_nr: string|string[];
-  // desc: string|string[];
-  
-  // constructor() {
-  //   super();
-  //   this.id = this.$route.params.id;
-  //   this.issue = this.$route.params.issue;
-  //   this.room_nr = this.$route.params.room_nr;
-  //   this.desc = this.$route.params.desc;
-  // }
 
-export default class RepirsFetchView extends Vue {
+export default class RepairsFetchView extends Vue {
   data() {
     return {
       id: this.$route.params.id,
