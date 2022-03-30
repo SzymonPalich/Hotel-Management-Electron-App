@@ -305,3 +305,8 @@
     text-align: center;
     line-height: 50px;
 }
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('fonts/poppins-v19-latin-regular.woff');
+  }
