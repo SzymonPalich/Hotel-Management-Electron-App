@@ -3,7 +3,7 @@
   <div class="sidebar">
     <div class="logo_content">
       <div class="logo">
-        <i class="bx bx-hotel" id="name_logo"></i>
+        <i class="material-icons">hotel</i>
         <div class="logo_name">SpurVaGo</div>
       </div>
     </div>
@@ -11,49 +11,49 @@
       
       <li>
         <a href="#">
-          <i class="bx bx-user-circle"></i>
+          <i class="material-icons">people</i>
           <span class="links_name">Klienci</span>
         </a>
       </li>
       <li>
         <a href="#">
-          <i class="bx bx-hard-hat"></i>
+          <i class="material-icons">contact_mail</i>
           <span class="links_name">Pracownicy</span>
         </a>
       </li>
       <li>
         <a href="#">
-          <i class="bx bx-home"></i>
+          <i class="material-icons">home</i>
           <span class="links_name">Pokoje</span>
         </a>
       </li>
       <li>
         <router-link to="/cleaning">
-            <i class="bx bx-brush-alt"></i>
+            <i class="material-icons">rowing</i>
             <span class="links_name">Pokojówka</span>
         </router-link>
       </li>
       <li>
         <router-link to="/repairs">
-          <i class="bx bx-wrench"></i>
+          <i class="material-icons">build</i>
           <span class="links_name">Naprawy</span>
         </router-link>
       </li>
       <li>
         <a href="#">
-          <i class="bx bx-collection"></i>
+          <i class="material-icons">storage</i>
           <span class="links_name">Magazyn</span>
         </a>
       </li>
       <li>
         <a href="#">
-          <i class="bx bx-money"></i>
+          <i class="material-icons">attach_money</i>
           <span class="links_name">Przychody</span>
         </a>
       </li>
       <li>
         <a href="#">
-          <i class="bx bx-file"></i>
+          <i class="material-icons">receipt</i>
           <span class="links_name">Raporty</span>
         </a>
       </li>
