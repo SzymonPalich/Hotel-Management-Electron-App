@@ -1,7 +1,6 @@
-import { app, protocol, BrowserWindow, screen } from 'electron'
+import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
-
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
@@ -12,18 +11,16 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   // Create the browser window.
-  const factor = screen.getPrimaryDisplay().scaleFactor;
   const win = new BrowserWindow({
-    width: 1200 / factor,
-    height: 1000 / factor,
+    width: 1200,
+    height: 1000,
     webPreferences: {
 
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
         .ELECTRON_NODE_INTEGRATION as unknown) as boolean,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
-      zoomFactor: 1.0 / factor
+      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION
     },
     resizable: false
   })
@@ -60,20 +57,24 @@ app.on('activate', () => {
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    try {
+    try 
+    {
       await installExtension(VUEJS3_DEVTOOLS)
     }
-    catch (e: unknown) {
-      if (typeof e === "string") {
+    catch (e: unknown)
+    {
+      if (typeof e === "string") 
+      {
         console.error('Vue Devtools failed to install:', e.toString())
       }
-      else {
+      else 
+      {
         console.error("Unknown error")
       }
     }
     createWindow()
   }
-})
+  })
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
