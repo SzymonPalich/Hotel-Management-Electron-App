@@ -73,7 +73,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { IRoom } from "../../services/RoomsService";
-import Pagination from "../../components/Pagiation.vue";
+import Pagination from "../../components/Pagination.vue";
 
 let temp_room_results: Array<IRoom> = [
   {
@@ -137,7 +137,7 @@ let temp_room_results: Array<IRoom> = [
     Pagination,
   },
 })
-export default class CleaningView extends Vue {
+export default class RoomsView extends Vue {
   data() {
     return {
       results: temp_room_results,
