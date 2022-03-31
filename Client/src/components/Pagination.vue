@@ -1,7 +1,7 @@
 <template>
   <div class="align-bottom">
-    <div class="bg-white px-6 items-center justify-between">
-      <div class="flex-1 flex justify-between sm:hidden">
+    <div class="bg-gray-800 px-6 items-center justify-between rounded-xl">
+      <div class="flex-1 flex justify-between sm:hidden content-end">
         <a
           href="#"
           class="
@@ -44,7 +44,7 @@
       </div>
       <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
         <div>
-          <p class="text-sm text-gray-700">
+          <p class="text-sm text-white">
             Showing
             <span class="font-medium">1</span>
             to
@@ -56,7 +56,7 @@
         </div>
         <div>
           <nav
-            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px py-3"
             aria-label="Pagination"
           >
             <a
@@ -68,8 +68,8 @@
                 px-2
                 py-2
                 rounded-l-md
-                border border-gray-300
-                bg-white
+                border border-gray-400
+                bg-gray-300
                 text-sm
                 font-medium
                 text-gray-500
@@ -98,8 +98,8 @@
               aria-current="page"
               class="
                 z-10
-                bg-indigo-50
-                border-indigo-500
+                bg-gray-300
+                border-gray-400
                 text-indigo-600
                 relative
                 inline-flex
@@ -116,8 +116,8 @@
             <a
               href="#"
               class="
-                bg-white
-                border-gray-300
+                bg-gray-300
+                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
                 relative
@@ -135,8 +135,8 @@
             <a
               href="#"
               class="
-                bg-white
-                border-gray-300
+                bg-gray-300
+                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
                 hidden
@@ -159,8 +159,8 @@
                 items-center
                 px-4
                 py-2
-                border border-gray-300
-                bg-white
+                border border-gray-400
+                bg-gray-300
                 text-sm
                 font-medium
                 text-gray-700
@@ -171,8 +171,8 @@
             <a
               href="#"
               class="
-                bg-white
-                border-gray-300
+                bg-gray-300
+                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
                 hidden
@@ -191,8 +191,8 @@
             <a
               href="#"
               class="
-                bg-white
-                border-gray-300
+                bg-gray-300
+                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
                 relative
@@ -210,8 +210,8 @@
             <a
               href="#"
               class="
-                bg-white
-                border-gray-300
+                bg-gray-300
+                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
                 relative
@@ -235,8 +235,8 @@
                 px-2
                 py-2
                 rounded-r-md
-                border border-gray-300
-                bg-white
+                border border-gray-400
+                bg-gray-300
                 text-sm
                 font-medium
                 text-gray-500

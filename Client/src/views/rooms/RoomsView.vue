@@ -76,7 +76,7 @@
         </table>
       </div>
     </div>
-    <div class="content-end">
+    <div class="content-end px-6 mb-2">
       <pagination />
     </div>
   </div>
