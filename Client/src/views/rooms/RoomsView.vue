@@ -1,73 +1,85 @@
 <template>
-  <div class="p-6 w-full h-full">
-    <div class="overflow-auto rounded-xl">
-      <table id="cleaning_table" class="min-w-full">
-        <thead class="bg-gray-800 text-white">
-          <tr>
-            <th
-              class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm"
-            >
-              Numer Pokoju
-            </th>
-            <th
-              class="
-                w-1/3
-                text-center
-                py-3
-                px-4
-                uppercase
-                font-semibold
-                text-sm
-              "
-            >
-              Typ
-            </th>
-            <th
-              class="
-                w-1/3
-                text-center
-                py-3
-                px-4
-                uppercase
-                font-semibold
-                text-sm
-              "
-            >
-              Status
-            </th>
-            <th
-              class="
-                w-1/3
-                text-center
-                py-3
-                px-4
-                uppercase
-                font-semibold
-                text-sm
-              "
-            >
-              Akcje
-            </th>
-          </tr>
-        </thead>
-        <tbody class="text-gray-700">
-          <tr v-for="room in results" :key="room.id" class="bg-white">
-            <td class="w-1/3 text-left py-3 px-4">
-              {{ room.room_number }}
-            </td>
-            <td class="w-1/3 text-center py-3 px-4">
-              {{ room.room_type }}
-            </td>
-            <td class="w-1/3 text-center py-3 px-4">
-              {{ this.setStatus(room.room_status) }}
-            </td>
-            <td class="w-1/3 text-center py-3 px-4">temp</td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="flex flex-col h-screen">
+    <div class="p-6 w-full h-full">
+      <div class="overflow-auto rounded-xl">
+        <table id="cleaning_table" class="min-w-full">
+          <thead class="bg-gray-800 text-white">
+            <tr>
+              <th
+                class="
+                  w-1/3
+                  text-left
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                "
+              >
+                Numer Pokoju
+              </th>
+              <th
+                class="
+                  w-1/3
+                  text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                "
+              >
+                Typ
+              </th>
+              <th
+                class="
+                  w-1/3
+                  text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                "
+              >
+                Status
+              </th>
+              <th
+                class="
+                  w-1/3
+                  text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                "
+              >
+                Akcje
+              </th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700">
+            <tr v-for="room in results" :key="room.id" class="bg-white">
+              <td class="w-1/3 text-left py-3 px-4">
+                {{ room.room_number }}
+              </td>
+              <td class="w-1/3 text-center py-3 px-4">
+                {{ room.room_type }}
+              </td>
+              <td class="w-1/3 text-center py-3 px-4">
+                {{ this.setStatus(room.room_status) }}
+              </td>
+              <td class="w-1/3 text-center py-3 px-4">temp</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="content-end">
+      <pagination />
     </div>
   </div>
-  <pagination />
 </template>
 
 <script lang="ts">
