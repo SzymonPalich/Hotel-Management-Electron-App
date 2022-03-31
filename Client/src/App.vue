@@ -1,28 +1,25 @@
 <template>
   <div class="flex flex-row">
-   <side-bar v-if="!this.checkIfLoginPage()"/>
-  <div class="w-screen">
-  <router-view/>
+    <sidebar v-if="!this.checkIfLoginPage()" />
+    <div class="w-screen">
+      <router-view />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import SideBar from './components/Sidebar.vue'
+import { Options, Vue } from "vue-class-component";
+import Sidebar from "./components/Sidebar.vue";
 
 @Options({
   components: {
-    SideBar
-  }
+    Sidebar,
+  },
 })
-export default class App extends Vue { 
-
-  private checkIfLoginPage() : boolean
-  {
+export default class App extends Vue {
+  private checkIfLoginPage(): boolean {
     return this.$router.currentRoute.value.name === "login";
   }
-
 }
 </script>
 

@@ -8,6 +8,8 @@ import RepairsCreateView from '../views/repairs/RepairsCreateView.vue'
 import CleaningView from '../views/cleaning/CleaningView.vue'
 import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
 
+import RoomsView from '../views/rooms/RoomsView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -30,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'cleaning-finish',
     component: CleaningFinishView
   },
-  // Modół napraw
+  // Moduł napraw
   {
     path: '/repairs',
     name: 'repairs',
@@ -45,6 +47,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/repairs/create',
     name: 'repairs-create',
     component: RepairsCreateView
+  },
+  // Moduł pokoi
+  {
+    path: '/rooms',
+    name: 'rooms',
+    component: RoomsView
   }
 ]
 
