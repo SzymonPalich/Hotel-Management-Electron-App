@@ -11,14 +11,10 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   // Create the browser window.
-  const factor = screen.getPrimaryDisplay().scaleFactor;
   const win = new BrowserWindow({
-    width: 1200 / factor,
-    height: 1000 / factor,
-    maxWidth: 1200 / factor,
-    maxHeight: 1000 / factor,
+    width: 1000,
+    height: 700,
     webPreferences: {
-      zoomFactor: 1.0 / factor,
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: (process.env
