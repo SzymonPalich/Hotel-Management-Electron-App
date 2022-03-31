@@ -149,42 +149,6 @@ let temp_room_results: Array<IRoom> = [
     room_type: "Ekonomiczny",
     room_status: 1,
   },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
 ];
 
 @Options({
