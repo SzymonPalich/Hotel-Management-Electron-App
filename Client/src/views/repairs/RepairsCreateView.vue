@@ -28,14 +28,19 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-800
+                    border-2 border-gray-400
                     w-full
                     h-full
-                    rounded-sm
+                    rounded-xl
                     text-md
+                    px-2
                     py-1
                     outline-none
+                    focus:border-2
+                    focus:border-cyan-400 
+                    focus:rounded-xl
                   "
+
                   type="text"
                 />
               </dd>
@@ -47,13 +52,17 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-800
+                    border-2 border-gray-400
                     w-full
                     h-full
-                    rounded-sm
+                    rounded-xl
                     text-md
+                    px-2
                     py-1
                     outline-none
+                    focus:border-2
+                    focus:border-cyan-400 
+                    focus:rounded-xl
                   "
                   type="text"
                 />
@@ -69,16 +78,23 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <textarea
+                <textarea rows="5" maxlength="400"
                   class="
-                    border-2 border-gray-800
+                    scroll
+                    border-2 border-gray-400
                     w-full
                     h-full
-                    rounded-sm
+                    rounded-xl
                     text-md
+                    px-2
                     py-1
                     outline-none
+                    focus:border-2
+                    focus:border-cyan-400 
+                    focus:rounded-xl 
+                    resize-none
                   "
+                  resi
                 ></textarea>
               </dd>
             </div>

@@ -11,3 +11,16 @@ tbody tr:hover {
     background-color: rgb(100, 100, 100);
     color: white;
 }
+
+option:hover {
+    background-color: yellow;
+}
+
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.py-0_1 {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
