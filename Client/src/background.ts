@@ -1,4 +1,4 @@
-import { app, protocol, BrowserWindow, screen } from 'electron'
+import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -23,6 +23,8 @@ async function createWindow() {
     },
     resizable: false
   })
+
+  win.removeMenu()
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -56,24 +58,20 @@ app.on('activate', () => {
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    try 
-    {
+    try {
       await installExtension(VUEJS3_DEVTOOLS)
     }
-    catch (e: unknown)
-    {
-      if (typeof e === "string") 
-      {
+    catch (e: unknown) {
+      if (typeof e === "string") {
         console.error('Vue Devtools failed to install:', e.toString())
       }
-      else 
-      {
+      else {
         console.error("Unknown error")
       }
     }
     createWindow()
   }
-  })
+})
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
