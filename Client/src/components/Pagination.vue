@@ -56,7 +56,15 @@
         </div>
         <div>
           <nav
-            class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px py-3"
+            class="
+              relative
+              z-0
+              inline-flex
+              rounded-md
+              shadow-sm
+              -space-x-px
+              py-3
+            "
             aria-label="Pagination"
           >
             <a

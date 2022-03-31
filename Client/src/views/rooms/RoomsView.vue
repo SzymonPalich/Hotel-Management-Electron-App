@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col h-screen">
+    <div class="px-6 mt-3">
+      <search-bar />
+    </div>
     <div class="p-6 w-full h-full">
       <div class="overflow-auto rounded-xl">
         <table id="cleaning_table" class="min-w-full">
@@ -76,7 +79,7 @@
         </table>
       </div>
     </div>
-    <div class="content-end px-6 mb-2">
+    <div class="content-end px-6 mb-3">
       <pagination />
     </div>
   </div>
@@ -86,6 +89,7 @@
 import { Options, Vue } from "vue-class-component";
 import { IRoom } from "../../services/RoomsService";
 import Pagination from "../../components/Pagination.vue";
+import SearchBar from "../../components/SearchBar.vue";
 
 let temp_room_results: Array<IRoom> = [
   {
@@ -147,6 +151,7 @@ let temp_room_results: Array<IRoom> = [
 @Options({
   components: {
     Pagination,
+    SearchBar
   },
 })
 export default class RoomsView extends Vue {
