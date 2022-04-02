@@ -10,6 +10,8 @@ import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
 
 import RoomsView from '../views/rooms/RoomsView.vue'
 
+import EmployeeView from '../views/employees/EmployeeView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -53,7 +55,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/rooms',
     name: 'rooms',
     component: RoomsView
-  }
+  },
+  // Moduł pracownikow
+  {
+    path: '/employees',
+    name: 'employees',
+    component: EmployeeView
+  },
 ]
 
 const router = createRouter({

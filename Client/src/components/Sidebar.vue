@@ -15,10 +15,10 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <router-link to="/employees">
             <i class="material-icons">contact_mail</i>
             <span class="links_name">Pracownicy</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <router-link to="/rooms">
