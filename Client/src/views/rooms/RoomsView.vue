@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
-    <div class="mt-4 flex mr-0 ml-auto">
+    <div class="mt-6 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
         <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
@@ -8,7 +8,7 @@
         >
       </div>
     </div>
-    <div class="px-6 pb-4 pt-3 w-full h-full">
+    <div class="px-6 pb-4 pt-4 w-full h-full">
       <div class="overflow-auto rounded-xl">
         <table id="cleaning_table" class="min-w-full">
           <thead class="bg-gray-800 text-white">
@@ -84,7 +84,7 @@
         </table>
       </div>
     </div>
-    <div class="px-6 mb-3">
+    <div class="px-6 mt-auto mb-3">
       <pagination />
     </div>
   </div>
@@ -144,12 +144,6 @@ let temp_room_results: Array<IRoom> = [
     room_number: 403,
     room_type: "Ekonomiczny",
     room_status: 5,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
   },
   {
     id: 7,
