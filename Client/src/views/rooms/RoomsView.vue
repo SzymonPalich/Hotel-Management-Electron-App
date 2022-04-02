@@ -9,7 +9,7 @@
         >
       </div>
     </div>
-    <div class="px-6 pb-4 pt-4 w-full h-full">
+    <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
         <table id="cleaning_table" class="min-w-full">
           <thead class="bg-gray-800 text-white">
@@ -50,7 +50,7 @@
                 {{ this.setStatus(room.room_status) }}
               </td>
               <td class="text-center py-2 px-4">
-                <router-link :to="{ name: 'rooms-fetch', params: { id: '1' }}"
+                <router-link :to="{ name: 'rooms-fetch', params: { id: '1' } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link
@@ -64,7 +64,7 @@
         </table>
       </div>
     </div>
-    <div class="px-6 mt-auto mb-3">
+    <div class="px-6 mt-auto mb-6">
       <pagination />
     </div>
   </div>
@@ -115,20 +115,26 @@ let temp_room_results: Array<IRoom> = [
     room_status: 1,
   },
   {
-    id: 6,
+    id: 7,
     room_number: 402,
     room_type: "Ekonomiczny",
     room_status: 4,
   },
   {
-    id: 6,
+    id: 8,
     room_number: 403,
     room_type: "Ekonomiczny",
     room_status: 5,
   },
   {
-    id: 7,
-    room_number: 403,
+    id: 9,
+    room_number: 404,
+    room_type: "Ekonomiczny",
+    room_status: 1,
+  },
+  {
+    id: 10,
+    room_number: 405,
     room_type: "Ekonomiczny",
     room_status: 1,
   },
