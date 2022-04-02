@@ -174,9 +174,10 @@
     background: #ffffff;
 }
 
-a.router-link-active {
+.router-link-active {
     color: var(--black-color);
     background: #2a2350;
+    border-radius: 0.75rem;
 }
 
 .sidebar ul li i {
