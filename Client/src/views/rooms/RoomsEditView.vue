@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Dodaj pokój
+            Edytuj #{{ this.result.id }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -120,7 +120,7 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
-import { IRoom } from "../../services/RoomsService";
+import RoomsService, { IRoom } from "../../services/RoomsService";
 
 let temp_room: IRoom = {
   id: 1,
@@ -134,6 +134,10 @@ export default class RoomsEditView extends Vue {
     return {
       result: temp_room,
     };
+  }
+
+  private setStatus(room_status: number): string {
+    return RoomsService.setStatus(room_status);
   }
 }
 </script>

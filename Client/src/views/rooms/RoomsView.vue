@@ -60,9 +60,9 @@
                 <router-link :to="{ name: 'rooms-edit', params: { id: '1' } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
-                <i class="material-icons align-middle" @click="alertDisplay"
-                  >delete</i
-                >
+                <router-link :to="{ name: 'rooms' }" @click="alertDisplay()">
+                  <i class="material-icons align-middle">delete</i>
+                </router-link>
               </td>
             </tr>
           </tbody>

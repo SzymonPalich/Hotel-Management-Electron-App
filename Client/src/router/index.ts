@@ -80,7 +80,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'clients',
     component: ClientsView
   },
-
 ]
 
 const router = createRouter({
