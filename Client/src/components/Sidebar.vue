@@ -9,10 +9,10 @@
       </div>
       <ul class="nav_list">
         <li>
-          <a href="#">
+          <router-link to="/clients">
             <i class="material-icons">people</i>
             <span class="links_name">Klienci</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <a href="#">
