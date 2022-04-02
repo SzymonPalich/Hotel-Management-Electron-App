@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Dodaj naprawę
+            Dodaj pokój
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,7 +24,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Usterka</dt>
+              <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -49,25 +49,13 @@
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
-                  class="
-                    border-2 border-gray-400
-                    w-full
-                    h-full
-                    rounded-xl
-                    text-md
-                    px-2
-                    py-1
-                    outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
-                  "
-                  type="text"
-                  required
-                />
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                  <option>Ekonomiczny</option>
+                  <option>Drogi</option>
+                  <option>O Panie</option>
+                </select>
               </dd>
             </div>
             <div
@@ -78,26 +66,15 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Opis</dt>
+              <dt class="text-sm font-medium text-gray-500">Status</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <textarea rows="5" maxlength="400"
-                  class="
-                    scroll
-                    border-2 border-gray-400
-                    w-full
-                    h-full
-                    rounded-xl
-                    text-md
-                    px-2
-                    py-1
-                    outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl 
-                    resize-none
-                  "
-                  required
-                ></textarea>
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                  <option>Gotowy</option>
+                  <option>Rezerwacja</option>
+                  <option>Sprzątanie</option>
+                  <option>Usterka</option>
+                  <option>Zablokowany</option>
+                </select>
               </dd>
             </div>
           </dl>
@@ -112,7 +89,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'repairs' })"
+              @click="$router.push({ name: 'rooms' })"
             >
               Dodaj
             </button>
@@ -126,5 +103,5 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-export default class RepairsCreateView extends Vue {}
+export default class RoomsCreateView extends Vue {}
 </script>
