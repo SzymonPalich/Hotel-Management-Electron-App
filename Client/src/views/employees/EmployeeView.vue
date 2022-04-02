@@ -78,7 +78,16 @@
               <td class="w-1/3 text-center py-3 px-4">
                 {{ emp.position }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">temp</td>
+              <td class="text-center py-2 px-4">
+                <router-link :to="{ name: 'employee-info', params: { id: emp.id }}"
+                  ><i class="material-icons align-middle"
+                    >description</i
+                  ></router-link
+                >
+                <i class="material-icons align-middle">person</i>
+                <i class="material-icons align-middle">edit</i>
+                <i class="material-icons align-middle">delete</i>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -103,9 +112,10 @@ let temp_emp_results: Array<IEmployee> = [
         surname: "Kowalski",
         position: "Manager",
         salary: 21308,
-        e_mail: "AKowalski@spr.com",
+        email: "AKowalski@spr.com",
         phone_number: "190-921-291",
-        pesel: "98721093802"
+        pesel: "98721093802",
+        employment_date: new Date(2001, 11, 9)
     },
     {
         id: 2,
@@ -113,9 +123,10 @@ let temp_emp_results: Array<IEmployee> = [
         surname: "Przybylski",
         position: "Technik",
         salary: 3502,
-        e_mail: "LPrzybylski@spr.com",
+        email: "LPrzybylski@spr.com",
         phone_number: "190-921-291",
-        pesel: "98721093802"
+        pesel: "98721093802",
+        employment_date: new Date(2002, 12, 2)
     },
     {
         id: 3,
@@ -123,9 +134,10 @@ let temp_emp_results: Array<IEmployee> = [
         surname: "Kowalska",
         position: "Recepcjonistka",
         salary: 20200,
-        e_mail: "EKowalska@spr.com",
+        email: "EKowalska@spr.com",
         phone_number: "190-921-291",
-        pesel: "98721093802"
+        pesel: "98721093802",
+        employment_date: new Date(2003, 5, 20)
     },
     {
         id: 4,
@@ -133,9 +145,10 @@ let temp_emp_results: Array<IEmployee> = [
         surname: "Nowak",
         position: "Pokojówka",
         salary: 4208,
-        e_mail: "PNowak@spr.com",
+        email: "PNowak@spr.com",
         phone_number: "190-921-291",
-        pesel: "98721093802"
+        pesel: "98721093802",
+        employment_date: new Date(2001, 11, 7)
     },
 ];
 

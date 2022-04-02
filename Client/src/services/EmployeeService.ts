@@ -8,7 +8,9 @@ export interface IEmployee {
     surname: string;
     position: string;
     salary: number;
-    e_mail: string;
+    email: string;
     phone_number: string;
     pesel: string;
+    employment_date: Date;
+    dismissal_date?: Date;
 }
