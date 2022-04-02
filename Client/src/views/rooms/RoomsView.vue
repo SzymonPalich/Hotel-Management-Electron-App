@@ -84,7 +84,7 @@
         </table>
       </div>
     </div>
-    <div class="px-6 mb-3">
+    <div class="px-6 mt-auto mb-3">
       <pagination />
     </div>
   </div>
@@ -144,12 +144,6 @@ let temp_room_results: Array<IRoom> = [
     room_number: 403,
     room_type: "Ekonomiczny",
     room_status: 5,
-  },
-  {
-    id: 7,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 1,
   },
   {
     id: 7,
