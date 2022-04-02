@@ -42,6 +42,7 @@
                   "
 
                   type="text"
+                  required
                 />
               </dd>
             </div>
@@ -65,6 +66,7 @@
                     focus:rounded-xl
                   "
                   type="text"
+                  required
                 />
               </dd>
             </div>
@@ -94,7 +96,7 @@
                     focus:rounded-xl 
                     resize-none
                   "
-                  resi
+                  required
                 ></textarea>
               </dd>
             </div>

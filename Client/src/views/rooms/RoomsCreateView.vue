@@ -42,6 +42,7 @@
                   "
 
                   type="text"
+                  required
                 />
               </dd>
             </div>
