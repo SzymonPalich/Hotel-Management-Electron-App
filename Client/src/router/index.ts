@@ -9,6 +9,7 @@ import CleaningView from '../views/cleaning/CleaningView.vue'
 import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
 
 import RoomsView from '../views/rooms/RoomsView.vue'
+import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 
 import EmployeeView from '../views/employees/EmployeeView.vue'
 
@@ -56,12 +57,17 @@ const routes: Array<RouteRecordRaw> = [
     name: 'rooms',
     component: RoomsView
   },
+  {
+    path: '/rooms/:id',
+    name: 'rooms-fetch',
+    component: RoomsFetchView
+  },
   // Moduł pracownikow
   {
     path: '/employees',
     name: 'employees',
     component: EmployeeView
-  },
+  }
 ]
 
 const router = createRouter({
