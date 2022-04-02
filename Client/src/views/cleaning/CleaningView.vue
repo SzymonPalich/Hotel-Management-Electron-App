@@ -1,72 +1,73 @@
 <template>
-  <div class="cleaning">
+  <div class="cleaning relative w-full flex flex-col h-screen overflow-hidden">
     <body class="font-family-karla flex">
-      <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
-        <div class="w-full h-screen overflow-x-hidden flex flex-col">
-          <div class="w-full flex-grow p-6">
-            <h2 class="text-4xl text-white pb-6 text-center">Sprzątanie</h2>
-            <div class="w-full mt-6">
-              <div class="overflow-auto rounded-xl">
-                <table id="cleaning_table" class="min-w-full">
-                  <thead class="bg-gray-800 text-white">
-                    <tr>
-                      <th
-                        class="
-                          w-1/3
-                          text-left
-                          py-3
-                          px-4
-                          uppercase
-                          font-semibold
-                          text-sm
-                        "
-                      >
-                        Numer Pokoju
-                      </th>
-                      <th
-                        class="
-                          w-1/3
-                          text-center
-                          py-3
-                          px-4
-                          uppercase
-                          font-semibold
-                          text-sm
-                        "
-                      >
-                        Uzupełnienie minibaru
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-gray-700">
-                    <tr
-                      v-for="room in results"
-                      :key="room.nr"
-                      @click="clean(room)"
-                      class="bg-white"
-                    >
-                      <td class="w-1/3 text-left py-3 px-4">
-                        {{ room.nr }}
-                      </td>
-                      <td class="w-1/3 text-center py-3 px-4">
-                        {{ room.minibar }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="pt-3 text-gray-600"></p>
-            </div>
+      <div class="w-full flex-grow p-6">
+        <h2 class="text-4xl text-white pb-6 text-center">Sprzątanie</h2>
+        <div class="w-full mt-6">
+          <div class="overflow-auto rounded-xl">
+            <table id="cleaning_table" class="min-w-full">
+              <thead class="bg-gray-800 text-white">
+                <tr>
+                  <th
+                    class="
+                      w-1/3
+                      text-left
+                      py-3
+                      px-4
+                      uppercase
+                      font-semibold
+                      text-sm
+                    "
+                  >
+                    Numer Pokoju
+                  </th>
+                  <th
+                    class="
+                      w-1/3
+                      text-center
+                      py-3
+                      px-4
+                      uppercase
+                      font-semibold
+                      text-sm
+                    "
+                  >
+                    Uzupełnienie minibaru
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700">
+                <tr
+                  v-for="room in results"
+                  :key="room.nr"
+                  @click="clean(room)"
+                  class="bg-white"
+                >
+                  <td class="w-1/3 text-left py-3 px-4">
+                    {{ room.nr }}
+                  </td>
+                  <td class="w-1/3 text-center py-3 px-4">
+                    {{ room.minibar }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+          <p class="pt-3 text-gray-600"></p>
         </div>
       </div>
     </body>
+    <div class="px-6 mt-auto mb-3">
+      <pagination />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 import { IRoom } from "../../services/CleaningService";
+import Pagination from "../../components/Pagination.vue";
+import SearchBar from "../../components/SearchBar.vue";
 
 let temp_room_results: Array<IRoom> = [
   {
@@ -101,6 +102,12 @@ let temp_room_results: Array<IRoom> = [
   },
 ];
 
+@Options({
+  components: {
+    Pagination,
+    SearchBar,
+  },
+})
 export default class CleaningView extends Vue {
   clean(room: IRoom) {
     if (room.minibar == "Tak") {
