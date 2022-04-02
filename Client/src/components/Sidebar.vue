@@ -8,7 +8,13 @@
         </div>
       </div>
       <ul class="nav_list">
-        <li>
+        <li v-if="this.isActive('clients')">
+          <router-link to="/clients">
+            <i class="material-icons">people</i>
+            <span class="links_name">Klienci</span>
+          </router-link>
+        </li>
+        <li v-else>
           <router-link to="/clients">
             <i class="material-icons">people</i>
             <span class="links_name">Klienci</span>
@@ -79,6 +85,11 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "SidebarComponent",
-  methods: {},
+  methods: {
+    isActive(path: string): boolean {
+      if (this.$route.name?.toString().includes(path)) return true;
+      else return false;
+    },
+  },
 });
 </script>
