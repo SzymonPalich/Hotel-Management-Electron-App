@@ -3,7 +3,8 @@
     <div class="mt-6 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
-        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+        <i
+          class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
           @click="$router.push({ name: 'rooms-create' })"
           >add</i
         >
@@ -57,7 +58,9 @@
                 >
                 <i class="material-icons align-middle">person</i>
                 <i class="material-icons align-middle">edit</i>
-                <i class="material-icons align-middle" @click="alertDisplay">delete</i>
+                <i class="material-icons align-middle" @click="alertDisplay"
+                  >delete</i
+                >
               </td>
             </tr>
           </tbody>
@@ -72,10 +75,10 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import Swal from "sweetalert2";
 import RoomsService, { IRoom } from "../../services/RoomsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import Utils from "../../Utils";
 
 let temp_room_results: Array<IRoom> = [
   {
@@ -157,20 +160,8 @@ export default class RoomsView extends Vue {
     return RoomsService.setStatus(room_status);
   }
 
-  alertDisplay() {
-    Swal.fire({
-      title: "Jesteś pewien?",
-      showCancelButton: true,
-      confirmButtonText: "Tak",
-      confirmButtonColor: "#FF2D00",
-      cancelButtonText: "Nie",
-      cancelButtonColor: "#187800",
-      showLoaderOnConfirm: true,
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire("Usunięte", "Pomyślnie usunąłeś rekord", "success");
-      }
-    });
+  private alertDisplay(): void {
+    Utils.alertDisplay();
   }
 }
 </script>

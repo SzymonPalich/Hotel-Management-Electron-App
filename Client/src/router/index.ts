@@ -11,6 +11,7 @@ import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
 import RoomsView from '../views/rooms/RoomsView.vue'
 import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 import RoomsCreateView from '../views/rooms/RoomsCreateView.vue'
+import RoomsEditView from '../views/rooms/RoomsEditView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -65,7 +66,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/rooms/create',
     name: 'rooms-create',
     component: RoomsCreateView
-  }
+  },
+  {
+    path: '/rooms/:id/edit',
+    name: 'rooms-edit',
+    component: RoomsEditView
+  },
 ]
 
 const router = createRouter({
