@@ -15,7 +15,7 @@
             <tr>
               <th
                 class="
-                  w-1/3
+                  w-1/4
                   text-left
                   py-3
                   px-4
@@ -26,59 +26,38 @@
               >
                 Numer Pokoju
               </th>
-              <th
-                class="
-                  w-1/3
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Typ
               </th>
-              <th
-                class="
-                  w-1/3
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Status
               </th>
-              <th
-                class="
-                  w-1/3
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Akcje
               </th>
             </tr>
           </thead>
           <tbody class="text-gray-700">
             <tr v-for="room in results" :key="room.id" class="bg-white">
-              <td class="w-1/3 text-left py-3 px-4">
+              <td class="text-left py-2 px-4">
                 {{ room.room_number }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">
+              <td class="text-center py-2 px-4">
                 {{ room.room_type }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">
+              <td class="text-center py-2 px-4">
                 {{ this.setStatus(room.room_status) }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">temp</td>
+              <td class="text-center py-2 px-4">
+                <router-link :to="{ name: 'rooms-fetch', params: { id: '1' }}"
+                  ><i class="material-icons align-middle"
+                    >description</i
+                  ></router-link
+                >
+                <i class="material-icons align-middle">person</i>
+                <i class="material-icons align-middle">edit</i>
+                <i class="material-icons align-middle">delete</i>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -92,7 +71,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IRoom } from "../../services/RoomsService";
+import RoomsService, { IRoom } from "../../services/RoomsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 
@@ -173,26 +152,7 @@ export default class RoomsView extends Vue {
   }
 
   private setStatus(room_status: number): string {
-    switch (room_status) {
-      case 1: {
-        return "Gotowy";
-      }
-      case 2: {
-        return "Rezerwacja";
-      }
-      case 3: {
-        return "Sprzątanie";
-      }
-      case 4: {
-        return "Usterka";
-      }
-      case 5: {
-        return "Zablokowany";
-      }
-      default: {
-        return "Błąd";
-      }
-    }
+    return RoomsService.setStatus(room_status);
   }
 }
 </script>
