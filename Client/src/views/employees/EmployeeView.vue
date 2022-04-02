@@ -4,6 +4,7 @@
       <search-bar />
       <div class="pr-6 flex items-center">
         <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+          @click="$router.push({ name: 'employees-create' })"
           >add</i
         >
       </div>

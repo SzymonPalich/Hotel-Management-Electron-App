@@ -12,6 +12,7 @@ import RoomsView from '../views/rooms/RoomsView.vue'
 import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 
 import EmployeeView from '../views/employees/EmployeeView.vue'
+import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -67,6 +68,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees',
     name: 'employees',
     component: EmployeeView
+  },
+  {
+    path: '/employees/create',
+    name: 'employees-create',
+    component: EmployeeCreateView
   }
 ]
 
