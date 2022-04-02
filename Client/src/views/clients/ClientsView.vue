@@ -1,17 +1,16 @@
 <template>
-  <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <h1 class="text-4xl text-white mt-6 text-center">Klienci</h1>
-<div class="flex justify-between flex-col h-screen">
+  <div class="flex justify-between flex-col h-screen">
     <div class="mt-6 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
-        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+        <i
+          class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
           @click="$router.push({ name: 'rooms-create' })"
           >add</i
         >
       </div>
     </div>
-      
+    <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
@@ -19,8 +18,8 @@
               <th
                 class="
                   w-1/5
-                  text-center
-                  py-5
+                  text-left
+                  py-3
                   px-4
                   uppercase
                   font-semibold
@@ -32,8 +31,8 @@
               <th
                 class="
                   w-1/5
-                  text-center
-                  py-5
+                  text-left
+                  py-3
                   px-4
                   uppercase
                   font-semibold
@@ -45,8 +44,8 @@
               <th
                 class="
                   w-1/5
-                  text-center
-                  py-5
+                  text-left
+                  py-3
                   px-4
                   uppercase
                   font-semibold
@@ -58,8 +57,8 @@
               <th
                 class="
                   w-2/5
-                  text-center
-                  py-5
+                  text-left
+                  py-3
                   px-4
                   uppercase
                   font-semibold
@@ -74,20 +73,19 @@
           <tbody class="text-gray-700">
             <tr v-for="client in results" :key="client" class="bg-white">
               <td class="w-1/5 text-left py-2 px-4">{{ client.first_name }}</td>
-              <td class="w-1/5 text-center py-2 px-4">
+              <td class="w-1/5 text-left py-2 px-4">
                 {{ client.last_name }}
               </td>
-              <td class="w-1/5 text-center py-2 px-4">{{ client.email }}</td>
-              <td class="w-2/5 text-center py-2 px-4">
+              <td class="w-1/5 text-left py-2 px-4">{{ client.email }}</td>
+              <td class="w-2/5 text-left py-2 px-4">
                 {{ client.phone_number }}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="pt-3 text-gray-600"></p>
     </div>
-    <div class="px-6 mb-3">
+    <div class="px-6 mt-auto mb-6">
       <pagination />
     </div>
   </div>
@@ -155,13 +153,20 @@ let temp_clients_results: Array<IClients> = [
     email: "fostrowski111@gmail.com",
     phone_number: "+48 648 156 113",
   },
-  //   {
-  //   id: 9,
-  //   first_name: "Kacper",
-  //   last_name: "Jakubowski",
-  //   email: "kjakubowski13gmail.com",
-  //   phone_number: "+48 652 425 635",
-  // },
+  {
+    id: 9,
+    first_name: "Kacper",
+    last_name: "Jakubowski",
+    email: "kjakubowski13gmail.com",
+    phone_number: "+48 652 425 635",
+  },
+  {
+    id: 10,
+    first_name: "Kacper",
+    last_name: "Jakubowski",
+    email: "kjakubowski13gmail.com",
+    phone_number: "+48 652 425 635",
+  },
 ];
 
 @Options({

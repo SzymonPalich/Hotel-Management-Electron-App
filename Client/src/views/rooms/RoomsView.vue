@@ -28,10 +28,10 @@
               >
                 Numer Pokoju
               </th>
-              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Typ
               </th>
-              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Status
               </th>
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
@@ -44,10 +44,10 @@
               <td class="text-left py-2 px-4">
                 {{ room.room_number }}
               </td>
-              <td class="text-center py-2 px-4">
+              <td class="text-left py-2 px-4">
                 {{ room.room_type }}
               </td>
-              <td class="text-center py-2 px-4">
+              <td class="text-left py-2 px-4">
                 {{ this.setStatus(room.room_status) }}
               </td>
               <td class="text-center py-2 px-4">
