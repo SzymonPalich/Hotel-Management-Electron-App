@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <div class="rounded-xl mx-48 mt-20">
+    <div class="rounded-xl mx-24 mt-20">
       <div
         class="
           bg-gray-800
@@ -50,7 +50,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
                   <option>Ekonomiczny</option>
                   <option>Drogi</option>
                   <option>O Panie</option>
@@ -67,7 +67,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Status</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
                   <option>Gotowy</option>
                   <option>Rezerwacja</option>
                   <option>Sprzątanie</option>
