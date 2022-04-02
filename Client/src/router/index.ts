@@ -13,6 +13,7 @@ import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 
 import EmployeeView from '../views/employees/EmployeeView.vue'
 import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
+import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -68,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees',
     name: 'employees',
     component: EmployeeView
+  },
+  {
+    path: '/employees/:id/info',
+    name: 'employee-info',
+    component: EmployeeFetchView
   },
   {
     path: '/employees/create',
