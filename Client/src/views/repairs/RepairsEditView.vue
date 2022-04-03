@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Podgląd
+            Edytuj #{{ this.result.id }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -26,7 +26,22 @@
             >
               <dt class="text-sm font-medium text-gray-500">Usterka</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.issue }}
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    text-md
+                    px-2
+                    py-1
+                    outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                  "
+                  type="text"
+                  required
+                  v-model="this.result.issue"
+                />
               </dd>
             </div>
             <div
@@ -34,7 +49,22 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.room_nr }}
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    text-md
+                    px-2
+                    py-1
+                    outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                  "
+                  type="number"
+                  required
+                  v-model="this.result.room_nr"
+                />
               </dd>
             </div>
             <div
@@ -47,7 +77,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.desc }}
+                <textarea rows="5" maxlength="400"
+                  class="
+                    scroll
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    text-md
+                    px-2
+                    py-1
+                    outline-none
+                    focus:border-2
+                    focus:border-cyan-400 
+                    focus:rounded-xl 
+                    resize-none
+                  "
+                  required
+                  v-model="this.result.desc"
+                ></textarea>
               </dd>
             </div>
           </dl>
@@ -56,7 +104,7 @@
               class="
                 bg-gray-800
                 rounded-xl
-                px-2
+                px-6
                 py-2
                 text-white
                 border-2 border-black
@@ -64,7 +112,7 @@
               "
               @click="$router.push({ name: 'repairs' })"
             >
-              Zatwierdź
+              Dodaj
             </button>
           </div>
         </div>
@@ -81,10 +129,10 @@ let temp_repair: IRepair = {
   id: 1,
   issue: "Telewizor",
   room_nr: 113,
-  desc: "Zniszczona matryca"
+  desc: "Uszkodzona Matryca",
 };
 
-export default class RepairsFetchView extends Vue {
+export default class RepairsEditView extends Vue {
   data() {
     return {
       result: temp_repair,
