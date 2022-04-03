@@ -236,11 +236,12 @@ li.router-link-active {
 .sidebar .user .user_details {
     opacity: 1;
     pointer-events: auto;
+    justify-content: space-between;
 }
 
 .content .user .user_details img {
-    height: 45px;
-    width: 45px;
+    height: 30px;
+    width: 30px;
     object-fit: cover;
     border-radius: 12px;
 }
