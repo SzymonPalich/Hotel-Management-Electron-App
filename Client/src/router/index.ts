@@ -19,6 +19,7 @@ import RoomsEditView from '../views/rooms/RoomsEditView.vue'
 import EmployeeView from '../views/employees/EmployeeView.vue'
 import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
+import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -105,6 +106,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees/create',
     name: 'employees-create',
     component: EmployeeCreateView
+  },
+  {
+    path: '/employees/:id/edit',
+    name: 'employees-edit',
+    component: EmployeeEditView
   }
 ]
 

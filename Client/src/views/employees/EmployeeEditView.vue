@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <div class="rounded-xl mx-24 mt-auto mb-auto">
+    <div class="rounded-xl mx-48 mt-auto mb-auto">
       <div
         class="
           bg-gray-800
@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Dodaj pracownika
+            Edytuj #{{ this.result.id }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,7 +24,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Imię</dt>
+              <dt class="text-sm font-medium text-gray-500">Imie</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -36,13 +36,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-
                   type="text"
                   required
+                  v-model="this.result.name"
                 />
               </dd>
             </div>
@@ -61,12 +59,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
+                  v-model="this.result.surname"
                 />
               </dd>
             </div>
@@ -85,12 +82,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="email"
                   required
+                  v-model="this.result.email"
                 />
               </dd>
             </div>
@@ -109,26 +105,30 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
+                  v-model="this.result.phone_number"
                 />
               </dd>
             </div>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-3
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+             <div
+              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none">
+                <select
+                  class="
+                    w-full
+                    border-2 border-gray-400
+                    px-2
+                    py-0_1
+                    rounded-xl
+                    outline-none
+                  "
+                >
+                  <option>Manager</option>
                   <option>Kierownik</option>
                   <option>Pokojówka</option>
                   <option>Technik</option>
@@ -151,19 +151,18 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
+                  v-model="this.result.pesel"
                 />
               </dd>
             </div>
             <div
               class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Data zatrudnienia</dt>
+              <dt class="text-sm font-medium text-gray-500">Nazwisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -175,12 +174,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="date"
                   required
+                  :value="dateToYYYYMMDD(this.result.employment_date)"
                 />
               </dd>
             </div>
@@ -199,19 +197,16 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="number"
-                  min="0"
-                  maxlength="6"
                   required
+                  v-model="this.result.salary"
                 />
               </dd>
             </div>
           </dl>
-          <div class="bg-gray-50 text-center px-4 py-3 rounded-b-xl">
+          <div class="text-center px-4 py-3 bg-gray-50 rounded-b-xl">
             <button
               class="
                 bg-gray-800
@@ -224,7 +219,7 @@
               "
               @click="$router.push({ name: 'employees' })"
             >
-              Dodaj
+              Edytuj
             </button>
           </div>
         </div>
@@ -235,6 +230,29 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
+import EmployeeService, { IEmployee } from "../../services/EmployeeService";
 
-export default class EmployeeCreateView extends Vue {}
+let temp_emp: IEmployee = {
+    id: 1,
+    name: "Andrzej",
+    surname: "Kowalski",
+    position: "Manager",
+    salary: 21308,
+    email: "AKowalski@spr.com",
+    phone_number: "190-921-291",
+    pesel: "98721093802",
+    employment_date: new Date(2001, 11, 9)
+};
+
+export default class EmployeeEditView extends Vue {
+  data() {
+    return {
+      result: temp_emp,
+    };
+  }
+  
+  dateToYYYYMMDD(d: { getTime: () => number; getTimezoneOffset: () => number; }) {
+      return d && new Date(d.getTime()-(d.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]
+    }
+}
 </script>

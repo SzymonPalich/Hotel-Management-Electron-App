@@ -79,9 +79,10 @@
                 <router-link :to="{ name: 'employee-info', params: { id: emp.id }}"
                   ><i class="material-icons align-middle"
                     >description</i
-                  ></router-link
-                >
-                <i class="material-icons align-middle">edit</i>
+                  ></router-link>
+                <router-link :to="{ name: 'employees-edit', params: { id: emp.id }}">
+                  <i class="material-icons align-middle">edit</i>
+                </router-link>
                 <i class="material-icons align-middle cursor-pointer" @click="alertDisplay()">delete</i>
               </td>
             </tr>

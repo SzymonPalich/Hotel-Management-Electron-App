@@ -112,7 +112,7 @@
               "
               @click="$router.push({ name: 'repairs' })"
             >
-              Dodaj
+              Edytuj
             </button>
           </div>
         </div>
