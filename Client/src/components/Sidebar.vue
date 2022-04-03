@@ -21,16 +21,16 @@
           </router-link>
         </li>
         <li v-if="this.isActive('employees') " class="router-link-active">
-          <a href="#">
+          <router-link to="/employees">
             <i class="material-icons">contact_mail</i>
             <span class="links_name">Pracownicy</span>
-          </a>
+          </router-link>
         </li>
         <li v-else>
-          <a href="#">
+          <router-link to="/employees">
             <i class="material-icons">contact_mail</i>
             <span class="links_name">Pracownicy</span>
-          </a>
+          </router-link>
         </li>
         <li v-if="this.isActive('rooms') " class="router-link-active">
           <router-link to="/rooms">

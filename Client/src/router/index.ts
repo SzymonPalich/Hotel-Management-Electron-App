@@ -15,6 +15,10 @@ import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 import RoomsCreateView from '../views/rooms/RoomsCreateView.vue'
 import RoomsEditView from '../views/rooms/RoomsEditView.vue'
 
+import EmployeeView from '../views/employees/EmployeeView.vue'
+import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
+import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -80,7 +84,22 @@ const routes: Array<RouteRecordRaw> = [
     name: 'clients',
     component: ClientsView
   },
-
+  // Moduł pracownikow
+  {
+    path: '/employees',
+    name: 'employees',
+    component: EmployeeView
+  },
+  {
+    path: '/employees/:id/info',
+    name: 'employee-info',
+    component: EmployeeFetchView
+  },
+  {
+    path: '/employees/create',
+    name: 'employees-create',
+    component: EmployeeCreateView
+  }
 ]
 
 const router = createRouter({

@@ -24,3 +24,13 @@ option:hover {
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
