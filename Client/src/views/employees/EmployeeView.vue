@@ -3,7 +3,7 @@
     <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
-        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons cursor-pointer"
           @click="$router.push({ name: 'employees-create' })"
           >add</i
         >
@@ -75,7 +75,7 @@
               <td class="text-center py-3 px-4">
                 {{ emp.position }}
               </td>
-              <td class="text-center py-2 px-4">
+              <td class="text-center py-2 px-4 w-36">
                 <router-link :to="{ name: 'employee-info', params: { id: emp.id }}"
                   ><i class="material-icons align-middle"
                     >description</i
