@@ -9,14 +9,13 @@
         >
       </div>
     </div>
-    <div class="px-6 pb-4 pt-3 w-full h-full">
+    <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
         <table id="cleaning_table" class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
               <th
                 class="
-                  w-1/3
                   text-left
                   py-3
                   px-4
@@ -29,7 +28,6 @@
               </th>
               <th
                 class="
-                  w-1/3
                   text-center
                   py-3
                   px-4
@@ -42,7 +40,6 @@
               </th>
               <th
                 class="
-                  w-1/3
                   text-center
                   py-3
                   px-4
@@ -55,7 +52,6 @@
               </th>
               <th
                 class="
-                  w-1/3
                   text-center
                   py-3
                   px-4
@@ -70,13 +66,13 @@
           </thead>
           <tbody class="text-gray-700">
             <tr v-for="emp in results" :key="emp.id" class="bg-white">
-              <td class="w-1/3 text-left py-3 px-4">
+              <td class="text-left py-3 px-4">
                 {{ emp.name }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">
+              <td class="text-center py-3 px-4">
                 {{ emp.surname }}
               </td>
-              <td class="w-1/3 text-center py-3 px-4">
+              <td class="text-center py-3 px-4">
                 {{ emp.position }}
               </td>
               <td class="text-center py-2 px-4">
@@ -85,16 +81,15 @@
                     >description</i
                   ></router-link
                 >
-                <i class="material-icons align-middle">person</i>
                 <i class="material-icons align-middle">edit</i>
-                <i class="material-icons align-middle">delete</i>
+                <i class="material-icons align-middle cursor-pointer" @click="alertDisplay()">delete</i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="px-6 mb-3">
+    <div class="px-6 mb-6">
       <pagination />
     </div>
   </div>
@@ -105,6 +100,7 @@ import { Options, Vue } from "vue-class-component";
 import { IEmployee } from "../../services/EmployeeService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import Utils from "../../Utils";
 
 let temp_emp_results: Array<IEmployee> = [
     {
@@ -166,5 +162,8 @@ export default class EmployeeView extends Vue {
     };
   }
 
+  private alertDisplay(): void {
+    Utils.alertDisplay();
+  }
 }
 </script>
