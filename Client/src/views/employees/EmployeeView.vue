@@ -66,13 +66,13 @@
           </thead>
           <tbody class="text-gray-700">
             <tr v-for="emp in results" :key="emp.id" class="bg-white">
-              <td class="text-left py-3 px-4">
+              <td class="text-left py-2 px-4">
                 {{ emp.name }}
               </td>
-              <td class="text-center py-3 px-4">
+              <td class="text-center py-2 px-4">
                 {{ emp.surname }}
               </td>
-              <td class="text-center py-3 px-4">
+              <td class="text-center py-2 px-4">
                 {{ emp.position }}
               </td>
               <td class="text-center py-2 px-4 w-36">
