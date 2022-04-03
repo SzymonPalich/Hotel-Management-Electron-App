@@ -88,9 +88,7 @@
                   "
                 >
                   <option>Gotowy</option>
-                  <option>Rezerwacja</option>
                   <option>Sprzątanie</option>
-                  <option>Usterka</option>
                   <option>Zablokowany</option>
                 </select>
               </dd>
