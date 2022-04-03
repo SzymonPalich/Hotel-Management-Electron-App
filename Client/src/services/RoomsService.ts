@@ -2,7 +2,7 @@ export default class RoomsService {
     public static setStatus(room_status: number): string {
         switch (room_status) {
             case 1: {
-                return "Gotowy";
+                return "Wolny";
             }
             case 2: {
                 return "Zajęty";
