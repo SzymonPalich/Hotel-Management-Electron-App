@@ -32,7 +32,6 @@
                     w-full
                     h-full
                     rounded-xl
-                    text-lg
                     px-2
                     py-0_1
                     outline-none
@@ -57,7 +56,6 @@
                     py-0_1
                     rounded-xl
                     outline-none
-                    text-lg
                   "
                 >
                   <option>Ekonomiczny</option>
@@ -84,7 +82,6 @@
                     py-0_1
                     rounded-xl
                     outline-none
-                    text-lg
                   "
                 >
                   <option>Gotowy</option>
@@ -103,7 +100,6 @@
                 py-2
                 text-white
                 border-2 border-black
-                hover:
               "
               @click="$router.push({ name: 'rooms' })"
             >
