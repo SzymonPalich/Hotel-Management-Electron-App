@@ -68,7 +68,12 @@
               </dd>
             </div>
             <div
-              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              class="
+                bg-gray-50
+                px-4
+                py-3
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
             >
               <dt class="text-sm font-medium text-gray-500">E-mail</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -113,8 +118,13 @@
                 />
               </dd>
             </div>
-             <div
-              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-3
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -160,9 +170,16 @@
               </dd>
             </div>
             <div
-              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              class="
+                bg-gray-50
+                px-4
+                py-3
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
             >
-              <dt class="text-sm font-medium text-gray-500">Nazwisko</dt>
+              <dt class="text-sm font-medium text-gray-500">
+                Data zatrudnienia
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -178,7 +195,7 @@
                   "
                   type="date"
                   required
-                  :value="dateToYYYYMMDD(this.result.employment_date)"
+                  :value="this.result.employment_date.toJSON().substring(0, 10)"
                 />
               </dd>
             </div>
@@ -233,15 +250,15 @@ import { Vue } from "vue-class-component";
 import EmployeeService, { IEmployee } from "../../services/EmployeeService";
 
 let temp_emp: IEmployee = {
-    id: 1,
-    name: "Andrzej",
-    surname: "Kowalski",
-    position: "Manager",
-    salary: 21308,
-    email: "AKowalski@spr.com",
-    phone_number: "190-921-291",
-    pesel: "98721093802",
-    employment_date: new Date(2001, 11, 9)
+  id: 1,
+  name: "Andrzej",
+  surname: "Kowalski",
+  position: "Manager",
+  salary: 21308,
+  email: "AKowalski@spr.com",
+  phone_number: "190-921-291",
+  pesel: "98721093802",
+  employment_date: new Date(2001, 11, 9),
 };
 
 export default class EmployeeEditView extends Vue {
@@ -249,10 +266,6 @@ export default class EmployeeEditView extends Vue {
     return {
       result: temp_emp,
     };
-  }
-  
-  dateToYYYYMMDD(d: { getTime: () => number; getTimezoneOffset: () => number; }) {
-    return d && new Date(d.getTime()-(d.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]
   }
 }
 </script>
