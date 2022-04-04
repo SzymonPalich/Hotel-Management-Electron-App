@@ -252,7 +252,7 @@ export default class EmployeeEditView extends Vue {
   }
   
   dateToYYYYMMDD(d: { getTime: () => number; getTimezoneOffset: () => number; }) {
-      return d && new Date(d.getTime()-(d.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]
-    }
+    return d && new Date(d.getTime()-(d.getTimezoneOffset()*60*1000)).toISOString().split('T')[0]
+  }
 }
 </script>
