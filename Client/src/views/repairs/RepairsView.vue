@@ -34,7 +34,11 @@
 
               <td class="text-left py-2 px-4">{{ repair.issue }}</td>
               <td class="text-center py-2 px-4">{{ repair.room_nr }}</td>
-              <td class="text-center py-2 px-4 w-36">
+              <td class="text-center py-2 px-4 w-44">
+                <router-link :to="{ name: 'repairs-finalization', params: { id: '1'} }">
+                  <i class="material-icons align-middle">build</i>
+                </router-link>
+
                 <router-link :to="{ name: 'repairs-fetch', params: { id: '1' } }">
                   <i class="material-icons align-middle">description</i>
                 </router-link>

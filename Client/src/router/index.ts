@@ -5,6 +5,7 @@ import RepairsView from '../views/repairs/RepairsView.vue'
 import RepairsFetchView from '../views/repairs/RepairsFetchView.vue'
 import RepairsCreateView from '../views/repairs/RepairsCreateView.vue'
 import RepairsEditView from '../views/repairs/RepairsEditView.vue'
+import RepairsFinalizationView from '../views/repairs/RepairsFinalizationView.vue'
 
 import CleaningView from '../views/cleaning/CleaningView.vue'
 import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
@@ -63,6 +64,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/repairs/:id/edit',
     name: 'repairs-edit',
     component: RepairsEditView
+  },
+  {
+    path: '/repairs/:id/finalization',
+    name: 'repairs-finalization',
+    component: RepairsFinalizationView
   },
   // Moduł pokoi
   {
