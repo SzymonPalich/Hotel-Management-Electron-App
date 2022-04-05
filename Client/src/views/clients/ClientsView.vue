@@ -17,7 +17,6 @@
             <tr>
               <th
                 class="
-                  w-1/5
                   text-left
                   py-3
                   px-4
@@ -30,7 +29,6 @@
               </th>
               <th
                 class="
-                  w-1/5
                   text-left
                   py-3
                   px-4
@@ -43,7 +41,6 @@
               </th>
               <th
                 class="
-                  w-1/5
                   text-left
                   py-3
                   px-4
@@ -56,7 +53,6 @@
               </th>
               <th
                 class="
-                  w-2/5
                   text-left
                   py-3
                   px-4
@@ -67,6 +63,9 @@
                 "
               >
                 NR Telefonu
+              </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Akcje
               </th>
             </tr>
           </thead>
@@ -79,6 +78,24 @@
               <td class="w-1/5 text-left py-2 px-4">{{ client.email }}</td>
               <td class="w-2/5 text-left py-2 px-4">
                 {{ client.phone_number }}
+              </td>
+              <td class="text-center py-2 px-4 w-36">
+                <router-link
+                  :to="{ name: 'clients-fetch', params: { id: client.id } }"
+                  ><i class="material-icons align-middle"
+                    >description</i
+                  ></router-link
+                >
+                <router-link
+                  :to="{ name: 'clients-edit', params: { id: client.id } }"
+                >
+                  <i class="material-icons align-middle">edit</i>
+                </router-link>
+                <i
+                  class="material-icons align-middle cursor-pointer"
+                  @click="alertDisplay()"
+                  >delete</i
+                >
               </td>
             </tr>
           </tbody>

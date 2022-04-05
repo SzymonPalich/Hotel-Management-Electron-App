@@ -11,6 +11,9 @@ import CleaningView from '../views/cleaning/CleaningView.vue'
 import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
 
 import ClientsView from '../views/clients/ClientsView.vue'
+import ClientsFetchView from '../views/clients/ClientsFetchView.vue'
+import ClientsCreateView from '../views/clients/ClientsCreateView.vue'
+import ClientsEditView from '../views/clients/ClientsEditView.vue'
 
 import RoomsView from '../views/rooms/RoomsView.vue'
 import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
@@ -96,6 +99,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/clients',
     name: 'clients',
     component: ClientsView
+  },
+  {
+    path: '/clients/:id',
+    name: 'clients-fetch',
+    component: ClientsFetchView
+  },
+  {
+    path: '/clients',
+    name: 'clients-create',
+    component: ClientsCreateView
+  },
+  {
+    path: '/clients/:id/edit',
+    name: 'clients-edit',
+    component: ClientsEditView
   },
   // Moduł pracownikow
   {
