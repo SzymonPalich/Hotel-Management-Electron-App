@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <div class="rounded-xl mx-48 mt-20">
+    <div class="rounded-xl mx-48 mt-auto mb-auto">
       <div
         class="
           bg-gray-800
@@ -26,7 +26,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Usterka</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ issue }}
+                {{ this.result.issue }}
               </dd>
             </div>
             <div
@@ -34,7 +34,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ room_nr }}
+                {{ this.result.room_nr }}
               </dd>
             </div>
             <div
@@ -47,7 +47,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ desc }}
+                {{ this.result.desc }}
               </dd>
             </div>
           </dl>
@@ -75,15 +75,19 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
+import RepairService, { IRepair } from "../../services/RepairService";
 
+let temp_repair: IRepair = {
+  id: 1,
+  issue: "Telewizor",
+  room_nr: 113,
+  desc: "Zniszczona matryca"
+};
 
 export default class RepairsFetchView extends Vue {
   data() {
     return {
-      id: this.$route.params.id,
-      issue: this.$route.params.issue,
-      room_nr: this.$route.params.room_nr,
-      desc: this.$route.params.desc
+      result: temp_repair,
     };
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <div class="rounded-xl mx-24 mt-20">
+    <div class="rounded-xl mx-48 mt-auto mb-auto">
       <div
         class="
           bg-gray-800
@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Dodaj naprawę
+            Edytuj #{{ this.result.id }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -36,13 +36,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-
                   type="text"
                   required
+                  v-model="this.result.issue"
                 />
               </dd>
             </div>
@@ -61,12 +59,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="number"
                   required
+                  v-model="this.result.room_nr"
                 />
               </dd>
             </div>
@@ -97,6 +94,7 @@
                     resize-none
                   "
                   required
+                  v-model="this.result.desc"
                 ></textarea>
               </dd>
             </div>
@@ -114,7 +112,7 @@
               "
               @click="$router.push({ name: 'repairs' })"
             >
-              Dodaj
+              Edytuj
             </button>
           </div>
         </div>
@@ -125,6 +123,20 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
+import RepairService, { IRepair } from "../../services/RepairService";
 
-export default class RepairsCreateView extends Vue {}
+let temp_repair: IRepair = {
+  id: 1,
+  issue: "Telewizor",
+  room_nr: 113,
+  desc: "Uszkodzona Matryca",
+};
+
+export default class RepairsEditView extends Vue {
+  data() {
+    return {
+      result: temp_repair,
+    };
+  }
+}
 </script>

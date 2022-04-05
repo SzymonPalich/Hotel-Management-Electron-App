@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
-    <div class="mt-6 flex mr-0 ml-auto">
+    <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
         <i
@@ -15,17 +15,7 @@
         <table id="cleaning_table" class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th
-                class="
-                  w-1/4
-                  text-left
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Numer Pokoju
               </th>
               <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
@@ -34,7 +24,9 @@
               <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Status
               </th>
-              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+              <th
+                class="text-center py-3 px-4 uppercase font-semibold text-sm w-36"
+              >
                 Akcje
               </th>
             </tr>
@@ -50,7 +42,7 @@
               <td class="text-left py-2 px-4">
                 {{ this.setStatus(room.room_status) }}
               </td>
-              <td class="text-center py-2 px-4">
+              <td class="text-center py-2 px-4 w-36">
                 <router-link :to="{ name: 'rooms-fetch', params: { id: '1' } }"
                   ><i class="material-icons align-middle"
                     >description</i

@@ -7,4 +7,7 @@ export interface IRepair {
     issue: string;
     room_nr: number;
     desc: string;
+    report?: string;
+    parts_price?: number;
+    finalization_date?: Date;
 }

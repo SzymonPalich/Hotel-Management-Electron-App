@@ -4,6 +4,8 @@ import LoginView from '../views/LoginView.vue'
 import RepairsView from '../views/repairs/RepairsView.vue'
 import RepairsFetchView from '../views/repairs/RepairsFetchView.vue'
 import RepairsCreateView from '../views/repairs/RepairsCreateView.vue'
+import RepairsEditView from '../views/repairs/RepairsEditView.vue'
+import RepairsFinalizationView from '../views/repairs/RepairsFinalizationView.vue'
 
 import CleaningView from '../views/cleaning/CleaningView.vue'
 import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
@@ -18,6 +20,7 @@ import RoomsEditView from '../views/rooms/RoomsEditView.vue'
 import EmployeeView from '../views/employees/EmployeeView.vue'
 import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
+import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -56,6 +59,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/repairs/create',
     name: 'repairs-create',
     component: RepairsCreateView
+  },
+  {
+    path: '/repairs/:id/edit',
+    name: 'repairs-edit',
+    component: RepairsEditView
+  },
+  {
+    path: '/repairs/:id/finalization',
+    name: 'repairs-finalization',
+    component: RepairsFinalizationView
   },
   // Moduł pokoi
   {
@@ -99,6 +112,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees/create',
     name: 'employees-create',
     component: EmployeeCreateView
+  },
+  {
+    path: '/employees/:id/edit',
+    name: 'employees-edit',
+    component: EmployeeEditView
   }
 ]
 
