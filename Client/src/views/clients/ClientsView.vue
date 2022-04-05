@@ -71,12 +71,16 @@
           </thead>
           <tbody class="text-gray-700">
             <tr v-for="client in results" :key="client" class="bg-white">
-              <td class="w-1/5 text-left py-2 px-4">{{ client.first_name }}</td>
-              <td class="w-1/5 text-left py-2 px-4">
+              <td class="text-left py-2 px-4">
+                {{ client.first_name }}
+                </td>
+              <td class="text-left py-2 px-4">
                 {{ client.last_name }}
               </td>
-              <td class="w-1/5 text-left py-2 px-4">{{ client.email }}</td>
-              <td class="w-2/5 text-left py-2 px-4">
+              <td class="text-left py-2 px-4">
+                {{ client.email }}
+                </td>
+              <td class="text-left py-2 px-4">
                 {{ client.phone_number }}
               </td>
               <td class="text-center py-2 px-4 w-36">
