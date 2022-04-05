@@ -5,7 +5,7 @@
       <div class="pr-6 flex items-center">
         <i
           class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
-          @click="$router.push({ name: 'rooms-create' })"
+          @click="$router.push({ name: 'clients-create' })"
           >add</i
         >
       </div>
@@ -49,7 +49,7 @@
                   text-sm
                 "
               >
-                Dane kontaktowe
+                E-mail
               </th>
               <th
                 class="
@@ -117,6 +117,7 @@ import { Options, Vue } from "vue-class-component";
 import { IClients } from "../../services/ClientsServices";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import Utils from "../../Utils";
 let temp_clients_results: Array<IClients> = [
   {
     id: 1,
@@ -201,6 +202,10 @@ export default class RoomsView extends Vue {
     return {
       results: temp_clients_results,
     };
+  }
+
+  private alertDisplay(): void {
+    Utils.alertDisplay();
   }
 }
 </script>
