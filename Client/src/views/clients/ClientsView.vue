@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
-    <div class="mt-6 flex mr-0 ml-auto">
+    <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
         <i
