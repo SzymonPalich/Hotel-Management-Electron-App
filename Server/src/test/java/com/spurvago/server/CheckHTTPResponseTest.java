@@ -19,7 +19,7 @@ public class CheckHTTPResponseTest {
 
     @Test
     public void shouldPassIfStringMatches() {
-        assertEquals("Hello World from Spring Boot",
+        assertEquals("GitGud",
                 testRestTemplate.getForObject("http://localhost:" + port + "/", String.class));
     }
 
