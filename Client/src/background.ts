@@ -1,6 +1,13 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
+import windowSizes from '../windowconfig.json';
+
+// Window size
+// small - 1350x700
+// large - 1800x1000
+const winSize = windowSizes.large;
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
@@ -12,8 +19,8 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1350,
-    height: 700,
+    width: winSize.width,
+    height: winSize.height,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info

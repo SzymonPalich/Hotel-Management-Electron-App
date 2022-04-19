@@ -9,3 +9,7 @@ declare module 'vue/types/vue' {
     $router: VueRouter
   }
 }
+declare module "*.json" {
+  const value: any;
+  export default value;
+}
