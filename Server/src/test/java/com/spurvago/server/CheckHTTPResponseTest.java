@@ -18,9 +18,9 @@ public class CheckHTTPResponseTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    public void shouldPassIfStringMatches() {
-        assertEquals("GitGud",
-                testRestTemplate.getForObject("http://localhost:" + port + "/", String.class));
+    public void checkServerStatus() {
+        assertEquals("Ok",
+                testRestTemplate.getForObject("http://localhost:" + port + "/api", String.class));
     }
 
 }

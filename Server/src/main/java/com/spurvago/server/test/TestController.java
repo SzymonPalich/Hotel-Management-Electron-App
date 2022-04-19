@@ -2,10 +2,7 @@ package com.spurvago.server.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -22,7 +19,11 @@ public class TestController {
 
     @GetMapping(path = "/{id}")
     TestEntity find(@PathVariable Long id) {
+
         TestEntity test = testService.find(id);
+        if (test == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
 
         return test;
     }
@@ -56,6 +57,7 @@ public class TestController {
 
     @DeleteMapping(path = "/{id}")
     void delete(@PathVariable Long id) {
+
         TestEntity test = testService.find(id);
         if (test == null) {
             throw new ResponseStatusException(NOT_FOUND);

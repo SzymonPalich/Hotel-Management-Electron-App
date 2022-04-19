@@ -1,19 +1,10 @@
 package com.spurvago.server.test;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class TestService {
-    private final TestRepository testRepository;
-
-    @Autowired
-    public TestService(TestRepository testRepository) {
-        this.testRepository = testRepository;
-    }
+public record TestService(TestRepository testRepository) {
 
     public TestEntity find(long id) {
         return testRepository.findById(id);
