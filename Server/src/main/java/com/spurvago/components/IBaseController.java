@@ -1,16 +1,14 @@
 package com.spurvago.components;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 public interface IBaseController<T> {
     @GetMapping(path = "/{id}")
     T find(@PathVariable Long id);
 
-    @GetMapping()
-    List<T> getList();
+    @GetMapping(params = {"index", "size", "sort"})
+    Page<T> getList(@RequestParam("index") int index, @RequestParam("size") int size, @RequestParam("sort") String sort);
 
     @PostMapping()
     T create(@RequestBody T newTestEntity);

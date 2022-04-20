@@ -1,14 +1,14 @@
 package com.spurvago.server.client;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
-public interface ClientRepository extends CrudRepository<Client, Long> {
+public interface ClientRepository extends PagingAndSortingRepository<Client, Long> {
 
     Client findById(long id);
-
-    List<Client> findAll();
+    Page<Client> findAll(Pageable pageable);
 }

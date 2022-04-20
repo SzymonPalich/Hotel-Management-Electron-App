@@ -1,7 +1,9 @@
 package com.spurvago.server.client;
 
 import com.spurvago.components.IBaseController;
+import com.spurvago.components.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,8 +33,9 @@ public class ClientController implements IBaseController<Client> {
     }
 
     @Override
-    public List<Client> getList() {
-        List<Client> entities = clientService.getList();
+    public Page<Client> getList(int index, int size, String sort) {
+        Pager pager = new Pager(index, size, sort);
+        Page<Client> entities = clientService.getList(pager);
 
         return entities;
     }

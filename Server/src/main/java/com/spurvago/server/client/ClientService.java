@@ -1,6 +1,9 @@
 package com.spurvago.server.client;
 
 import com.spurvago.components.IBaseService;
+import com.spurvago.components.Pager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +17,11 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
     }
 
     @Override
-    public List<Client> getList() {
-        return clientRepository.findAll();
+    public Page<Client> getList(Pager pager) {
+        Pageable pageable = pager.getPageable();
+        return clientRepository.findAll(pageable);
     }
+
 
     @Override
     public Client create(Client newTestEntity) {
