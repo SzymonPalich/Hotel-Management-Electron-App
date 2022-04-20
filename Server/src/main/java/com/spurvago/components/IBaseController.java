@@ -1,0 +1,23 @@
+package com.spurvago.components;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+public interface IBaseController<T> {
+    @GetMapping(path = "/{id}")
+    T find(@PathVariable Long id);
+
+    @GetMapping()
+    List<T> getList();
+
+    @PostMapping()
+    T create(@RequestBody T newTestEntity);
+
+    @PutMapping(path = "/{id}")
+    T update(@PathVariable Long id, @RequestBody T newTestEntity);
+
+    @DeleteMapping(path = "/{id}")
+    void delete(@PathVariable Long id);
+}

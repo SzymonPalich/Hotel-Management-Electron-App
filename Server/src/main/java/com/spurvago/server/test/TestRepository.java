@@ -10,8 +10,8 @@ public interface TestRepository
         extends CrudRepository<TestEntity, Long> {
 
     TestEntity findById(long id);
-    List<TestEntity> findAll();
 
+    List<TestEntity> findAll();
 
 
 }

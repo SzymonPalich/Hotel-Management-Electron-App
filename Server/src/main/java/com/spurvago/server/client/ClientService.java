@@ -15,7 +15,8 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
     @Override
     public List<Client> getList() {
-        return clientRepository.findAll();    }
+        return clientRepository.findAll();
+    }
 
     @Override
     public Client create(Client newTestEntity) {

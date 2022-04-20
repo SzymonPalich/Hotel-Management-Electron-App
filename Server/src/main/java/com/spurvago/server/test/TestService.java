@@ -1,6 +1,7 @@
 package com.spurvago.server.test;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

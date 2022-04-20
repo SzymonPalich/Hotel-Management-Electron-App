@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table
 public class TestEntity {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
 
@@ -21,7 +21,8 @@ public class TestEntity {
     @Setter
     private int intField;
 
-    protected TestEntity() { }
+    protected TestEntity() {
+    }
 
     public TestEntity(String stringField, int intField) {
         this.stringField = stringField;
