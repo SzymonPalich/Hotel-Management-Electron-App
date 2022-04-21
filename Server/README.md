@@ -22,4 +22,4 @@ Przykładowy test [testujący połączenie z serwerem](src/test/java/com/spurvag
 http://localhost:8081/swagger-ui/
 
 ## Struktura projektu
-Wzorować się na razie na [tym](src/main/java/com/spurvago/server/test).
+Wzorować się na razie na [tym](src/main/java/com/spurvago/server/client).
