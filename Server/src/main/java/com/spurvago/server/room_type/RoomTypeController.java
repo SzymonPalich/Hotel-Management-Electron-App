@@ -32,6 +32,5 @@ public class RoomTypeController implements IBaseController<RoomType> {
 
     @Override
     public void delete(Long id) {
-    return null;
     }
 }
