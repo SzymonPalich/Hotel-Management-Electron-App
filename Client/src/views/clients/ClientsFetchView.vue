@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Klient: {{ this.result.first_name }} {{this.result.last_name}}
+            Klient: {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -34,7 +34,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer telefonu</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.phone_number }}
+                {{ this.result.phoneNumber }}
               </dd>
             </div>
           </dl>
@@ -61,21 +61,28 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import ClientsServices, { IClients } from "../../services/ClientsServices";
+import ClientsServices, { IClient } from "../../services/ClientsService";
+import { defineComponent } from "vue";
 
-let temp_client: IClients = {
-    id: 1,
-    first_name: "Jan",
-    last_name: "Nowak",
-    email: "jkowalski2137@gmail.com",
-    phone_number: "+48 667 444 321",
-  };
-export default class ClientsFetchView extends Vue {
+export default defineComponent({
   data() {
     return {
-      result: temp_client,
+      result: ClientsServices.getTempClient(),
     };
-  }
-}
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
+    },
+
+    async getData(): Promise<IClient> {
+      return await ClientsServices.fetch(this.getId());
+    },
+  },
+});
 </script>
