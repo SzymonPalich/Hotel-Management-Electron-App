@@ -24,19 +24,19 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
     }
 
     @Override
-    public Client create(Client newTestEntity) {
-        return clientRepository.save(newTestEntity);
+    public Client create(Client newEntity) {
+        return clientRepository.save(newEntity);
     }
 
     @Override
-    public Client update(Client oldTestEntity, Client newTestEntity) {
-        oldTestEntity.map(newTestEntity);
+    public Client update(Client oldEntity, Client newEntity) {
+        oldEntity.map(newEntity);
 
-        return clientRepository.save(oldTestEntity);
+        return clientRepository.save(oldEntity);
     }
 
     @Override
-    public void delete(Client testEntity) {
-        clientRepository.delete(testEntity);
+    public void delete(Client Entity) {
+        clientRepository.delete(Entity);
     }
 }

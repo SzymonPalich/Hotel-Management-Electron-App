@@ -2,6 +2,7 @@ package com.spurvago.server.client;
 
 import com.spurvago.components.IMappableEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -29,9 +30,6 @@ public class Client implements IMappableEntity<Client> {
     @Getter
     @Setter
     private String phoneNumber;
-
-    public Client() {
-    }
 
     @Override
     public void map(Client source) {
