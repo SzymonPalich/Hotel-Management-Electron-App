@@ -55,14 +55,14 @@ public class Employee implements IMappableEntity<Employee> {
 
     @Override
     public void map(Employee source) {
-        this.setName(source.name);
-        this.setSurname(source.surname);
-        this.setEmail(source.email);
-        this.setPhoneNumber(source.phoneNumber);
-        this.setPosition(source.position);
-        this.setPesel(source.pesel);
-        this.setEmploymentDate(source.employmentDate);
-        this.setDismissalDate(source.dismissalDate);
-        this.setSalary(source.salary);
+        this.setName(source.getName());
+        this.setSurname(source.getSurname());
+        this.setEmail(source.getEmail());
+        this.setPhoneNumber(source.getPhoneNumber());
+        this.setPosition(source.getPosition());
+        this.setPesel(source.getPesel());
+        this.setEmploymentDate(source.getEmploymentDate());
+        this.setDismissalDate(source.getDismissalDate());
+        this.setSalary(source.getSalary());
     }
 }
