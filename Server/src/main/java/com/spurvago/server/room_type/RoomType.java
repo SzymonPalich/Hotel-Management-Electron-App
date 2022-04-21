@@ -27,6 +27,6 @@ public class RoomType implements IMappableEntity<RoomType> {
     @Override
     public void map(RoomType source) {
         this.setPrice(source.getPrice());
-        this.setPrice(source.getPrice());
+        this.setType(source.getType());
     }
 }
