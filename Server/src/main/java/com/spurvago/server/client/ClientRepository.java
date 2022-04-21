@@ -10,5 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ClientRepository extends PagingAndSortingRepository<Client, Long> {
 
     Client findById(long id);
+
     Page<Client> findAll(Pageable pageable);
 }

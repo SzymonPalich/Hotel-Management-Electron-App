@@ -1,12 +1,11 @@
 package com.spurvago.server.client;
 
 import com.spurvago.components.IBaseService;
+import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public record ClientService(ClientRepository clientRepository) implements IBaseService<Client> {
@@ -17,11 +16,12 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
     }
 
     @Override
-    public Page<Client> getList(Pager pager) {
-        Pageable pageable = pager.getPageable();
-        return clientRepository.findAll(pageable);
+    public ListPaginated<Client> getList(Pager pager) {
+        Pageable pageable = pager.makePageable();
+        Page<Client> entities = clientRepository.findAll(pageable);
+        ListPaginated<Client> listPaginated = new ListPaginated<>(entities, pager);
+        return listPaginated;
     }
-
 
     @Override
     public Client create(Client newTestEntity) {
