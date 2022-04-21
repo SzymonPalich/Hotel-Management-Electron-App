@@ -1,4 +1,4 @@
-CREATE TABLE employee
+CREATE OR REPLACE TABLE employee
 (
     id              bigint(20)    not null AUTO_INCREMENT,
     name            varchar(50)   not null,
