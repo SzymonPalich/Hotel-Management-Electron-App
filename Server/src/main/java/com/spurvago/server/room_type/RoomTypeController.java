@@ -55,7 +55,7 @@ public class RoomTypeController implements IBaseController<RoomType> {
     }
 
     @Override
-    public void delete(Long id){
+    public void delete(Long id) {
         RoomType entity = roomTypeService.find(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
