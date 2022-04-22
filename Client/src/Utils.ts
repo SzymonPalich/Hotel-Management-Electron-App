@@ -31,4 +31,42 @@ export default class Utils {
             text: 'Something went wrong!',
           })
     }
+
+    public static getDefaultPager(): IPager {
+        return {
+            index: 0,
+            size: 10,
+            sort: "id"
+        };
+    }
+    public static getDefaultPagerWithSort(sort: string): IPager {
+        return {
+            index: 0,
+            size: 10,
+            sort: sort
+        };
+    }
+
+    public static getBlankListTemplate<T>(): IList<T> {
+        return {
+            content: [],
+            pager: this.getDefaultPager(),
+            totalElements: 0,
+            totalPages: 0
+        }
+
+    }
+}
+
+export interface IPager {
+    index: number,
+    size: number,
+    sort: string
+}
+
+export interface IList<T> {
+    content: Array<T>,
+    pager: IPager,
+    totalElements: number,
+    totalPages: number
 }

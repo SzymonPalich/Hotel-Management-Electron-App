@@ -1,3 +1,4 @@
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
 
 export default class ClientsServices {
@@ -8,7 +9,7 @@ export default class ClientsServices {
             lastName: "",
             email: "",
             phoneNumber: "",
-          };
+        };
         return tempClient;
     }
 
@@ -19,6 +20,10 @@ export default class ClientsServices {
     public static async update(id: string, client: IClient): Promise<IClient> {
         return (await axios.put<IClient>(`http://localhost:8081/api/client/${id}`, client)).data;
     }
+
+    public static async getList(pager: IPager): Promise<IList<IClient>> {
+        return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager })).data;
+    }
 }
 
 export interface IClient {
@@ -26,5 +31,5 @@ export interface IClient {
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber: string; 
+    phoneNumber: string;
 }
