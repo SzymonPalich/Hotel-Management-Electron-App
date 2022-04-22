@@ -24,6 +24,32 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
+              <dt class="text-sm font-medium text-gray-500">Imię</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.firstName }}
+              </dd>
+            </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Nazwisko</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.lastName }}
+              </dd>
+            </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
               <dt class="text-sm font-medium text-gray-500">E-mail</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {{ this.result.email }}
@@ -67,7 +93,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   data() {
     return {
-      result: ClientsServices.getTempClient(),
+      result: ClientsServices.getBlankClientTemplate(),
     };
   },
   mounted() {

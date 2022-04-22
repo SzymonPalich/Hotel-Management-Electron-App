@@ -12,4 +12,23 @@ export default class Utils {
             showLoaderOnConfirm: true,
         });
     }
+
+    public static acceptedAlert(): void {
+        Swal.fire({
+            icon: 'success',
+            title: "Pomyślnie zapisano rekord!",
+            showConfirmButton: true,
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#3f5137",
+            timer: 1500
+        });
+    }
+
+    public static errorAlert(): void {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+    }
 }
