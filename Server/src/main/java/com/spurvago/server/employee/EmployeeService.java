@@ -3,13 +3,19 @@ package com.spurvago.server.employee;
 import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.components.Utils;
 import com.spurvago.server.client.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
 public record EmployeeService(EmployeeRepository employeeRepository) implements IBaseService<Employee> {
+
 
     @Override
     public Employee find(long id) { return employeeRepository.findById(id); }
@@ -23,7 +29,12 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
     }
 
     @Override
-    public Employee create(Employee newEntity) { return employeeRepository.save(newEntity); }
+    public Employee create(Employee newEntity) {
+        if(!Utils.emailValidation(newEntity.getEmail())) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+        return employeeRepository.save(newEntity);
+    }
 
     @Override
     public Employee update(Employee oldEntity, Employee newEntity) {

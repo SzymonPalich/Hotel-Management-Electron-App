@@ -17,11 +17,11 @@ public class Client implements IMappableEntity<Client> {
 
     @Getter
     @Setter
-    private String name;
+    private String firstName;
 
     @Getter
     @Setter
-    private String surname;
+    private String lastName;
 
     @Getter
     @Setter
@@ -33,8 +33,8 @@ public class Client implements IMappableEntity<Client> {
 
     @Override
     public void map(Client source) {
-        this.setName(source.getName());
-        this.setSurname(source.getSurname());
+        this.setFirstName(source.getFirstName());
+        this.setLastName(source.getLastName());
         this.setEmail(source.getEmail());
         this.setPhoneNumber(source.getPhoneNumber());
     }

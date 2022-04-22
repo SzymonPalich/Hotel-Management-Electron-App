@@ -12,7 +12,7 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository) implements 
 
     @Override
     public RoomType find(long id) {
-        return null;
+        return roomTypeRepository.findById(id);
     }
 
     @Override
@@ -31,10 +31,12 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository) implements 
     @Override
     public RoomType update(RoomType oldEntity, RoomType newEntity) {
         oldEntity.map(newEntity);
+
         return roomTypeRepository.save(oldEntity);
     }
+
     @Override
-    public void delete(RoomType Entity) {
-    return;
+    public void delete(RoomType Entity)  {
+        roomTypeRepository.delete(Entity);
     }
 }
