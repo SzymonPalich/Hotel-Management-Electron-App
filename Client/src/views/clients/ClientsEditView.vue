@@ -185,6 +185,7 @@ export default defineComponent({
     async save(): Promise<void> {
       await ClientsServices.update(this.getId(), this.result);
       Utils.acceptedAlert();
+      this.$router.push({ name: 'clients' });
     }
   },
 });
