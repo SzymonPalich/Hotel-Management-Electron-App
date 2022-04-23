@@ -17,7 +17,7 @@ public interface ClientRepository extends PagingAndSortingRepository<Client, Lon
 
     Page<Client> findAll(Pageable pageable);
 
-    default Specification<Client> search(String searchWord) {
+    static Specification<Client> search(String searchWord) {
         return (root, query, builder) -> {
             Expression<String> surnameLower = builder.lower(root.get("lastName"));
             return builder.like(surnameLower, "%" + searchWord.toLowerCase() + "%");

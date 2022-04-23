@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -56,15 +57,16 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
         clientRepository.delete(Entity);
     }
 
-    public List<Client> getSurname(List<String> words) {
+    public ListPaginated<Client> getFiltered(List<String> words, Pager pager) {
+        Pageable pageable = pager.makePageable();
         if(words.isEmpty())
         {
-            return Collections.emptyList();
+            return null;
         }
 
         Specification<Client> specification = null;
         for(String word : words) {
-            Specification<Client> wordSpecification = clientRepository.search(word);
+            Specification<Client> wordSpecification = ClientRepository.search(word);
             if(specification == null) {
                 specification = wordSpecification;
             }
@@ -72,6 +74,7 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
                 specification = specification.or(wordSpecification);
             }
         }
-        return clientRepository.findAll(specification);
+        Page<Client> entities = clientRepository.findAll(specification, pageable);
+        return new ListPaginated<>(entities, pager);
     }
 }

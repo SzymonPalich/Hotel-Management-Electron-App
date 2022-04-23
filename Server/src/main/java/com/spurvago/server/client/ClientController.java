@@ -5,12 +5,13 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.criteria.Expression;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -69,5 +70,10 @@ public class ClientController implements IBaseController<Client> {
         }
 
         clientService.delete(entity);
+    }
+
+    @GetMapping(path = "/name")
+    public ListPaginated<Client> getFiltered(@RequestParam List<String> words, Pager pager) {
+        return clientService.getFiltered(words, pager);
     }
 }
