@@ -73,7 +73,7 @@ public class ClientController implements IBaseController<Client> {
     }
 
     @GetMapping(path = "/name")
-    public ListPaginated<Client> getFiltered(@RequestParam List<String> words, Pager pager) {
-        return clientService.getFiltered(words, pager);
+    public ListPaginated<Client> getFiltered(@RequestParam String input, Pager pager) {
+        return clientService.getFiltered(input, pager);
     }
 }

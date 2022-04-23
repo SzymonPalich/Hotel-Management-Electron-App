@@ -57,23 +57,14 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
         clientRepository.delete(Entity);
     }
 
-    public ListPaginated<Client> getFiltered(List<String> words, Pager pager) {
+    public ListPaginated<Client> getFiltered(String input, Pager pager) {
         Pageable pageable = pager.makePageable();
-        if(words.isEmpty())
+        if(input.isEmpty())
         {
             return null;
         }
-
-        Specification<Client> specification = null;
-        for(String word : words) {
-            Specification<Client> wordSpecification = ClientRepository.search(word);
-            if(specification == null) {
-                specification = wordSpecification;
-            }
-            else {
-                specification = specification.or(wordSpecification);
-            }
-        }
+        List<String> words = List.of(input.split("\\s"));
+        Specification<Client> specification = ClientRepository.search(words);
         Page<Client> entities = clientRepository.findAll(specification, pageable);
         return new ListPaginated<>(entities, pager);
     }
