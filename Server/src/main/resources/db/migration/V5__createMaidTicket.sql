@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE maid_ticket
+CREATE TABLE IF NOT EXISTS maid_ticket
 (
     id                   bigint(20) not null AUTO_INCREMENT,
     room_id              bigint(20) not null,
