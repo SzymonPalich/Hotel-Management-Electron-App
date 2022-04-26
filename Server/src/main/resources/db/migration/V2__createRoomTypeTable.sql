@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE room_type
+CREATE TABLE IF NOT EXISTS room_type
 (
     id    bigint(20)    not null AUTO_INCREMENT,
     type  varchar(50)   not null,

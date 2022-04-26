@@ -113,6 +113,10 @@ export default defineComponent({
     async getData(): Promise<IList<IClient>> {
       return await ClientsServices.getList(this.pager);
     },
+    
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
   },
 });
 </script>

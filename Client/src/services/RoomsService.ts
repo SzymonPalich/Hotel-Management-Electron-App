@@ -1,3 +1,6 @@
+import Utils, {IList, IPager} from "@/Utils";
+import axios from "axios";
+
 export default class RoomsService {
     public static setStatus(room_status: number): string {
         switch (room_status) {
@@ -23,6 +26,16 @@ export default class RoomsService {
                 return "Błąd";
             }
         }
+    }
+
+    public static getBlankRoomTemplate(): IRoom {
+        const tempRoom: IRoom = {
+            id: 0,
+            room_number: 0,
+            room_type: "",
+            room_status: 0,
+        };
+        return tempRoom;
     }
 }
 
