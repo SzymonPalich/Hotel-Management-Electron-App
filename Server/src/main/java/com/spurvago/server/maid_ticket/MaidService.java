@@ -5,6 +5,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +40,14 @@ public record MaidService(MaidRepository maidRepository) implements IBaseService
     @Override
     public void delete(MaidTicket entity) {
         maidRepository.delete(entity);
+    }
+
+    public ListPaginated<MaidTicket> getFiltered(String input, Pager pager) {
+        Pageable pageable = pager.makePageable();
+        if(input.isEmpty()) return null;
+        List<String> words = List.of(input.split("\\s"));
+        Specification<MaidTicket> specification = MaidRepository.search(words);
+        Page<MaidTicket> entities = maidRepository.findAll(specification, pageable);
+        return new ListPaginated<>(entities, pager);
     }
 }

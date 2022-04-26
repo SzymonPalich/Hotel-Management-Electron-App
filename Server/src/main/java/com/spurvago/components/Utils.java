@@ -16,6 +16,7 @@ public class Utils {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
 
+
         return matcher.matches();
     }
 
@@ -49,6 +50,7 @@ public class Utils {
                                 b.like(phoneNumberLower, "%" + searchWords.get(0).toLowerCase() + "%")
                         ),
                         b.or(
+                                b.like(firstNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
                                 b.like(lastNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
                                 b.like(emailLower, "%" + searchWords.get(1).toLowerCase() + "%"),
                                 b.like(phoneNumberLower, "%" + searchWords.get(1).toLowerCase() + "%")

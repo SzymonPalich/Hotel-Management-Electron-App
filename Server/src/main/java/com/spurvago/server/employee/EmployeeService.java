@@ -4,15 +4,15 @@ import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
-import com.spurvago.server.client.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
+
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
@@ -47,4 +47,13 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
 
     @Override
     public void delete(Employee Entity) { employeeRepository.delete(Entity); }
+
+    public ListPaginated<Employee> getFiltered(String input, Pager pager) {
+        Pageable pageable = pager.makePageable();
+        if(input.isEmpty()) return null;
+        List<String> words = List.of(input.split("\\s"));
+        Specification<Employee> specification = EmployeeRepository.search(words);
+        Page<Employee> entities = employeeRepository.findAll(specification, pageable);
+        return new ListPaginated<>(entities, pager);
+    }
 }
