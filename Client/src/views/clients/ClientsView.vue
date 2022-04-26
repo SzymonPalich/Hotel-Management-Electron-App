@@ -72,16 +72,16 @@
           <tbody class="text-gray-700">
             <tr v-for="client in results" :key="client" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ client.first_name }}
+                {{ client.firstName }}
                 </td>
               <td class="text-left py-2 px-4">
-                {{ client.last_name }}
+                {{ client.lastName }}
               </td>
               <td class="text-left py-2 px-4">
                 {{ client.email }}
                 </td>
               <td class="text-left py-2 px-4">
-                {{ client.phone_number }}
+                {{ client.phoneNumber }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link
@@ -114,80 +114,80 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IClients } from "../../services/ClientsServices";
+import { IClient } from "../../services/ClientsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils from "../../Utils";
-let temp_clients_results: Array<IClients> = [
+let temp_clients_results: Array<IClient> = [
   {
     id: 1,
-    first_name: "Jan",
-    last_name: "Nowak",
+    firstName: "Jan",
+    lastName: "Nowak",
     email: "jkowalski2137@gmail.com",
-    phone_number: "+48 667 444 321",
+    phoneNumber: "+48 667 444 321",
   },
   {
     id: 2,
-    first_name: "Dariusz",
-    last_name: "Kowalski",
+    firstName: "Dariusz",
+    lastName: "Kowalski",
     email: "dkowalski3@gmail.com",
-    phone_number: "+48 550 684 531",
+    phoneNumber: "+48 550 684 531",
   },
   {
     id: 3,
-    first_name: "Heronim",
-    last_name: "Wróblewski",
+    firstName: "Heronim",
+    lastName: "Wróblewski",
     email: "hwroblewski52@gmail.com",
-    phone_number: "+48 663 548 522",
+    phoneNumber: "+48 663 548 522",
   },
   {
     id: 4,
-    first_name: "Cyprian",
-    last_name: "Kołodziej",
+    firstName: "Cyprian",
+    lastName: "Kołodziej",
     email: "ckolodziej8@gmail.com",
-    phone_number: "+48 611 333 156",
+    phoneNumber: "+48 611 333 156",
   },
   {
     id: 5,
-    first_name: "Dominik",
-    last_name: "Wójcik",
+    firstName: "Dominik",
+    lastName: "Wójcik",
     email: "dwojzik999@gmail.com",
-    phone_number: "+48 574 433 111",
+    phoneNumber: "+48 574 433 111",
   },
   {
     id: 6,
-    first_name: "Oskar",
-    last_name: "Mazurek",
+    firstName: "Oskar",
+    lastName: "Mazurek",
     email: "omazurek601@gmail.com",
-    phone_number: "+48 401 215 116",
+    phoneNumber: "+48 401 215 116",
   },
   {
     id: 7,
-    first_name: "Ksawery",
-    last_name: "Kwiatkowski",
+    firstName: "Ksawery",
+    lastName: "Kwiatkowski",
     email: "kkwiatkowski4@gmail.com",
-    phone_number: "+48 607 277 888",
+    phoneNumber: "+48 607 277 888",
   },
   {
     id: 8,
-    first_name: "Fryderyk",
-    last_name: "Ostrowski",
+    firstName: "Fryderyk",
+    lastName: "Ostrowski",
     email: "fostrowski111@gmail.com",
-    phone_number: "+48 648 156 113",
+    phoneNumber: "+48 648 156 113",
   },
   {
     id: 9,
-    first_name: "Kacper",
-    last_name: "Jakubowski",
+    firstName: "Kacper",
+    lastName: "Jakubowski",
     email: "kjakubowski13gmail.com",
-    phone_number: "+48 652 425 635",
+    phoneNumber: "+48 652 425 635",
   },
   {
     id: 10,
-    first_name: "Kacper",
-    last_name: "Jakubowski",
+    firstName: "Kacper",
+    lastName: "Jakubowski",
     email: "kjakubowski13gmail.com",
-    phone_number: "+48 652 425 635",
+    phoneNumber: "+48 652 425 635",
   },
 ];
 
@@ -197,7 +197,7 @@ let temp_clients_results: Array<IClients> = [
     SearchBar,
   },
 })
-export default class RoomsView extends Vue {
+export default class ClientsView extends Vue {
   data() {
     return {
       results: temp_clients_results,

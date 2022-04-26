@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @RequestMapping(path="/api/employee")
@@ -36,6 +40,9 @@ public class EmployeeController implements IBaseController<Employee> {
 
     @Override
     public Employee create(Employee newEntity) {
+        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
         Employee entity = employeeService.create(newEntity);
 
         return entity;
@@ -43,10 +50,12 @@ public class EmployeeController implements IBaseController<Employee> {
 
     @Override
     public Employee update(Long id, Employee newEntity) {
+        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
         Employee entity = employeeService.find(id);
-        if (entity == null) {
+        if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
-        }
 
         entity = employeeService.update(entity, newEntity);
 

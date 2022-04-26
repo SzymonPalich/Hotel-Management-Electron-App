@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS client
 (
     id           bigint(20)  not null AUTO_INCREMENT,
-    name         varchar(50) not null,
-    surname      varchar(50) not null,
+    first_name         varchar(50) not null,
+    last_name      varchar(50) not null,
     email        varchar(50) null,
     phone_number varchar(9)  null,
 
     primary key (id)
 );
 
-INSERT INTO `client` (`id`, `name`, `surname`, `email`, `phone_number`)
+INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `phone_number`)
 VALUES (NULL, 'Jan', 'Dzban', 'jan@spurvago.com', '881223295'),
        (NULL, 'Aureliusz', 'Zalewski', 'aur123@spurvago.com', '905984460'),
        (NULL, 'Marcin', 'Sikora', 'czxz21412@spurvago.com', '905984460'),
