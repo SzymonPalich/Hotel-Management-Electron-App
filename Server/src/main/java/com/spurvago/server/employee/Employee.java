@@ -1,6 +1,6 @@
 package com.spurvago.server.employee;
 
-import com.spurvago.components.IMappableEntity;
+import com.spurvago.components.IBaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class Employee implements IMappableEntity<Employee> {
+public class Employee implements IBaseEntity<Employee> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -64,6 +64,11 @@ public class Employee implements IMappableEntity<Employee> {
         this.setEmploymentDate(source.getEmploymentDate());
         this.setDismissalDate(source.getDismissalDate());
         this.setSalary(source.getSalary());
+    }
+
+    @Override
+    public boolean validate() {
+        return true;
     }
 
     public static final class Position {

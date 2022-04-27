@@ -1,6 +1,6 @@
 package com.spurvago.server.client;
 
-import com.spurvago.components.IMappableEntity;
+import com.spurvago.components.IBaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class Client implements IMappableEntity<Client> {
+public class Client implements IBaseEntity<Client> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -47,6 +47,11 @@ public class Client implements IMappableEntity<Client> {
         this.setLastName(source.getLastName());
         this.setEmail(source.getEmail());
         this.setPhoneNumber(source.getPhoneNumber());
+    }
+
+    @Override
+    public boolean validate() {
+        return true;
     }
 
     @Override
