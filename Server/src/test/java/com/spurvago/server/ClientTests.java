@@ -34,6 +34,7 @@ public class ClientTests {
         clientRepository.deleteAll(testClientList);
     }
 
+    // Testy Fetch
     @Test
     void makeValidGetRequest_thenReturns200() throws Exception {
         Client testClient = initClient(
@@ -51,6 +52,7 @@ public class ClientTests {
                 .andExpect(status().isNotFound());
     }
 
+    // Testy Post
     @Test
     void makeValidPostRequest_thenReturns201() throws Exception {
         Client testClient = initClient(
