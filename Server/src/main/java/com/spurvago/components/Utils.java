@@ -1,5 +1,7 @@
 package com.spurvago.components;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,5 +14,13 @@ public class Utils {
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

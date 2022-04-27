@@ -2,10 +2,10 @@ package com.spurvago.server.client;
 
 import com.spurvago.components.IMappableEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table
@@ -31,11 +31,32 @@ public class Client implements IMappableEntity<Client> {
     @Setter
     private String phoneNumber;
 
+    public Client() {
+    }
+
+    public Client(String firstName, String lastName, String email, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public void map(Client source) {
         this.setFirstName(source.getFirstName());
         this.setLastName(source.getLastName());
         this.setEmail(source.getEmail());
         this.setPhoneNumber(source.getPhoneNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }
