@@ -1,6 +1,7 @@
 package com.spurvago.server.client;
 
 import com.spurvago.components.IBaseEntity;
+import com.spurvago.components.Utils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,8 +50,26 @@ public class Client implements IBaseEntity<Client> {
         this.setPhoneNumber(source.getPhoneNumber());
     }
 
+    /**
+     * <b>firstName</b> nie może być puste i musi zawierać < 50 znaków<br>
+     * <b>lastName</b> nie może być puste i musi zawierać < 50 znaków<br>
+     * <b>email</b> musi być prawidłowym adresem email<br>
+     * <b>phoneNumber</b> musi zawierać < 16 znaków<br>
+     * musi zostać podany <b>email</b> lub <b>phoneNumber</b>
+     * @return True, jeżeli obiekt przeszedł walidację
+     */
     @Override
     public boolean validate() {
+        if (firstName.length() > 50 || firstName.isEmpty())
+            return false;
+        if (lastName.length() > 50 || lastName.isEmpty())
+            return false;
+        if (email.isEmpty() && phoneNumber.isEmpty())
+            return false;
+        if (!phoneNumber.isEmpty() && phoneNumber.length() > 16)
+            return false;
+        if (!phoneNumber.isEmpty() && !Utils.validateEmail(email))
+            return false;
         return true;
     }
 

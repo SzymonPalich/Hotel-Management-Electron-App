@@ -6,7 +6,6 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,7 +29,7 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
     @Override
     public Client create(Client newEntity) {
-        if(!Utils.emailValidation(newEntity.getEmail())){
+        if(!newEntity.validate()){
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
         return clientRepository.save(newEntity);
