@@ -76,8 +76,6 @@ public class Client implements IBaseEntity<Client> {
             return false;
         if (!Utils.isNullOrBlank(phoneNumber) && phoneNumber.length() > 16)
             return false;
-        if (Utils.isNullOrBlank(email) && Utils.isNullOrBlank(phoneNumber))
-            return false;
         return Utils.isNullOrBlank(email) || Utils.validateEmail(email);
     }
 

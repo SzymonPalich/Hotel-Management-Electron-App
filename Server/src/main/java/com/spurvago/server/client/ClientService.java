@@ -45,10 +45,12 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         if (!Objects.equals(oldEntity.getPhoneNumber(), newEntity.getPhoneNumber())
+                && newEntity.getPhoneNumber() != null
                 && clientRepository.existsByPhoneNumber(newEntity.getPhoneNumber()))
                 throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         if (!Objects.equals(oldEntity.getEmail(), newEntity.getEmail())
+                && newEntity.getEmail() != null
                 && clientRepository.existsByEmail(newEntity.getEmail()))
                 throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
