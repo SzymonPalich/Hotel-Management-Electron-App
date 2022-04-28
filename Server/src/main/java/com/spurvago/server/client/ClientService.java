@@ -31,9 +31,9 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
     @Override
     public Client create(Client newEntity) {
-        if (!newEntity.validate()) {
+        if (!newEntity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-        }
+
         return clientRepository.save(newEntity);
     }
 
@@ -51,9 +51,16 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
     public ListPaginated<Client> getFiltered(String input, Pager pager) {
         Pageable pageable = pager.makePageable();
-        if(input.isEmpty()) return null;
+
+        if (input.isEmpty())
+            return null;
+
         List<String> words = List.of(input.split("\\s"));
+        if (words.size() > 4)
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
         Specification<Client> specification = ClientRepository.search(words);
+
         Page<Client> entities = clientRepository.findAll(specification, pageable);
         return new ListPaginated<>(entities, pager);
     }
