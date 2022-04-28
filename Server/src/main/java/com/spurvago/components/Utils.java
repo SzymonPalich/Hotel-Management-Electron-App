@@ -5,6 +5,7 @@ import com.spurvago.server.client.Client;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,104 +23,28 @@ public class Utils {
     }
 
     public static Specification<Client> filter(List<String> searchWords) {
-        if (searchWords.size() == 1) {
-            return (r, q, b) -> {
-                Expression<String> firstNameLower = b.lower(r.get("firstName"));
-                Expression<String> lastNameLower = b.lower(r.get("lastName"));
-                Expression<String> emailLower = b.lower(r.get("email"));
-                Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
-                return b.and(
+        return (r, q, b) -> {
+            Expression<String> firstNameLower = b.lower(r.get("firstName"));
+            Expression<String> lastNameLower = b.lower(r.get("lastName"));
+            Expression<String> emailLower = b.lower(r.get("email"));
+            Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
+            Predicate finalpredicate = null;
+            Predicate predicate[] = new Predicate[4];
+            for (int i = 0; i < searchWords.size(); i++) {
+                predicate[i] =
                         b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(0).toLowerCase() + "%")
-                        )
-                );
-            };
-        } else if (searchWords.size() == 2) {
-            return (r, q, b) -> {
-                Expression<String> firstNameLower = b.lower(r.get("firstName"));
-                Expression<String> lastNameLower = b.lower(r.get("lastName"));
-                Expression<String> emailLower = b.lower(r.get("email"));
-                Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
-                return b.and(
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(0).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(1).toLowerCase() + "%")
-                        )
-                );
-            };
-        } else if (searchWords.size() == 3) {
-            return (r, q, b) -> {
-                Expression<String> firstNameLower = b.lower(r.get("firstName"));
-                Expression<String> lastNameLower = b.lower(r.get("lastName"));
-                Expression<String> emailLower = b.lower(r.get("email"));
-                Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
-                return b.and(
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(0).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(1).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(2).toLowerCase() + "%")
-                        )
-                );
-            };
-        } else {
-            return (r, q, b) -> {
-                Expression<String> firstNameLower = b.lower(r.get("firstName"));
-                Expression<String> lastNameLower = b.lower(r.get("lastName"));
-                Expression<String> emailLower = b.lower(r.get("email"));
-                Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
-                return b.and(
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(0).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(1).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(2).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(2).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(firstNameLower, "%" + searchWords.get(3).toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWords.get(3).toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWords.get(3).toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWords.get(3).toLowerCase() + "%")
-                        )
-                );
-            };
-        }
+                                b.like(firstNameLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(lastNameLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(emailLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(phoneNumberLower, "%" + searchWords.get(i).toLowerCase() + "%")
+                        );
+            }
+            finalpredicate = b.and(predicate[0], predicate[1], predicate[2], predicate[3]);
+
+            return finalpredicate;
+        };
     }
+
 
     public static boolean isNullOrBlank(String string) {
         return (string == null || string.isBlank());
