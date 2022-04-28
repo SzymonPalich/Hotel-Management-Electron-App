@@ -10,12 +10,12 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,11 +41,13 @@ public class ClientTests {
     // Testy Get
     @Test
     void GetRequest_getExistingClient_thenReturns200() throws Exception {
-        mockMvc.perform(get("http://localhost:8081/api/client/{id}", 1L)
+        Client testClient = getTestEntityById(1);
+
+        mockMvc.perform(get("http://localhost:8081/api/client/{id}", testClient.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json(Utils.asJsonString(getTestEntityById(1))));
+                .andExpect(content().json(Utils.asJsonString(testClient)));
     }
 
     @Test
@@ -95,7 +97,7 @@ public class ClientTests {
     }
 
     @Test
-    void PostRequest_createWithoutPhoneNumberAndEmail_thenReturns422() throws Exception {
+    void PostRequest_createNullPhoneNumberAndEmail_thenReturns422() throws Exception {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", null, "666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -144,6 +146,71 @@ public class ClientTests {
                 .andExpect(status().isOk())
                 .andExpect(content().json(Utils.asJsonString(testClient)));
     }
+
+    @Test
+    void PutRequest_updateClientRemoveEmail_thenReturns200() throws Exception {
+        Client testClient = getTestEntityById(4);
+        testClient.setEmail("");
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .content(Utils.asJsonString(testClient))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void PutRequest_updateClientDuplicateEmailAndPhoneNumber_thenReturns422() throws Exception {
+        Client testClient = getTestEntityById(3);
+        testClient.setEmail(getTestEntityById(1).getEmail());
+        testClient.setPhoneNumber(getTestEntityById(1).getPhoneNumber());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .content(Utils.asJsonString(testClient))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void PutRequest_updateClientNullPhoneNumberAndEmail_thenReturns422() throws Exception {
+        Client testClient = getTestEntityById(3);
+        testClient.setPhoneNumber(null);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .content(Utils.asJsonString(testClient))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    // Testy Delete
+    @Test
+    void DeleteRequest_deleteExistingClient_thenReturns203And201() throws Exception {
+        Client testClient = getTestEntityById(1);
+
+        mockMvc.perform(delete("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void DeleteRequest_deleteNonExistingClient_thenReturns404() throws Exception {
+        mockMvc.perform(delete("http://localhost:8081/api/client/{id}", 99L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
 
     private Client getTestEntityById(int id) {
         return testUsers.get(id - 1);
