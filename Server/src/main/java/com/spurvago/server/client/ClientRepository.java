@@ -16,6 +16,8 @@ public interface ClientRepository extends PagingAndSortingRepository<Client, Lon
 
     Client findById(long id);
 
+    Client findByPhoneNumber(String phoneNumber);
+
     Page<Client> findAll(Pageable pageable);
 
     static Specification<Client> search(List<String> searchWords) {

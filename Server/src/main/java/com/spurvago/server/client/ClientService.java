@@ -3,13 +3,10 @@ package com.spurvago.server.client;
 import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
-import com.spurvago.components.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -28,12 +25,13 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
     public ListPaginated<Client> getList(Pager pager) {
         Pageable pageable = pager.makePageable();
         Page<Client> entities = clientRepository.findAll(pageable);
-        return new ListPaginated<>(entities, pager);
+        ListPaginated<Client> listPaginated = new ListPaginated<>(entities, pager);
+        return listPaginated;
     }
 
     @Override
     public Client create(Client newEntity) {
-        if(!Utils.emailValidation(newEntity.getEmail())){
+        if (!newEntity.validate()) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
         return clientRepository.save(newEntity);

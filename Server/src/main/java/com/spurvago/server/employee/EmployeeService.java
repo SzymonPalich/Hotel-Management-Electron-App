@@ -7,12 +7,11 @@ import com.spurvago.components.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
@@ -20,7 +19,9 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
 
 
     @Override
-    public Employee find(long id) { return employeeRepository.findById(id); }
+    public Employee find(long id) {
+        return employeeRepository.findById(id);
+    }
 
     @Override
     public ListPaginated<Employee> getList(Pager pager) {
@@ -32,7 +33,8 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
 
     @Override
     public Employee create(Employee newEntity) {
-        if(!Utils.emailValidation(newEntity.getEmail())) {
+        // walidacje zrobic przez validate w klasie()
+        if (!Utils.validateEmail(newEntity.getEmail())) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
         return employeeRepository.save(newEntity);
@@ -46,7 +48,9 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
     }
 
     @Override
-    public void delete(Employee Entity) { employeeRepository.delete(Entity); }
+    public void delete(Employee Entity) {
+        employeeRepository.delete(Entity);
+    }
 
     public ListPaginated<Employee> getFiltered(String input, Pager pager) {
         Pageable pageable = pager.makePageable();

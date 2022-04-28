@@ -1,13 +1,7 @@
-CREATE TABLE IF NOT EXISTS client
-(
-    id           bigint(20)  not null AUTO_INCREMENT,
-    first_name   varchar(50) not null,
-    last_name    varchar(50) not null,
-    email        varchar(50) null UNIQUE,
-    phone_number varchar(16) null UNIQUE,
-
-    primary key (id)
-);
+DELETE
+FROM client;
+ALTER TABLE client
+    AUTO_INCREMENT = 1;
 
 INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `phone_number`)
 VALUES (NULL, 'Jan', 'Dzban', 'jan@spurvago.com', '881223295'),
@@ -25,3 +19,7 @@ VALUES (NULL, 'Jan', 'Dzban', 'jan@spurvago.com', '881223295'),
        (NULL, 'Krzysztof', 'Przewoźnik', 'krzysztof@spurvago.com', '143676088'),
        (NULL, 'Przemysław', 'Paluch', 'przemysław@spurvago.com', '697810506'),
        (NULL, 'Adam', 'Kowalski', 'adam@gmail.com', '221824389');
+
+INSERT INTO `accommodation`(`client_id`, `room_id`, `start_date`, `end_date`, `reservation_only`)
+VALUES (1, 1, '2022-04-15', '2022-04-23', 1),
+       (2, 2, '2021-06-21', '2021-07-03', 0);

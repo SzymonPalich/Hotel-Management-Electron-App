@@ -1,6 +1,6 @@
 package com.spurvago.server.room_type;
 
-import com.spurvago.components.IMappableEntity;
+import com.spurvago.components.IBaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table
-public class RoomType implements IMappableEntity<RoomType> {
+public class RoomType implements IBaseEntity<RoomType> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -28,5 +28,10 @@ public class RoomType implements IMappableEntity<RoomType> {
     public void map(RoomType source) {
         this.setPrice(source.getPrice());
         this.setType(source.getType());
+    }
+
+    @Override
+    public boolean validate() {
+        return true;
     }
 }

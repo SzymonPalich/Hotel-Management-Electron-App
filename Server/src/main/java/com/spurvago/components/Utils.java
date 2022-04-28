@@ -1,5 +1,6 @@
 package com.spurvago.components;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spurvago.server.client.Client;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -9,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-    public static boolean emailValidation(String email) {
+    public static boolean validateEmail(String email) {
         String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
@@ -57,7 +58,7 @@ public class Utils {
                         )
                 );
             };
-        } else if(searchWords.size() == 3) {
+        } else if (searchWords.size() == 3) {
             return (r, q, b) -> {
                 Expression<String> firstNameLower = b.lower(r.get("firstName"));
                 Expression<String> lastNameLower = b.lower(r.get("lastName"));
@@ -117,6 +118,18 @@ public class Utils {
                         )
                 );
             };
+        }
+    }
+
+    public static boolean isNullOrBlank(String string) {
+        return (string == null || string.isBlank());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
