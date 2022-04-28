@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -43,11 +44,11 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
         if (!newEntity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
-        if (oldEntity.getPhoneNumber().equals(newEntity.getPhoneNumber())
+        if (!Objects.equals(oldEntity.getPhoneNumber(), newEntity.getPhoneNumber())
                 && clientRepository.existsByPhoneNumber(newEntity.getPhoneNumber()))
                 throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
-        if (oldEntity.getEmail().equals(newEntity.getEmail())
+        if (!Objects.equals(oldEntity.getEmail(), newEntity.getEmail())
                 && clientRepository.existsByEmail(newEntity.getEmail()))
                 throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
