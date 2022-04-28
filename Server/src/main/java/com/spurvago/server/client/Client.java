@@ -4,6 +4,7 @@ import com.spurvago.components.IBaseEntity;
 import com.spurvago.components.Utils;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -25,21 +26,28 @@ public class Client implements IBaseEntity<Client> {
     private String lastName;
 
     @Getter
-    @Setter
     private String email;
 
     @Getter
-    @Setter
     private String phoneNumber;
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String email, String phoneNumber) {
+    public Client(Long id, String firstName, String lastName, String email, String phoneNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.email = (Utils.isNullOrBlank(email)) ? null : email;
+        this.phoneNumber = (Utils.isNullOrBlank(phoneNumber)) ? null : phoneNumber;
+    }
+
+    public void setEmail(String email) {
+        this.email = (Utils.isNullOrBlank(email)) ? null : email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = (Utils.isNullOrBlank(phoneNumber)) ? null : phoneNumber;
     }
 
     @Override
@@ -60,15 +68,15 @@ public class Client implements IBaseEntity<Client> {
      */
     @Override
     public boolean validate() {
-        if (firstName.length() > 50 || firstName.isEmpty())
+        if (firstName.length() > 50 || firstName.isBlank())
             return false;
-        if (lastName.length() > 50 || lastName.isEmpty())
+        if (lastName.length() > 50 || lastName.isBlank())
             return false;
-        if (email.isEmpty() && phoneNumber.isEmpty())
+        if (Utils.isNullOrBlank(email) && Utils.isNullOrBlank(phoneNumber))
             return false;
-        if (!phoneNumber.isEmpty() && phoneNumber.length() > 16)
+        if (!Utils.isNullOrBlank(phoneNumber) && phoneNumber.length() > 16)
             return false;
-        if (!phoneNumber.isEmpty() && !Utils.validateEmail(email))
+        if (!Utils.isNullOrBlank(email) && !Utils.validateEmail(email))
             return false;
         return true;
     }

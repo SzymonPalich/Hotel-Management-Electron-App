@@ -16,6 +16,10 @@ public class Utils {
         return matcher.matches();
     }
 
+    public static boolean isNullOrBlank(String string) {
+        return (string == null || string.isBlank());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
