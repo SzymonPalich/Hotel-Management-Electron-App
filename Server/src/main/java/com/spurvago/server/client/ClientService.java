@@ -33,12 +33,24 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
     public Client create(Client newEntity) {
         if (!newEntity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
+        if (!checkConstraints(newEntity.getPhoneNumber(), newEntity.getEmail()))
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return clientRepository.save(newEntity);
     }
 
     @Override
     public Client update(Client oldEntity, Client newEntity) {
+        if (!newEntity.validate())
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
+        if (oldEntity.getPhoneNumber().equals(newEntity.getPhoneNumber())
+                && clientRepository.existsByPhoneNumber(newEntity.getPhoneNumber()))
+                throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
+        if (oldEntity.getEmail().equals(newEntity.getEmail())
+                && clientRepository.existsByEmail(newEntity.getEmail()))
+                throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
         oldEntity.map(newEntity);
 
         return clientRepository.save(oldEntity);
@@ -63,5 +75,13 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
         Page<Client> entities = clientRepository.findAll(specification, pageable);
         return new ListPaginated<>(entities, pager);
+    }
+
+    private boolean checkConstraints(String phoneNumber, String email){
+        if(clientRepository.existsByPhoneNumber(phoneNumber))
+            return false;
+        if(clientRepository.existsByEmail(email))
+            return false;
+        return true;
     }
 }

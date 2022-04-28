@@ -101,7 +101,7 @@ public class ClientTests {
 
     @Test
     void PostRequest_createNullPhoneNumberAndEmail_thenReturns422() throws Exception {
-        Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", null, "666666666");
+        Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", null, null);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post(HTTP_ADDRESS)
