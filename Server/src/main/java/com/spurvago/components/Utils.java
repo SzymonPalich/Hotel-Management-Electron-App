@@ -24,23 +24,24 @@ public class Utils {
 
     public static Specification<Client> filter(List<String> searchWords) {
         return (r, q, b) -> {
-            Predicate finalPredicate = null;
-            for (int i = 0; i < searchWords.size(); i++) {
-                Predicate temp =
+            Predicate predicate = null;
+            Predicate tempPredicate;
+
+            for (String searchWord : searchWords) {
+                tempPredicate =
                         b.or(
-                                b.like(r.get("firstName"), asLikeQuery(searchWords.get(i))),
-                                b.like(r.get("lastName"), asLikeQuery(searchWords.get(i))),
-                                b.like(r.get("email"), asLikeQuery(searchWords.get(i))),
-                                b.like(r.get("phoneNumber"), asLikeQuery(searchWords.get(i)))
+                                b.like(r.get("firstName"), asLikeQuery(searchWord)),
+                                b.like(r.get("lastName"), asLikeQuery(searchWord)),
+                                b.like(r.get("email"), asLikeQuery(searchWord)),
+                                b.like(r.get("phoneNumber"), asLikeQuery(searchWord))
                         );
-                if(i == 0) {
-                    finalPredicate = temp;
-                }else{
-                    finalPredicate = b.and(finalPredicate, temp);
-                }
+                if (searchWord.equals(searchWords.get(0)))
+                    predicate = tempPredicate;
+                else
+                    predicate = b.and(predicate, tempPredicate);
             }
 
-            return finalPredicate;
+            return predicate;
         };
     }
 
