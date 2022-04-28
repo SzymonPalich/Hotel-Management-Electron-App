@@ -29,15 +29,19 @@ public class Utils {
             Expression<String> emailLower = b.lower(r.get("email"));
             Expression<String> phoneNumberLower = b.lower(r.get("phoneNumber"));
             Predicate finalPredicate = null;
-            for (String searchWord : searchWords) {
+            for (int i = 0; i < searchWords.size(); i++) {
                 Predicate temp =
                         b.or(
-                                b.like(firstNameLower, "%" + searchWord.toLowerCase() + "%"),
-                                b.like(lastNameLower, "%" + searchWord.toLowerCase() + "%"),
-                                b.like(emailLower, "%" + searchWord.toLowerCase() + "%"),
-                                b.like(phoneNumberLower, "%" + searchWord.toLowerCase() + "%")
+                                b.like(firstNameLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(lastNameLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(emailLower, "%" + searchWords.get(i).toLowerCase() + "%"),
+                                b.like(phoneNumberLower, "%" + searchWords.get(i).toLowerCase() + "%")
                         );
-                finalPredicate = b.and(temp);
+                if(i == 0) {
+                    finalPredicate = temp;
+                }else{
+                    finalPredicate = b.and(finalPredicate, temp);
+                }
             }
 
             return finalPredicate;
