@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,14 +22,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Sql(scripts = "init.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "teardown.sql", executionPhase = AFTER_TEST_METHOD)
 public class ClientTests {
+    @LocalServerPort
+    private int port;
     @Autowired
     private MockMvc mockMvc;
 
+    private final String HTTP_ADDRESS = "http://localhost:" + port + "/api/client";
     private final List<Client> testUsers = new ArrayList<>(List.of(
             new Client(1L, "Jacek", "Testowy", "j.testowy@test.test", "111111111"),
             new Client(2L, "Marcin", "Inny", "m.inny@test.test", null),
@@ -43,7 +47,7 @@ public class ClientTests {
     void GetRequest_getExistingClient_thenReturns200() throws Exception {
         Client testClient = getTestEntityById(1);
 
-        mockMvc.perform(get("http://localhost:8081/api/client/{id}", testClient.getId())
+        mockMvc.perform(get(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -52,7 +56,7 @@ public class ClientTests {
 
     @Test
     void GetRequest_getNonExistingClient_thenReturns404() throws Exception {
-        mockMvc.perform(get("http://localhost:8081/api/client/{id}", 99L)
+        mockMvc.perform(get(HTTP_ADDRESS + "/{id}", 99L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -64,7 +68,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "a.nowy@test.test", "666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -77,7 +81,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "wrong_email", "666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -89,7 +93,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "a.nowy@test.test", "wrong_phone_number_666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -101,7 +105,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", null, "666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -113,7 +117,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "j.testowy@test.test", "666666666");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -125,7 +129,7 @@ public class ClientTests {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "a.nowy@test.test", "111111111");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("http://localhost:8081/api/client")
+                        .post(HTTP_ADDRESS)
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -139,7 +143,7 @@ public class ClientTests {
         testClient.setFirstName("UpdatedTest1");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .put(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -153,7 +157,7 @@ public class ClientTests {
         testClient.setEmail("");
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .put(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -167,7 +171,7 @@ public class ClientTests {
         testClient.setPhoneNumber(getTestEntityById(1).getPhoneNumber());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .put(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -180,7 +184,7 @@ public class ClientTests {
         testClient.setPhoneNumber(null);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("http://localhost:8081/api/client/{id}", testClient.getId())
+                        .put(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .content(Utils.asJsonString(testClient))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -192,12 +196,12 @@ public class ClientTests {
     void DeleteRequest_deleteExistingClient_thenReturns203And201() throws Exception {
         Client testClient = getTestEntityById(1);
 
-        mockMvc.perform(delete("http://localhost:8081/api/client/{id}", testClient.getId())
+        mockMvc.perform(delete(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
-        mockMvc.perform(get("http://localhost:8081/api/client/{id}", testClient.getId())
+        mockMvc.perform(get(HTTP_ADDRESS + "/{id}", testClient.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -205,7 +209,7 @@ public class ClientTests {
 
     @Test
     void DeleteRequest_deleteNonExistingClient_thenReturns404() throws Exception {
-        mockMvc.perform(delete("http://localhost:8081/api/client/{id}", 99L)
+        mockMvc.perform(delete(HTTP_ADDRESS + "/{id}", 99L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());

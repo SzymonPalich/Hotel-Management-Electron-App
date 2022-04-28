@@ -4,7 +4,6 @@ import com.spurvago.components.IBaseEntity;
 import com.spurvago.components.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
@@ -64,6 +63,7 @@ public class Client implements IBaseEntity<Client> {
      * <b>email</b> musi być prawidłowym adresem email<br>
      * <b>phoneNumber</b> musi zawierać < 16 znaków<br>
      * musi zostać podany <b>email</b> lub <b>phoneNumber</b>
+     *
      * @return True, jeżeli obiekt przeszedł walidację
      */
     @Override
@@ -76,9 +76,7 @@ public class Client implements IBaseEntity<Client> {
             return false;
         if (!Utils.isNullOrBlank(phoneNumber) && phoneNumber.length() > 16)
             return false;
-        if (!Utils.isNullOrBlank(email) && !Utils.validateEmail(email))
-            return false;
-        return true;
+        return Utils.isNullOrBlank(email) || Utils.validateEmail(email);
     }
 
     @Override

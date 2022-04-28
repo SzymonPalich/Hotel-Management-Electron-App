@@ -16,7 +16,9 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
 
 
     @Override
-    public Employee find(long id) { return employeeRepository.findById(id); }
+    public Employee find(long id) {
+        return employeeRepository.findById(id);
+    }
 
     @Override
     public ListPaginated<Employee> getList(Pager pager) {
@@ -28,7 +30,7 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
 
     @Override
     public Employee create(Employee newEntity) {
-        if(!Utils.validateEmail(newEntity.getEmail())) {
+        if (!Utils.validateEmail(newEntity.getEmail())) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
         return employeeRepository.save(newEntity);
@@ -42,5 +44,7 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
     }
 
     @Override
-    public void delete(Employee Entity) { employeeRepository.delete(Entity); }
+    public void delete(Employee Entity) {
+        employeeRepository.delete(Entity);
+    }
 }

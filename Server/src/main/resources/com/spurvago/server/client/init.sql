@@ -1,5 +1,12 @@
-DELETE FROM client;
-ALTER TABLE client AUTO_INCREMENT = 1;
+DELETE
+FROM accommodation;
+ALTER TABLE accommodation
+    AUTO_INCREMENT = 1;
+
+DELETE
+FROM client;
+ALTER TABLE client
+    AUTO_INCREMENT = 1;
 
 INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `phone_number`)
 VALUES (1, 'Jacek', 'Testowy', 'j.testowy@test.test', '111111111'),

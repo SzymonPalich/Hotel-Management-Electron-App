@@ -3,7 +3,6 @@ package com.spurvago.server.client;
 import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
-import com.spurvago.components.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
 
     @Override
     public Client create(Client newEntity) {
-        if(!newEntity.validate()){
+        if (!newEntity.validate()) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
         return clientRepository.save(newEntity);

@@ -36,7 +36,7 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository) implements 
     }
 
     @Override
-    public void delete(RoomType Entity)  {
+    public void delete(RoomType Entity) {
         roomTypeRepository.delete(Entity);
     }
 }
