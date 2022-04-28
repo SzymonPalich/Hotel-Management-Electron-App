@@ -1,4 +1,7 @@
-export default class RoomsService {
+import Utils, {IList, IPager} from "@/Utils";
+import axios from "axios";
+
+export default class RoomsServices {
     public static setStatus(room_status: number): string {
         switch (room_status) {
             case 1: {
@@ -24,6 +27,28 @@ export default class RoomsService {
             }
         }
     }
+
+    public static getBlankRoomTemplate(): IRoom {
+        const tempRoom: IRoom = {
+            id: 0,
+            room_number: 0,
+            room_type: "",
+            room_status: 0,
+        };
+        return tempRoom;
+    }
+
+    public static async fetch(id: string): Promise<IRoom> {
+        return (await axios.get<IRoom>(`http://localhost:8081/api/rooms/${id}`)).data;
+    }
+
+    public static async update(id: string, room: IRoom): Promise<IRoom> {
+        return (await axios.put<IRoom>(`http://localhost:8081/api/rooms/${id}`, room)).data;
+    }
+
+    public static async getList(pager: IPager): Promise<IList<IRoom>> {
+        return (await axios.get<IList<IRoom>>(`http://localhost:8081/api/rooms`, { params: pager })).data;
+    }  
 }
 
 export interface IRoom {

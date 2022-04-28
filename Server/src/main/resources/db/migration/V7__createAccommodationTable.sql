@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE accommodation
+CREATE TABLE IF NOT EXISTS accommodation
 (
     id               bigint(20) not null auto_increment,
     client_id        bigint(20) not null,

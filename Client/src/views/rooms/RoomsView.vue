@@ -69,93 +69,41 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import RoomsService, { IRoom } from "../../services/RoomsService";
+import RoomsServices, { IRoom } from "../../services/RoomsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
-import Utils from "../../Utils";
+import Utils, { IPager, IList } from "../../Utils";
+import { defineComponent } from "vue";
 
-let temp_room_results: Array<IRoom> = [
-  {
-    id: 1,
-    room_number: 101,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 2,
-    room_number: 102,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 3,
-    room_number: 103,
-    room_type: "Ekonomiczny",
-    room_status: 2,
-  },
-  {
-    id: 4,
-    room_number: 201,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 5,
-    room_number: 202,
-    room_type: "Ekonomiczny",
-    room_status: 3,
-  },
-  {
-    id: 6,
-    room_number: 401,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 7,
-    room_number: 402,
-    room_type: "Ekonomiczny",
-    room_status: 4,
-  },
-  {
-    id: 8,
-    room_number: 403,
-    room_type: "Ekonomiczny",
-    room_status: 5,
-  },
-  {
-    id: 9,
-    room_number: 404,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-  {
-    id: 10,
-    room_number: 405,
-    room_type: "Ekonomiczny",
-    room_status: 1,
-  },
-];
-
-@Options({
+export default defineComponent({
   components: {
     Pagination,
     SearchBar,
   },
-})
-export default class RoomsView extends Vue {
   data() {
     return {
-      results: temp_room_results,
+      result: Utils.getBlankListTemplate<IRoom>(),
+      pager: Utils.getDefaultPager(),
     };
-  }
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
 
-  private setStatus(room_status: number): string {
-    return RoomsService.setStatus(room_status);
-  }
+  methods: {
+    async getData(): Promise<IList<IRoom>> {
+      return await RoomsServices.getList(this.pager);
+    },
 
-  private alertDisplay(): void {
-    Utils.alertDisplay();
+    setStatus(room_status: number): string {
+      return RoomsServices.setStatus(room_status);
+    },
+
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
+
   }
-}
+});
 </script>

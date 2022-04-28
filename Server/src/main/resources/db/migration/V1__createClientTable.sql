@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE client
+CREATE TABLE IF NOT EXISTS client
 (
     id           bigint(20)  not null AUTO_INCREMENT,
     first_name   varchar(50) not null,

@@ -15,40 +15,13 @@
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th
-                class="
-                  text-left
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Imię
               </th>
-              <th
-                class="
-                  text-left
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Nazwisko
               </th>
-              <th
-                class="
-                  text-left
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 E-mail
               </th>
               <th
@@ -70,16 +43,16 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="client in results" :key="client" class="bg-white">
+            <tr v-for="client in result.content" :key="client" class="bg-white">
               <td class="text-left py-2 px-4">
                 {{ client.firstName }}
-                </td>
+              </td>
               <td class="text-left py-2 px-4">
                 {{ client.lastName }}
               </td>
               <td class="text-left py-2 px-4">
                 {{ client.email }}
-                </td>
+              </td>
               <td class="text-left py-2 px-4">
                 {{ client.phoneNumber }}
               </td>
@@ -114,98 +87,36 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IClient } from "../../services/ClientsService";
+import ClientsServices, { IClient } from "../../services/ClientsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
-import Utils from "../../Utils";
-let temp_clients_results: Array<IClient> = [
-  {
-    id: 1,
-    firstName: "Jan",
-    lastName: "Nowak",
-    email: "jkowalski2137@gmail.com",
-    phoneNumber: "+48 667 444 321",
-  },
-  {
-    id: 2,
-    firstName: "Dariusz",
-    lastName: "Kowalski",
-    email: "dkowalski3@gmail.com",
-    phoneNumber: "+48 550 684 531",
-  },
-  {
-    id: 3,
-    firstName: "Heronim",
-    lastName: "Wróblewski",
-    email: "hwroblewski52@gmail.com",
-    phoneNumber: "+48 663 548 522",
-  },
-  {
-    id: 4,
-    firstName: "Cyprian",
-    lastName: "Kołodziej",
-    email: "ckolodziej8@gmail.com",
-    phoneNumber: "+48 611 333 156",
-  },
-  {
-    id: 5,
-    firstName: "Dominik",
-    lastName: "Wójcik",
-    email: "dwojzik999@gmail.com",
-    phoneNumber: "+48 574 433 111",
-  },
-  {
-    id: 6,
-    firstName: "Oskar",
-    lastName: "Mazurek",
-    email: "omazurek601@gmail.com",
-    phoneNumber: "+48 401 215 116",
-  },
-  {
-    id: 7,
-    firstName: "Ksawery",
-    lastName: "Kwiatkowski",
-    email: "kkwiatkowski4@gmail.com",
-    phoneNumber: "+48 607 277 888",
-  },
-  {
-    id: 8,
-    firstName: "Fryderyk",
-    lastName: "Ostrowski",
-    email: "fostrowski111@gmail.com",
-    phoneNumber: "+48 648 156 113",
-  },
-  {
-    id: 9,
-    firstName: "Kacper",
-    lastName: "Jakubowski",
-    email: "kjakubowski13gmail.com",
-    phoneNumber: "+48 652 425 635",
-  },
-  {
-    id: 10,
-    firstName: "Kacper",
-    lastName: "Jakubowski",
-    email: "kjakubowski13gmail.com",
-    phoneNumber: "+48 652 425 635",
-  },
-];
+import Utils, { IPager, IList } from "../../Utils";
+import { defineComponent } from "vue";
 
-@Options({
+export default defineComponent({
   components: {
     Pagination,
     SearchBar,
   },
-})
-export default class ClientsView extends Vue {
   data() {
     return {
-      results: temp_clients_results,
+      result: Utils.getBlankListTemplate<IClient>(),
+      pager: Utils.getDefaultPager(),
     };
-  }
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
 
-  private alertDisplay(): void {
-    Utils.alertDisplay();
-  }
-}
+  methods: {
+    async getData(): Promise<IList<IClient>> {
+      return await ClientsServices.getList(this.pager);
+    },
+    
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
+  },
+});
 </script>
