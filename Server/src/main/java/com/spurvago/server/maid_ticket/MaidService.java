@@ -15,7 +15,8 @@ public record MaidService(MaidRepository maidRepository) implements IBaseService
 
     @Override
     public MaidTicket find(long id) {
-        return maidRepository.findById(id);
+        var test = maidRepository.findById(id);
+        return test;
     }
 
     @Override

@@ -22,7 +22,6 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     private long room_id;
 
     @ManyToOne
-    @JoinColumn(name = "maid_id")
     private Employee employee;
 
     @Getter
@@ -32,7 +31,7 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Override
     public void map(MaidTicket source) {
         this.setRoom_id(source.room_id);
-//        this.setMaid_id(source.maid_id);
+        // this.setEmployee_id(source.employee_id);
         this.setFinalization_date(source.finalization_date);
     }
 

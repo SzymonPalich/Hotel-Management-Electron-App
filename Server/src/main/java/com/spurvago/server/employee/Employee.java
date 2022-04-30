@@ -55,8 +55,8 @@ public class Employee implements IBaseEntity<Employee> {
     @Setter
     private BigDecimal salary;
 
-    @OneToMany(mappedBy = "employee")
-    private List<MaidTicket> maidTickets = new ArrayList<>();
+    @OneToMany
+    private List<MaidTicket> maidTickets;
 
     @Override
     public void map(Employee source) {
