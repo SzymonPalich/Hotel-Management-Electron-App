@@ -24,7 +24,7 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
     }
 
     @Override
-    public ListPaginated<Employee> getList(Pager pager) {
+    public ListPaginated<Employee> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<Employee> entities = employeeRepository.findAll(pageable);
         ListPaginated<Employee> listPaginated = new ListPaginated<>(entities, pager);

@@ -3,9 +3,10 @@ package com.spurvago.server.client;
 import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -32,25 +33,20 @@ public class ClientController implements IBaseController<Client> {
     }
 
     @Override
-    public ListPaginated<Client> getList(Pager pager) {
-        ListPaginated<Client> entities = clientService.getList(pager);
-
-        return entities;
+    public ListPaginated<Client> getList(Pager pager, String search) {
+        return clientService.getList(pager, search);
     }
 
     @Override
     public Client create(Client newTestEntity) {
-        Client entity = clientService.create(newTestEntity);
-
-        return entity;
+        return clientService.create(newTestEntity);
     }
 
     @Override
     public Client update(Long id, Client newTestEntity) {
         Client oldEntity = clientService.find(id);
-        if (oldEntity == null) {
+        if (oldEntity == null)
             throw new ResponseStatusException(NOT_FOUND);
-        }
 
         oldEntity = clientService.update(oldEntity, newTestEntity);
 
@@ -65,10 +61,5 @@ public class ClientController implements IBaseController<Client> {
         }
 
         clientService.delete(entity);
-    }
-
-    @GetMapping(path = "/find")
-    public ListPaginated<Client> getFiltered(Pager pager, String search) {
-        return clientService.getFiltered(pager, search);
     }
 }

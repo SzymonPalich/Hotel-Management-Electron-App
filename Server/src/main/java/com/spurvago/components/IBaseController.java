@@ -10,7 +10,7 @@ public interface IBaseController<T> {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    ListPaginated<T> getList(Pager pager);
+    ListPaginated<T> getList(Pager pager, String search);
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

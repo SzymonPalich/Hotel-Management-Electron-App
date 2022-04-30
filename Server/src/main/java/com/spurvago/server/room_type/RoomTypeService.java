@@ -19,7 +19,7 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository) implements 
     }
 
     @Override
-    public ListPaginated<RoomType> getList(Pager pager) {
+    public ListPaginated<RoomType> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<RoomType> entities = roomTypeRepository.findAll(pageable);
         ListPaginated<RoomType> listPaginated = new ListPaginated<>(entities, pager);

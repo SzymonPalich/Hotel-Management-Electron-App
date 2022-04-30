@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.criteria.Predicate;
@@ -21,19 +20,24 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @Service
 public record ClientService(ClientRepository clientRepository) implements IBaseService<Client> {
 
+    //<editor-fold desc="find()">
     @Override
     public Client find(long id) {
         return clientRepository.findById(id);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="getList()">
     @Override
-    public ListPaginated<Client> getList(Pager pager) {
+    public ListPaginated<Client> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
-        Page<Client> entities = clientRepository.findAll(pageable);
-        ListPaginated<Client> listPaginated = new ListPaginated<>(entities, pager);
-        return listPaginated;
-    }
+        Page<Client> entities = clientRepository.findAll(makeSpecification(search), pageable);
 
+        return new ListPaginated<>(entities, pager);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="create()">
     @Override
     public Client create(Client newEntity) {
         if (!newEntity.validate())
@@ -42,7 +46,9 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return clientRepository.save(newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="update()">
     @Override
     public Client update(Client oldEntity, Client newEntity) {
         if (!newEntity.validate())
@@ -51,26 +57,28 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
         if (!Objects.equals(oldEntity.getPhoneNumber(), newEntity.getPhoneNumber())
                 && newEntity.getPhoneNumber() != null
                 && clientRepository.existsByPhoneNumber(newEntity.getPhoneNumber()))
-                throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         if (!Objects.equals(oldEntity.getEmail(), newEntity.getEmail())
                 && newEntity.getEmail() != null
                 && clientRepository.existsByEmail(newEntity.getEmail()))
-                throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         oldEntity.map(newEntity);
 
         return clientRepository.save(oldEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="delete()">
     @Override
     public void delete(Client Entity) {
         clientRepository.delete(Entity);
     }
+    //</editor-fold>
 
-    public ListPaginated<Client> getFiltered(Pager pager, String search) {
-        Pageable pageable = pager.makePageable();
-
+    //<editor-fold desc="makeSpecification()">
+    private Specification<Client> makeSpecification(String search) {
         Specification<Client> specification;
         if (!Utils.isNullOrBlank(search)) {
             List<String> words = List.of(search.split("\\s"));
@@ -78,15 +86,14 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
                 throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
             specification = filter(words);
-        }
-        else {
+        } else {
             specification = null;
         }
-
-        Page<Client> entities = clientRepository.findAll(specification, pageable);
-        return new ListPaginated<>(entities, pager);
+        return specification;
     }
+    //</editor-fold>
 
+    //<editor-fold desc="filter()">
     Specification<Client> filter(List<String> searchWords) {
         return (r, q, b) -> {
             Predicate predicate = null;
@@ -109,13 +116,13 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
             return predicate;
         };
     }
+    //</editor-fold>
 
-
+    //<editor-fold desc="checkConstraints()">
     private boolean checkConstraints(String phoneNumber, String email){
         if(clientRepository.existsByPhoneNumber(phoneNumber))
             return false;
-        if(clientRepository.existsByEmail(email))
-            return false;
-        return true;
+        return !clientRepository.existsByEmail(email);
     }
+    //</editor-fold>
 }
