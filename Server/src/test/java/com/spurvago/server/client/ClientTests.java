@@ -18,8 +18,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TES
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -27,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "init.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "teardown.sql", executionPhase = AFTER_TEST_METHOD)
 public class ClientTests {
+    //<editor-fold desc="Wartości z bazy">
     private final List<Client> testUsers = new ArrayList<>(List.of(
             new Client(1L, "Jacek", "Testowy", "j.testowy@test.test", "111111111"),
             new Client(2L, "Marcin", "Inny", "m.inny@test.test", null),
@@ -35,13 +35,18 @@ public class ClientTests {
             new Client(5L, "Piotr", "Nowak", "p.nowak@test.test", "555555555")
     ));
     private final long NEXT_ID = 6L;
+    //</editor-fold>
+
+    //<editor-fold desc="Konfiguracja">
     @LocalServerPort
     private int port;
     private final String HTTP_ADDRESS = "http://localhost:" + port + "/api/client";
     @Autowired
     private MockMvc mockMvc;
+    //</editor-fold>
 
-    // Testy Get
+
+    //<editor-fold desc="Testy Get">
     @Test
     void GetRequest_getExistingClient_thenReturns200() throws Exception {
         Client testClient = getTestEntityById(1);
@@ -60,8 +65,52 @@ public class ClientTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
+    //</editor-fold>
 
-    // Testy Post
+    //<editor-fold desc="Testy GetList">
+    @Test
+    void GetListRequest_getAllClients_thenReturns200() throws Exception {
+        mockMvc.perform(get(HTTP_ADDRESS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(5));
+    }
+
+    @Test
+    void GetListRequest_FindUser_thenReturns200() throws Exception {
+        Client testClient = getTestEntityById(1);
+        String testClientInfo = testClient.getFirstName() + " " + testClient.getLastName() + " " + testClient.getEmail();
+
+        mockMvc.perform(get(HTTP_ADDRESS)
+                        .param("search", testClientInfo)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(1));
+    }
+
+    @Test
+    void GetListRequest_nonExistingClients_thenReturns200() throws Exception {
+        mockMvc.perform(get(HTTP_ADDRESS)
+                        .param("search", "ojoj nie ma")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalElements").value(0));
+    }
+
+    @Test
+    void GetListRequest_exceedSearchWordLimit_thenReturns422() throws Exception {
+        mockMvc.perform(get(HTTP_ADDRESS)
+                        .param("search", "ojoj jest zbyt dużo słów")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Testy Post">
     @Test
     void PostRequest_createClient_thenReturns201() throws Exception {
         Client testClient = new Client(NEXT_ID, "Andrzej", "Nowy", "a.nowy@test.test", "666666666");
@@ -134,8 +183,9 @@ public class ClientTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnprocessableEntity());
     }
+    //</editor-fold>
 
-    // Testy Put
+    //<editor-fold desc="Testy Update">
     @Test
     void PutRequest_updateClient_thenReturns200() throws Exception {
         Client testClient = getTestEntityById(3);
@@ -189,8 +239,9 @@ public class ClientTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnprocessableEntity());
     }
+    //</editor-fold>
 
-    // Testy Delete
+    //<editor-fold desc="Testy Delete">
     @Test
     void DeleteRequest_deleteExistingClient_thenReturns203And201() throws Exception {
         Client testClient = getTestEntityById(1);
@@ -213,7 +264,7 @@ public class ClientTests {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
-
+    //</editor-fold>
 
     private Client getTestEntityById(int id) {
         return testUsers.get(id - 1);
