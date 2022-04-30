@@ -3,15 +3,19 @@ package com.spurvago.server.client;
 import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.components.Utils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.Predicate;
 import java.util.List;
 import java.util.Objects;
 
+import static com.spurvago.components.Utils.asLikeQuery;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
@@ -64,21 +68,48 @@ public record ClientService(ClientRepository clientRepository) implements IBaseS
         clientRepository.delete(Entity);
     }
 
-    public ListPaginated<Client> getFiltered(String input, Pager pager) {
+    public ListPaginated<Client> getFiltered(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
 
-        if (input.isEmpty())
-            return null;
+        Specification<Client> specification;
+        if (!Utils.isNullOrBlank(search)) {
+            List<String> words = List.of(search.split("\\s"));
+            if (words.size() > 4)
+                throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
-        List<String> words = List.of(input.split("\\s"));
-        if (words.size() > 4)
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        Specification<Client> specification = ClientRepository.search(words);
+            specification = filter(words);
+        }
+        else {
+            specification = null;
+        }
 
         Page<Client> entities = clientRepository.findAll(specification, pageable);
         return new ListPaginated<>(entities, pager);
     }
+
+    Specification<Client> filter(List<String> searchWords) {
+        return (r, q, b) -> {
+            Predicate predicate = null;
+            Predicate tempPredicate;
+
+            for (String searchWord : searchWords) {
+                tempPredicate =
+                        b.or(
+                                b.like(r.get("firstName"), asLikeQuery(searchWord)),
+                                b.like(r.get("lastName"), asLikeQuery(searchWord)),
+                                b.like(r.get("email"), asLikeQuery(searchWord)),
+                                b.like(r.get("phoneNumber"), asLikeQuery(searchWord))
+                        );
+                if (searchWord.equals(searchWords.get(0)))
+                    predicate = tempPredicate;
+                else
+                    predicate = b.and(predicate, tempPredicate);
+            }
+
+            return predicate;
+        };
+    }
+
 
     private boolean checkConstraints(String phoneNumber, String email){
         if(clientRepository.existsByPhoneNumber(phoneNumber))

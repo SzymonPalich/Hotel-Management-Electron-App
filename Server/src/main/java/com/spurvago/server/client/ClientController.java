@@ -3,6 +3,7 @@ package com.spurvago.server.client;
 import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -66,8 +67,8 @@ public class ClientController implements IBaseController<Client> {
         clientService.delete(entity);
     }
 
-    @GetMapping(path = "/name")
-    public ListPaginated<Client> getFiltered(@RequestParam String input, Pager pager) {
-        return clientService.getFiltered(input, pager);
+    @GetMapping(path = "/find")
+    public ListPaginated<Client> getFiltered(Pager pager, String search) {
+        return clientService.getFiltered(pager, search);
     }
 }

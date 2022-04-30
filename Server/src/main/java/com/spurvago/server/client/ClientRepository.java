@@ -23,31 +23,4 @@ public interface ClientRepository extends PagingAndSortingRepository<Client, Lon
     Boolean existsByEmail(String email);
 
     Page<Client> findAll(Pageable pageable);
-
-    static Specification<Client> search(List<String> searchWords) {
-        return filter(searchWords);
-    }
-
-    private static Specification<Client> filter(List<String> searchWords) {
-        return (r, q, b) -> {
-            Predicate predicate = null;
-            Predicate tempPredicate;
-
-            for (String searchWord : searchWords) {
-                tempPredicate =
-                        b.or(
-                                b.like(r.get("firstName"), asLikeQuery(searchWord)),
-                                b.like(r.get("lastName"), asLikeQuery(searchWord)),
-                                b.like(r.get("email"), asLikeQuery(searchWord)),
-                                b.like(r.get("phoneNumber"), asLikeQuery(searchWord))
-                        );
-                if (searchWord.equals(searchWords.get(0)))
-                    predicate = tempPredicate;
-                else
-                    predicate = b.and(predicate, tempPredicate);
-            }
-
-            return predicate;
-        };
-    }
 }
