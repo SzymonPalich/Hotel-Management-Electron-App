@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-resources/configuration/ui").permitAll()
                 .antMatchers("/swagger-resources/configuration/**").permitAll()
-                .antMatchers("/api/client/**", "/api/employee/**").hasRole("MANAGER")
+                .antMatchers("/api/client/**", "/api/employee/**", "/api/room_type/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
