@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "maid_ticket")
+@Table
 public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,10 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Getter
     @Setter
     private long room_id;
+
+    @Getter
+    @Setter
+    private long employee_id;
 
     @ManyToOne
     private Employee employee;
