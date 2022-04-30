@@ -2,6 +2,7 @@ package com.spurvago.server.maid_ticket;
 
 
 import com.spurvago.components.IBaseEntity;
+import com.spurvago.server.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table
+@Table(name = "maid_ticket")
 public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +21,9 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Setter
     private long room_id;
 
-    @Getter
-    @Setter
-    private long maid_id;
+    @ManyToOne
+    @JoinColumn(name = "maid_id")
+    private Employee employee;
 
     @Getter
     @Setter
@@ -31,7 +32,7 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Override
     public void map(MaidTicket source) {
         this.setRoom_id(source.room_id);
-        this.setMaid_id(source.maid_id);
+//        this.setMaid_id(source.maid_id);
         this.setFinalization_date(source.finalization_date);
     }
 
