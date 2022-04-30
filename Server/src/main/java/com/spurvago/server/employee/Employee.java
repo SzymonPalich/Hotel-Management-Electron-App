@@ -31,11 +31,15 @@ public class Employee implements IMappableEntity<Employee> {
 
     @Getter
     @Setter
+    private String password;
+
+    @Getter
+    @Setter
     private String phoneNumber;
 
     @Getter
     @Setter
-    private int position;
+    private String position;
 
     @Getter
     @Setter
@@ -58,6 +62,7 @@ public class Employee implements IMappableEntity<Employee> {
         this.setName(source.getName());
         this.setSurname(source.getSurname());
         this.setEmail(source.getEmail());
+        this.setPassword(source.getPassword());
         this.setPhoneNumber(source.getPhoneNumber());
         this.setPosition(source.getPosition());
         this.setPesel(source.getPesel());
@@ -67,10 +72,6 @@ public class Employee implements IMappableEntity<Employee> {
     }
 
     public static final class Position {
-        public final static List<Integer> ACCEPTED_VALUES = List.of(1, 2, 3, 4);
-        public final static int MANAGER = 1;
-        public final static int MAID = 2;
-        public final static int TECHNICIAN = 3;
-        public final static int RECEPTIONIST = 4;
+        public final static List<String> ACCEPTED_VALUES = List.of("ROLE_MANAGER", "ROLE_MAID", "ROLE_TECHNICIAN", "ROLE_RECEPTIONIST");
     }
 }

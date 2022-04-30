@@ -1,14 +1,19 @@
 package com.spurvago.server.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spurvago.server.employee.Employee;
+import com.spurvago.server.employee.EmployeeDetailsServeceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -17,6 +22,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import javax.sql.DataSource;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
@@ -24,6 +30,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RestAuthenticationFailureHandler failureHandler;
     private final RestAuthenticationSuccessHandler successHandler;
     private final String secret;
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new EmployeeDetailsServeceImpl();
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+
+    }
 
     public SecurityConfig(DataSource dataSource, ObjectMapper objectMapper, RestAuthenticationFailureHandler failureHandler,
                           RestAuthenticationSuccessHandler successHandler,
@@ -35,13 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.secret = secret;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("{bcrypt}"+ new BCryptPasswordEncoder().encode("password"))
-                .roles("USER");
-    }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -60,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-resources/configuration/ui").permitAll()
                 .antMatchers("/swagger-resources/configuration/**").permitAll()
+                .antMatchers("/api/client/**", "/api/employee/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
