@@ -1,11 +1,9 @@
 package com.spurvago.components;
 
-import java.util.List;
-
 public interface IBaseService<T> {
     T find(long id);
 
-    ListPaginated<T> getList(Pager pager);
+    ListPaginated<T> getList(Pager pager, String search);
 
     T create(T newTestEntity);
 

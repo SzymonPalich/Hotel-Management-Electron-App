@@ -4,16 +4,11 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -37,8 +32,8 @@ public class MaidController implements IBaseController<MaidTicket> {
     }
 
     @Override
-    public ListPaginated<MaidTicket> getList(Pager pager) {
-        return maidService.getList(pager);
+    public ListPaginated<MaidTicket> getList(Pager pager, String search) {
+        return maidService.getList(pager, search);
     }
 
     @Override

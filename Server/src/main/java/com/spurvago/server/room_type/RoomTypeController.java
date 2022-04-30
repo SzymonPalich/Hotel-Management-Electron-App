@@ -31,8 +31,8 @@ public class RoomTypeController implements IBaseController<RoomType> {
     }
 
     @Override
-    public ListPaginated<RoomType> getList(Pager pager) {
-        ListPaginated<RoomType> entities = roomTypeService.getList(pager);
+    public ListPaginated<RoomType> getList(Pager pager, String search) {
+        ListPaginated<RoomType> entities = roomTypeService.getList(pager, search);
         return entities;
     }
 

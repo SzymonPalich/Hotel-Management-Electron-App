@@ -19,7 +19,7 @@ public record MaidService(MaidRepository maidRepository) implements IBaseService
     }
 
     @Override
-    public ListPaginated<MaidTicket> getList(Pager pager) {
+    public ListPaginated<MaidTicket> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<MaidTicket> entities = maidRepository.findAll(pageable);
         return new ListPaginated<>(entities, pager);

@@ -34,8 +34,8 @@ public class EmployeeController implements IBaseController<Employee> {
     }
 
     @Override
-    public ListPaginated<Employee> getList(Pager pager) {
-        ListPaginated<Employee> entities = employeeService.getList(pager);
+    public ListPaginated<Employee> getList(Pager pager, String search) {
+        ListPaginated<Employee> entities = employeeService.getList(pager, search);
 
         return entities;
     }
