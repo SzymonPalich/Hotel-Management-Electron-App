@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
+import static com.spurvago.components.Utils.asLikeQuery;
 
 @Repository
 public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTicket, Long>, JpaSpecificationExecutor<MaidTicket> {
@@ -21,35 +23,24 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
     static Specification<MaidTicket> search(List<String> searchWords) {
         return (r, q, b) -> {
             Join<MaidTicket, Employee> join = r.join("employee");
-            Expression<String> name = join.get("name");
-            return b.or(b.like(name, "%" + searchWords.get(0).toLowerCase() + "%"));
+            Predicate predicate = null;
+            Predicate tempPredicate;
+
+            for (String searchWord : searchWords) {
+                tempPredicate =
+                        b.or(
+                                b.like(join.get("firstName"), asLikeQuery(searchWord)),
+                                b.like(join.get("lastName"), asLikeQuery(searchWord)),
+                                b.like(r.get("roomId").as(String.class), asLikeQuery(searchWord)),
+                                b.like(r.get("finalizationDate").as(String.class), asLikeQuery(searchWord))
+                        );
+                if (searchWord.equals(searchWords.get(0)))
+                    predicate = tempPredicate;
+                else {
+                    predicate = b.and(predicate, tempPredicate);
+                }
+            }
+            return predicate;
         };
-//        if (searchWords.size() == 1) {
-//            return (r, q, b) -> {
-//                Expression<String> maid_id = r.get("maid_id");
-//                Expression<String> room_id = r.get("room_id");
-//                return b.and(
-//                        b.or(
-//                                b.like(maid_id.as(String.class), "%" + searchWords.get(0).toLowerCase() + "%"),
-//                                b.like(room_id.as(String.class), "%" + searchWords.get(0).toLowerCase() + "%")
-//                        ).or(b.like(name, "%" + searchWords.get(0).toLowerCase() + "%"));
-//                );
-//            };
-//        } else {
-//            return (r, q, b) -> {
-//                Expression<String> maid_id = r.get("maid_id");
-//                Expression<String> room_id = r.get("room_id");
-//                return b.and(
-//                        b.or(
-//                                b.like(maid_id.as(String.class), "%" + searchWords.get(0).toLowerCase() + "%"),
-//                                b.like(room_id.as(String.class), "%" + searchWords.get(0).toLowerCase() + "%")
-//                        ),
-//                        b.or(
-//                                b.like(maid_id.as(String.class), "%" + searchWords.get(1).toLowerCase() + "%"),
-//                                b.like(room_id.as(String.class), "%" + searchWords.get(1).toLowerCase() + "%")
-//                        )
-//                );
-//            };
-//        }
     }
 }

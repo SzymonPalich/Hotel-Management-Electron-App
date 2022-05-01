@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.spurvago.components.Utils;
 
 import java.util.List;
 
@@ -28,7 +29,15 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidT
 
     public ListPaginated<MaidTicketVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
-        Page<MaidTicket> entities = maidTicketRepository.findAll(pageable);
+        Page<MaidTicket> entities;
+        if (Utils.isNullOrBlank(search)) {
+            entities = maidTicketRepository.findAll(pageable);
+        }
+        else {
+            List<String> words = List.of(search.split("\\s"));
+            Specification<MaidTicket> specification = MaidTicketRepository.search(words);
+            entities = maidTicketRepository.findAll(specification, pageable);
+        }
         Page<MaidTicketVM> entitiesDTO = entities.map(MaidTicketVM::new);
 
         return new ListPaginated<>(entitiesDTO, pager);
