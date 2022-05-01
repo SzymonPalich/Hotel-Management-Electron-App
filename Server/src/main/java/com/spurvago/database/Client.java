@@ -1,4 +1,4 @@
-package com.spurvago.server.client;
+package com.spurvago.database;
 
 import com.spurvago.components.IBaseEntity;
 import com.spurvago.components.Utils;

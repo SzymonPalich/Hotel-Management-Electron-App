@@ -1,6 +1,7 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.server.employee.Employee;
+import com.spurvago.database.Employee;
+import com.spurvago.database.MaidTicket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,7 +14,7 @@ import javax.persistence.criteria.Join;
 import java.util.List;
 
 @Repository
-public interface MaidRepository extends PagingAndSortingRepository<MaidTicket, Long>, JpaSpecificationExecutor<MaidTicket> {
+public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTicket, Long>, JpaSpecificationExecutor<MaidTicket> {
     MaidTicket findById(long id);
     Page<MaidTicket> findAll(Pageable pageable);
 

@@ -1,5 +1,6 @@
 package com.spurvago.server.room_type;
 
+import com.spurvago.database.RoomType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

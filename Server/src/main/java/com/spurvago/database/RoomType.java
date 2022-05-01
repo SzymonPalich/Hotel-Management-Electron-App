@@ -1,4 +1,4 @@
-package com.spurvago.server.room_type;
+package com.spurvago.database;
 
 import com.spurvago.components.IBaseEntity;
 import lombok.Getter;

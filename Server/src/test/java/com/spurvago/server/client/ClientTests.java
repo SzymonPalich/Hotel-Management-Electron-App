@@ -1,6 +1,7 @@
 package com.spurvago.server.client;
 
 import com.spurvago.components.Utils;
+import com.spurvago.database.Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

@@ -3,6 +3,7 @@ package com.spurvago.server.employee;
 import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.database.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

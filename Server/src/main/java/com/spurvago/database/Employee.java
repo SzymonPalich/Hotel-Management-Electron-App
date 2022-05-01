@@ -1,14 +1,12 @@
-package com.spurvago.server.employee;
+package com.spurvago.database;
 
 import com.spurvago.components.IBaseEntity;
-import com.spurvago.server.maid_ticket.MaidTicket;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,11 +19,11 @@ public class Employee implements IBaseEntity<Employee> {
 
     @Getter
     @Setter
-    private String name;
+    private String firstName;
 
     @Getter
     @Setter
-    private String surname;
+    private String lastName;
 
     @Getter
     @Setter
@@ -60,8 +58,6 @@ public class Employee implements IBaseEntity<Employee> {
 
     @Override
     public void map(Employee source) {
-        this.setName(source.getName());
-        this.setSurname(source.getSurname());
         this.setEmail(source.getEmail());
         this.setPhoneNumber(source.getPhoneNumber());
         this.setPosition(source.getPosition());
