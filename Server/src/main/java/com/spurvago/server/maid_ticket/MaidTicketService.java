@@ -3,6 +3,7 @@ package com.spurvago.server.maid_ticket;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.MaidTicket;
+import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.MaidTicketVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,14 +28,22 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository){
         return new MaidTicketVM(entity);
     }
 
-    public ListPaginated<MaidTicket> getList(Pager pager, String search) {
+    public ListPaginated<MaidTicketVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<MaidTicket> entities = maidTicketRepository.findAll(pageable);
-        return new ListPaginated<MaidTicket>(entities, pager);
+        Page<MaidTicketVM> entitiesDTO = entities.map(e -> {
+            MaidTicketVM dto = new MaidTicketVM(e);
+            return dto;
+        });
+        return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    public MaidTicket create(MaidTicket newEntity) {
-        return maidTicketRepository.save(newEntity);
+    public MaidTicketVM create(MaidTicketFM newEntity) {
+        MaidTicket tempEntity = new MaidTicket();
+        tempEntity.map(newEntity);
+        maidTicketRepository.save(tempEntity);
+        MaidTicketVM entity = new MaidTicketVM(tempEntity);
+        return entity;
     }
 
     public MaidTicket update(MaidTicket oldEntity, MaidTicket newEntity) {
