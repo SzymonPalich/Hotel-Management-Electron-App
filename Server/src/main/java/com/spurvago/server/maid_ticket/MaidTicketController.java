@@ -40,17 +40,12 @@ public class MaidTicketController {
     public MaidTicketVM create(MaidTicketFM newEntity) {
         return maidTicketService.create(newEntity);
     }
-/*
+
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicket update(Long id, MaidTicket newEntity) {
-        MaidTicket entity = maidTicketService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        return entity;
-    }*/
+    public MaidTicket update(@PathVariable Long id, MaidTicketFM newEntity) {
+        return maidTicketService.update(id, newEntity);
+    }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

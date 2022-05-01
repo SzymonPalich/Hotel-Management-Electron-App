@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
@@ -31,10 +32,7 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository){
     public ListPaginated<MaidTicketVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<MaidTicket> entities = maidTicketRepository.findAll(pageable);
-        Page<MaidTicketVM> entitiesDTO = entities.map(e -> {
-            MaidTicketVM dto = new MaidTicketVM(e);
-            return dto;
-        });
+        Page<MaidTicketVM> entitiesDTO = entities.map(MaidTicketVM::new);
         return new ListPaginated<>(entitiesDTO, pager);
     }
 
@@ -46,9 +44,15 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository){
         return entity;
     }
 
-    public MaidTicket update(MaidTicket oldEntity, MaidTicket newEntity) {
+    public MaidTicket update(long id, MaidTicketFM newEntity) {
+        MaidTicket entity = maidTicketRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
 
-        return maidTicketRepository.save(oldEntity);
+        entity.map(newEntity);
+
+        return maidTicketRepository.save(entity);
     }
 
     public void delete(long id) {
