@@ -1,5 +1,6 @@
 package com.spurvago.server.maid_ticket.models;
 
+import com.spurvago.database.Employee;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,4 +13,5 @@ public class MaidTicketFM {
     private long roomId;
     private Date finalizationDate;
     private long employeeId;
+    private Employee employee;
 }

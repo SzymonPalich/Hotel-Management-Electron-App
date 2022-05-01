@@ -1,9 +1,12 @@
 package com.spurvago.database;
 
 
+import com.spurvago.server.employee.EmployeeRepository;
+import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.MaidTicketVM;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -28,4 +31,10 @@ public class MaidTicket {
     @Getter
     @Setter
     private Employee employee;
+
+    public void map(MaidTicketFM formModel) {
+        roomId = formModel.getRoomId();
+        employee = formModel.getEmployee();
+        finalizationDate = formModel.getFinalizationDate();
+    }
 }
