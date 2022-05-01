@@ -44,15 +44,14 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository){
         return entity;
     }
 
-    public MaidTicket update(long id, MaidTicketFM newEntity) {
+    public MaidTicketVM update(long id, MaidTicketFM newEntity) {
         MaidTicket entity = maidTicketRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
-
         entity.map(newEntity);
-
-        return maidTicketRepository.save(entity);
+        maidTicketRepository.save(entity);
+        return new MaidTicketVM(entity);
     }
 
     public void delete(long id) {

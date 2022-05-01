@@ -43,7 +43,7 @@ public class MaidTicketController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicket update(@PathVariable Long id, MaidTicketFM newEntity) {
+    public MaidTicketVM update(@PathVariable Long id, @RequestBody MaidTicketFM newEntity) {
         return maidTicketService.update(id, newEntity);
     }
 
