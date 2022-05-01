@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS employee
     primary key (id)
 );
 
-INSERT INTO `employee` (`id`, `name`, `surname`, `email`, `phone_number`, `position`, `pesel`, `employment_date`,
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `email`, `phone_number`, `position`, `pesel`, `employment_date`,
                         `dismissal_date`, `salary`)
 VALUES (NULL, 'Mariusz', 'Pudzianowski', 'mariusz.pudzian@spurvago.com', '881223295', 1, '82783123142', '2010-03-12',
         NULL, 3000.50),
