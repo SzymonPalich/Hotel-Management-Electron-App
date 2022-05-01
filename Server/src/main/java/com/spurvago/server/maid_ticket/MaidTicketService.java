@@ -1,6 +1,5 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.MaidTicket;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
-public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidTicketMapper maidTicketMapper){
+public record MaidTicketService(MaidTicketRepository maidTicketRepository){
 
     public MaidTicketVM find(long id) {
         var entity = maidTicketRepository.findById(id);
@@ -26,7 +24,7 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidT
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        return maidTicketMapper.map(entity, new MaidTicketVM());
+        return new MaidTicketVM(entity);
     }
 
     public ListPaginated<MaidTicket> getList(Pager pager, String search) {
