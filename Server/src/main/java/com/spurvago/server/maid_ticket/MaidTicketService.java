@@ -13,43 +13,45 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
-public record MaidTicketService(MaidTicketRepository maidTicketRepository){
+public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidTicketMapper maidTicketMapper){
 
     public MaidTicketVM find(long id) {
         var entity = maidTicketRepository.findById(id);
-
-        if (entity == null) {
+        if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
-        }
 
-        return new MaidTicketVM(entity);
+        return maidTicketMapper.mapToVM(entity);
     }
 
     public ListPaginated<MaidTicketVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<MaidTicket> entities = maidTicketRepository.findAll(pageable);
         Page<MaidTicketVM> entitiesDTO = entities.map(MaidTicketVM::new);
+
         return new ListPaginated<>(entitiesDTO, pager);
     }
 
     public MaidTicketVM create(MaidTicketFM newEntity) {
-        MaidTicket tempEntity = new MaidTicket();
-        tempEntity.map(newEntity);
-        maidTicketRepository.save(tempEntity);
-        MaidTicketVM entity = new MaidTicketVM(tempEntity);
-        return entity;
+        // Sprawdzanie validate()
+        // Sprawdzanie FK
+
+        var entity = maidTicketMapper.mapToEntity(newEntity);
+        maidTicketRepository.save(entity);
+        return maidTicketMapper.mapToVM(entity);
     }
 
     public MaidTicketVM update(long id, MaidTicketFM newEntity) {
         MaidTicket entity = maidTicketRepository.findById(id);
-        if (entity == null) {
+        if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
-        }
-        entity.map(newEntity);
+
+        // Sprawdzanie validate()
+        // Sprawdzanie FK
+
+        maidTicketMapper.mapToEntity(entity, newEntity);
         maidTicketRepository.save(entity);
         return new MaidTicketVM(entity);
     }

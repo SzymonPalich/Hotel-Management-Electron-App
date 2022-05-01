@@ -32,6 +32,9 @@ public class MaidTicket {
     @Setter
     private Employee employee;
 
+    public MaidTicket() {
+    }
+
     public void map(MaidTicketFM formModel) {
         roomId = formModel.getRoomId();
         finalizationDate = formModel.getFinalizationDate();

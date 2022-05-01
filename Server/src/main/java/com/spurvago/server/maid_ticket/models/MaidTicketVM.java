@@ -16,6 +16,9 @@ public class MaidTicketVM {
     private String employeeFirstName;
     private String employeeLastName;
 
+    public MaidTicketVM() {
+    }
+
     public MaidTicketVM(MaidTicket entity) {
         this.id = entity.getId();
         this.roomId = entity.getRoomId();

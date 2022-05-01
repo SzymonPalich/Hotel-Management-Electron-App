@@ -1,7 +1,6 @@
 package com.spurvago.server.maid_ticket;
 
 
-import com.spurvago.database.MaidTicket;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.server.maid_ticket.models.MaidTicketFM;
@@ -9,9 +8,7 @@ import com.spurvago.server.maid_ticket.models.MaidTicketVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping(path = "/api/maid_ticket")
@@ -25,7 +22,7 @@ public class MaidTicketController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicketVM find(@PathVariable Long id) {
+    public MaidTicketVM find(@PathVariable long id) {
         return maidTicketService.find(id);
     }
 
@@ -43,13 +40,13 @@ public class MaidTicketController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicketVM update(@PathVariable Long id, @RequestBody MaidTicketFM newEntity) {
+    public MaidTicketVM update(@PathVariable long id, @RequestBody MaidTicketFM newEntity) {
         return maidTicketService.update(id, newEntity);
     }
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable long id) {
          maidTicketService.delete(id);
     }
 
