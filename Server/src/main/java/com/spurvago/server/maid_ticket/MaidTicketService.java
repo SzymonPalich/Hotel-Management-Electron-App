@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidTicketMapper maidTicketMapper){
 
-    public MaidTicketVM find(@PathVariable long id) {
+    public MaidTicketVM find(long id) {
         var entity = maidTicketRepository.findById(id);
 
         if (entity == null) {

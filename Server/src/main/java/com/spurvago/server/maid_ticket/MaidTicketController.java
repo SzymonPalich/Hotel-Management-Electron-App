@@ -19,7 +19,7 @@ public class MaidTicketController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicketVM find(Long id) {
+    public MaidTicketVM find(@PathVariable Long id) {
         return maidTicketService.find(id);
     }
 
