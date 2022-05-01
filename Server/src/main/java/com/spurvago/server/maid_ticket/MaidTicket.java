@@ -21,10 +21,6 @@ public class MaidTicket implements IBaseEntity<MaidTicket> {
     @Setter
     private long room_id;
 
-    @Getter
-    @Setter
-    private long employee_id;
-
     @ManyToOne
     private Employee employee;
 
