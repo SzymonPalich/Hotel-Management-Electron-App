@@ -34,7 +34,6 @@ public class MaidTicket {
 
     public void map(MaidTicketFM formModel) {
         roomId = formModel.getRoomId();
-        employee = formModel.getEmployee();
         finalizationDate = formModel.getFinalizationDate();
     }
 }

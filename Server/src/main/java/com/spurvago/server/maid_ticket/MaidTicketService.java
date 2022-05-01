@@ -42,7 +42,11 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository){
         return maidTicketRepository.save(oldEntity);
     }
 
-    public void delete(MaidTicket entity) {
+    public void delete(long id) {
+        var entity = maidTicketRepository.findById(id);
+        if (entity == null)
+            throw new ResponseStatusException(NOT_FOUND);
+
         maidTicketRepository.delete(entity);
     }
 
