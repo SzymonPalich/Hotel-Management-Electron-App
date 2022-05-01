@@ -1,6 +1,7 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.server.employee.Employee;
+import com.spurvago.database.Employee;
+import com.spurvago.database.MaidTicket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,14 +1,12 @@
-package com.spurvago.server.employee;
+package com.spurvago.database;
 
 import com.spurvago.components.IBaseEntity;
-import com.spurvago.server.maid_ticket.MaidTicket;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -1,5 +1,6 @@
 package com.spurvago.server.client;
 
+import com.spurvago.database.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

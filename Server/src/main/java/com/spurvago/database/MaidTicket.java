@@ -1,8 +1,7 @@
-package com.spurvago.server.maid_ticket;
+package com.spurvago.database;
 
 
 import com.spurvago.components.IBaseEntity;
-import com.spurvago.server.employee.Employee;
 import lombok.Getter;
 import lombok.Setter;
 
