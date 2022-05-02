@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS employee
 (
     id              bigint(20)    not null AUTO_INCREMENT,
-    name            varchar(50)   not null,
-    surname         varchar(50)   not null,
+    first_name      varchar(50)   not null,
+    last_name       varchar(50)   not null,
     email           varchar(50)   not null,
     phone_number    varchar(9)    not null,
     position        int(20)       not null,
@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS employee
     primary key (id)
 );
 
-INSERT INTO `employee` (`id`, `name`, `surname`, `email`, `phone_number`, `position`, `pesel`, `employment_date`,
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `email`, `phone_number`, `position`, `pesel`,
+                        `employment_date`,
                         `dismissal_date`, `salary`)
 VALUES (NULL, 'Mariusz', 'Pudzianowski', 'mariusz.pudzian@spurvago.com', '881223295', 1, '82783123142', '2010-03-12',
         NULL, 3000.50),
