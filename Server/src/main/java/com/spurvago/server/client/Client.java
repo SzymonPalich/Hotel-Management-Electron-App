@@ -4,9 +4,9 @@ import com.spurvago.components.IBaseEntity;
 import com.spurvago.components.Utils;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table

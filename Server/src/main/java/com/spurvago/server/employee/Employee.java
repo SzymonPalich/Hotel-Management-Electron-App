@@ -3,7 +3,6 @@ package com.spurvago.server.employee;
 import com.spurvago.components.IBaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
