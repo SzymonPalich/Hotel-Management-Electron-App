@@ -5,7 +5,7 @@ export default class MaidTicketServices {
     public static getBlankMaidTicketTemplate(): IMaid {
         const tempMaid: IMaid = {
             id: 0,
-            room_id: 0,
+            room_number: 0,
             employee_id: 0,
             employee_firstName: "",
             employee_lastName: "",
@@ -28,7 +28,7 @@ export default class MaidTicketServices {
 
 export interface IMaid {
     id: number;
-    room_id: number;
+    room_number: number;
     finalization_date?: Date;
     employee_id: number;
     employee_firstName: string;

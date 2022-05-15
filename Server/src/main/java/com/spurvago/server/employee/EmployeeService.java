@@ -53,6 +53,11 @@ public record EmployeeService(EmployeeRepository employeeRepository) implements 
         employeeRepository.delete(Entity);
     }
 
+    public List<Employee> findByPosition(int position) {
+        List<Employee> entities = employeeRepository.findEmployeesByPosition(position);
+        return entities;
+    }
+
     public ListPaginated<Employee> getFiltered(String input, Pager pager) {
         Pageable pageable = pager.makePageable();
         if(input.isEmpty()) return null;

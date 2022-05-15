@@ -40,7 +40,7 @@
           <tbody class="text-gray-700">
             <tr v-for="maid in result.content" :key="maid" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ maid.roomId }}
+                {{ maid.roomNumber }}
               </td>
               <td class="text-center py-2 px-4">
                 {{ maid.employeeFirstName }} {{ maid.employeeLastName }}

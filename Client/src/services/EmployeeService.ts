@@ -48,6 +48,10 @@ export default class EmployeeServices {
 
     public static async getList(pager: IPager): Promise<IList<IEmployee>> {
         return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee`, { params: pager })).data;
+    }
+
+    public static async getEmployeesByPosition(position: string): Promise<IList<IEmployee>> {
+        return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee/position/${position}`)).data;
     }  
 }
 

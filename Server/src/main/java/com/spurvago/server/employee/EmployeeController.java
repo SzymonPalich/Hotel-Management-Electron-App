@@ -5,8 +5,11 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -71,6 +74,13 @@ public class EmployeeController implements IBaseController<Employee> {
         }
 
         employeeService.delete(entity);
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path="/position")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> getEmployeesByPosition(@RequestParam int position){
+        return employeeService.findByPosition(position);
     }
 
     @GetMapping(path = "/name")

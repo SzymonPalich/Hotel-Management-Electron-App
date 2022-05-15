@@ -26,9 +26,9 @@
             >
               <dt class="text-sm font-medium text-gray-500">Sprzątacz</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select v-model="selected">
-                    <option>
-
+                <select v-model="selected" required>
+                    <option v-for="emp in resultEmployee.content" :key="emp">
+                        {{ emp.firstName }} {{ emp.lastName }}
                     </option>
                 </select>
               </dd>
@@ -41,7 +41,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">E-mail</dt>
+              <dt class="text-sm font-medium text-gray-500">Id Pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -57,31 +57,24 @@
                   "
                   type="email"
                   required
-                  v-model="this.result.email"
+                  v-model="this.result.roomId"
                 />
               </dd>
             </div>
             <div
-              class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
             >
-              <dt class="text-sm font-medium text-gray-500">Numer telefonu</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
-                  class="
-                    border-2 border-gray-400
-                    w-full
-                    h-full
-                    rounded-xl
-                    text-md
-                    px-2
-                    py-1
-                    outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                  "
-                  type="text"
-                  required
-                  v-model="this.result.phoneNumber"
-                />
+              <dt class="text-sm font-medium text-gray-500">Data zakończenia</dt>
+              <dd v-if="this.result.finalizationDate == null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                Nie zakończono
+              </dd>
+              <dd v-if="this.result.finalizationDate != null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.finalizationDate }}
               </dd>
             </div>
           </dl>
@@ -124,35 +117,47 @@
 </template>
 
 <script lang="ts">
-import ClientsServices, { IClient } from "../../services/ClientsService";
+import { Options, Vue } from "vue-class-component";
+import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
-import Utils from "../../Utils";
+import Utils, {IList, IPager } from "../../Utils";
+import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
+
+
 
 export default defineComponent({
-  data() {
-    return {
-      result: ClientsServices.getBlankClientTemplate(),
-    };
-  },
-  mounted() {
-    console.log(this.getData());
-    this.getData().then((data) => (this.result = data));
-  },
-
-  methods: {
-    getId(): string {
-      return this.$route.params.id as string;
+    data() {
+        return {
+            result: MaidTicketServices.getBlankMaidTicketTemplate(),
+            pager: Utils.getDefaultPager(),
+            resultEmployee: EmployeeServices.getBlankEmployeeTemplate(),
+        };
     },
 
-    async getData(): Promise<IClient> {
-      return await ClientsServices.fetch(this.getId());
+    mounted() {
+        console.log(this.getData());
+        this.getData().then((data) => (this.result = data));
+        this.getEmployees().then((data) => (this.resultEmployee = data));
     },
 
-    async save(): Promise<void> {
-      await ClientsServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: 'clients' });
-    }
-  },
+    methods: {
+        getId(): string {
+            return this.$route.params.id as string;
+        },
+
+        async getData(): Promise<IMaid> {
+            return await MaidTicketServices.fetch(this.getId());
+        },
+
+        async getEmployees(): Promise<IList<IEmployee>> {
+            return await EmployeeServices.getEmployeesByPosition("2")
+        },
+
+        async save(): Promise<void> {
+            await MaidTicketServices.update(this.getId(), this.result);
+            Utils.acceptedAlert();
+            this.$router.push({ name: 'maid_ticket' });
+        }
+    },
 });
 </script>
