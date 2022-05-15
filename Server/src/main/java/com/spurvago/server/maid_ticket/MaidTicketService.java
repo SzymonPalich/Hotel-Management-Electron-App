@@ -71,13 +71,4 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidT
 
         maidTicketRepository.delete(entity);
     }
-
-    public ListPaginated<MaidTicket> getFiltered(String input, Pager pager) {
-        Pageable pageable = pager.makePageable();
-        if (input.isEmpty()) return null;
-        List<String> words = List.of(input.split("\\s"));
-        Specification<MaidTicket> specification = MaidTicketRepository.search(words);
-        Page<MaidTicket> entities = maidTicketRepository.findAll(specification, pageable);
-        return new ListPaginated<>(entities, pager);
-    }
 }

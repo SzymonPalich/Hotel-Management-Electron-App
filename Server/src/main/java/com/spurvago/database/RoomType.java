@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table
@@ -23,6 +24,8 @@ public class RoomType implements IBaseEntity<RoomType> {
     @Setter
     private BigDecimal Price;
 
+    @OneToMany
+    private List<Room> rooms;
 
     @Override
     public void map(RoomType source) {
