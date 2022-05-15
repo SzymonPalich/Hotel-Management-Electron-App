@@ -34,4 +34,7 @@ public class Room {
 
     @OneToMany
     private List<MaintenanceTicket> maintenanceTickets;
+
+    @OneToMany
+    private List<Accommodation> accommodationList;
 }

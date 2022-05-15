@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -29,6 +30,9 @@ public class Client implements IBaseEntity<Client> {
 
     @Getter
     private String phoneNumber;
+
+    @OneToMany
+    private List<Accommodation> accommodationList;
 
     public Client() {
     }

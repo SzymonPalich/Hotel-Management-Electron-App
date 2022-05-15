@@ -15,7 +15,7 @@ public class Employee implements IBaseEntity<Employee> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private long id;
+    private Long id;
 
     @Getter
     @Setter

@@ -13,7 +13,7 @@ public class MaintenanceTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private long id;
+    private Long id;
 
     @ManyToOne
     @Getter
