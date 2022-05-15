@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Klient: {{ this.result.firstName }} {{ this.result.lastName }}
+            ID Pokoju: {{ this.result.roomId }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,9 +24,9 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Imię</dt>
+              <dt class="text-sm font-medium text-gray-500">Imię sprzątacza</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.firstName }}
+                {{ this.result.employeeFirstName }}
               </dd>
             </div>
             <div
@@ -37,9 +37,9 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Nazwisko</dt>
+              <dt class="text-sm font-medium text-gray-500">Nazwisko sprzątacza</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.lastName }}
+                {{ this.result.employeeLastName }}
               </dd>
             </div>
             <div
@@ -50,21 +50,16 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">E-mail</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.email }}
+              <dt class="text-sm font-medium text-gray-500">Data zakończenia</dt>
+              <dd v-if="this.result.finalizationDate == null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                Nie zakończono
               </dd>
-            </div>
-            <div
-              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-            >
-              <dt class="text-sm font-medium text-gray-500">Numer telefonu</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.phoneNumber }}
+              <dd v-if="this.result.finalizationDate != null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.finalizationDate }}
               </dd>
             </div>
           </dl>
-          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
+          <div class="text-center px-4 py-5">
             <button
               class="
                 bg-gray-800
@@ -75,7 +70,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'clients' })"
+              @click="$router.push({ name: 'maid_ticket' })"
             >
               Powrót
             </button>
@@ -87,13 +82,13 @@
 </template>
 
 <script lang="ts">
-import ClientsServices, { IClient } from "../../services/ClientsService";
+import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
     return {
-      result: ClientsServices.getBlankClientTemplate(),
+      result: MaidTicketServices.getBlankMaidTicketTemplate(),
     };
   },
   mounted() {
@@ -106,8 +101,8 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    async getData(): Promise<IClient> {
-      return await ClientsServices.fetch(this.getId());
+    async getData(): Promise<IMaid> {
+      return await MaidTicketServices.fetch(this.getId());
     },
   },
 });

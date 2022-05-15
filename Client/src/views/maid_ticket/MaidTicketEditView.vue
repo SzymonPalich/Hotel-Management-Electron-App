@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Edytuj {{ this.result.firstName }} {{ this.result.lastName }}
+            ID Pokoju: {{ this.result.roomId }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,47 +24,13 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Imie</dt>
+              <dt class="text-sm font-medium text-gray-500">Sprzątacz</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
-                  class="
-                    border-2 border-gray-400
-                    w-full
-                    h-full
-                    rounded-xl
-                    text-md
-                    px-2
-                    py-1
-                    outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                  "
-                  type="text"
-                  required
-                  v-model="this.result.firstName"
-                />
-              </dd>
-            </div>
-            <div
-              class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-            >
-              <dt class="text-sm font-medium text-gray-500">Nazwisko</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
-                  class="
-                    border-2 border-gray-400
-                    w-full
-                    h-full
-                    rounded-xl
-                    text-md
-                    px-2
-                    py-1
-                    outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                  "
-                  type="text"
-                  required
-                  v-model="this.result.lastName"
-                />
+                <select v-model="selected">
+                    <option>
+
+                    </option>
+                </select>
               </dd>
             </div>
             <div

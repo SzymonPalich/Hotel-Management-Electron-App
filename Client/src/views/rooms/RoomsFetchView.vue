@@ -47,7 +47,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Status pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.setStatus(this.result.room_status) }}
+                {{ this.setStatus(this.result.status) }}
               </dd>
             </div>
             <div
@@ -81,7 +81,7 @@
               </dd>
             </div>
           </dl>
-          <div class="text-center px-4 py-5">
+          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
             <button
               class="
                 bg-gray-800
@@ -107,18 +107,7 @@
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 
-<<<<<<< Updated upstream
-let temp_room: IRoom = {
-  id: 1,
-  room_number: 101,
-  room_type: "Ekonomiczny",
-  room_status: 1,
-};
-
-export default class RoomsFetchView extends Vue {
-=======
 export default defineComponent({
->>>>>>> Stashed changes
   data() {
     return {
       result: RoomsServices.getBlankRoomTemplate(),
@@ -138,16 +127,9 @@ export default defineComponent({
       return RoomsServices.setStatus(status);
     },
 
-<<<<<<< Updated upstream
-  private setStatus(room_status: number): string {
-    return RoomsService.setStatus(room_status);
-  }
-}
-=======
     async getData(): Promise<IRoom> {
       return await RoomsServices.fetch(this.getId());
     },
   },
 });
->>>>>>> Stashed changes
 </script>

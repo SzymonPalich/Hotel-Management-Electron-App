@@ -44,8 +44,6 @@
             <span class="links_name">Pokoje</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('cleaning')" class="router-link-active">
-          <router-link to="/cleaning">
         <li v-if="this.isActive('maid_ticket')" class="router-link-active">
           <router-link to="/maid_ticket">
             <i class="material-icons">rowing</i>
@@ -53,7 +51,6 @@
           </router-link>
         </li>
         <li v-else>
-          <router-link to="/cleaning">
           <router-link to="/maid_ticket">
             <i class="material-icons">rowing</i>
             <span class="links_name">Pokojówka</span>

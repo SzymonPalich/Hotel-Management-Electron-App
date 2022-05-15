@@ -7,14 +7,9 @@ import RepairsCreateView from '../views/repairs/RepairsCreateView.vue'
 import RepairsEditView from '../views/repairs/RepairsEditView.vue'
 import RepairsFinalizationView from '../views/repairs/RepairsFinalizationView.vue'
 
-<<<<<<< Updated upstream
-import CleaningView from '../views/cleaning/CleaningView.vue'
-import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
-=======
 import MaidTicketView from '../views/maid_ticket/MaidTicketView.vue'
 import MaidTicketFetchView from '../views/maid_ticket/MaidTicketFetchView.vue'
 import MaidTicketEditView from '../views/maid_ticket/MaidTicketEditView.vue'
->>>>>>> Stashed changes
 
 import ClientsView from '../views/clients/ClientsView.vue'
 import ClientsFetchView from '../views/clients/ClientsFetchView.vue'
@@ -44,14 +39,14 @@ const routes: Array<RouteRecordRaw> = [
   },
   // Moduł pokojówki
   {
-    path: '/cleaning',
-    name: 'cleaning',
-    component: CleaningView
+    path: '/maid_ticket',
+    name: 'maid_ticket',
+    component: MaidTicketView
   },
   {
-    path: '/cleaning/:id/finish',
-    name: 'cleaning-finish',
-    component: CleaningFinishView
+    path: '/maid_ticket/:id',
+    name: 'maid_ticket-fetch',
+    component: MaidTicketFetchView
   },
   {
     path: '/maid_ticket/:id/edit',

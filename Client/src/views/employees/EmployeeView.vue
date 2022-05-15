@@ -11,7 +11,7 @@
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
-        <table id="cleaning_table" class="min-w-full">
+        <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
               <th
@@ -67,22 +67,22 @@
           <tbody class="text-gray-700">
             <tr v-for="emp in result.content" :key="emp" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ emp.name }}
+                {{ emp.firstName }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ emp.surname }}
+                {{ emp.lastName }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ emp.position }}
+                {{ this.setPosition(emp.position) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link 
-                  :to="{ name: 'employee-info', params: { id: emp.id }}"
+                  :to="{ name: 'employee-info', params: { id: emp.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link>
                 <router-link 
-                  :to="{ name: 'employees-edit', params: { id: emp.id }}">
+                  :to="{ name: 'employees-edit', params: { id: emp.id } }">
                   <i class="material-icons align-middle">edit</i>
                 </router-link>
                 <i class="material-icons align-middle cursor-pointer" @click="alertDisplay()">delete</i>
@@ -122,9 +122,17 @@ export default defineComponent({
     this.getData().then((data) => (this.result = data));
   },
 
+  setPosition(position: number): string {
+    return EmployeeServices.setPosition(position);
+  },
+
   methods: {
     async getData(): Promise<IList<IEmployee>> {
       return await EmployeeServices.getList(this.pager);
+    },
+
+    setPosition(position: number): string {
+      return EmployeeServices.setPosition(position);
     },
 
     alertDisplay(): void {
