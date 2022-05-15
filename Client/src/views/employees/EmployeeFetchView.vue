@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Pracownik: {{ this.result.name }} {{this.result.surname}}
+            Pracownik: {{ this.result.firstName }} {{this.result.lastName}}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -26,7 +26,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.position }}
+                {{ this.setPosition(this.result.position) }}
               </dd>
             </div>
             <div
@@ -55,7 +55,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer telefonu</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.phone_number }}
+                {{ this.result.phoneNumber }}
               </dd>
             </div>
             <div
@@ -76,7 +76,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Data zatrudnienia</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.employment_date.getDate()+'-'+this.result.employment_date.getMonth()+'-'+this.result.employment_date.getFullYear()}}
+                {{ this.result.employmentDate }}
               </dd>
             </div>
                 <div
@@ -86,15 +86,16 @@
                 px-4
                 py-5
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+                rounded-bt-6
               "
             >
               <dt class="text-sm font-medium text-gray-500">Data zwolnienia</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.dismissal_date.getDate()+'-'+this.result.dismissal_date.getMonth()+'-'+this.result.dismissal_date.getFullYear()}}
+                {{ this.result.dismissalDate }}
               </dd>
             </div>
           </dl>
-          <div class="text-center px-4 py-5">
+          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
             <button
               class="
                 bg-gray-800
@@ -117,26 +118,32 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import EmployeeService, { IEmployee } from "../../services/EmployeeService";
+import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
+import { defineComponent } from "vue";
 
-let temp_emp: IEmployee = {
-    id: 1,
-    name: "Andrzej",
-    surname: "Kowalski",
-    position: "Manager",
-    salary: 21308,
-    email: "AKowalski@spr.com",
-    phone_number: "190-921-291",
-    pesel: "98721093802",
-    employment_date: new Date(2001, 11, 9)
-};
-
-export default class EmployeeFetchView extends Vue {
+export default defineComponent({
   data() {
     return {
-      result: temp_emp,
+      result: EmployeeServices.getBlankEmployeeTemplate(),
     };
-  }
-}
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
+    },
+
+    async getData(): Promise<IEmployee> {
+      return await EmployeeServices.fetch(this.getId());
+    },
+
+    setPosition(position: number): string {
+      return EmployeeServices.setPosition(position);
+    }
+  },
+});
 </script>

@@ -120,7 +120,7 @@ let temp_room: IRoom = {
   id: 1,
   room_number: 101,
   room_type: "Ekonomiczny",
-  room_status: 1,
+  status: 1,
 };
 
 export default class RoomsEditView extends Vue {

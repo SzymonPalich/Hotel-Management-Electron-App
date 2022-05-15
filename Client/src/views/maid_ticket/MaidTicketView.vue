@@ -5,7 +5,6 @@
       <div class="pr-6 flex items-center">
         <i
           class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
-          @click="$router.push({ name: 'rooms-create' })"
           >add</i
         >
       </div>
@@ -15,44 +14,47 @@
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
+              <th class="text-left py-2 px-4 uppercase font-semibold text-sm w-1/5">
                 Numer Pokoju
               </th>
-              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Typ
-              </th>
-              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Status
+              <th class="text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm">
+                Sprzątacz
               </th>
               <th
-                class="text-center py-3 px-4 uppercase font-semibold text-sm w-36"
+                class="text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm w-36"
               >
                 Akcje
               </th>
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="room in result.content" :key="room" class="bg-white">
+            <tr v-for="maid in result.content" :key="maid" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ room.roomNumber }}
+                {{ maid.roomId }}
               </td>
-              <td class="text-left py-2 px-4">
-                {{ room.roomType }}
-              </td>
-              <td class="text-left py-2 px-4">
-                {{ this.setStatus(room.status) }}
+              <td class="text-center py-2 px-4">
+                {{ maid.employeeFirstName }} {{ maid.employeeLastName }}
               </td>
               <td class="text-center py-2 px-4 w-36">
-                <router-link :to="{ name: 'rooms-fetch', params: { id: '1' } }"
+                <router-link
+                  :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link
                 >
                 <i class="material-icons align-middle">person</i>
-                <router-link :to="{ name: 'rooms-edit', params: { id: '1' } }"
-                  ><i class="material-icons align-middle">edit</i>
-                </router-link>
-                <router-link :to="{ name: 'rooms' }" @click="alertDisplay()">
+                <i class="material-icons align-middle">edit</i>
+                <router-link :to="{ name: 'maid_ticket' }" @click="alertDisplay()">
                   <i class="material-icons align-middle">delete</i>
                 </router-link>
               </td>
@@ -69,7 +71,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils, { IPager, IList } from "../../Utils";
@@ -82,7 +84,7 @@ export default defineComponent({
   },
   data() {
     return {
-      result: Utils.getBlankListTemplate<IRoom>(),
+      result: Utils.getBlankListTemplate<IMaid>(),
       pager: Utils.getDefaultPager(),
     };
   },
@@ -92,12 +94,8 @@ export default defineComponent({
   },
 
   methods: {
-    async getData(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
-    },
-
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
+    async getData(): Promise<IList<IMaid>> {
+      return await MaidTicketServices.getList(this.pager);
     },
 
     alertDisplay(): void {
