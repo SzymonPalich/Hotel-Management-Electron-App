@@ -11,4 +11,5 @@ CREATE TABLE IF NOT EXISTS maid_ticket
 
 INSERT INTO `maid_ticket`(`room_id`, `employee_id`)
 VALUES (2, 1),
-       (1, 1);
+       (1, 1),
+       (2, null);
