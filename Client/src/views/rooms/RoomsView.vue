@@ -12,7 +12,7 @@
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
-        <table class="min-w-full">
+        <table id="cleaning_table" class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
               <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
@@ -32,15 +32,15 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="room in result.content" :key="room" class="bg-white">
+            <tr v-for="room in results" :key="room.id" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ room.roomNumber }}
+                {{ room.room_number }}
               </td>
               <td class="text-left py-2 px-4">
-                {{ room.roomType }}
+                {{ room.room_type }}
               </td>
               <td class="text-left py-2 px-4">
-                {{ this.setStatus(room.status) }}
+                {{ this.setStatus(room.room_status) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link :to="{ name: 'rooms-fetch', params: { id: '1' } }"
@@ -96,8 +96,8 @@ export default defineComponent({
       return await RoomsServices.getList(this.pager);
     },
 
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
+    setStatus(room_status: number): string {
+      return RoomsServices.setStatus(room_status);
     },
 
     alertDisplay(): void {

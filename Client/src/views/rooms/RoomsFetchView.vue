@@ -47,7 +47,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Status pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.setStatus(this.result.status) }}
+                {{ this.setStatus(this.result.room_status) }}
               </dd>
             </div>
             <div
@@ -81,7 +81,7 @@
               </dd>
             </div>
           </dl>
-          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
+          <div class="text-center px-4 py-5">
             <button
               class="
                 bg-gray-800
@@ -111,7 +111,7 @@ let temp_room: IRoom = {
   id: 1,
   room_number: 101,
   room_type: "Ekonomiczny",
-  status: 1,
+  room_status: 1,
 };
 
 export default class RoomsFetchView extends Vue {
@@ -121,8 +121,8 @@ export default class RoomsFetchView extends Vue {
     };
   }
 
-  private setStatus(status: number): string {
-    return RoomsService.setStatus(status);
+  private setStatus(room_status: number): string {
+    return RoomsService.setStatus(room_status);
   }
 }
 </script>

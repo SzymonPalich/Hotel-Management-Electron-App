@@ -31,7 +31,7 @@
             </div>
             <div
               class="
-                bg-white
+                bg-gray-50
                 px-4
                 py-5
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
@@ -64,7 +64,7 @@
               </dd>
             </div>
           </dl>
-          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
+          <div class="text-center px-4 py-5">
             <button
               class="
                 bg-gray-800

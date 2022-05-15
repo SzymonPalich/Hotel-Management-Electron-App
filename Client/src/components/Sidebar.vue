@@ -44,14 +44,14 @@
             <span class="links_name">Pokoje</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('maid_ticket')" class="router-link-active">
-          <router-link to="/maid_ticket">
+        <li v-if="this.isActive('cleaning')" class="router-link-active">
+          <router-link to="/cleaning">
             <i class="material-icons">rowing</i>
             <span class="links_name">Pokojówka</span>
           </router-link>
         </li>
         <li v-else>
-          <router-link to="/maid_ticket">
+          <router-link to="/cleaning">
             <i class="material-icons">rowing</i>
             <span class="links_name">Pokojówka</span>
           </router-link>

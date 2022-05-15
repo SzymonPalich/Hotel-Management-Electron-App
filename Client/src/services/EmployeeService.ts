@@ -2,26 +2,6 @@ import Utils, {IList, IPager} from "@/Utils";
 import axios from "axios";
 
 export default class EmployeeServices {
-    public static setPosition(position: number): string {
-        switch (position) {
-            case 1: {
-                return "Manager";
-            }
-            case 2: {
-                return "Sprzątacz";
-            }
-            case 3: {
-                return "Technik";
-            }
-            case 4: {
-                return "Recepcjonista";
-            }
-            default: {
-                return "Błąd";
-            }
-        }
-    }
-
     public static getBlankEmployeeTemplate(): IEmployee {
         const tempEmployee: IEmployee = {
             id: 0,
