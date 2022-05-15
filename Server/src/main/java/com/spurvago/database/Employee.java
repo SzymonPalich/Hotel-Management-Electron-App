@@ -56,6 +56,9 @@ public class Employee implements IBaseEntity<Employee> {
     @OneToMany
     private List<MaidTicket> maidTickets;
 
+    @OneToMany
+    private List<MaintenanceTicket> maintenanceTickets;
+
     @Override
     public void map(Employee source) {
         this.setEmail(source.getEmail());

@@ -16,9 +16,10 @@ public class MaidTicket {
     @Getter
     private long id;
 
+    @ManyToOne
     @Getter
     @Setter
-    private long roomId;
+    private Room room;
 
     @Getter
     @Setter
@@ -30,10 +31,5 @@ public class MaidTicket {
     private Employee employee;
 
     public MaidTicket() {
-    }
-
-    public void map(MaidTicketFM formModel) {
-        roomId = formModel.getRoomId();
-        finalizationDate = formModel.getFinalizationDate();
     }
 }
