@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 @Setter
 public class MaidTicketVM {
     private long id;
+    private long roomId;
     private int roomNumber;
     private String roomType;
     private int roomStatus;
@@ -25,6 +26,7 @@ public class MaidTicketVM {
 
     public MaidTicketVM(MaidTicket entity) {
         this.id = entity.getId();
+        this.roomId = entity.getRoom().getId();
         this.roomNumber = entity.getRoom().getRoomNumber();
         this.roomType = entity.getRoom().getRoomType().getType();
         this.roomStatus = entity.getRoom().getStatus();

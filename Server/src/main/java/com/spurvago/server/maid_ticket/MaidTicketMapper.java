@@ -30,6 +30,7 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
         MaidTicketVM dest = new MaidTicketVM();
 
         dest.setId(src.getId());
+        dest.setRoomId(src.getRoom().getId());
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());

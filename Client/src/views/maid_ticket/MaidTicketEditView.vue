@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            ID Pokoju: {{ this.result.roomId }}
+            Numer Pokoju: {{ this.result.roomNumber }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -26,8 +26,17 @@
             >
               <dt class="text-sm font-medium text-gray-500">Sprzątacz</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select v-model="selected" required>
-                    <option v-for="emp in resultEmployee.content" :key="emp">
+                <select
+                  class="
+                    w-full
+                    border-2 border-gray-400
+                    px-2
+                    py-0_1
+                    rounded-xl
+                    outline-none
+                  "
+                >
+                    <option v-for="emp in resultEmployee" :key="emp"  v-bind:value="{ id: emp.id }" :selected ="emp.id == this.result.employeeId" >
                         {{ emp.firstName }} {{ emp.lastName }}
                     </option>
                 </select>
@@ -41,24 +50,22 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Id Pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
+                <select
                   class="
-                    border-2 border-gray-400
                     w-full
-                    h-full
-                    rounded-xl
-                    text-md
+                    border-2 border-gray-400
                     px-2
-                    py-1
+                    py-0_1
+                    rounded-xl
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-                  type="email"
-                  required
-                  v-model="this.result.roomId"
-                />
+                >
+                    <option v-for="room in resultRooms.content" :key="room" v-bind="room" :selected ="room.id == this.result.roomId" >
+                        {{ room.roomNumber }} {{ room.roomType }}
+                    </option>
+                </select>
               </dd>
             </div>
             <div
@@ -122,6 +129,7 @@ import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
 import Utils, {IList, IPager } from "../../Utils";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
+import RoomsServices, { IRoom } from "../../services/RoomsService";
 
 
 
@@ -130,14 +138,18 @@ export default defineComponent({
         return {
             result: MaidTicketServices.getBlankMaidTicketTemplate(),
             pager: Utils.getDefaultPager(),
-            resultEmployee: EmployeeServices.getBlankEmployeeTemplate(),
+            resultEmployee: Utils.getBlankListTemplate<IEmployee>(),
+            resultRooms: Utils.getBlankListTemplate<IRoom>(),
         };
     },
 
     mounted() {
         console.log(this.getData());
+        console.log(this.getEmployees());
+        console.log(this.getRooms());
         this.getData().then((data) => (this.result = data));
         this.getEmployees().then((data) => (this.resultEmployee = data));
+        this.getRooms().then((data) => (this.resultRooms = data));
     },
 
     methods: {
@@ -150,7 +162,11 @@ export default defineComponent({
         },
 
         async getEmployees(): Promise<IList<IEmployee>> {
-            return await EmployeeServices.getEmployeesByPosition("2")
+            return await EmployeeServices.getEmployeesByPosition(this.pager,"2");
+        },
+
+        async getRooms(): Promise<IList<IRoom>> {
+            return await RoomsServices.getList(this.pager);
         },
 
         async save(): Promise<void> {
