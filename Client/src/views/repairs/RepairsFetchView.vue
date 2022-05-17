@@ -26,7 +26,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Usterka</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.issue }}
+                {{ this.result.name }}
               </dd>
             </div>
             <div
@@ -34,7 +34,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.room_nr }}
+                {{ this.result.roomNumber }}
               </dd>
             </div>
             <div
@@ -47,7 +47,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.desc }}
+                {{ this.result.description }}
               </dd>
             </div>
           </dl>
@@ -74,21 +74,28 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import RepairService, { IRepair } from "../../services/RepairService";
+import RepairServices, { IRepair } from "../../services/RepairService";
+import { defineComponent } from "vue";
 
-let temp_repair: IRepair = {
-  id: 1,
-  issue: "Telewizor",
-  room_nr: 113,
-  desc: "Zniszczona matryca"
-};
-
-export default class RepairsFetchView extends Vue {
+export default defineComponent({
   data() {
     return {
-      result: temp_repair,
+      result: RepairServices.getBlankRepairTemplate(),
     };
-  }
-}
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
+    },
+
+    async getData(): Promise<IRepair> {
+      return await RepairServices.fetch(this.getId());
+    },
+  },
+});
 </script>
