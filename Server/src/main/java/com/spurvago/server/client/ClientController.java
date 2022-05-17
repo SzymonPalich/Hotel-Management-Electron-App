@@ -4,10 +4,10 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Client;
+import com.spurvago.server.client.models.ClientVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -15,7 +15,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/client")
-public class ClientController implements IBaseController<Client> {
+public class ClientController {
     private final ClientService clientService;
 
     @Autowired
@@ -23,44 +23,33 @@ public class ClientController implements IBaseController<Client> {
         this.clientService = clientService;
     }
 
-    @Override
-    public Client find(Long id) {
-        Client entity = clientService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        return entity;
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientVM find(@PathVariable long id) {
+        return clientService.find(id);
     }
 
-    @Override
-    public ListPaginated<Client> getList(Pager pager, String search) {
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ListPaginated<ClientVM> getList(Pager pager, String search) {
         return clientService.getList(pager, search);
     }
 
-    @Override
-    public Client create(Client newTestEntity) {
-        return clientService.create(newTestEntity);
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public ClientVM create(Client newEntity) {
+        return clientService.create(newEntity);
     }
 
-    @Override
-    public Client update(Long id, Client newTestEntity) {
-        Client oldEntity = clientService.find(id);
-        if (oldEntity == null)
-            throw new ResponseStatusException(NOT_FOUND);
-
-        oldEntity = clientService.update(oldEntity, newTestEntity);
-
-        return oldEntity;
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientVM update(@PathVariable Long id, Client newEntity) {
+        return clientService.update(id, newEntity);
     }
 
-    @Override
-    public void delete(Long id) {
-        Client entity = clientService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        clientService.delete(entity);
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        clientService.delete(id);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class Client implements IBaseEntity<Client> {
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -53,14 +53,6 @@ public class Client implements IBaseEntity<Client> {
         this.phoneNumber = (Utils.isNullOrBlank(phoneNumber)) ? null : phoneNumber;
     }
 
-    @Override
-    public void map(Client source) {
-        this.setFirstName(source.getFirstName());
-        this.setLastName(source.getLastName());
-        this.setEmail(source.getEmail());
-        this.setPhoneNumber(source.getPhoneNumber());
-    }
-
     /**
      * <b>firstName</b> nie może być puste i musi zawierać < 50 znaków<br>
      * <b>lastName</b> nie może być puste i musi zawierać < 50 znaków<br>
@@ -70,7 +62,6 @@ public class Client implements IBaseEntity<Client> {
      *
      * @return True, jeżeli obiekt przeszedł walidację
      */
-    @Override
     public boolean validate() {
         if (firstName.length() > 50 || firstName.isBlank())
             return false;

@@ -21,7 +21,19 @@ public class EmployeeVM {
     private Date dismissalDate;
     private BigDecimal salary;
 
+    public EmployeeVM(){
+    }
 
+    public EmployeeVM(Employee entity) {
+        this.id = entity.getId();
+        this.firstName = entity.getFirstName();
+        this.lastName = entity.getLastName();
+        this.email = entity.getEmail();
+        this.phoneNumber = getPhoneNumber();
+        this.position = entity.getPosition();
+        this.pesel = entity.getPesel();
+        this.employmentDate = entity.getEmploymentDate();
+        this.dismissalDate = entity.getDismissalDate();
+        this.salary = entity.getSalary();
+    }
 }
-
-

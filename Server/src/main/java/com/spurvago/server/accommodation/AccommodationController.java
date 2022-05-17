@@ -22,6 +22,7 @@ public class AccommodationController {
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AccommodationVM find(@PathVariable long id) {
+
         return accommodationService.find(id);
     }
 
@@ -34,6 +35,7 @@ public class AccommodationController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public AccommodationVM create(AccommodationFM newEntity) {
+
         return accommodationService.create(newEntity);
     }
 

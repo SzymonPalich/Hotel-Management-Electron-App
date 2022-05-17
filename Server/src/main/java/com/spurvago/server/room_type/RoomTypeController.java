@@ -4,69 +4,51 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.RoomType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.spurvago.server.room_type.models.RoomTypeVM;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/api/room_type")
-public class RoomTypeController implements IBaseController<RoomType> {
+public class RoomTypeController {
     private final RoomTypeService roomTypeService;
-
+    @Autowired
     public RoomTypeController(RoomTypeService roomTypeService) {
         this.roomTypeService = roomTypeService;
     }
 
-    @Override
-    public RoomType find(Long id) {
-        RoomType entity = roomTypeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        return entity;
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public RoomTypeVM find(@PathVariable Long id) {
+        return roomTypeService.find(id);
     }
 
-    @Override
-    public ListPaginated<RoomType> getList(Pager pager, String search) {
-        ListPaginated<RoomType> entities = roomTypeService.getList(pager, search);
-        return entities;
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ListPaginated<RoomTypeVM> getList(Pager pager, String search) {
+        return roomTypeService.getList(pager, search);
     }
 
-    @Override
-    public RoomType create(RoomType newTestEntity) {
-        RoomType entity = roomTypeService.create(newTestEntity);
-        return entity;
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public RoomTypeVM create(RoomType newEntity) {
+        return roomTypeService.create(newEntity);
     }
 
-
-    @Override
-    public RoomType update(Long id, RoomType newTestEntity) {
-        RoomType entity = roomTypeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        entity = roomTypeService.update(entity, newTestEntity);
-
-        return entity;
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public RoomTypeVM update(@PathVariable Long id,@RequestBody RoomType newEntity) {
+        return roomTypeService.update(id, newEntity);
     }
 
-    @Override
-    public void delete(Long id) {
-        RoomType entity = roomTypeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-        roomTypeService.delete(entity);
-    }
-
-    @GetMapping(path = "/name")
-    public ListPaginated<RoomType> getFiltered(@RequestParam String input, Pager pager) {
-        return roomTypeService.getFiltered(input, pager);
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        roomTypeService.delete(id);
     }
 }

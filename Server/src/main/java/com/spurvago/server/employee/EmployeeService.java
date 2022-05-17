@@ -5,6 +5,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Employee;
+import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,57 +14,69 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record EmployeeService(EmployeeRepository employeeRepository) implements IBaseService<Employee> {
+public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
 
+    public EmployeeVM find(long id) {
+        var entity = employeeRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
 
-    @Override
-    public Employee find(long id) {
-        return employeeRepository.findById(id);
+        return employeeMapper.mapToVM(entity);
     }
 
-    @Override
-    public ListPaginated<Employee> getList(Pager pager, String search) {
+    public ListPaginated<EmployeeVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
-        Page<Employee> entities = employeeRepository.findAll(pageable);
-        ListPaginated<Employee> listPaginated = new ListPaginated<>(entities, pager);
-        return listPaginated;
+        Page<Employee> entities;
+
+        if (Utils.isNullOrBlank(search)) {
+            entities = employeeRepository.findAll(pageable);
+        } else {
+            List<String> words = List.of(search.split("\\s"));
+            Specification<Employee> specification = EmployeeRepository.search(words);
+            entities = employeeRepository.findAll(specification, pageable);
+        }
+
+        Page<EmployeeVM> entitiesDTO = entities.map(EmployeeVM::new);
+
+        return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    @Override
-    public Employee create(Employee newEntity) {
-        // walidacje zrobic przez validate w klasie()
+
+    public EmployeeVM create(Employee newEntity) {
         if (!Utils.validateEmail(newEntity.getEmail())) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
-        return employeeRepository.save(newEntity);
+        employeeRepository.save(newEntity);
+        return employeeMapper.mapToVM(newEntity);
     }
 
-    @Override
-    public Employee update(Employee oldEntity, Employee newEntity) {
-        oldEntity.map(newEntity);
 
-        return employeeRepository.save(oldEntity);
+    public EmployeeVM update(long id, Employee newEntity) {
+        Employee entity = employeeRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+
+        employeeMapper.mapToEntity(entity, newEntity);
+        employeeRepository.save(entity);
+        return new EmployeeVM(entity);
     }
 
-    @Override
-    public void delete(Employee Entity) {
-        employeeRepository.delete(Entity);
+    public void delete(long id) {
+        var entity = employeeRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+
+        employeeRepository.delete(entity);
     }
 
     public List<Employee> findByPosition(int position) {
-        List<Employee> entities = employeeRepository.findEmployeesByPosition(position);
-        return entities;
-    }
-
-    public ListPaginated<Employee> getFiltered(String input, Pager pager) {
-        Pageable pageable = pager.makePageable();
-        if(input.isEmpty()) return null;
-        List<String> words = List.of(input.split("\\s"));
-        Specification<Employee> specification = EmployeeRepository.search(words);
-        Page<Employee> entities = employeeRepository.findAll(specification, pageable);
-        return new ListPaginated<>(entities, pager);
+        return employeeRepository.findEmployeesByPosition(position);
     }
 }

@@ -1,6 +1,5 @@
 package com.spurvago.database;
 
-import com.spurvago.components.IBaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class Employee implements IBaseEntity<Employee> {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -58,22 +57,6 @@ public class Employee implements IBaseEntity<Employee> {
 
     @OneToMany
     private List<MaintenanceTicket> maintenanceTickets;
-
-    @Override
-    public void map(Employee source) {
-        this.setEmail(source.getEmail());
-        this.setPhoneNumber(source.getPhoneNumber());
-        this.setPosition(source.getPosition());
-        this.setPesel(source.getPesel());
-        this.setEmploymentDate(source.getEmploymentDate());
-        this.setDismissalDate(source.getDismissalDate());
-        this.setSalary(source.getSalary());
-    }
-
-    @Override
-    public boolean validate() {
-        return true;
-    }
 
     public static final class Position {
         public final static List<Integer> ACCEPTED_VALUES = List.of(1, 2, 3, 4);

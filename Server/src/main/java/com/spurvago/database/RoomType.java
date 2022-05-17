@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table
-public class RoomType implements IBaseEntity<RoomType> {
+public class RoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -18,23 +18,12 @@ public class RoomType implements IBaseEntity<RoomType> {
 
     @Getter
     @Setter
-    private String Type;
+    private String type;
 
     @Getter
     @Setter
-    private BigDecimal Price;
+    private BigDecimal price;
 
     @OneToMany
     private List<Room> rooms;
-
-    @Override
-    public void map(RoomType source) {
-        this.setPrice(source.getPrice());
-        this.setType(source.getType());
-    }
-
-    @Override
-    public boolean validate() {
-        return true;
-    }
 }
