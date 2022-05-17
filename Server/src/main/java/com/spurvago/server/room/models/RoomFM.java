@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoomFM {
-    private int roomNumber;
     private long roomTypeId;
+    private int roomNumber;
     private int status;
 }

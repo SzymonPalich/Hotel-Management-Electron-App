@@ -8,9 +8,8 @@ import java.sql.Date;
 @Getter
 @Setter
 public class AccommodationFM {
-    private long id;
-    private long clientId;
-    private long roomId;
+    private long RoomId;
+    private long ClientId;
     private Date startDate;
     private Date endDate;
     private Boolean reservationOnly;
