@@ -4,6 +4,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Product;
+import com.spurvago.server.product.models.ProductVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -17,17 +18,17 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
-public record ProductService(ProductRepository productRepository) {
-    public Product find(long id) {
+public record ProductService(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductVM find(long id) {
         var entity = productRepository.findById(id);
         if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(NOT_FOUND);
         }
 
-        return entity;
+        return productMapper.mapToVM(entity);
     }
 
-    public ListPaginated<Product> getList(Pager pager, String search) {
+    public ListPaginated<ProductVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
         Page<Product> entities;
         if (Utils.isNullOrBlank(search)) {
@@ -38,21 +39,25 @@ public record ProductService(ProductRepository productRepository) {
             entities = productRepository.findAll(specification, pageable);
         }
 
-        return new ListPaginated<>(entities, pager);
+        Page<ProductVM> entitiesDTO = entities.map(ProductVM::new);
+
+        return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    public Product create(Product newEntity) {
-        return productRepository.save(newEntity);
+    public ProductVM create(Product newEntity) {
+        productRepository.save(newEntity);
+        return productMapper.mapToVM(newEntity);
     }
 
-    public Product update(long id, Product newEntity) {
+    public ProductVM update(long id, Product newEntity) {
         Product entity = productRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        entity.map(newEntity);
-        return productRepository.save(entity);
+        productMapper.mapToEntity(entity, newEntity);
+        productRepository.save(entity);
+        return new ProductVM(entity);
     }
 
     public void delete(long id) {

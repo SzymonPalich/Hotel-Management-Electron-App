@@ -4,6 +4,7 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Employee;
+import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @CrossOrigin
 @RestController
 @RequestMapping(path="/api/employee")
-public class EmployeeController implements IBaseController<Employee> {
+public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
@@ -25,55 +26,36 @@ public class EmployeeController implements IBaseController<Employee> {
         this.employeeService = employeeService;
     }
 
-    @Override
-    public Employee find(Long id) {
-        Employee entity = employeeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        return entity;
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeVM find(@PathVariable long id) {
+        return employeeService.find(id);
     }
 
-    @Override
-    public ListPaginated<Employee> getList(Pager pager, String search) {
-        ListPaginated<Employee> entities = employeeService.getList(pager, search);
-
-        return entities;
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ListPaginated<EmployeeVM> getList(Pager pager, String search) {
+        return employeeService.getList(pager, search);
     }
 
-    @Override
-    public Employee create(Employee newEntity) {
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public EmployeeVM create(Employee newEntity) {
+        return employeeService.create(newEntity);
+    }
+
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeVM update(@PathVariable Long id,@RequestBody Employee newEntity) {
         if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        Employee entity = employeeService.create(newEntity);
-
-        return entity;
+        return employeeService.update(id, newEntity);
     }
 
-    @Override
-    public Employee update(Long id, Employee newEntity) {
-        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        Employee entity = employeeService.find(id);
-        if (entity == null)
-            throw new ResponseStatusException(NOT_FOUND);
-
-        entity = employeeService.update(entity, newEntity);
-
-        return entity;
-    }
-
-    @Override
-    public void delete(Long id) {
-        Employee entity = employeeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        employeeService.delete(entity);
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        employeeService.delete(id);
     }
 
     @CrossOrigin
@@ -81,10 +63,5 @@ public class EmployeeController implements IBaseController<Employee> {
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesByPosition(@RequestParam int position){
         return employeeService.findByPosition(position);
-    }
-
-    @GetMapping(path = "/name")
-    public ListPaginated<Employee> getFiltered(@RequestParam String input, Pager pager) {
-        return employeeService.getFiltered(input, pager);
     }
 }

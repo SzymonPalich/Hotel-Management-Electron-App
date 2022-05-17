@@ -3,6 +3,7 @@ package com.spurvago.server.product;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Product;
+import com.spurvago.server.product.models.ProductVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,25 +24,25 @@ public class ProductController {
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Product find(@PathVariable Long id) {
+    public ProductVM find(@PathVariable Long id) {
         return productService.find(id);
     }
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ListPaginated<Product> getList(Pager pager, String search) {
+    public ListPaginated<ProductVM> getList(Pager pager, String search) {
         return productService.getList(pager, search);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Product create(Product newEntity) {
+    public ProductVM create(Product newEntity) {
         return productService.create(newEntity);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Product update(@PathVariable Long id, @RequestBody Product newEntity) {
+    public ProductVM update(@PathVariable Long id, @RequestBody Product newEntity) {
         return productService.update(id, newEntity);
     }
 

@@ -25,13 +25,4 @@ public class Product {
     @Getter
     @Setter
     private BigDecimal wholesalePrice;
-
-    public Product(){
-    }
-
-    public void map(Product src) {
-        this.setProductName(src.getProductName());
-        this.setRetailPrice(src.getRetailPrice());
-        this.setWholesalePrice(src.getWholesalePrice());
-    }
 }

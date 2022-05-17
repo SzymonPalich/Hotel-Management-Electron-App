@@ -9,7 +9,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
+
+import static com.spurvago.components.Utils.asLikeQuery;
 
 @Repository
 public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType, Long>, JpaSpecificationExecutor<RoomType> {
@@ -19,32 +22,23 @@ public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType,
     Page<RoomType> findAll(Pageable pageable);
 
     static Specification<RoomType> search(List<String> searchWords) {
-        if (searchWords.size() == 1) {
-            return (r, q, b) -> {
-                Expression<String> type = b.lower(r.get("Type"));
-                Expression<String> price = r.get("Price");
-                return b.and(
+        return (r, q, b) -> {
+            Predicate predicate = null;
+            Predicate tempPredicate;
+
+            for (String searchWord : searchWords) {
+                tempPredicate =
                         b.or(
-                                b.like(type, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(price.as(String.class), "%" + searchWords.get(0) + "%")
-                        )
-                );
-            };
-        } else {
-            return (r, q, b) -> {
-                Expression<String> type = b.lower(r.get("Type"));
-                Expression<String> price = r.get("Price");
-                return b.and(
-                        b.or(
-                                b.like(type, "%" + searchWords.get(0).toLowerCase() + "%"),
-                                b.like(price.as(String.class), "%" + searchWords.get(0).toLowerCase() + "%")
-                        ),
-                        b.or(
-                                b.like(type, "%" + searchWords.get(1).toLowerCase() + "%"),
-                                b.like(price.as(String.class), "%" + searchWords.get(1).toLowerCase() + "%")
-                        )
-                );
-            };
-        }
+                                b.like(r.get("type"), asLikeQuery(searchWord)),
+                                b.like(r.get("price").as(String.class), asLikeQuery(searchWord))
+                        );
+                if (searchWord.equals(searchWords.get(0)))
+                    predicate = tempPredicate;
+                else {
+                    predicate = b.and(predicate, tempPredicate);
+                }
+            }
+            return predicate;
+        };
     }
 }
