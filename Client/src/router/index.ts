@@ -26,6 +26,8 @@ import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
 import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
+import ProductView from '../views/product/ProductView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -141,6 +143,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees/:id/edit',
     name: 'employees-edit',
     component: EmployeeEditView
+  },
+  // Moduł magazynu
+  {
+    path: '/product',
+    name: 'product',
+    component: ProductView
   }
 ]
 

@@ -68,17 +68,17 @@
             <span class="links_name">Naprawy</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('storage')" class="router-link-active">
-          <a href="#">
+        <li v-if="this.isActive('product')" class="router-link-active">
+          <router-link to ="/product">
             <i class="material-icons">storage</i>
             <span class="links_name">Magazyn</span>
-          </a>
+          </router-link>
         </li>
         <li v-else>
-          <a href="#">
+          <router-link to="/product">
             <i class="material-icons">storage</i>
             <span class="links_name">Magazyn</span>
-          </a>
+          </router-link>
         </li>
         <li v-if="this.isActive('incomes')" class="router-link-active">
           <a href="#">
