@@ -5,6 +5,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Client;
+import com.spurvago.server.client.models.ClientFM;
 import com.spurvago.server.client.models.ClientVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,22 +50,23 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
         return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    public ClientVM create(Client newEntity) {
-        if (!newEntity.validate())
+    public ClientVM create(ClientFM newEntity) {
+        var entity = clientMapper.mapToEntity(newEntity);
+        if (!entity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         if (!checkConstraints(newEntity.getPhoneNumber(), newEntity.getEmail()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-        clientRepository.save(newEntity);
-        return clientMapper.mapToVM(newEntity);
+        clientRepository.save(entity);
+        return clientMapper.mapToVM(entity);
     }
 
-    public ClientVM update(long id, Client newEntity) {
+    public ClientVM update(long id, ClientFM newEntity) {
         Client entity = clientRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        if (!newEntity.validate())
+        if (!entity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         if (!Objects.equals(entity.getPhoneNumber(), newEntity.getPhoneNumber())

@@ -1,6 +1,7 @@
 package com.spurvago.server.product;
 
 import com.spurvago.database.Product;
+import com.spurvago.server.product.models.ProductFM;
 import com.spurvago.server.product.models.ProductVM;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,15 @@ public record ProductMapper() {
         return dest;
     }
 
-    Product mapToEntity(Product dest, Product src) {
+    Product mapToEntity( ProductFM src) {
+        Product dest = new Product();
+        dest.setProductName(src.getProductName());
+        dest.setRetailPrice(src.getRetailPrice());
+        dest.setWholesalePrice(src.getWholesalePrice());
+        return dest;
+    }
+
+    Product mapToEntity(Product dest, ProductFM src) {
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());
         dest.setWholesalePrice(src.getWholesalePrice());

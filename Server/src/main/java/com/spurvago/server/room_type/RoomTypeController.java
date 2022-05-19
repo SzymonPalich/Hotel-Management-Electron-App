@@ -4,6 +4,7 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.RoomType;
+import com.spurvago.server.room_type.models.RoomTypeFM;
 import com.spurvago.server.room_type.models.RoomTypeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class RoomTypeController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public RoomTypeVM create(RoomType newEntity) {
+    public RoomTypeVM create(RoomTypeFM newEntity) {
         return roomTypeService.create(newEntity);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoomTypeVM update(@PathVariable Long id,@RequestBody RoomType newEntity) {
+    public RoomTypeVM update(@PathVariable Long id,@RequestBody RoomTypeFM newEntity) {
         return roomTypeService.update(id, newEntity);
     }
 

@@ -4,6 +4,7 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Client;
+import com.spurvago.server.client.models.ClientFM;
 import com.spurvago.server.client.models.ClientVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,13 @@ public class ClientController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientVM create(Client newEntity) {
+    public ClientVM create(ClientFM newEntity) {
         return clientService.create(newEntity);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientVM update(@PathVariable Long id, Client newEntity) {
+    public ClientVM update(@PathVariable Long id, ClientFM newEntity) {
         return clientService.update(id, newEntity);
     }
 

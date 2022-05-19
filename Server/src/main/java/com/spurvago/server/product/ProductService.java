@@ -4,6 +4,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Product;
+import com.spurvago.server.product.models.ProductFM;
 import com.spurvago.server.product.models.ProductVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,12 +45,13 @@ public record ProductService(ProductRepository productRepository, ProductMapper 
         return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    public ProductVM create(Product newEntity) {
-        productRepository.save(newEntity);
-        return productMapper.mapToVM(newEntity);
+    public ProductVM create(ProductFM newEntity) {
+        var entity = productMapper.mapToEntity(newEntity);
+        productRepository.save(entity);
+        return productMapper.mapToVM(entity);
     }
 
-    public ProductVM update(long id, Product newEntity) {
+    public ProductVM update(long id, ProductFM newEntity) {
         Product entity = productRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);

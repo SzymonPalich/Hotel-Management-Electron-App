@@ -6,6 +6,7 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.RoomType;
 import com.spurvago.server.product.models.ProductVM;
+import com.spurvago.server.room_type.models.RoomTypeFM;
 import com.spurvago.server.room_type.models.RoomTypeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,12 +48,13 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMap
         return new ListPaginated<>(entitiesDTO, pager);
     }
 
-    public RoomTypeVM create(RoomType newEntity) {
-        roomTypeRepository.save(newEntity);
-        return roomTypeMapper.mapToVM(newEntity);
+    public RoomTypeVM create(RoomTypeFM newEntity) {
+        var entity = roomTypeMapper.mapToEntity(newEntity);
+        roomTypeRepository.save(entity);
+        return roomTypeMapper.mapToVM(entity);
     }
 
-    public RoomTypeVM update(long id, RoomType newEntity) {
+    public RoomTypeVM update(long id, RoomTypeFM newEntity) {
         RoomType entity = roomTypeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);

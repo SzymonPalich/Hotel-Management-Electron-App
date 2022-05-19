@@ -4,6 +4,7 @@ import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Employee;
+import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,13 +41,13 @@ public class EmployeeController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeVM create(Employee newEntity) {
+    public EmployeeVM create(EmployeeFM newEntity) {
         return employeeService.create(newEntity);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeVM update(@PathVariable Long id,@RequestBody Employee newEntity) {
+    public EmployeeVM update(@PathVariable Long id,@RequestBody EmployeeFM newEntity) {
         if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return employeeService.update(id, newEntity);

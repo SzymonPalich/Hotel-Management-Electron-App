@@ -11,5 +11,5 @@ public class ProductFM {
     private long id;
     private String productName;
     private BigDecimal retailPrice;
-    private BigDecimal wholsalePrice;
+    private BigDecimal wholesalePrice;
 }

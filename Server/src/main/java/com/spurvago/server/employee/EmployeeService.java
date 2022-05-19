@@ -5,6 +5,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Employee;
+import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,16 +48,17 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
     }
 
 
-    public EmployeeVM create(Employee newEntity) {
+    public EmployeeVM create(EmployeeFM newEntity) {
+        var entity = employeeMapper.mapToEntity(newEntity);
         if (!Utils.validateEmail(newEntity.getEmail())) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
-        employeeRepository.save(newEntity);
-        return employeeMapper.mapToVM(newEntity);
+        employeeRepository.save(entity);
+        return employeeMapper.mapToVM(entity);
     }
 
 
-    public EmployeeVM update(long id, Employee newEntity) {
+    public EmployeeVM update(long id, EmployeeFM newEntity) {
         Employee entity = employeeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);

@@ -3,6 +3,7 @@ package com.spurvago.server.product;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Product;
+import com.spurvago.server.product.models.ProductFM;
 import com.spurvago.server.product.models.ProductVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,13 +37,13 @@ public class ProductController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductVM create(Product newEntity) {
+    public ProductVM create(ProductFM newEntity) {
         return productService.create(newEntity);
     }
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductVM update(@PathVariable Long id, @RequestBody Product newEntity) {
+    public ProductVM update(@PathVariable Long id, @RequestBody ProductFM newEntity) {
         return productService.update(id, newEntity);
     }
 
