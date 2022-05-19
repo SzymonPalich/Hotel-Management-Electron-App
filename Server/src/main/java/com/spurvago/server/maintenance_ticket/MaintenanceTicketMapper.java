@@ -41,8 +41,13 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());
-        dest.setEmployeeLastName(src.getTechnician().getFirstName());
-        dest.setEmployeeLastName(src.getTechnician().getLastName());
+        if (src.getTechnician() == null) {
+            dest.setEmployeeFirstName("");
+            dest.setEmployeeLastName("");
+        } else {
+            dest.setEmployeeLastName(src.getTechnician().getFirstName());
+            dest.setEmployeeLastName(src.getTechnician().getLastName());
+        }
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
