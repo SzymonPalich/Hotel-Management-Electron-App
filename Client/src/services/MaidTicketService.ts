@@ -5,13 +5,15 @@ export default class MaidTicketServices {
     public static getBlankMaidTicketTemplate(): IMaid {
         const tempMaid: IMaid = {
             id: 0,
-            room_number: 0,
-            employee_id: 0,
-            employee_firstName: "",
-            employee_lastName: "",
+            roomId: 0,
+            roomNumber: 0,
+            employeeId: 0,
+            employeeFirstName: "",
+            employeeLastName: "",
         };
         return tempMaid;
     }
+
 
     public static async fetch(id: string): Promise<IMaid> {
         return (await axios.get<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`)).data;
@@ -28,9 +30,10 @@ export default class MaidTicketServices {
 
 export interface IMaid {
     id: number;
-    room_number: number;
+    roomId: number;
+    roomNumber: number;
     finalization_date?: Date;
-    employee_id: number;
-    employee_firstName: string;
-    employee_lastName: string;
+    employeeId: number;
+    employeeFirstName: string;
+    employeeLastName: string;
 }

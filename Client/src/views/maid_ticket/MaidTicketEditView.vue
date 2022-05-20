@@ -35,8 +35,9 @@
                     rounded-xl
                     outline-none
                   "
+                  @change="selectEmployee($event.target.value)"
                 >
-                    <option v-for="emp in resultEmployee" :key="emp"  v-bind:value="{ id: emp.id }" :selected ="emp.id == this.result.employeeId" >
+                    <option v-for="emp in resultEmployee" :key="emp"  v-bind:value="emp.id" :selected ="emp.id == this.result.employeeId" >
                         {{ emp.firstName }} {{ emp.lastName }}
                     </option>
                 </select>
@@ -61,8 +62,9 @@
                     rounded-xl
                     outline-none
                   "
+                   @change="selectRoom($event.target.value)"
                 >
-                    <option v-for="room in resultRooms.content" :key="room" v-bind="room" :selected ="room.id == this.result.roomId" >
+                    <option v-for="room in resultRooms.content" :key="room" v-bind:value="room.id" :selected ="room.id == this.result.roomId">
                         {{ room.roomNumber }} {{ room.roomType }}
                     </option>
                 </select>
@@ -97,7 +99,7 @@
                 hover:
                 mx-4
               "
-              @click="$router.push({ name: 'clients' })"
+              @click="$router.push({ name: 'maid_ticket' })"
             >
               Powrót
             </button>
@@ -167,6 +169,14 @@ export default defineComponent({
 
         async getRooms(): Promise<IList<IRoom>> {
             return await RoomsServices.getList(this.pager);
+        },
+
+        selectRoom: function(value: number) {
+          this.result.roomId = value;
+        },
+
+        selectEmployee: function(value: number) {
+          this.result.employeeId = value;
         },
 
         async save(): Promise<void> {
