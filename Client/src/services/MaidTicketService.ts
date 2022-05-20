@@ -25,15 +25,19 @@ export default class MaidTicketServices {
 
     public static async getList(pager: IPager): Promise<IList<IMaid>> {
         return (await axios.get<IList<IMaid>>(`http://localhost:8081/api/maid_ticket`, { params: pager })).data;
-    }  
+    }
+
+    public static async delete(id: string): Promise<IMaid> {
+        return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`)).data;
+    }
 }
 
 export interface IMaid {
     id: number;
     roomId: number;
     roomNumber: number;
-    finalization_date?: Date;
+    finalizationDate?: Date;
     employeeId: number;
-    employeeFirstName: string;
-    employeeLastName: string;
+    employeeFirstName?: string;
+    employeeLastName?: string;
 }

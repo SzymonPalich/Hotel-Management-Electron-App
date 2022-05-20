@@ -53,6 +53,10 @@ export default class EmployeeServices {
     public static async getEmployeesByPosition(pager: IPager, position: string): Promise<IList<IEmployee>> {
         return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee/position?position=${position}`, { params: pager })).data;
     }  
+
+    public static async delete(id: string): Promise<IEmployee> {
+        return (await axios.delete(`http://localhost:8081/api/employee/${id}`)).data;
+    }
 }
 
 export interface IEmployee {

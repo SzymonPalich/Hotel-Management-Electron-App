@@ -1,7 +1,9 @@
 import Swal from "sweetalert2";
+import EmployeeServices, { IEmployee } from "./services/EmployeeService";
+import MaidTicketServices, { IMaid } from "./services/MaidTicketService";
 
 export default class Utils {
-    public static alertDisplay(): void {
+    public static alertDisplay() {
         Swal.fire({
             title: "Jesteś pewien?",
             showCancelButton: true,
@@ -10,7 +12,29 @@ export default class Utils {
             cancelButtonText: "Nie",
             cancelButtonColor: "#374151",
             showLoaderOnConfirm: true,
-        });
+        })
+    }
+
+    public static alertDisplayDelete(table: string, id: string) {
+        Swal.fire({
+            title: "Jesteś pewien?",
+            showCancelButton: true,
+            confirmButtonText: "Tak",
+            confirmButtonColor: "#992c2c",
+            cancelButtonText: "Nie",
+            cancelButtonColor: "#374151",
+            showLoaderOnConfirm: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+              if (table == "maid") {
+                this.deleteMaid(id);
+              } else if (table == "employee") {
+                this.deleteEmployee(id);
+              }
+            } else if (result.isDenied) {
+              return false
+            }
+          })
     }
 
     public static acceptedAlert(): void {
@@ -55,6 +79,14 @@ export default class Utils {
             totalPages: 0
         }
 
+    }
+
+    static async deleteMaid(id: string): Promise<IMaid> {
+        return await MaidTicketServices.delete(id);
+    }
+
+    static async deleteEmployee(id: string): Promise<IEmployee> {
+        return await EmployeeServices.delete(id);
     }
 }
 

@@ -59,7 +59,7 @@
                     >edit</i
                   ></router-link
                 >
-                <router-link :to="{ name: 'maid_ticket' }" @click="alertDisplay()">
+                <router-link :to="{ name: 'maid_ticket' }" @click="alertDisplay(maid.id)" >
                   <i class="material-icons align-middle">delete</i>
                 </router-link>
               </td>
@@ -103,8 +103,8 @@ export default defineComponent({
       return await MaidTicketServices.getList(this.pager);
     },
 
-    alertDisplay(): void {
-      Utils.alertDisplay();
+    alertDisplay(id: string) {
+      Utils.alertDisplayDelete("maid", id);
     }
 
   }
