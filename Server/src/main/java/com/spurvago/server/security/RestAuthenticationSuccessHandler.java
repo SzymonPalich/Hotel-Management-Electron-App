@@ -16,8 +16,6 @@ import java.util.Date;
 
 @Component
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-
-
     private final long expirationTime;
     private final String secret;
 
@@ -30,7 +28,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         String token = JWT.create()
                 .withSubject(principal.getUsername())

@@ -1,8 +1,7 @@
 package com.spurvago.server.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spurvago.server.employee.Employee;
-import com.spurvago.server.employee.EmployeeDetailsServeceImpl;
+import com.spurvago.server.employee.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,23 +17,35 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final DataSource dataSource;
     private final ObjectMapper objectMapper;
     private final RestAuthenticationFailureHandler failureHandler;
     private final RestAuthenticationSuccessHandler successHandler;
     private final String secret;
 
+    public SecurityConfig(DataSource dataSource, ObjectMapper objectMapper, RestAuthenticationFailureHandler failureHandler,
+                          RestAuthenticationSuccessHandler successHandler,
+                          @Value("${jwt.secret}") String secret) {
+        this.dataSource = dataSource;
+        this.objectMapper = objectMapper;
+        this.failureHandler = failureHandler;
+        this.successHandler = successHandler;
+        this.secret = secret;
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
-        return new EmployeeDetailsServeceImpl();
+        return new EmployeeDetailsServiceImplementation();
     }
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -49,29 +60,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
-
     }
-
-    public SecurityConfig(DataSource dataSource, ObjectMapper objectMapper, RestAuthenticationFailureHandler failureHandler,
-                          RestAuthenticationSuccessHandler successHandler,
-                          @Value("${jwt.secret}")String secret) {
-        this.dataSource = dataSource;
-        this.objectMapper = objectMapper;
-        this.failureHandler = failureHandler;
-        this.successHandler = successHandler;
-        this.secret = secret;
-    }
-
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
-                .authorizeRequests()
+            .authorizeRequests()
+                .antMatchers("/login?logout").permitAll()
+                .antMatchers("/logout").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("webjars/**").permitAll()
@@ -87,15 +86,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/client/**", "/api/employee/**", "/api/room_type/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(authenticationFilter())
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .and()
+            .addFilter(authenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService(), secret))
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));
     }
 
-    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception{
+    public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
         JsonObjectAuthenticationFilter authenticationFilter = new JsonObjectAuthenticationFilter(objectMapper);
         authenticationFilter.setAuthenticationSuccessHandler(successHandler);
         authenticationFilter.setAuthenticationFailureHandler(failureHandler);
@@ -104,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserDetailsManager userDetailsManager(){
+    public UserDetailsManager userDetailsManager() {
         return new JdbcUserDetailsManager(dataSource);
     }
 }

@@ -17,7 +17,7 @@ spring.flyway.enabled=true
 spring.flyway.locations=classpath:/db/migration
 
 jwt.expirationTime = 3600000
-jwt.secret=abcdef1@#$$!@
+jwt.secret=5PuRv^g0
 
 
 

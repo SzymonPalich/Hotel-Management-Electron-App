@@ -5,10 +5,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class EmployeeDetailsServeceImpl implements UserDetailsService {
+public class EmployeeDetailsServiceImplementation implements UserDetailsService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -15,6 +15,5 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     Page<Employee> findAll(Pageable pageable);
 
-    @Query("SELECT e FROM Employee e Where e.email = :email")
-    Employee getEmployeeByEmail(@Param("email") String email);
+    Employee getEmployeeByEmail(String email);
 }
