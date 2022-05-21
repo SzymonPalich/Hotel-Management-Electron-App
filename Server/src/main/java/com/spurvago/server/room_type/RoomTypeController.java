@@ -1,23 +1,19 @@
 package com.spurvago.server.room_type;
 
-import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
-import com.spurvago.database.RoomType;
 import com.spurvago.server.room_type.models.RoomTypeFM;
 import com.spurvago.server.room_type.models.RoomTypeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/room_type")
 public class RoomTypeController {
     private final RoomTypeService roomTypeService;
+
     @Autowired
     public RoomTypeController(RoomTypeService roomTypeService) {
         this.roomTypeService = roomTypeService;
@@ -43,7 +39,7 @@ public class RoomTypeController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoomTypeVM update(@PathVariable Long id,@RequestBody RoomTypeFM newEntity) {
+    public RoomTypeVM update(@PathVariable Long id, @RequestBody RoomTypeFM newEntity) {
         return roomTypeService.update(id, newEntity);
     }
 

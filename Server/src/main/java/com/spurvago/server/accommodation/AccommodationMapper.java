@@ -6,10 +6,10 @@ import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.client.ClientRepository;
 import com.spurvago.server.room.RoomRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 @Component
 public record AccommodationMapper(ClientRepository clientRepository, RoomRepository roomRepository) {
+
     Accommodation mapToEntity(AccommodationFM src) {
         Accommodation dest = new Accommodation();
         dest.setRoom(roomRepository.findById(src.getRoomId()));
@@ -21,14 +21,12 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
         return dest;
     }
 
-    Accommodation mapToEntity(Accommodation dest, AccommodationFM src) {
+    void mapToEntity(Accommodation dest, AccommodationFM src) {
         dest.setRoom(roomRepository.findById(src.getRoomId()));
         dest.setClient(clientRepository.findById(src.getClientId()));
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
         dest.setReservationOnly(src.getReservationOnly());
-
-        return dest;
     }
 
     AccommodationVM mapToVM(Accommodation src) {

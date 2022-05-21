@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS maintenance_ticket
 (
     id                bigint(20)   not null AUTO_INCREMENT,
     room_id           bigint(20)   not null,
-    technician_id     bigint(20)    default null,
+    employee_id     bigint(20)    default null,
     name              varchar(50)  not null,
     description       varchar(300) not null,
     parts_price       decimal(8, 2) default null,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS maintenance_ticket
 
     PRIMARY KEY (id),
     CONSTRAINT maintenance_room_fk FOREIGN KEY (room_id) REFERENCES room (id),
-    CONSTRAINT maintenance_employee_fk FOREIGN KEY (technician_id) REFERENCES employee (id)
+    CONSTRAINT maintenance_employee_fk FOREIGN KEY (employee_id) REFERENCES employee (id)
 );
 
 INSERT INTO `maintenance_ticket`(`room_id`, `name`, `description`)

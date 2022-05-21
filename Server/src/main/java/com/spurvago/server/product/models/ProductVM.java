@@ -1,6 +1,5 @@
 package com.spurvago.server.product.models;
 
-import com.spurvago.database.Client;
 import com.spurvago.database.Product;
 import lombok.Getter;
 import lombok.Setter;

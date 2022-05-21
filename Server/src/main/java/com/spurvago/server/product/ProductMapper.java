@@ -18,7 +18,7 @@ public record ProductMapper() {
         return dest;
     }
 
-    Product mapToEntity( ProductFM src) {
+    Product mapToEntity(ProductFM src) {
         Product dest = new Product();
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());

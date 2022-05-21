@@ -19,6 +19,4 @@ public class EmployeeFM {
     private Date employmentDate;
     private Date dismissalDate;
     private BigDecimal salary;
-
-
 }

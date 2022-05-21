@@ -21,7 +21,7 @@ public class EmployeeVM {
     private Date dismissalDate;
     private BigDecimal salary;
 
-    public EmployeeVM(){
+    public EmployeeVM() {
     }
 
     public EmployeeVM(Employee entity) {

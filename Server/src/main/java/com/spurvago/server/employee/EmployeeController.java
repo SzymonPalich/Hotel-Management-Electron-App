@@ -1,6 +1,5 @@
 package com.spurvago.server.employee;
 
-import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Employee;
@@ -13,12 +12,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="/api/employee")
+@RequestMapping(path = "/api/employee")
 public class EmployeeController {
     private final EmployeeService employeeService;
 
@@ -47,7 +45,7 @@ public class EmployeeController {
 
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeVM update(@PathVariable Long id,@RequestBody EmployeeFM newEntity) {
+    public EmployeeVM update(@PathVariable Long id, @RequestBody EmployeeFM newEntity) {
         if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return employeeService.update(id, newEntity);
@@ -60,9 +58,9 @@ public class EmployeeController {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path="/position")
+    @RequestMapping(method = RequestMethod.GET, path = "/position")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getEmployeesByPosition(@RequestParam int position){
+    public List<Employee> getEmployeesByPosition(@RequestParam int position) {
         return employeeService.findByPosition(position);
     }
 }

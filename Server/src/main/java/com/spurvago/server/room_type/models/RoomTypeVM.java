@@ -13,7 +13,7 @@ public class RoomTypeVM {
     private String type;
     private BigDecimal price;
 
-    public RoomTypeVM(){
+    public RoomTypeVM() {
     }
 
     public RoomTypeVM(RoomType entity) {

@@ -1,7 +1,6 @@
 package com.spurvago.database;
 
 
-import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -16,12 +16,6 @@ import static com.spurvago.components.Utils.asLikeQuery;
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
-    Employee findById(long id);
-
-    List<Employee> findEmployeesByPosition(int position);
-
-    Page<Employee> findAll(Pageable pageable);
-
     static Specification<Employee> search(List<String> searchWords) {
         return (r, q, b) -> {
             Predicate predicate = null;
@@ -47,4 +41,10 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
             return predicate;
         };
     }
+
+    Employee findById(long id);
+
+    List<Employee> findEmployeesByPosition(int position);
+
+    Page<Employee> findAll(Pageable pageable);
 }

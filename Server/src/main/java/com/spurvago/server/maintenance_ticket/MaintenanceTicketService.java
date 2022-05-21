@@ -15,8 +15,10 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @Service
-public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTicketRepository, MaintenanceTicketMapper maintenanceTicketMapper) {
+public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTicketRepository,
+                                       MaintenanceTicketMapper maintenanceTicketMapper) {
     public MaintenanceTicketVM find(long id) {
         var entity = maintenanceTicketRepository.findById(id);
         if (entity == null) {

@@ -1,6 +1,5 @@
 package com.spurvago.server.client;
 
-import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
@@ -13,11 +12,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.criteria.Predicate;
 import java.util.List;
 import java.util.Objects;
 
-import static com.spurvago.components.Utils.asLikeQuery;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -25,7 +22,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 public record ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
 
     public ClientVM find(long id) {
-        var entity = clientRepository.findById(id);
+        Client entity = clientRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -51,11 +48,12 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
     }
 
     public ClientVM create(ClientFM newEntity) {
-        var entity = clientMapper.mapToEntity(newEntity);
-        if (!entity.validate())
+        if (!newEntity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         if (!checkConstraints(newEntity.getPhoneNumber(), newEntity.getEmail()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+
+        Client entity = clientMapper.mapToEntity(newEntity);
         clientRepository.save(entity);
         return clientMapper.mapToVM(entity);
     }
@@ -66,7 +64,7 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        if (!entity.validate())
+        if (!newEntity.validate())
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
 
         if (!Objects.equals(entity.getPhoneNumber(), newEntity.getPhoneNumber())
@@ -85,7 +83,7 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
     }
 
     public void delete(long id) {
-        var entity = clientRepository.findById(id);
+        Client entity = clientRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -93,8 +91,8 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
         clientRepository.delete(entity);
     }
 
-    private boolean checkConstraints(String phoneNumber, String email){
-        if(clientRepository.existsByPhoneNumber(phoneNumber))
+    private boolean checkConstraints(String phoneNumber, String email) {
+        if (clientRepository.existsByPhoneNumber(phoneNumber))
             return false;
         return !clientRepository.existsByEmail(email);
     }

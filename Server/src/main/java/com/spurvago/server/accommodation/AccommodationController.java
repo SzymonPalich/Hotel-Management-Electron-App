@@ -19,35 +19,44 @@ public class AccommodationController {
         this.accommodationService = accommodationService;
     }
 
+    //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AccommodationVM find(@PathVariable long id) {
-
         return accommodationService.find(id);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="getList()">
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ListPaginated<AccommodationVM> getList(Pager pager, String search) {
-        return  accommodationService.getList(pager, search);
+        return accommodationService.getList(pager, search);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public AccommodationVM create(AccommodationFM newEntity) {
 
         return accommodationService.create(newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AccommodationVM update(@PathVariable long id, @RequestBody AccommodationFM newEntity) {
         return accommodationService.update(id, newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         accommodationService.delete(id);
     }
+    //</editor-fold>
 }

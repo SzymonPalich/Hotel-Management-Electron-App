@@ -1,17 +1,14 @@
 package com.spurvago.server.room_type;
 
-import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.RoomType;
-import com.spurvago.server.product.models.ProductVM;
 import com.spurvago.server.room_type.models.RoomTypeFM;
 import com.spurvago.server.room_type.models.RoomTypeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 

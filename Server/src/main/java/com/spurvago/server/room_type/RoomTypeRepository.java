@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import java.util.List;
 
@@ -16,10 +15,6 @@ import static com.spurvago.components.Utils.asLikeQuery;
 
 @Repository
 public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType, Long>, JpaSpecificationExecutor<RoomType> {
-
-    RoomType findById(long id);
-
-    Page<RoomType> findAll(Pageable pageable);
 
     static Specification<RoomType> search(List<String> searchWords) {
         return (r, q, b) -> {
@@ -41,4 +36,8 @@ public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType,
             return predicate;
         };
     }
+
+    RoomType findById(long id);
+
+    Page<RoomType> findAll(Pageable pageable);
 }

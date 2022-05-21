@@ -12,7 +12,7 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
     MaintenanceTicket mapToEntity(MaintenanceTicketFM src) {
         MaintenanceTicket dest = new MaintenanceTicket();
         dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setTechnician(employeeRepository.findById(src.getEmployeeId()));
+        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
@@ -22,16 +22,15 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         return dest;
     }
 
-    MaintenanceTicket mapToEntity(MaintenanceTicket dest, MaintenanceTicketFM src) {
+    void mapToEntity(MaintenanceTicket dest, MaintenanceTicketFM src) {
         dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setTechnician(employeeRepository.findById(src.getEmployeeId()));
+        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
         dest.setTechnicianReport(src.getTechnicianReport());
         dest.setFinalizationDate(src.getFinalizationDate());
 
-        return dest;
     }
 
     MaintenanceTicketVM mapToVM(MaintenanceTicket src) {
@@ -41,8 +40,8 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());
-        dest.setEmployeeLastName(src.getTechnician().getFirstName());
-        dest.setEmployeeLastName(src.getTechnician().getLastName());
+        dest.setEmployeeLastName(src.getEmployee().getFirstName());
+        dest.setEmployeeLastName(src.getEmployee().getLastName());
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());

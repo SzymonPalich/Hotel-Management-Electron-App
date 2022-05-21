@@ -32,9 +32,9 @@ public class MaintenanceTicketVM {
         this.roomNumber = entity.getRoom().getRoomNumber();
         this.roomType = entity.getRoom().getRoomType().getType();
         this.roomStatus = entity.getRoom().getStatus();
-        if (!(entity.getTechnician() == null)) {
-            this.employeeFirstName = entity.getTechnician().getFirstName();
-            this.employeeLastName = entity.getTechnician().getLastName();
+        if (!(entity.getEmployee() == null)) {
+            this.employeeFirstName = entity.getEmployee().getFirstName();
+            this.employeeLastName = entity.getEmployee().getLastName();
         } else {
             this.employeeFirstName = "";
             this.employeeLastName = "";

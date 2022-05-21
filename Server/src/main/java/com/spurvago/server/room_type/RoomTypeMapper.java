@@ -17,7 +17,7 @@ public record RoomTypeMapper() {
         return dest;
     }
 
-    RoomType mapToEntity(RoomTypeFM src){
+    RoomType mapToEntity(RoomTypeFM src) {
         RoomType dest = new RoomType();
         dest.setType(src.getType());
         dest.setPrice(src.getPrice());

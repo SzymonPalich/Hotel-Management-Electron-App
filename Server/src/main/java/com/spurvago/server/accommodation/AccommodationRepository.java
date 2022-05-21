@@ -17,7 +17,9 @@ import java.util.List;
 import static com.spurvago.components.Utils.asLikeQuery;
 
 @Repository
-public interface AccommodationRepository extends PagingAndSortingRepository<Accommodation, Long>, JpaSpecificationExecutor<Accommodation> {
+public interface AccommodationRepository
+        extends PagingAndSortingRepository<Accommodation, Long>, JpaSpecificationExecutor<Accommodation> {
+
     static Specification<Accommodation> search(List<String> searchWords) {
         return (r, q, b) -> {
             Join<Accommodation, Client> joinClient = r.join("client");
@@ -25,6 +27,7 @@ public interface AccommodationRepository extends PagingAndSortingRepository<Acco
             Predicate predicate = null;
             Predicate tempPredicate;
 
+            //<editor-fold desc="Predicate Builder">
             for (String searchWord : searchWords) {
                 tempPredicate =
                         b.or(
@@ -35,7 +38,6 @@ public interface AccommodationRepository extends PagingAndSortingRepository<Acco
                                 b.like(joinRoom.get("roomStatus").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("startDate").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("endDate").as(String.class), asLikeQuery(searchWord))
-                                // bool
                         );
                 if (searchWord.equals(searchWords.get(0)))
                     predicate = tempPredicate;
@@ -43,6 +45,8 @@ public interface AccommodationRepository extends PagingAndSortingRepository<Acco
                     predicate = b.and(predicate, tempPredicate);
                 }
             }
+            //</editor-fold>
+
             return predicate;
         };
     }

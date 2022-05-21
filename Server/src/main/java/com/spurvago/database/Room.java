@@ -1,7 +1,5 @@
 package com.spurvago.database;
 
-import com.spurvago.components.IBaseEntity;
-import com.spurvago.components.Utils;
 import lombok.Getter;
 import lombok.Setter;
 

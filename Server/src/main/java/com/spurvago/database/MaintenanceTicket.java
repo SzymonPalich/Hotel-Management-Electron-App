@@ -23,7 +23,7 @@ public class MaintenanceTicket {
     @ManyToOne
     @Getter
     @Setter
-    private Employee technician;
+    private Employee employee;
 
     @Getter
     @Setter

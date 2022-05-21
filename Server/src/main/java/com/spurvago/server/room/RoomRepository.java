@@ -14,6 +14,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 import static com.spurvago.components.Utils.asLikeQuery;
+
 @Repository
 public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, JpaSpecificationExecutor<Room> {
     static Specification<Room> search(List<String> searchWords) {
@@ -31,8 +32,7 @@ public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, 
                         );
                 if (searchWord.equals(searchWords.get(0))) {
                     predicate = tempPredicate;
-                }
-                else {
+                } else {
                     predicate = b.and(predicate, tempPredicate);
                 }
             }

@@ -15,6 +15,7 @@ import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 import static com.spurvago.components.Utils.asLikeQuery;
+
 @Repository
 public interface MaintenanceTicketRepository extends PagingAndSortingRepository<MaintenanceTicket, Long>, JpaSpecificationExecutor<MaintenanceTicket> {
     static Specification<MaintenanceTicket> search(List<String> searchWords) {
