@@ -11,7 +11,7 @@
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
-        <table id="cleaning_table" class="min-w-full">
+        <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
               <th
@@ -65,22 +65,24 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="emp in results" :key="emp.id" class="bg-white">
+            <tr v-for="emp in result.content" :key="emp" class="bg-white">
               <td class="text-left py-2 px-4">
-                {{ emp.name }}
+                {{ emp.firstName }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ emp.surname }}
+                {{ emp.lastName }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ emp.position }}
+                {{ this.setPosition(emp.position) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
-                <router-link :to="{ name: 'employee-info', params: { id: emp.id }}"
+                <router-link 
+                  :to="{ name: 'employee-info', params: { id: emp.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link>
-                <router-link :to="{ name: 'employees-edit', params: { id: emp.id }}">
+                <router-link 
+                  :to="{ name: 'employees-edit', params: { id: emp.id } }">
                   <i class="material-icons align-middle">edit</i>
                 </router-link>
                 <i class="material-icons align-middle cursor-pointer" @click="alertDisplay()">delete</i>
@@ -98,73 +100,44 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IEmployee } from "../../services/EmployeeService";
+import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
-import Utils from "../../Utils";
+import Utils, { IPager, IList } from "../../Utils";
+import { defineComponent } from "vue";
 
-let temp_emp_results: Array<IEmployee> = [
-    {
-        id: 1,
-        name: "Andrzej",
-        surname: "Kowalski",
-        position: "Manager",
-        salary: 21308,
-        email: "AKowalski@spr.com",
-        phone_number: "190-921-291",
-        pesel: "98721093802",
-        employment_date: new Date(2001, 11, 9)
-    },
-    {
-        id: 2,
-        name: "Leonardo",
-        surname: "Przybylski",
-        position: "Technik",
-        salary: 3502,
-        email: "LPrzybylski@spr.com",
-        phone_number: "190-921-291",
-        pesel: "98721093802",
-        employment_date: new Date(2002, 12, 2)
-    },
-    {
-        id: 3,
-        name: "Elwira",
-        surname: "Kowalska",
-        position: "Recepcjonistka",
-        salary: 20200,
-        email: "EKowalska@spr.com",
-        phone_number: "190-921-291",
-        pesel: "98721093802",
-        employment_date: new Date(2003, 5, 20)
-    },
-    {
-        id: 4,
-        name: "Patrycja",
-        surname: "Nowak",
-        position: "Pokojówka",
-        salary: 4208,
-        email: "PNowak@spr.com",
-        phone_number: "190-921-291",
-        pesel: "98721093802",
-        employment_date: new Date(2001, 11, 7)
-    },
-];
-
-@Options({
+export default defineComponent({
   components: {
     Pagination,
     SearchBar,
   },
-})
-export default class EmployeeView extends Vue {
   data() {
     return {
-      results: temp_emp_results,
+      result: Utils.getBlankListTemplate<IEmployee>(),
+      pager: Utils.getDefaultPager(),
     };
-  }
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
 
-  private alertDisplay(): void {
-    Utils.alertDisplay();
-  }
-}
+  setPosition(position: number): string {
+    return EmployeeServices.setPosition(position);
+  },
+
+  methods: {
+    async getData(): Promise<IList<IEmployee>> {
+      return await EmployeeServices.getList(this.pager);
+    },
+
+    setPosition(position: number): string {
+      return EmployeeServices.setPosition(position);
+    },
+
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
+  },
+});
 </script>

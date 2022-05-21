@@ -1,71 +1,84 @@
 package com.spurvago.server.client;
 
-import com.spurvago.components.IBaseService;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
+import com.spurvago.database.Client;
+import com.spurvago.server.client.models.ClientFM;
+import com.spurvago.server.client.models.ClientVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import java.util.Collections;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record ClientService(ClientRepository clientRepository) implements IBaseService<Client>{
+public record ClientService(ClientRepository clientRepository,
+                            ClientMapper clientMapper,
+                            ClientValidator clientValidator) {
 
-    @Override
-    public Client find(long id) {
-        return clientRepository.findById(id);
+    public ClientVM find(long id) {
+        Client entity = clientRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+
+        return clientMapper.mapToVM(entity);
     }
 
-    @Override
-    public ListPaginated<Client> getList(Pager pager) {
+    public ListPaginated<ClientVM> getList(Pager pager, String search) {
         Pageable pageable = pager.makePageable();
-        Page<Client> entities = clientRepository.findAll(pageable);
-        return new ListPaginated<>(entities, pager);
+        Page<Client> entities;
+
+        if (Utils.isNullOrBlank(search)) {
+            entities = clientRepository.findAll(pageable);
+        } else {
+            List<String> words = List.of(search.split("\\s"));
+            Specification<Client> specification = ClientRepository.search(words);
+            entities = clientRepository.findAll(specification, pageable);
+        }
+
+        List<ClientVM> entitiesDTO = clientMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
-    @Override
-    public Client create(Client newEntity) {
-        if(!Utils.emailValidation(newEntity.getEmail())){
+    public ClientVM create(ClientFM newEntity) {
+        if (!clientValidator.validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
-        return clientRepository.save(newEntity);
+
+        Client entity = clientMapper.mapToEntity(newEntity);
+        clientRepository.save(entity);
+        return clientMapper.mapToVM(entity);
     }
 
-    @Override
-    public Client update(Client oldEntity, Client newEntity) {
-        oldEntity.map(newEntity);
-
-        return clientRepository.save(oldEntity);
-    }
-
-    @Override
-    public void delete(Client Entity) {
-        clientRepository.delete(Entity);
-    }
-
-    public ListPaginated<Client> getFiltered(String input, Pager pager) {
-        Pageable pageable = pager.makePageable();
-        if(input.isEmpty())
-        {
-            return null;
+    public ClientVM update(long id, ClientFM newEntity) {
+        Client entity = clientRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
         }
-        List<String> words = List.of(input.split("\\s"));
-        Specification<Client> specification = ClientRepository.search(words);
-        Page<Client> entities = clientRepository.findAll(specification, pageable);
-        return new ListPaginated<>(entities, pager);
+
+        if (!clientValidator.validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        clientMapper.mapToEntity(entity, newEntity);
+        clientRepository.save(entity);
+        return clientMapper.mapToVM(entity);
+    }
+
+    public void delete(long id) {
+        Client entity = clientRepository.findById(id);
+        if (entity == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+
+        clientRepository.delete(entity);
     }
 }

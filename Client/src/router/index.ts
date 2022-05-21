@@ -7,8 +7,9 @@ import RepairsCreateView from '../views/repairs/RepairsCreateView.vue'
 import RepairsEditView from '../views/repairs/RepairsEditView.vue'
 import RepairsFinalizationView from '../views/repairs/RepairsFinalizationView.vue'
 
-import CleaningView from '../views/cleaning/CleaningView.vue'
-import CleaningFinishView from '../views/cleaning/CleaningFinishView.vue'
+import MaidTicketView from '../views/maid_ticket/MaidTicketView.vue'
+import MaidTicketFetchView from '../views/maid_ticket/MaidTicketFetchView.vue'
+import MaidTicketEditView from '../views/maid_ticket/MaidTicketEditView.vue'
 
 import ClientsView from '../views/clients/ClientsView.vue'
 import ClientsFetchView from '../views/clients/ClientsFetchView.vue'
@@ -25,6 +26,8 @@ import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
 import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
+import ProductView from '../views/product/ProductView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -38,14 +41,19 @@ const routes: Array<RouteRecordRaw> = [
   },
   // Moduł pokojówki
   {
-    path: '/cleaning',
-    name: 'cleaning',
-    component: CleaningView
+    path: '/maid_ticket',
+    name: 'maid_ticket',
+    component: MaidTicketView
   },
   {
-    path: '/cleaning/:id/finish',
-    name: 'cleaning-finish',
-    component: CleaningFinishView
+    path: '/maid_ticket/:id',
+    name: 'maid_ticket-fetch',
+    component: MaidTicketFetchView
+  },
+  {
+    path: '/maid_ticket/:id/edit',
+    name: 'maid_ticket-edit',
+    component: MaidTicketEditView
   },
   // Moduł napraw
   {
@@ -135,6 +143,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/employees/:id/edit',
     name: 'employees-edit',
     component: EmployeeEditView
+  },
+  // Moduł magazynu
+  {
+    path: '/product',
+    name: 'product',
+    component: ProductView
   }
 ]
 

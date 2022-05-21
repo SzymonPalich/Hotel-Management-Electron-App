@@ -28,22 +28,22 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="repair in results"
+            <tr v-for="repair in result.content"
             :key="repair"
             class="bg-white">
 
-              <td class="text-left py-2 px-4">{{ repair.issue }}</td>
-              <td class="text-center py-2 px-4">{{ repair.room_nr }}</td>
+              <td class="text-left py-2 px-4">{{ repair.name }}</td>
+              <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
-                <router-link :to="{ name: 'repairs-finalization', params: { id: '1'} }">
+                <router-link :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
                   <i class="material-icons align-middle">build</i>
                 </router-link>
 
-                <router-link :to="{ name: 'repairs-fetch', params: { id: '1' } }">
+                <router-link :to="{ name: 'repairs-fetch', params: { id: repair.id } }">
                   <i class="material-icons align-middle">description</i>
                 </router-link>
 
-                <router-link :to="{ name: 'repairs-edit', params: { id: '1' } }"
+                <router-link :to="{ name: 'repairs-edit', params: { id: repair.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
 
@@ -64,53 +64,36 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { IRepair } from "../../services/RepairService";
+import RepairServices, { IRepair } from "../../services/RepairService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
-import Utils from "../../Utils";
+import Utils, { IPager, IList } from "../../Utils";
+import { defineComponent } from "vue";
 
-let temp_repair_results: Array<IRepair> = [
-  {
-    id: 1,
-    issue: "Telewizor",
-    room_nr: 113,
-    desc: "Zniszczona matryca"
-  },
-  {
-    id: 2,
-    issue: "Cieknący kran",
-    room_nr: 53,
-    desc: "Woda cieknie z kranu"
-  },
-  {
-    id: 3,
-    issue: "Wybita szyba",
-    room_nr: 22,
-    desc: "Szyba przy balkonie wybita"
-  },
-  {
-    id: 4,
-    issue: "Wyrwana klamka",
-    room_nr: 9,
-    desc: "Klamka do garderoby wyrwana"
-  },
-];
-
-@Options({
+export default defineComponent({
   components: {
     Pagination,
     SearchBar,
   },
-})
-export default class RepairsView extends Vue {
   data(){
     return {
-      results: temp_repair_results,
+      result: Utils.getBlankListTemplate<IRepair>(),
+      pager: Utils.getDefaultPager(),
     };
-  }
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
 
-  private alertDisplay(): void {
-    Utils.alertDisplay();
+  methods: {
+    async getData(): Promise<IList<IRepair>> {
+      return await RepairServices.getList(this.pager);
+    },
+
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
   }
-}
+});
 </script>

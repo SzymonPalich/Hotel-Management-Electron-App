@@ -1,5 +1,6 @@
 package com.spurvago.components;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -8,8 +9,11 @@ import org.springframework.data.domain.Sort;
  * Komponent do tworzenia Paginacji
  */
 public class Pager {
-    public int index;
-    public int size;
+    @ApiParam(value = "index")
+    public Integer index;
+    @ApiParam(value = "size")
+    public Integer size;
+    @ApiParam(value = "sort")
     public String sort;
 
     /**
@@ -17,10 +21,10 @@ public class Pager {
      * @param size  Liczba rekordów na stronę
      * @param sort  Nazwa kolumny, po której będzie się sortowało
      */
-    public Pager(int index, int size, String sort) {
-        this.index = index;
-        this.size = size;
-        this.sort = sort;
+    public Pager(Integer index, Integer size, String sort) {
+        this.index = (index == null) ? 1 : index;
+        this.size = (index == null) ? 10 : size;
+        this.sort = (Utils.isNullOrBlank(sort)) ? "id" : sort;
     }
 
     public Pageable makePageable() {

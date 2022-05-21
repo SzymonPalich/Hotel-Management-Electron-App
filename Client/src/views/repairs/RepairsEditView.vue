@@ -125,17 +125,9 @@
 import { Vue } from "vue-class-component";
 import RepairService, { IRepair } from "../../services/RepairService";
 
-let temp_repair: IRepair = {
-  id: 1,
-  issue: "Telewizor",
-  room_nr: 113,
-  desc: "Uszkodzona Matryca",
-};
-
 export default class RepairsEditView extends Vue {
   data() {
     return {
-      result: temp_repair,
     };
   }
 }

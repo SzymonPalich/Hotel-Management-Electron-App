@@ -1,24 +1,17 @@
 package com.spurvago.server.client;
 
-import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.server.client.models.ClientFM;
+import com.spurvago.server.client.models.ClientVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.persistence.criteria.Expression;
-
-import java.util.List;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/client")
-public class ClientController implements IBaseController<Client> {
+public class ClientController {
     private final ClientService clientService;
 
     @Autowired
@@ -26,54 +19,44 @@ public class ClientController implements IBaseController<Client> {
         this.clientService = clientService;
     }
 
-    @Override
-    public Client find(Long id) {
-        Client entity = clientService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
 
-        return entity;
+    //<editor-fold desc="find()">
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientVM find(@PathVariable long id) {
+        return clientService.find(id);
     }
+    //</editor-fold>
 
-    @Override
-    public ListPaginated<Client> getList(Pager pager) {
-        ListPaginated<Client> entities = clientService.getList(pager);
-
-        return entities;
+    //<editor-fold desc="getList()">
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ListPaginated<ClientVM> getList(Pager pager, String search) {
+        return clientService.getList(pager, search);
     }
+    //</editor-fold>
 
-    @Override
-    public Client create(Client newTestEntity) {
-        Client entity = clientService.create(newTestEntity);
-
-        return entity;
+    //<editor-fold desc="create()">
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public ClientVM create(ClientFM newEntity) {
+        return clientService.create(newEntity);
     }
+    //</editor-fold>
 
-    @Override
-    public Client update(Long id, Client newTestEntity) {
-        Client entity = clientService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        entity = clientService.update(entity, newTestEntity);
-
-        return entity;
+    //<editor-fold desc="update()">
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientVM update(@PathVariable Long id, ClientFM newEntity) {
+        return clientService.update(id, newEntity);
     }
+    //</editor-fold>
 
-    @Override
-    public void delete(Long id) {
-        Client entity = clientService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        clientService.delete(entity);
+    //<editor-fold desc="delete()">
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        clientService.delete(id);
     }
-
-    @GetMapping(path = "/name")
-    public ListPaginated<Client> getFiltered(@RequestParam String input, Pager pager) {
-        return clientService.getFiltered(input, pager);
-    }
+    //</editor-fold>
 }

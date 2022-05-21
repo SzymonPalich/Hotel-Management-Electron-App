@@ -1,19 +1,22 @@
 package com.spurvago.server.employee;
 
-import com.spurvago.components.IBaseController;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.server.employee.models.EmployeeFM;
+import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/api/employee")
-public class EmployeeController implements IBaseController<Employee> {
+public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
@@ -21,54 +24,55 @@ public class EmployeeController implements IBaseController<Employee> {
         this.employeeService = employeeService;
     }
 
-    @Override
-    public Employee find(Long id) {
-        Employee entity = employeeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        return entity;
+    //<editor-fold desc="find()">
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeVM find(@PathVariable long id) {
+        return employeeService.find(id);
     }
+    //</editor-fold>
 
-    @Override
-    public ListPaginated<Employee> getList(Pager pager) {
-        ListPaginated<Employee> entities = employeeService.getList(pager);
-
-        return entities;
+    //<editor-fold desc="getList()">
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public ListPaginated<EmployeeVM> getList(Pager pager, String search) {
+        return employeeService.getList(pager, search);
     }
+    //</editor-fold>
 
-    @Override
-    public Employee create(Employee newEntity) {
-        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
+    //<editor-fold desc="create()">
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public EmployeeVM create(EmployeeFM newEntity) {
+        return employeeService.create(newEntity);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="update()">
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeVM update(@PathVariable Long id, @RequestBody EmployeeFM newEntity) {
+        if (!com.spurvago.server.employee.Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        Employee entity = employeeService.create(newEntity);
-
-        return entity;
+        return employeeService.update(id, newEntity);
     }
+    //</editor-fold>
 
-    @Override
-    public Employee update(Long id, Employee newEntity) {
-        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        Employee entity = employeeService.find(id);
-        if (entity == null)
-            throw new ResponseStatusException(NOT_FOUND);
-
-        entity = employeeService.update(entity, newEntity);
-
-        return entity;
+    //<editor-fold desc="delete()">
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        employeeService.delete(id);
     }
+    //</editor-fold>
 
-    @Override
-    public void delete(Long id) {
-        Employee entity = employeeService.find(id);
-        if (entity == null) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-
-        employeeService.delete(entity);
+    // TODO To można przenieść do zwykłego getList() front wtedy będzie wysyłał do search wartość
+    //      Zmieni się to po zaimplementowaniu autoryzacji
+    //<editor-fold desc="getEmployeesByPosition">
+    @RequestMapping(method = RequestMethod.GET, path = "/position")
+    @ResponseStatus(HttpStatus.OK)
+    public List<com.spurvago.server.employee.Employee> getEmployeesByPosition(@RequestParam int position) {
+        return employeeService.findByPosition(position);
     }
+    //</editor-fold>
 }

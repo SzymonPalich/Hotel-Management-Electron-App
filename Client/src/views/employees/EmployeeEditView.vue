@@ -40,7 +40,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.name"
+                  v-model="this.result.firstName"
                 />
               </dd>
             </div>
@@ -63,7 +63,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.surname"
+                  v-model="this.result.lastName"
                 />
               </dd>
             </div>
@@ -114,7 +114,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.phone_number"
+                  v-model="this.result.phoneNumber"
                 />
               </dd>
             </div>
@@ -139,7 +139,6 @@
                   "
                 >
                   <option>Manager</option>
-                  <option>Kierownik</option>
                   <option>Pokojówka</option>
                   <option>Technik</option>
                   <option>Recepcjonista</option>
@@ -195,7 +194,7 @@
                   "
                   type="date"
                   required
-                  :value="this.result.employment_date.toJSON().substring(0, 10)"
+                  :value="this.result.employmentDate"
                 />
               </dd>
             </div>
@@ -246,26 +245,39 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import EmployeeService, { IEmployee } from "../../services/EmployeeService";
+import { Options, Vue } from "vue-class-component";
+import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
+import { defineComponent } from "vue";
+import Utils, { IPager, IList } from '../../Utils';
 
-let temp_emp: IEmployee = {
-  id: 1,
-  name: "Andrzej",
-  surname: "Kowalski",
-  position: "Manager",
-  salary: 21308,
-  email: "AKowalski@spr.com",
-  phone_number: "190-921-291",
-  pesel: "98721093802",
-  employment_date: new Date(2001, 11, 9),
-};
 
-export default class EmployeeEditView extends Vue {
-  data() {
-    return {
-      result: temp_emp,
-    };
-  }
-}
+export default defineComponent({
+    data() {
+        return {
+            result: EmployeeServices.getBlankEmployeeTemplate(),
+            pager: Utils.getDefaultPager(),
+        };
+    },
+
+    mounted() {
+        console.log(this.getData());
+        this.getData().then((data) => (this.result = data));
+    },
+
+    methods: {
+        getId(): string {
+            return this.$route.params.id as string;
+        },
+
+        async getData(): Promise<IEmployee> {
+            return await EmployeeServices.fetch(this.getId());
+        },
+
+        async save(): Promise<void> {
+            await EmployeeServices.update(this.getId(), this.result);
+            Utils.acceptedAlert();
+            this.$router.push({ name: 'employee' });
+        }
+    },
+});
 </script>

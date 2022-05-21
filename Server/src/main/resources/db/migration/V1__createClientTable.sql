@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS client
 (
     id           bigint(20)  not null AUTO_INCREMENT,
-    first_name         varchar(50) not null,
-    last_name      varchar(50) not null,
-    email        varchar(50) null,
-    phone_number varchar(9)  null,
+    first_name   varchar(50) not null,
+    last_name    varchar(50) not null,
+    email        varchar(50) null UNIQUE,
+    phone_number varchar(16) null UNIQUE,
 
     primary key (id)
 );
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS client
 INSERT INTO `client` (`id`, `first_name`, `last_name`, `email`, `phone_number`)
 VALUES (NULL, 'Jan', 'Dzban', 'jan@spurvago.com', '881223295'),
        (NULL, 'Aureliusz', 'Zalewski', 'aur123@spurvago.com', '905984460'),
-       (NULL, 'Marcin', 'Sikora', 'czxz21412@spurvago.com', '905984460'),
+       (NULL, 'Marcin', 'Sikora', 'czxz21412@spurvago.com', '905984390'),
        (NULL, 'Eugeniusz', 'Witkowski', 'sddsfa@spurvago.com', '833498212'),
        (NULL, 'Joachim', 'Lis', 'joachim@spurvago.com', '151919298'),
        (NULL, 'Henryk', 'Kwiatkowski', 'henry@spurvago.com', '981795766'),

@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Edytuj #{{ this.result.id }}
+            Edytuj {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -40,7 +40,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.first_name"
+                  v-model="this.result.firstName"
                 />
               </dd>
             </div>
@@ -63,7 +63,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.last_name"
+                  v-model="this.result.lastName"
                 />
               </dd>
             </div>
@@ -114,7 +114,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.phone_number"
+                  v-model="this.result.phoneNumber"
                 />
               </dd>
             </div>
@@ -129,10 +129,26 @@
                 text-white
                 border-2 border-black
                 hover:
+                mx-4
               "
               @click="$router.push({ name: 'clients' })"
             >
-              Edytuj
+              Powrót
+            </button>
+            <button
+              class="
+                bg-gray-800
+                rounded-xl
+                px-6
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+                mx-4
+              "
+              @click="this.save()"
+            >
+              Zatwierdź
             </button>
           </div>
         </div>
@@ -142,21 +158,35 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
 import ClientsServices, { IClient } from "../../services/ClientsService";
+import { defineComponent } from "vue";
+import Utils from "../../Utils";
 
-let temp_client: IClient = {
-    id: 1,
-    firstName: "Jan",
-    lastName: "Nowak",
-    email: "jkowalski2137@gmail.com",
-    phoneNumber: "+48 667 444 321",
-  };
-export default class ClientsFetchView extends Vue {
+export default defineComponent({
   data() {
     return {
-      result: temp_client,
+      result: ClientsServices.getBlankClientTemplate(),
     };
-  }
-}
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
+    },
+
+    async getData(): Promise<IClient> {
+      return await ClientsServices.fetch(this.getId());
+    },
+
+    async save(): Promise<void> {
+      await ClientsServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: 'clients' });
+    }
+  },
+});
 </script>
