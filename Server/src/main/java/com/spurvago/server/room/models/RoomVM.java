@@ -1,6 +1,5 @@
 package com.spurvago.server.room.models;
 
-import com.spurvago.database.Room;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +12,5 @@ public class RoomVM {
     private int status;
 
     public RoomVM() {
-    }
-
-    public RoomVM(Room entity) {
-        this.id = entity.getId();
-        this.roomNumber = entity.getRoomNumber();
-        this.roomType = entity.getRoomType().getType();
-        this.status = entity.getStatus();
     }
 }

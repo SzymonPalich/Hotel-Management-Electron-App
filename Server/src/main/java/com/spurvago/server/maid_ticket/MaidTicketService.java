@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidTicketMapper maidTicketMapper) {
 
     public MaidTicketVM find(long id) {
-        var entity = maidTicketRepository.findById(id);
+        MaidTicket entity = maidTicketRepository.findById(id);
         if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
 
@@ -37,35 +37,33 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidT
             Specification<MaidTicket> specification = MaidTicketRepository.search(words);
             entities = maidTicketRepository.findAll(specification, pageable);
         }
-        Page<MaidTicketVM> entitiesDTO = entities.map(MaidTicketVM::new);
 
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<MaidTicketVM> entitiesDTO = maidTicketMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public MaidTicketVM create(MaidTicketFM newEntity) {
-        // Sprawdzanie validate()
-        // Sprawdzanie FK
+        // TODO Validator
 
-        var entity = maidTicketMapper.mapToEntity(newEntity);
+        MaidTicket entity = maidTicketMapper.mapToEntity(newEntity);
         maidTicketRepository.save(entity);
         return maidTicketMapper.mapToVM(entity);
     }
 
     public MaidTicketVM update(long id, MaidTicketFM newEntity) {
+        // TODO Validator
         MaidTicket entity = maidTicketRepository.findById(id);
         if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
 
-        // Sprawdzanie validate()
-        // Sprawdzanie FK
-
         maidTicketMapper.mapToEntity(entity, newEntity);
         maidTicketRepository.save(entity);
-        return new MaidTicketVM(entity);
+        return maidTicketMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
-        var entity = maidTicketRepository.findById(id);
+        MaidTicket entity = maidTicketRepository.findById(id);
         if (entity == null)
             throw new ResponseStatusException(NOT_FOUND);
 

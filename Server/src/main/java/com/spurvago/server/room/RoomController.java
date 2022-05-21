@@ -19,33 +19,43 @@ public class RoomController {
         this.roomService = roomService;
     }
 
+    //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public RoomVM find(@PathVariable long id) {
         return roomService.find(id);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="getList()">
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ListPaginated<RoomVM> getList(Pager pager, String search) {
         return roomService.getList(pager, search);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public RoomVM create(RoomFM newEntity) {
         return roomService.create(newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public RoomVM update(@PathVariable long id, @RequestBody RoomFM newEntity) {
         return roomService.update(id, newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         roomService.delete(id);
     }
+    //</editor-fold>
 }

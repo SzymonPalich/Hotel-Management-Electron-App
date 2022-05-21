@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTicketRepository,
                                        MaintenanceTicketMapper maintenanceTicketMapper) {
     public MaintenanceTicketVM find(long id) {
-        var entity = maintenanceTicketRepository.findById(id);
+        MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -39,18 +39,20 @@ public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTi
             entities = maintenanceTicketRepository.findAll(specification, pageable);
         }
 
-        Page<MaintenanceTicketVM> entitiesDTO = entities.map(MaintenanceTicketVM::new);
-
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<MaintenanceTicketVM> entitiesDTO = maintenanceTicketMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public MaintenanceTicketVM create(MaintenanceTicketFM newEntity) {
-        var entity = maintenanceTicketMapper.mapToEntity(newEntity);
+        // TODO Validacja
+        MaintenanceTicket entity = maintenanceTicketMapper.mapToEntity(newEntity);
         maintenanceTicketRepository.save(entity);
         return maintenanceTicketMapper.mapToVM(entity);
     }
 
     public MaintenanceTicketVM update(long id, MaintenanceTicketFM newEntity) {
+        // TODO Validacja
         MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
@@ -58,11 +60,11 @@ public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTi
 
         maintenanceTicketMapper.mapToEntity(entity, newEntity);
         maintenanceTicketRepository.save(entity);
-        return new MaintenanceTicketVM(entity);
+        return maintenanceTicketMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
-        var entity = maintenanceTicketRepository.findById(id);
+        MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }

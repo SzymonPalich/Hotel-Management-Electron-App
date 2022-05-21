@@ -21,6 +21,7 @@ public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType,
             Predicate predicate = null;
             Predicate tempPredicate;
 
+            //<editor-fold desc="Predicate Builder">
             for (String searchWord : searchWords) {
                 tempPredicate =
                         b.or(
@@ -33,6 +34,8 @@ public interface RoomTypeRepository extends PagingAndSortingRepository<RoomType,
                     predicate = b.and(predicate, tempPredicate);
                 }
             }
+            //</editor-fold>
+
             return predicate;
         };
     }

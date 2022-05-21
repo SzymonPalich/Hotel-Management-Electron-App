@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "init.sql", executionPhase = BEFORE_TEST_METHOD)
 @Sql(scripts = "teardown.sql", executionPhase = AFTER_TEST_METHOD)
 public class ClientTests {
+    // TODO Przepisać tak bazę, aby było kompatybilne z modelami
     //<editor-fold desc="Wartości z bazy">
     private final List<Client> testUsers = new ArrayList<>(List.of(
             new Client(1L, "Jacek", "Testowy", "j.testowy@test.test", "111111111"),

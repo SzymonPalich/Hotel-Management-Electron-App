@@ -6,7 +6,6 @@ import com.spurvago.components.Utils;
 import com.spurvago.database.Accommodation;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
-import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.room.RoomStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

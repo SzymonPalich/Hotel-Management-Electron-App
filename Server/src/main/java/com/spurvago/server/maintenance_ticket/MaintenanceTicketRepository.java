@@ -25,6 +25,7 @@ public interface MaintenanceTicketRepository extends PagingAndSortingRepository<
             Predicate predicate = null;
             Predicate tempPredicate;
 
+            //<editor-fold desc="Predicate Builder">
             for (String searchWord : searchWords) {
                 tempPredicate =
                         b.or(
@@ -45,6 +46,8 @@ public interface MaintenanceTicketRepository extends PagingAndSortingRepository<
                     predicate = b.and(predicate, tempPredicate);
                 }
             }
+            //</editor-fold>
+
             return predicate;
         };
     }

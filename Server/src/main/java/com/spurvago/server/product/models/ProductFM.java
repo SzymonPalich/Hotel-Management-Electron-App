@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class ProductFM {
-    private long id;
     private String productName;
     private BigDecimal retailPrice;
     private BigDecimal wholesalePrice;

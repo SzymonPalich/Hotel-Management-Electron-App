@@ -5,6 +5,9 @@ import com.spurvago.server.product.models.ProductFM;
 import com.spurvago.server.product.models.ProductVM;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public record ProductMapper() {
     ProductVM mapToVM(Product src) {
@@ -26,11 +29,18 @@ public record ProductMapper() {
         return dest;
     }
 
-    Product mapToEntity(Product dest, ProductFM src) {
+    void mapToEntity(Product dest, ProductFM src) {
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());
         dest.setWholesalePrice(src.getWholesalePrice());
+    }
 
-        return dest;
+    List<ProductVM> mapToList(List<Product> srcList) {
+        List<ProductVM> destList = new ArrayList<>();
+        for (Product srcEntity : srcList) {
+            destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
     }
 }

@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public record RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
 
     public RoomVM find(long id) {
-        var entity = roomRepository.findById(id);
+        Room entity = roomRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -38,18 +38,21 @@ public record RoomService(RoomRepository roomRepository, RoomMapper roomMapper) 
             Specification<Room> specification = RoomRepository.search(words);
             entities = roomRepository.findAll(specification, pageable);
         }
-        Page<RoomVM> entitiesDTO = entities.map(RoomVM::new);
 
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<RoomVM> entitiesDTO = roomMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public RoomVM create(RoomFM newEntity) {
-        var entity = roomMapper.mapToEntity(newEntity);
+        // TODO Validacja
+        Room entity = roomMapper.mapToEntity(newEntity);
         roomRepository.save(entity);
         return roomMapper.mapToVM(entity);
     }
 
     public RoomVM update(long id, RoomFM newEntity) {
+        // TODO Validacja
         Room entity = roomRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
@@ -57,11 +60,11 @@ public record RoomService(RoomRepository roomRepository, RoomMapper roomMapper) 
 
         roomMapper.mapToEntity(entity, newEntity);
         roomRepository.save(entity);
-        return new RoomVM(entity);
+        return roomMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
-        var entity = roomRepository.findById(id);
+        Room entity = roomRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }

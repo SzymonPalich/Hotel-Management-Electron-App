@@ -7,23 +7,29 @@ import com.spurvago.server.maid_ticket.models.MaidTicketVM;
 import com.spurvago.server.room.RoomRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
     MaidTicket mapToEntity(MaidTicketFM src) {
         MaidTicket dest = new MaidTicket();
         dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
+        if (src.getEmployeeId() != null) {
+            dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
+        }
         dest.setFinalizationDate(src.getFinalizationDate());
 
         return dest;
     }
 
-    MaidTicket mapToEntity(MaidTicket dest, MaidTicketFM src) {
+    void mapToEntity(MaidTicket dest, MaidTicketFM src) {
         dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
+        if (src.getEmployeeId() != null) {
+            dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
+        }
         dest.setFinalizationDate(src.getFinalizationDate());
 
-        return dest;
     }
 
     MaidTicketVM mapToVM(MaidTicket src) {
@@ -35,10 +41,21 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());
         dest.setFinalizationDate(src.getFinalizationDate());
-        dest.setEmployeeId(src.getEmployee().getId());
-        dest.setEmployeeFirstName(src.getEmployee().getFirstName());
-        dest.setEmployeeLastName(src.getEmployee().getLastName());
+        if (src.getEmployee() != null) {
+            dest.setEmployeeId(src.getEmployee().getId());
+            dest.setEmployeeFirstName(src.getEmployee().getFirstName());
+            dest.setEmployeeLastName(src.getEmployee().getLastName());
+        }
 
         return dest;
+    }
+
+    List<MaidTicketVM> mapToList(List<MaidTicket> srcList) {
+        List<MaidTicketVM> destList = new ArrayList<>();
+        for (MaidTicket srcEntity : srcList) {
+            destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
     }
 }

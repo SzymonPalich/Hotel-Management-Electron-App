@@ -1,6 +1,5 @@
 package com.spurvago.server.accommodation.models;
 
-import com.spurvago.database.Accommodation;
 import lombok.Getter;
 import lombok.Setter;
 

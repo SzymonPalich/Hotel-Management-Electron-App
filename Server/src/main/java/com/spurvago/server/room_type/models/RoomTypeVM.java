@@ -1,6 +1,5 @@
 package com.spurvago.server.room_type.models;
 
-import com.spurvago.database.RoomType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +13,5 @@ public class RoomTypeVM {
     private BigDecimal price;
 
     public RoomTypeVM() {
-    }
-
-    public RoomTypeVM(RoomType entity) {
-        this.id = entity.getId();
-        this.type = entity.getType();
-        this.price = entity.getPrice();
     }
 }

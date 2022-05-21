@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS maintenance_ticket
 (
     id                bigint(20)   not null AUTO_INCREMENT,
     room_id           bigint(20)   not null,
-    employee_id     bigint(20)    default null,
+    employee_id       bigint(20)    default null,
     name              varchar(50)  not null,
     description       varchar(300) not null,
     parts_price       decimal(8, 2) default null,

@@ -1,11 +1,9 @@
 package com.spurvago.server.accommodation;
 
 import com.spurvago.database.Accommodation;
-import com.spurvago.database.Client;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.client.ClientRepository;
-import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.room.RoomRepository;
 import org.springframework.stereotype.Component;
 

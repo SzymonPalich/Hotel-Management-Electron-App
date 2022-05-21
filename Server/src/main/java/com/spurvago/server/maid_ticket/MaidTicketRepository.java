@@ -25,6 +25,7 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
             Predicate predicate = null;
             Predicate tempPredicate;
 
+            //<editor-fold desc="Predicate Builder">
             for (String searchWord : searchWords) {
                 tempPredicate =
                         b.or(
@@ -41,6 +42,8 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
                     predicate = b.and(predicate, tempPredicate);
                 }
             }
+            //</editor-fold>
+
             return predicate;
         };
     }

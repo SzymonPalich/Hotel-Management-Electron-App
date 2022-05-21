@@ -1,6 +1,5 @@
 package com.spurvago.server.maid_ticket.models;
 
-import com.spurvago.database.MaidTicket;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,28 +14,10 @@ public class MaidTicketVM {
     private String roomType;
     private int roomStatus;
     private Date finalizationDate;
-    private long employeeId;
+    private Long employeeId;
     private String employeeFirstName;
     private String employeeLastName;
 
     public MaidTicketVM() {
-    }
-
-    public MaidTicketVM(MaidTicket entity) {
-        this.id = entity.getId();
-        this.roomId = entity.getRoom().getId();
-        this.roomNumber = entity.getRoom().getRoomNumber();
-        this.roomType = entity.getRoom().getRoomType().getType();
-        this.roomStatus = entity.getRoom().getStatus();
-        this.finalizationDate = entity.getFinalizationDate();
-        if (!(entity.getEmployee() == null)) {
-            this.employeeId = entity.getEmployee().getId();
-            this.employeeFirstName = entity.getEmployee().getFirstName();
-            this.employeeLastName = entity.getEmployee().getLastName();
-        } else {
-            this.employeeId = 0;
-            this.employeeFirstName = "";
-            this.employeeLastName = "";
-        }
     }
 }

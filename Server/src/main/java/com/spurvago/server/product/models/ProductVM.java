@@ -1,6 +1,5 @@
 package com.spurvago.server.product.models;
 
-import com.spurvago.database.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +14,5 @@ public class ProductVM {
     private BigDecimal wholesalePrice;
 
     public ProductVM() {
-    }
-
-    public ProductVM(Product entity) {
-        this.id = entity.getId();
-        this.productName = entity.getProductName();
-        this.retailPrice = entity.getRetailPrice();
-        this.wholesalePrice = entity.getWholesalePrice();
     }
 }

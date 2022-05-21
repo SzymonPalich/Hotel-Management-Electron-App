@@ -1,10 +1,8 @@
 package com.spurvago.server.client;
 
-import com.spurvago.components.ListPaginated;
 import com.spurvago.database.Client;
 import com.spurvago.server.client.models.ClientFM;
 import com.spurvago.server.client.models.ClientVM;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

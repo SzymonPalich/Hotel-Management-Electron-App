@@ -6,6 +6,9 @@ import com.spurvago.server.room.models.RoomVM;
 import com.spurvago.server.room_type.RoomTypeRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public record RoomMapper(RoomTypeRepository roomTypeRepository) {
     RoomVM mapToVM(Room src) {
@@ -19,12 +22,10 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         return dest;
     }
 
-    Room mapToEntity(Room dest, RoomFM src) {
+    void mapToEntity(Room dest, RoomFM src) {
         dest.setRoomNumber(src.getRoomNumber());
         dest.setRoomType(roomTypeRepository.findById(src.getRoomTypeId()));
         dest.setStatus(src.getStatus());
-
-        return dest;
     }
 
     Room mapToEntity(RoomFM src) {
@@ -34,5 +35,14 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         dest.setStatus(src.getStatus());
 
         return dest;
+    }
+
+    List<RoomVM> mapToList(List<Room> srcList) {
+        List<RoomVM> destList = new ArrayList<>();
+        for (Room srcEntity : srcList) {
+            destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
     }
 }

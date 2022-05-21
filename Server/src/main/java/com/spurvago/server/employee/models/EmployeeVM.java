@@ -1,6 +1,5 @@
 package com.spurvago.server.employee.models;
 
-import com.spurvago.database.Employee;
 import lombok.Getter;
 import lombok.Setter;
 

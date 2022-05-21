@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMapper roomTypeMapper) {
 
     public RoomTypeVM find(long id) {
-        var entity = roomTypeRepository.findById(id);
+        RoomType entity = roomTypeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -40,18 +40,20 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMap
             entities = roomTypeRepository.findAll(specification, pageable);
         }
 
-        Page<RoomTypeVM> entitiesDTO = entities.map(RoomTypeVM::new);
-
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<RoomTypeVM> entitiesDTO = roomTypeMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public RoomTypeVM create(RoomTypeFM newEntity) {
-        var entity = roomTypeMapper.mapToEntity(newEntity);
+        // TODO Validacja
+        RoomType entity = roomTypeMapper.mapToEntity(newEntity);
         roomTypeRepository.save(entity);
         return roomTypeMapper.mapToVM(entity);
     }
 
     public RoomTypeVM update(long id, RoomTypeFM newEntity) {
+        // TODO Validacja
         RoomType entity = roomTypeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
@@ -59,11 +61,11 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMap
 
         roomTypeMapper.mapToEntity(entity, newEntity);
         roomTypeRepository.save(entity);
-        return new RoomTypeVM(entity);
+        return roomTypeMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
-        var entity = roomTypeRepository.findById(id);
+        RoomType entity = roomTypeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }

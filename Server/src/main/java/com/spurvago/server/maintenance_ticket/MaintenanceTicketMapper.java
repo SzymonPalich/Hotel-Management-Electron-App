@@ -7,12 +7,17 @@ import com.spurvago.server.maintenance_ticket.models.MaintenanceTicketVM;
 import com.spurvago.server.room.RoomRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
+
     MaintenanceTicket mapToEntity(MaintenanceTicketFM src) {
         MaintenanceTicket dest = new MaintenanceTicket();
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
+        if (src.getEmployeeId() != null) {
+            dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
+        }
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
@@ -23,8 +28,9 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
     }
 
     void mapToEntity(MaintenanceTicket dest, MaintenanceTicketFM src) {
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setEmployee(employeeRepository.findById(src.getEmployeeId()));
+        if (src.getEmployeeId() != null) {
+            dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
+        }
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
@@ -40,14 +46,25 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());
-        dest.setEmployeeLastName(src.getEmployee().getFirstName());
-        dest.setEmployeeLastName(src.getEmployee().getLastName());
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
         dest.setTechnicianReport(src.getTechnicianReport());
         dest.setFinalizationDate(src.getFinalizationDate());
+        if (src.getEmployee() != null) {
+            dest.setEmployeeLastName(src.getEmployee().getFirstName());
+            dest.setEmployeeLastName(src.getEmployee().getLastName());
+        }
 
         return dest;
+    }
+
+    List<MaintenanceTicketVM> mapToList(List<MaintenanceTicket> srcList) {
+        List<MaintenanceTicketVM> destList = new ArrayList<>();
+        for (MaintenanceTicket srcEntity : srcList) {
+            destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
     }
 }

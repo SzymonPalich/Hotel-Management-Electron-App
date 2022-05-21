@@ -1,8 +1,6 @@
 package com.spurvago.server.employee;
 
-import com.spurvago.database.Client;
 import com.spurvago.database.Employee;
-import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.stereotype.Component;
