@@ -1,6 +1,10 @@
-package com.spurvago.server.security;
+package com.spurvago.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spurvago.security.JsonObjectAuthenticationFilter;
+import com.spurvago.security.JwtAuthorizationFilter;
+import com.spurvago.security.RestAuthenticationFailureHandler;
+import com.spurvago.security.RestAuthenticationSuccessHandler;
 import com.spurvago.server.employee.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -68,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/login?logout").permitAll()
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
@@ -86,15 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/client/**", "/api/employee/**", "/api/room_type/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
                 .and()
-            .sessionManagement()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-            .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .and()
-            .addFilter(authenticationFilter())
+                .addFilter(authenticationFilter())
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService(), secret))
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));

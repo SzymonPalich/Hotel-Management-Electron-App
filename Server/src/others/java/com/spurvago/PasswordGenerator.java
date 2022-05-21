@@ -1,4 +1,4 @@
-package com.spurvago.server.password_generator;
+package com.spurvago;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

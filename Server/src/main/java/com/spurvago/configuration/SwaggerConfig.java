@@ -1,4 +1,4 @@
-package com.spurvago.server.security;
+package com.spurvago.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ public class SwaggerConfig {
                 .securityContexts(List.of(securityContext()))
                 .securitySchemes(List.of(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.spurvago.server"))
                 .paths(PathSelectors.any())
                 .build();
     }
