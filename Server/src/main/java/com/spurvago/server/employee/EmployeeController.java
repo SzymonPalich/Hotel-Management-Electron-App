@@ -25,24 +25,31 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeVM find(@PathVariable long id) {
         return employeeService.find(id);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="getList()">
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ListPaginated<EmployeeVM> getList(Pager pager, String search) {
         return employeeService.getList(pager, search);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public EmployeeVM create(EmployeeFM newEntity) {
         return employeeService.create(newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeVM update(@PathVariable Long id, @RequestBody EmployeeFM newEntity) {
@@ -50,17 +57,23 @@ public class EmployeeController {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return employeeService.update(id, newEntity);
     }
+    //</editor-fold>
 
+    //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         employeeService.delete(id);
     }
+    //</editor-fold>
 
-    @CrossOrigin
+    // TODO To można przenieść do zwykłego getList() front wtedy będzie wysyłał do search wartość
+    //      Zmieni się to po zaimplementowaniu autoryzacji
+    //<editor-fold desc="getEmployeesByPosition">
     @RequestMapping(method = RequestMethod.GET, path = "/position")
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesByPosition(@RequestParam int position) {
         return employeeService.findByPosition(position);
     }
+    //</editor-fold>
 }

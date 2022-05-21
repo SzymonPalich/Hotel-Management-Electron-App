@@ -6,6 +6,7 @@ import com.spurvago.components.Utils;
 import com.spurvago.database.Accommodation;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
+import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.room.RoomStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,9 +43,9 @@ public record AccommodationService(AccommodationRepository accommodationReposito
             entities = accommodationRepository.findAll(specification, pageable);
         }
 
-        Page<AccommodationVM> entitiesDTO = entities.map(AccommodationVM::new);
-
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<AccommodationVM> entitiesDTO = accommodationMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public AccommodationVM create(AccommodationFM newEntity) {
@@ -71,7 +72,7 @@ public record AccommodationService(AccommodationRepository accommodationReposito
 
         accommodationMapper.mapToEntity(entity, newEntity);
         accommodationRepository.save(entity);
-        return new AccommodationVM(entity);
+        return accommodationMapper.mapToVM(entity);
     }
 
     public void delete(long id) {

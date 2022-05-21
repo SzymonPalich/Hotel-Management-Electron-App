@@ -4,6 +4,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Employee;
+import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
 
     public EmployeeVM find(long id) {
-        var entity = employeeRepository.findById(id);
+        Employee entity = employeeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -41,14 +42,16 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
             entities = employeeRepository.findAll(specification, pageable);
         }
 
-        Page<EmployeeVM> entitiesDTO = entities.map(EmployeeVM::new);
-
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<EmployeeVM> entitiesDTO = employeeMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
 
     public EmployeeVM create(EmployeeFM newEntity) {
-        var entity = employeeMapper.mapToEntity(newEntity);
+        // TODO Dodać validator
+        Employee entity = employeeMapper.mapToEntity(newEntity);
+        // TODO Email sprawdzać w validatorze
         if (!Utils.validateEmail(newEntity.getEmail())) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
@@ -58,6 +61,7 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
 
 
     public EmployeeVM update(long id, EmployeeFM newEntity) {
+        // TODO Dodać validator
         Employee entity = employeeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
@@ -65,11 +69,11 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
 
         employeeMapper.mapToEntity(entity, newEntity);
         employeeRepository.save(entity);
-        return new EmployeeVM(entity);
+        return employeeMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
-        var entity = employeeRepository.findById(id);
+        Employee entity = employeeRepository.findById(id);
         if (entity == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
@@ -77,6 +81,7 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
         employeeRepository.delete(entity);
     }
 
+    // TODO Tak jak w kontrolerze pisałem
     public List<Employee> findByPosition(int position) {
         return employeeRepository.findEmployeesByPosition(position);
     }

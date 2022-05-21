@@ -19,7 +19,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
+public record ClientService(ClientRepository clientRepository,
+                            ClientMapper clientMapper,
+                            ClientValidator clientValidator) {
 
     public ClientVM find(long id) {
         Client entity = clientRepository.findById(id);
@@ -42,16 +44,15 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
             entities = clientRepository.findAll(specification, pageable);
         }
 
-        Page<ClientVM> entitiesDTO = entities.map(ClientVM::new);
-
-        return new ListPaginated<>(entitiesDTO, pager);
+        List<ClientVM> entitiesDTO = clientMapper.mapToList(entities.getContent());
+        return new ListPaginated<>(entitiesDTO, pager,
+                entities.getTotalElements(), entities.getTotalPages());
     }
 
     public ClientVM create(ClientFM newEntity) {
-        if (!newEntity.validate())
+        if (!clientValidator.validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-        if (!checkConstraints(newEntity.getPhoneNumber(), newEntity.getEmail()))
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
 
         Client entity = clientMapper.mapToEntity(newEntity);
         clientRepository.save(entity);
@@ -64,22 +65,13 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        if (!newEntity.validate())
+        if (!clientValidator.validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        if (!Objects.equals(entity.getPhoneNumber(), newEntity.getPhoneNumber())
-                && newEntity.getPhoneNumber() != null
-                && clientRepository.existsByPhoneNumber(newEntity.getPhoneNumber()))
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-
-        if (!Objects.equals(entity.getEmail(), newEntity.getEmail())
-                && newEntity.getEmail() != null
-                && clientRepository.existsByEmail(newEntity.getEmail()))
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
 
         clientMapper.mapToEntity(entity, newEntity);
         clientRepository.save(entity);
-        return new ClientVM(entity);
+        return clientMapper.mapToVM(entity);
     }
 
     public void delete(long id) {
@@ -89,11 +81,5 @@ public record ClientService(ClientRepository clientRepository, ClientMapper clie
         }
 
         clientRepository.delete(entity);
-    }
-
-    private boolean checkConstraints(String phoneNumber, String email) {
-        if (clientRepository.existsByPhoneNumber(phoneNumber))
-            return false;
-        return !clientRepository.existsByEmail(email);
     }
 }

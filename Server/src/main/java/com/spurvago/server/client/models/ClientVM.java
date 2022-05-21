@@ -1,6 +1,5 @@
 package com.spurvago.server.client.models;
 
-import com.spurvago.database.Client;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,14 +13,5 @@ public class ClientVM {
     private String phoneNumber;
 
     public ClientVM() {
-
-    }
-
-    public ClientVM(Client entity) {
-        this.id = entity.getId();
-        this.firstName = entity.getFirstName();
-        this.lastName = entity.getLastName();
-        this.email = entity.getEmail();
-        this.phoneNumber = entity.getPhoneNumber();
     }
 }

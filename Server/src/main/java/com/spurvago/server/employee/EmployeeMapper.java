@@ -1,9 +1,14 @@
 package com.spurvago.server.employee;
 
+import com.spurvago.database.Client;
 import com.spurvago.database.Employee;
+import com.spurvago.server.client.models.ClientVM;
 import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public record EmployeeMapper() {
@@ -23,7 +28,7 @@ public record EmployeeMapper() {
         return dest;
     }
 
-    Employee mapToEntity(Employee dest, EmployeeFM src) {
+    void mapToEntity(Employee dest, EmployeeFM src) {
         dest.setFirstName(src.getFirstName());
         dest.setLastName(src.getLastName());
         dest.setEmail(src.getEmail());
@@ -33,8 +38,6 @@ public record EmployeeMapper() {
         dest.setEmploymentDate(src.getEmploymentDate());
         dest.setDismissalDate(src.getDismissalDate());
         dest.setSalary(src.getSalary());
-
-        return dest;
     }
 
     Employee mapToEntity(EmployeeFM src) {
@@ -50,5 +53,14 @@ public record EmployeeMapper() {
         dest.setSalary(src.getSalary());
 
         return dest;
+    }
+
+    List<EmployeeVM> mapToList(List<Employee> srcList) {
+        List<EmployeeVM> destList = new ArrayList<>();
+        for (Employee srcEntity : srcList) {
+            destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
     }
 }

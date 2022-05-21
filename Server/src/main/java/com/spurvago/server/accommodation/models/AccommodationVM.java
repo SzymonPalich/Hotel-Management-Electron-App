@@ -21,16 +21,4 @@ public class AccommodationVM {
 
     public AccommodationVM() {
     }
-
-    public AccommodationVM(Accommodation entity) {
-        this.id = entity.getId();
-        this.clientFirstName = entity.getClient().getFirstName();
-        this.clientLastName = entity.getClient().getLastName();
-        this.roomNumber = entity.getRoom().getRoomNumber();
-        this.roomType = entity.getRoom().getRoomType().getType();
-        this.roomStatus = entity.getRoom().getStatus();
-        this.startDate = entity.getStartDate();
-        this.endDate = entity.getEndDate();
-        this.reservationOnly = entity.getReservationOnly();
-    }
 }

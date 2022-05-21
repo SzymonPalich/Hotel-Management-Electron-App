@@ -58,6 +58,7 @@ public class Employee {
     @OneToMany
     private List<MaintenanceTicket> maintenanceTickets;
 
+    // TODO Po merge autoryzacji do wywalenia
     public static final class Position {
         public final static List<Integer> ACCEPTED_VALUES = List.of(1, 2, 3, 4);
         public final static int MANAGER = 1;
