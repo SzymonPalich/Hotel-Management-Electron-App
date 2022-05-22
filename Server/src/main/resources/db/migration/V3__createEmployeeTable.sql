@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS employee
     email           varchar(50)   not null,
     password        varchar(120)  not null,
     phone_number    varchar(9)    not null,
-    position        int(20)       not null,
+    position        varchar(25)   not null,
     pesel           varchar(11)   not null,
     employment_date date          not null,
     dismissal_date  date          null,

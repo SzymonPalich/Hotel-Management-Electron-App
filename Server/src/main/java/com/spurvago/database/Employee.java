@@ -1,4 +1,4 @@
-package com.spurvago.server.employee;
+package com.spurvago.database;
 
 import com.spurvago.database.MaidTicket;
 import com.spurvago.database.MaintenanceTicket;
@@ -40,7 +40,7 @@ public class Employee {
 
     @Getter
     @Setter
-    private int position;
+    private String position;
 
     @Getter
     @Setter
@@ -63,6 +63,7 @@ public class Employee {
 
     @OneToMany
     private List<MaintenanceTicket> maintenanceTickets;
+
 
 
     public static final class Position {

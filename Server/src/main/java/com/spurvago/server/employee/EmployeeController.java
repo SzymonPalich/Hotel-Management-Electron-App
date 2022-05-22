@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.spurvago.database.Employee;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class EmployeeController {
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EmployeeVM update(@PathVariable Long id, @RequestBody EmployeeFM newEntity) {
-        if (!com.spurvago.server.employee.Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
+        if (!Employee.Position.ACCEPTED_VALUES.contains(newEntity.getPosition()))
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         return employeeService.update(id, newEntity);
     }
@@ -71,7 +72,7 @@ public class EmployeeController {
     //<editor-fold desc="getEmployeesByPosition">
     @RequestMapping(method = RequestMethod.GET, path = "/position")
     @ResponseStatus(HttpStatus.OK)
-    public List<com.spurvago.server.employee.Employee> getEmployeesByPosition(@RequestParam int position) {
+    public List<Employee> getEmployeesByPosition(@RequestParam int position) {
         return employeeService.findByPosition(position);
     }
     //</editor-fold>

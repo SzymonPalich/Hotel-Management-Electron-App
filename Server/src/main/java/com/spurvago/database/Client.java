@@ -36,4 +36,8 @@ public class Client {
 
     public Client() {
     }
+
+
+    public Client(long l, String szymon, String jakiś, String s, String s1) {
+    }
 }

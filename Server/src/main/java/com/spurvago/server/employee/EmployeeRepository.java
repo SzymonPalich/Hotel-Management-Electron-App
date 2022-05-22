@@ -1,6 +1,6 @@
 package com.spurvago.server.employee;
 
-import com.spurvago.database.Employee;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.spurvago.server.employee.Employee;
+import com.spurvago.database.Employee;
 import javax.persistence.criteria.Predicate;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import static com.spurvago.components.Utils.asLikeQuery;
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 
-    static Specification<com.spurvago.server.employee.Employee> search(List<String> searchWords) {
+    static Specification<Employee> search(List<String> searchWords) {
         return (r, q, b) -> {
             Predicate predicate = null;
             Predicate tempPredicate;

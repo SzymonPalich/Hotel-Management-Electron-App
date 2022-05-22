@@ -13,7 +13,7 @@ public class EmployeeFM {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private int position;
+    private String position;
     private String pesel;
     private Date employmentDate;
     private Date dismissalDate;

@@ -35,6 +35,7 @@ public class ClientTests {
             new Client(3L, "Jan", "Kowalski", null, "333333333"),
             new Client(4L, "Szymon", "Jakiś", "s.jakis@test.test", "444444444"),
             new Client(5L, "Piotr", "Nowak", "p.nowak@test.test", "555555555")
+
     ));
     private final long NEXT_ID = 6L;
     //</editor-fold>
