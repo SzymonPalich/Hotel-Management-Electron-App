@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import EmployeeServices, { IEmployee } from "./services/EmployeeService";
 import MaidTicketServices, { IMaid } from "./services/MaidTicketService";
+import Router from "./router"
 
 export default class Utils {
     public static alertDisplay() {
@@ -28,8 +29,10 @@ export default class Utils {
             if (result.isConfirmed) {
               if (table == "maid") {
                 this.deleteMaid(id);
+                window.location.reload();
               } else if (table == "employee") {
                 this.deleteEmployee(id);
+                window.location.reload();
               }
             } else if (result.isDenied) {
               return false

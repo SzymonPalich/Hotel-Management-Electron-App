@@ -30,6 +30,10 @@ export default class MaidTicketServices {
     public static async delete(id: string): Promise<IMaid> {
         return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`)).data;
     }
+
+    public static async create(employeeId: number, roomId: number): Promise<IMaid> {
+        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket?employeeId=${employeeId}&roomId=${roomId}`)).data;
+    }
 }
 
 export interface IMaid {

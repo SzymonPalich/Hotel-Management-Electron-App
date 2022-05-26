@@ -3,10 +3,12 @@
     <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
+        <router-link :to="{ name: 'maid_ticket-create' }">
         <i
           class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
           >add</i
         >
+        </router-link>
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
