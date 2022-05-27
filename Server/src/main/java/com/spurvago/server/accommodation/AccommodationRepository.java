@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -51,7 +52,7 @@ public interface AccommodationRepository
         };
     }
 
-    Accommodation findById(long id);
+    Optional<Accommodation> findById(Long id);
 
     Page<Accommodation> findAll(Pageable pageable);
 }

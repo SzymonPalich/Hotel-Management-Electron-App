@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -43,7 +44,7 @@ public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, 
         };
     }
 
-    Room findById(long id);
+    Optional<Room> findById(Long id);
 
     Page<Room> findAll(Pageable pageable);
 }

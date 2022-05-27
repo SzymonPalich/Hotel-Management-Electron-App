@@ -13,18 +13,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
+public record EmployeeService(EmployeeRepository employeeRepository,
+                              EmployeeMapper employeeMapper,
+                              EmployeeValidator employeeValidator) {
 
-    public EmployeeVM find(long id) {
-        Employee entity = employeeRepository.findById(id);
-        if (entity == null) {
+    public EmployeeVM find(Long id) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        Employee entity;
+        if (optionalEmployee.isEmpty()){
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalEmployee.get();
 
         return employeeMapper.mapToVM(entity);
     }
@@ -48,34 +53,40 @@ public record EmployeeService(EmployeeRepository employeeRepository, EmployeeMap
 
 
     public EmployeeVM create(EmployeeFM newEntity) {
-        // TODO Dodać validator
-        Employee entity = employeeMapper.mapToEntity(newEntity);
-        // TODO Email sprawdzać w validatorze
-        if (!Utils.validateEmail(newEntity.getEmail())) {
+        if (!employeeValidator().validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
+
+        Employee entity = employeeMapper.mapToEntity(newEntity);
         employeeRepository.save(entity);
         return employeeMapper.mapToVM(entity);
     }
 
 
-    public EmployeeVM update(long id, EmployeeFM newEntity) {
-        // TODO Dodać validator
-        Employee entity = employeeRepository.findById(id);
-        if (entity == null) {
+    public EmployeeVM update(Long id, EmployeeFM newEntity) {
+        if (!employeeValidator().validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        Employee entity;
+        if (optionalEmployee.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalEmployee.get();
 
         employeeMapper.mapToEntity(entity, newEntity);
         employeeRepository.save(entity);
         return employeeMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        Employee entity = employeeRepository.findById(id);
-        if (entity == null) {
+    public void delete(Long id) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        Employee entity;
+        if (optionalEmployee.isEmpty()){
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalEmployee.get();
 
         employeeRepository.delete(entity);
     }

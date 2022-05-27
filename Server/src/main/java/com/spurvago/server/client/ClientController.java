@@ -23,7 +23,7 @@ public class ClientController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientVM find(@PathVariable long id) {
+    public ClientVM find(@PathVariable Long id) {
         return clientService.find(id);
     }
     //</editor-fold>

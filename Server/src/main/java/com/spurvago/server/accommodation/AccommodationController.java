@@ -22,7 +22,7 @@ public class AccommodationController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AccommodationVM find(@PathVariable long id) {
+    public AccommodationVM find(@PathVariable Long id) {
         return accommodationService.find(id);
     }
     //</editor-fold>
@@ -47,7 +47,7 @@ public class AccommodationController {
     //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AccommodationVM update(@PathVariable long id, @RequestBody AccommodationFM newEntity) {
+    public AccommodationVM update(@PathVariable Long id, @RequestBody AccommodationFM newEntity) {
         return accommodationService.update(id, newEntity);
     }
     //</editor-fold>
@@ -55,7 +55,7 @@ public class AccommodationController {
     //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         accommodationService.delete(id);
     }
     //</editor-fold>

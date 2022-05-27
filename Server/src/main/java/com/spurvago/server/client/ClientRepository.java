@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -41,7 +42,7 @@ public interface ClientRepository
         };
     }
 
-    Client findById(long id);
+    Optional<Client> findById(Long id);
 
     Boolean existsByPhoneNumber(String phoneNumber);
 

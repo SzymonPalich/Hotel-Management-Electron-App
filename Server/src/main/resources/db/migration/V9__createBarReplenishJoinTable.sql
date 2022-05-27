@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS bar_replenish
     maid_ticket_id bigint(20) not null,
     product_id     bigint(20) not null,
     primary key (maid_ticket_id, product_id),
-    constraint maid_ticket_fk foreign key (maid_ticket_id) references maid_ticket (id),
-    constraint product_fk foreign key (product_id) references product (id)
+    constraint maid_ticket_fk foreign key (maid_ticket_id) references maid_ticket (id) on delete cascade,
+    constraint product_fk foreign key (product_id) references product (id) on delete cascade
 );
 
 INSERT INTO `bar_replenish`

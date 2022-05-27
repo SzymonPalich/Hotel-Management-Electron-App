@@ -9,7 +9,7 @@ import java.sql.Date;
 @Getter
 @Setter
 public class MaintenanceTicketVM {
-    private long id;
+    private Long id;
     private int roomNumber;
     private String roomType;
     private int roomStatus;

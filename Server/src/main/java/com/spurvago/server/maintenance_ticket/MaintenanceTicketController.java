@@ -22,7 +22,7 @@ public class MaintenanceTicketController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaintenanceTicketVM find(@PathVariable long id) {
+    public MaintenanceTicketVM find(@PathVariable Long id) {
         return maintenanceTicketService.find(id);
     }
     //</editor-fold>
@@ -46,7 +46,7 @@ public class MaintenanceTicketController {
     //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaintenanceTicketVM update(@PathVariable long id, @RequestBody MaintenanceTicketFM newEntity) {
+    public MaintenanceTicketVM update(@PathVariable Long id, @RequestBody MaintenanceTicketFM newEntity) {
         return maintenanceTicketService.update(id, newEntity);
     }
     //</editor-fold>
@@ -54,7 +54,7 @@ public class MaintenanceTicketController {
     //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         maintenanceTicketService.delete(id);
     }
     //</editor-fold>

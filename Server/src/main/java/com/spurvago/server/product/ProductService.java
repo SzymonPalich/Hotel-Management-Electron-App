@@ -13,16 +13,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record ProductService(ProductRepository productRepository, ProductMapper productMapper) {
-    public ProductVM find(long id) {
-        Product entity = productRepository.findById(id);
-        if (entity == null) {
+public record ProductService(ProductRepository productRepository,
+                             ProductMapper productMapper,
+                             ProductValidator productValidator) {
+    public ProductVM find(Long id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        Product entity;
+        if (optionalProduct.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalProduct.get();
 
         return productMapper.mapToVM(entity);
     }
@@ -44,29 +50,39 @@ public record ProductService(ProductRepository productRepository, ProductMapper 
     }
 
     public ProductVM create(ProductFM newEntity) {
-        // TODO Validacja
+        if (!productValidator().validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
         Product entity = productMapper.mapToEntity(newEntity);
         productRepository.save(entity);
         return productMapper.mapToVM(entity);
     }
 
-    public ProductVM update(long id, ProductFM newEntity) {
-        // TODO Validacja
-        Product entity = productRepository.findById(id);
-        if (entity == null) {
+    public ProductVM update(Long id, ProductFM newEntity) {
+        if (!productValidator().validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        Product entity;
+        if (optionalProduct.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalProduct.get();
 
         productMapper.mapToEntity(entity, newEntity);
         productRepository.save(entity);
         return productMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        Product entity = productRepository.findById(id);
-        if (entity == null) {
+    public void delete(Long id) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        Product entity;
+        if (optionalProduct.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalProduct.get();
 
         productRepository.delete(entity);
     }

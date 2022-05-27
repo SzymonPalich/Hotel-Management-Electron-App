@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -22,11 +23,13 @@ public record ClientService(ClientRepository clientRepository,
                             ClientMapper clientMapper,
                             ClientValidator clientValidator) {
 
-    public ClientVM find(long id) {
-        Client entity = clientRepository.findById(id);
-        if (entity == null) {
+    public ClientVM find(Long id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        Client entity;
+        if (optionalClient.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalClient.get();
 
         return clientMapper.mapToVM(entity);
     }
@@ -58,11 +61,13 @@ public record ClientService(ClientRepository clientRepository,
         return clientMapper.mapToVM(entity);
     }
 
-    public ClientVM update(long id, ClientFM newEntity) {
-        Client entity = clientRepository.findById(id);
-        if (entity == null) {
+    public ClientVM update(Long id, ClientFM newEntity) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        Client entity;
+        if (optionalClient.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalClient.get();
 
         if (!clientValidator.validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
@@ -73,11 +78,13 @@ public record ClientService(ClientRepository clientRepository,
         return clientMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        Client entity = clientRepository.findById(id);
-        if (entity == null) {
+    public void delete(Long id) {
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        Client entity;
+        if (optionalClient.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalClient.get();
 
         clientRepository.delete(entity);
     }

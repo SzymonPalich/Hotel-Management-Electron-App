@@ -22,7 +22,7 @@ public class RoomController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoomVM find(@PathVariable long id) {
+    public RoomVM find(@PathVariable Long id) {
         return roomService.find(id);
     }
     //</editor-fold>
@@ -46,7 +46,7 @@ public class RoomController {
     //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RoomVM update(@PathVariable long id, @RequestBody RoomFM newEntity) {
+    public RoomVM update(@PathVariable Long id, @RequestBody RoomFM newEntity) {
         return roomService.update(id, newEntity);
     }
     //</editor-fold>
@@ -54,7 +54,7 @@ public class RoomController {
     //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         roomService.delete(id);
     }
     //</editor-fold>

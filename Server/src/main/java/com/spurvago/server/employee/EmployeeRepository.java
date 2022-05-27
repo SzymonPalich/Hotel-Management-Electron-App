@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -46,7 +47,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
         };
     }
 
-    Employee findById(long id);
+    Optional<Employee> findById(Long id);
 
     List<Employee> findEmployeesByPosition(int position);
 

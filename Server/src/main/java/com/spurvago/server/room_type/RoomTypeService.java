@@ -13,17 +13,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMapper roomTypeMapper) {
+public record RoomTypeService(RoomTypeRepository roomTypeRepository,
+                              RoomTypeMapper roomTypeMapper,
+                              RoomTypeValidator roomTypeValidator) {
 
-    public RoomTypeVM find(long id) {
-        RoomType entity = roomTypeRepository.findById(id);
-        if (entity == null) {
+    public RoomTypeVM find(Long id) {
+        Optional<RoomType> optionalRoomType = roomTypeRepository.findById(id);
+        RoomType entity;
+        if (optionalRoomType.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalRoomType.get();
 
         return roomTypeMapper.mapToVM(entity);
     }
@@ -46,29 +52,40 @@ public record RoomTypeService(RoomTypeRepository roomTypeRepository, RoomTypeMap
     }
 
     public RoomTypeVM create(RoomTypeFM newEntity) {
-        // TODO Validacja
+        if (!roomTypeValidator().validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
         RoomType entity = roomTypeMapper.mapToEntity(newEntity);
         roomTypeRepository.save(entity);
         return roomTypeMapper.mapToVM(entity);
     }
 
-    public RoomTypeVM update(long id, RoomTypeFM newEntity) {
-        // TODO Validacja
-        RoomType entity = roomTypeRepository.findById(id);
-        if (entity == null) {
+    public RoomTypeVM update(Long id, RoomTypeFM newEntity) {
+        Optional<RoomType> optionalRoomType = roomTypeRepository.findById(id);
+        RoomType entity;
+        if (optionalRoomType.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+
+        if (!roomTypeValidator().validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        entity = optionalRoomType.get();
 
         roomTypeMapper.mapToEntity(entity, newEntity);
         roomTypeRepository.save(entity);
         return roomTypeMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        RoomType entity = roomTypeRepository.findById(id);
-        if (entity == null) {
+    public void delete(Long id) {
+        Optional<RoomType> optionalRoomType = roomTypeRepository.findById(id);
+        RoomType entity;
+        if (optionalRoomType.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalRoomType.get();
 
         roomTypeRepository.delete(entity);
     }

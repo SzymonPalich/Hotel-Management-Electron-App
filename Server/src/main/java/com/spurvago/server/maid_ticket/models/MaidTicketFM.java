@@ -9,6 +9,6 @@ import java.sql.Date;
 @Setter
 public class MaidTicketFM {
     private Long employeeId;
-    private long roomId;
+    private Long roomId;
     private Date finalizationDate;
 }

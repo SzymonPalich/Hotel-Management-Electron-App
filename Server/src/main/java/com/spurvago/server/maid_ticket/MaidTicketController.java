@@ -23,7 +23,7 @@ public class MaidTicketController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicketVM find(@PathVariable long id) {
+    public MaidTicketVM find(@PathVariable Long id) {
         return maidTicketService.find(id);
     }
     //</editor-fold>
@@ -47,7 +47,7 @@ public class MaidTicketController {
     //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MaidTicketVM update(@PathVariable long id, @RequestBody MaidTicketFM newEntity) {
+    public MaidTicketVM update(@PathVariable Long id, @RequestBody MaidTicketFM newEntity) {
         return maidTicketService.update(id, newEntity);
     }
     //</editor-fold>
@@ -55,7 +55,7 @@ public class MaidTicketController {
     //<editor-fold desc="delete()">
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         maidTicketService.delete(id);
     }
     //</editor-fold>

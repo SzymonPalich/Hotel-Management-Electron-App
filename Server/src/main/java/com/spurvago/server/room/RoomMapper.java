@@ -1,13 +1,18 @@
 package com.spurvago.server.room;
 
 import com.spurvago.database.Room;
+import com.spurvago.database.RoomType;
 import com.spurvago.server.room.models.RoomFM;
 import com.spurvago.server.room.models.RoomVM;
 import com.spurvago.server.room_type.RoomTypeRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Component
 public record RoomMapper(RoomTypeRepository roomTypeRepository) {
@@ -24,14 +29,26 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
 
     void mapToEntity(Room dest, RoomFM src) {
         dest.setRoomNumber(src.getRoomNumber());
-        dest.setRoomType(roomTypeRepository.findById(src.getRoomTypeId()));
+        Optional<RoomType> optionalRoomType = roomTypeRepository.findById(src.getRoomTypeId());
+        RoomType entity;
+        if (optionalRoomType.isEmpty()) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalRoomType.get();
+        dest.setRoomType(entity);
         dest.setStatus(src.getStatus());
     }
 
     Room mapToEntity(RoomFM src) {
         Room dest = new Room();
         dest.setRoomNumber(src.getRoomNumber());
-        dest.setRoomType(roomTypeRepository.findById(src.getRoomTypeId()));
+        Optional<RoomType> optionalRoomType = roomTypeRepository.findById(src.getRoomTypeId());
+        RoomType entity;
+        if (optionalRoomType.isEmpty()) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalRoomType.get();
+        dest.setRoomType(entity);
         dest.setStatus(src.getStatus());
 
         return dest;

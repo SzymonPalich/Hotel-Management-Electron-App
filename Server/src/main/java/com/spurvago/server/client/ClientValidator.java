@@ -38,11 +38,9 @@ public class ClientValidator extends Validator {
                 && (clientRepository.existsByEmail(model.getEmail())
                 || !haveLength(model.getPhoneNumber(), 16))))
             return false;
-        if ((!isEmpty(model.getEmail())
+        return ((!isEmpty(model.getEmail())
                 && (clientRepository.existsByPhoneNumber(model.getPhoneNumber())
-                || !isEmail(model.getEmail()))))
-            return false;
-        return true;
+                || !isEmail(model.getEmail()))));
     }
     //</editor-fold>
 }

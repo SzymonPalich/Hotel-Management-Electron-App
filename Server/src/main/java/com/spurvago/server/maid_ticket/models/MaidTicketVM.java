@@ -8,7 +8,7 @@ import java.sql.Date;
 @Getter
 @Setter
 public class MaidTicketVM {
-    private long id;
+    private Long id;
     private long roomId;
     private int roomNumber;
     private String roomType;

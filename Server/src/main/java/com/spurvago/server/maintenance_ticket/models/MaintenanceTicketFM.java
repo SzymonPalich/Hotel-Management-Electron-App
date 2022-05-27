@@ -9,6 +9,7 @@ import java.sql.Date;
 @Getter
 @Setter
 public class MaintenanceTicketFM {
+    private Long roomId;
     private Long employeeId;
     private String name;
     private String description;

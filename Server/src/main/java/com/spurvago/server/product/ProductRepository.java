@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -40,7 +41,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
         };
     }
 
-    Product findById(long id);
+    Optional<Product> findById(Long id);
 
     Page<Product> findAll(Pageable pageable);
 }

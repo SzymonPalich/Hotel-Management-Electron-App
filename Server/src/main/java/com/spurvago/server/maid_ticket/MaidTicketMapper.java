@@ -1,20 +1,31 @@
 package com.spurvago.server.maid_ticket;
 
+import com.spurvago.database.Client;
 import com.spurvago.database.MaidTicket;
+import com.spurvago.database.Room;
 import com.spurvago.server.employee.EmployeeRepository;
 import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.MaidTicketVM;
 import com.spurvago.server.room.RoomRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
     MaidTicket mapToEntity(MaidTicketFM src) {
         MaidTicket dest = new MaidTicket();
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
+        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
+        Room room;
+        if (optionalRoom.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        room = optionalRoom.get();
+        dest.setRoom(room);
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         }
@@ -24,7 +35,13 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
     }
 
     void mapToEntity(MaidTicket dest, MaidTicketFM src) {
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
+        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
+        Room room;
+        if (optionalRoom.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        room = optionalRoom.get();
+        dest.setRoom(room);
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         }

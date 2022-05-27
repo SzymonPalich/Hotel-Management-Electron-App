@@ -28,7 +28,7 @@ public class EmployeeController {
     //<editor-fold desc="find()">
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeVM find(@PathVariable long id) {
+    public EmployeeVM find(@PathVariable Long id) {
         return employeeService.find(id);
     }
     //</editor-fold>

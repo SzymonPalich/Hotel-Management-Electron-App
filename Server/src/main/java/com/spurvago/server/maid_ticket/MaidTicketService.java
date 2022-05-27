@@ -13,16 +13,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
-public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidTicketMapper maidTicketMapper) {
+public record MaidTicketService(MaidTicketRepository maidTicketRepository,
+                                MaidTicketMapper maidTicketMapper,
+                                MaidTicketValidator maidTicketValidator) {
 
-    public MaidTicketVM find(long id) {
-        MaidTicket entity = maidTicketRepository.findById(id);
-        if (entity == null)
+    public MaidTicketVM find(Long id) {
+        Optional<MaidTicket> optionalMaidTicket = maidTicketRepository.findById(id);
+        MaidTicket entity;
+        if (optionalMaidTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalMaidTicket.get();
 
         return maidTicketMapper.mapToVM(entity);
     }
@@ -44,28 +51,39 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository, MaidT
     }
 
     public MaidTicketVM create(MaidTicketFM newEntity) {
-        // TODO Validator
+        if (!maidTicketValidator.validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
 
         MaidTicket entity = maidTicketMapper.mapToEntity(newEntity);
         maidTicketRepository.save(entity);
         return maidTicketMapper.mapToVM(entity);
     }
 
-    public MaidTicketVM update(long id, MaidTicketFM newEntity) {
-        // TODO Validator
-        MaidTicket entity = maidTicketRepository.findById(id);
-        if (entity == null)
+    public MaidTicketVM update(Long id, MaidTicketFM newEntity) {
+        if (!maidTicketValidator.validate(newEntity)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        Optional<MaidTicket> optionalMaidTicket = maidTicketRepository.findById(id);
+        MaidTicket entity;
+        if (optionalMaidTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalMaidTicket.get();
 
         maidTicketMapper.mapToEntity(entity, newEntity);
         maidTicketRepository.save(entity);
         return maidTicketMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        MaidTicket entity = maidTicketRepository.findById(id);
-        if (entity == null)
+    public void delete(Long id) {
+        Optional<MaidTicket> optionalMaidTicket = maidTicketRepository.findById(id);
+        MaidTicket entity;
+        if (optionalMaidTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalMaidTicket.get();
 
         maidTicketRepository.delete(entity);
     }

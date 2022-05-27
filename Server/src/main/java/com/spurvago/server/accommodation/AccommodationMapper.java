@@ -1,22 +1,39 @@
 package com.spurvago.server.accommodation;
 
 import com.spurvago.database.Accommodation;
+import com.spurvago.database.Client;
+import com.spurvago.database.Room;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.client.ClientRepository;
 import com.spurvago.server.room.RoomRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public record AccommodationMapper(ClientRepository clientRepository, RoomRepository roomRepository) {
 
     Accommodation mapToEntity(AccommodationFM src) {
         Accommodation dest = new Accommodation();
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setClient(clientRepository.findById(src.getClientId()));
+        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
+        Room room;
+        if (optionalRoom.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        room = optionalRoom.get();
+        dest.setRoom(room);
+        Optional<Client> optionalClient = clientRepository.findById(src.getClientId());
+        Client client;
+        if (optionalClient.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        client = optionalClient.get();
+        dest.setClient(client);
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
         dest.setReservationOnly(src.getReservationOnly());
@@ -25,8 +42,20 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
     }
 
     void mapToEntity(Accommodation dest, AccommodationFM src) {
-        dest.setRoom(roomRepository.findById(src.getRoomId()));
-        dest.setClient(clientRepository.findById(src.getClientId()));
+        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
+        Room room;
+        if (optionalRoom.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        room = optionalRoom.get();
+        dest.setRoom(room);
+        Optional<Client> optionalClient = clientRepository.findById(src.getClientId());
+        Client client;
+        if (optionalClient.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        client = optionalClient.get();
+        dest.setClient(client);
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
         dest.setReservationOnly(src.getReservationOnly());

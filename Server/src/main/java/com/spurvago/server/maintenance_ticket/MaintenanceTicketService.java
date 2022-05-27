@@ -13,17 +13,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
 public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTicketRepository,
-                                       MaintenanceTicketMapper maintenanceTicketMapper) {
-    public MaintenanceTicketVM find(long id) {
-        MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
-        if (entity == null) {
+                                       MaintenanceTicketMapper maintenanceTicketMapper,
+                                       MaintenanceTicketValidator maintenanceTicketValidator) {
+    public MaintenanceTicketVM find(Long id) {
+        Optional<MaintenanceTicket> optionalMaintenanceTicket = maintenanceTicketRepository.findById(id);
+        MaintenanceTicket entity;
+        if (optionalMaintenanceTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalMaintenanceTicket.get();
 
         return maintenanceTicketMapper.mapToVM(entity);
     }
@@ -45,29 +50,39 @@ public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTi
     }
 
     public MaintenanceTicketVM create(MaintenanceTicketFM newEntity) {
-        // TODO Validacja
+        if (!(maintenanceTicketValidator().validate(newEntity))) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
         MaintenanceTicket entity = maintenanceTicketMapper.mapToEntity(newEntity);
         maintenanceTicketRepository.save(entity);
         return maintenanceTicketMapper.mapToVM(entity);
     }
 
-    public MaintenanceTicketVM update(long id, MaintenanceTicketFM newEntity) {
-        // TODO Validacja
-        MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
-        if (entity == null) {
+    public MaintenanceTicketVM update(Long id, MaintenanceTicketFM newEntity) {
+        if (!(maintenanceTicketValidator().validate(newEntity))) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        Optional<MaintenanceTicket> optionalMaintenanceTicket = maintenanceTicketRepository.findById(id);
+        MaintenanceTicket entity;
+        if (optionalMaintenanceTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalMaintenanceTicket.get();
 
         maintenanceTicketMapper.mapToEntity(entity, newEntity);
         maintenanceTicketRepository.save(entity);
         return maintenanceTicketMapper.mapToVM(entity);
     }
 
-    public void delete(long id) {
-        MaintenanceTicket entity = maintenanceTicketRepository.findById(id);
-        if (entity == null) {
+    public void delete(Long id) {
+        Optional<MaintenanceTicket> optionalMaintenanceTicket = maintenanceTicketRepository.findById(id);
+        MaintenanceTicket entity;
+        if (optionalMaintenanceTicket.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
+        entity = optionalMaintenanceTicket.get();
 
         maintenanceTicketRepository.delete(entity);
     }

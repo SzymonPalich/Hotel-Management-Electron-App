@@ -1,5 +1,6 @@
 package com.spurvago.components;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,5 +28,15 @@ public class Validator {
             return false;
         }
         return (string.length() >= minLength && string.length() <= maxLength);
+    }
+
+    public boolean correctDecimal(BigDecimal decimal, int maxSize, int maxDecimalPlaces) {
+        return decimal.compareTo(BigDecimal.ZERO) > 0 &&
+                decimal.stripTrailingZeros().scale() <= maxDecimalPlaces &&
+                decimal.stripTrailingZeros().precision() - decimal.stripTrailingZeros().scale() <= maxSize;
+    }
+
+    public boolean intOverflow(int number) {
+        return (int) (Math.log(number) + 1) < 19;
     }
 }

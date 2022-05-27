@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
@@ -52,7 +53,7 @@ public interface MaintenanceTicketRepository extends PagingAndSortingRepository<
         };
     }
 
-    MaintenanceTicket findById(long id);
+    Optional<MaintenanceTicket> findById(Long id);
 
     Page<MaintenanceTicket> findAll(Pageable pageable);
 }
