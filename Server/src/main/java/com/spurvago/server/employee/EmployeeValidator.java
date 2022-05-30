@@ -35,7 +35,7 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getPesel(), 11, 11))) {
             return false;
         }
-        if (!model.getEmploymentDate().before(new Date())) {
+        if (model.getEmploymentDate().after(new Date())) {
             return false;
         }
         if(model.getDismissalDate() != null) {
