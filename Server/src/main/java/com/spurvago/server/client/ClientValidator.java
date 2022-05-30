@@ -58,7 +58,7 @@ public class ClientValidator extends Validator {
             return false;
         if (model.getPhoneNumber().equals(previousEntity.get().getPhoneNumber()))
             if ((!isEmpty(model.getPhoneNumber())
-                    && (clientRepository.existsByPhoneNumber(model.getEmail())
+                    && (clientRepository.existsByPhoneNumber(model.getPhoneNumber())
                     || !haveLength(model.getPhoneNumber(), 9, 9))))
                 return false;
         if (model.getEmail().equals(previousEntity.get().getEmail()))
