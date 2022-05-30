@@ -137,11 +137,12 @@
                     rounded-xl
                     outline-none
                   "
+                  @change="selectPosition($event.target.value)"
                 >
-                  <option>Manager</option>
-                  <option>Pokojówka</option>
-                  <option>Technik</option>
-                  <option>Recepcjonista</option>
+                  <option value="1">Manager</option>
+                  <option value="2">Pokojówka</option>
+                  <option value="3">Technik</option>
+                  <option value="4">Recepcjonista</option>
                 </select>
               </dd>
             </div>
@@ -233,7 +234,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'employees' })"
+              @click="this.save()"
             >
               Edytuj
             </button>
@@ -273,10 +274,15 @@ export default defineComponent({
             return await EmployeeServices.fetch(this.getId());
         },
 
+        selectPosition: function(value: string) {
+          this.result.position = value;
+        },
+
         async save(): Promise<void> {
+            console.log(this.result)
             await EmployeeServices.update(this.getId(), this.result);
             Utils.acceptedAlert();
-            this.$router.push({ name: 'employee' });
+            this.$router.push({ name: 'employees' });
         }
     },
 });
