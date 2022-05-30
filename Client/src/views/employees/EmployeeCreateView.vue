@@ -262,7 +262,7 @@ export default defineComponent({
     methods: {
         async add() : Promise<void> {
           console.log(this.result);
-          await EmployeeServices.create(this.result.email, this.result.employmentDate, this.result.firstName, this.result.lastName, this.result.pesel, this.result.phoneNumber, this.result.position, this.result.salary);
+          await EmployeeServices.create(this.result);
           this.$router.push({ name: 'employees' }); 
         },
 

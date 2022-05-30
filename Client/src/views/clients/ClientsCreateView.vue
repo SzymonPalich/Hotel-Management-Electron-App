@@ -163,7 +163,7 @@ export default defineComponent({
     methods: {
         async add() : Promise<void> {
           console.log(this.result);
-          await ClientsServices.create(this.result.email, this.result.firstName, this.result.lastName, this.result.phoneNumber);
+          await ClientsServices.create(this.result);
           this.$router.push({ name: 'clients' }); 
         }
     },

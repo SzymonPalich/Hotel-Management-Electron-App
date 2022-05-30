@@ -35,11 +35,13 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getPesel(), 11, 11))) {
             return false;
         }
-        if (model.getEmploymentDate().before(new Date())) {
+        if (!model.getEmploymentDate().before(new Date())) {
             return false;
         }
-        if (model.getEmploymentDate().after(model.getDismissalDate())) {
-            return false;
+        if(model.getDismissalDate() != null) {
+            if (model.getDismissalDate().before(model.getEmploymentDate())) {
+                return false;
+            }
         }
         return correctDecimal(model.getSalary(), 8, 2);
     }

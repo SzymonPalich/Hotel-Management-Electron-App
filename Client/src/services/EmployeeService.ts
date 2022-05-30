@@ -58,8 +58,8 @@ export default class EmployeeServices {
         return (await axios.delete(`http://localhost:8081/api/employee/${id}`)).data;
     }
 
-    public static async create(email: string, employmentDate: Date, firstName: string, lastName: string, pesel: string, phoneNumber: string, position: string, salary: number): Promise<IEmployee> {
-        return (await axios.post(`http://localhost:8081/api/employee?email=${email}&employmentDate=${employmentDate}&firstName=${firstName}&lastName=${lastName}&pesel=${pesel}&phoneNumber=${phoneNumber}&position=${position}&salary=${salary}`)).data;
+    public static async create(employee: IEmployee): Promise<IEmployee> {
+        return (await axios.post(`http://localhost:8081/api/employee`, employee)).data;
     }
 }
 

@@ -31,8 +31,8 @@ export default class MaidTicketServices {
         return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`)).data;
     }
 
-    public static async create(employeeId: number, roomId: number): Promise<IMaid> {
-        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket?employeeId=${employeeId}&roomId=${roomId}`)).data;
+    public static async create(maid: IMaid): Promise<IMaid> {
+        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket`, maid)).data;
     }
 }
 

@@ -160,7 +160,7 @@ export default defineComponent({
           console.log(this.result.employeeId);
           console.log(this.result.roomId);
           console.log(this.result);
-          await MaidTicketServices.create(this.result.employeeId, this.result.roomId);
+          await MaidTicketServices.create(this.result);
           this.$router.push({ name: 'maid_ticket' });
         }
     },
