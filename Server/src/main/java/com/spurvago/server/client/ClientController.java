@@ -39,7 +39,7 @@ public class ClientController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientVM create(ClientFM newEntity) {
+    public ClientVM create(@RequestBody ClientFM newEntity) {
         return clientService.create(newEntity);
     }
     //</editor-fold>
@@ -47,7 +47,7 @@ public class ClientController {
     //<editor-fold desc="update()">
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientVM update(@PathVariable Long id, ClientFM newEntity) {
+    public ClientVM update(@PathVariable Long id, @RequestBody ClientFM newEntity) {
         return clientService.update(id, newEntity);
     }
     //</editor-fold>

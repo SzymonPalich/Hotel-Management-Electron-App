@@ -38,7 +38,7 @@ public class MaintenanceTicketController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public MaintenanceTicketVM create(MaintenanceTicketFM newEntity) {
+    public MaintenanceTicketVM create(@RequestBody MaintenanceTicketFM newEntity) {
         return maintenanceTicketService.create(newEntity);
     }
     //</editor-fold>

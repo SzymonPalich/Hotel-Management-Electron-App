@@ -38,7 +38,7 @@ public class RoomTypeController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public RoomTypeVM create(RoomTypeFM newEntity) {
+    public RoomTypeVM create(@RequestBody RoomTypeFM newEntity) {
         return roomTypeService.create(newEntity);
     }
     //</editor-fold>

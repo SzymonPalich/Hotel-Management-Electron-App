@@ -38,7 +38,7 @@ public class AccommodationController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public AccommodationVM create(AccommodationFM newEntity) {
+    public AccommodationVM create(@RequestBody AccommodationFM newEntity) {
 
         return accommodationService.create(newEntity);
     }

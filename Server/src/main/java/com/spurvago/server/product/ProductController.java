@@ -38,7 +38,7 @@ public class ProductController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductVM create(ProductFM newEntity) {
+    public ProductVM create(@RequestBody ProductFM newEntity) {
         return productService.create(newEntity);
     }
     //</editor-fold>

@@ -39,7 +39,7 @@ public class MaidTicketController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public MaidTicketVM create(MaidTicketFM newEntity) {
+    public MaidTicketVM create(@RequestBody MaidTicketFM newEntity) {
         return maidTicketService.create(newEntity);
     }
     //</editor-fold>

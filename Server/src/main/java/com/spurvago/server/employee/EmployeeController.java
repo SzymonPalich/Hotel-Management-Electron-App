@@ -44,7 +44,7 @@ public class EmployeeController {
     //<editor-fold desc="create()">
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeVM create(EmployeeFM newEntity) {
+    public EmployeeVM create(@RequestBody EmployeeFM newEntity) {
         return employeeService.create(newEntity);
     }
     //</editor-fold>
