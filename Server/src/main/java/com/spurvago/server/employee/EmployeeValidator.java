@@ -5,6 +5,8 @@ import com.spurvago.server.employee.models.EmployeeFM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class EmployeeValidator extends Validator {
     private final EmployeeRepository employeeRepository;
@@ -24,7 +26,7 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getEmail(), 50)) && !isEmail(model.getEmail())) {
             return false;
         }
-        if (!(haveLength(model.getPhoneNumber(), 9, 9))) {
+        if (!(haveLength(model.getPhoneNumber(),9, 9))) {
             return false;
         }
         if (!(model.getPosition() > 0) && !(model.getPosition() < 5)) {
@@ -33,7 +35,12 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getPesel(), 11, 11))) {
             return false;
         }
-        // data TODO AFRICA
+        if (model.getEmploymentDate().before(new Date())) {
+            return false;
+        }
+        if (model.getEmploymentDate().after(model.getDismissalDate())) {
+            return false;
+        }
         return correctDecimal(model.getSalary(), 8, 2);
     }
 }
