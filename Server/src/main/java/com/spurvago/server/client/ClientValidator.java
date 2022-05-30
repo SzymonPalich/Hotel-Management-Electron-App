@@ -56,12 +56,12 @@ public class ClientValidator extends Validator {
             return false;
         if (isEmpty(model.getEmail()) && isEmpty(model.getPhoneNumber()))
             return false;
-        if (model.getPhoneNumber().equals(previousEntity.get().getPhoneNumber()))
+        if (!model.getPhoneNumber().equals(previousEntity.get().getPhoneNumber()))
             if ((!isEmpty(model.getPhoneNumber())
                     && (clientRepository.existsByPhoneNumber(model.getPhoneNumber())
                     || !haveLength(model.getPhoneNumber(), 9, 9))))
                 return false;
-        if (model.getEmail().equals(previousEntity.get().getEmail()))
+        if (!model.getEmail().equals(previousEntity.get().getEmail()))
             if ((!isEmpty(model.getEmail())
                     && (clientRepository.existsByEmail(model.getEmail())
                     || !isEmail(model.getEmail()))))
