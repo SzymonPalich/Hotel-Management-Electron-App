@@ -70,7 +70,7 @@
                 </router-link>
                 <i
                   class="material-icons align-middle cursor-pointer"
-                  @click="alertDisplay()"
+                  @click="alertDisplay(client.id)"
                   >delete</i
                 >
               </td>
@@ -114,8 +114,8 @@ export default defineComponent({
       return await ClientsServices.getList(this.pager);
     },
     
-    alertDisplay(): void {
-      Utils.alertDisplay();
+    alertDisplay(id: string): void {
+      Utils.alertDisplayDelete('client', id);
     }
   },
 });

@@ -24,8 +24,10 @@ public class MaintenanceTicketValidator extends Validator {
         if (!(roomRepository.existsById(model.getRoomId()))){
             return false;
         }
-        if (!(employeeRepository.existsById(model.getEmployeeId()))) {
-            return false;
+        if (model.getEmployeeId() != null) {
+            if (!(employeeRepository.existsById(model.getEmployeeId()))) {
+                return false;
+            }
         }
         if (!(haveLength(model.getName(), 50))) {
             return false;

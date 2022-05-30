@@ -25,15 +25,15 @@ export default class EmployeeServices {
     public static getBlankEmployeeTemplate(): IEmployee {
         const tempEmployee: IEmployee = {
             id: 0,
-            name: "",
-            surname: "",
+            firstName: "",
+            lastName: "",
             position: "",
             salary: 0,
             email: "",
-            phone_number: "",
+            phoneNumber: "",
             pesel: "",
-            employment_date: new Date("2000-02-02"),
-            dismissal_date: undefined,
+            employmentDate: new Date("2000-02-02"),
+            dismissalDate: undefined,
         };
         return tempEmployee;
     }
@@ -57,17 +57,21 @@ export default class EmployeeServices {
     public static async delete(id: string): Promise<IEmployee> {
         return (await axios.delete(`http://localhost:8081/api/employee/${id}`)).data;
     }
+
+    public static async create(email: string, employmentDate: Date, firstName: string, lastName: string, pesel: string, phoneNumber: string, position: string, salary: number): Promise<IEmployee> {
+        return (await axios.post(`http://localhost:8081/api/employee?email=${email}&employmentDate=${employmentDate}&firstName=${firstName}&lastName=${lastName}&pesel=${pesel}&phoneNumber=${phoneNumber}&position=${position}&salary=${salary}`)).data;
+    }
 }
 
 export interface IEmployee {
     id: number;
-    name: string;
-    surname: string;
+    firstName: string;
+    lastName: string;
     position: string;
     salary: number;
     email: string;
-    phone_number: string;
+    phoneNumber: string;
     pesel: string;
-    employment_date: Date;
-    dismissal_date?: Date;
+    employmentDate: Date;
+    dismissalDate?: Date;
 }

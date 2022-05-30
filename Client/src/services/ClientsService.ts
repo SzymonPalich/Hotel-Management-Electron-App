@@ -24,6 +24,15 @@ export default class ClientsServices {
     public static async getList(pager: IPager): Promise<IList<IClient>> {
         return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager })).data;
     }
+
+    public static async create(email: string, firstName: string, lastName: string, phoneNumber: string): Promise<IClient> {
+        return (await axios.post<IClient>(`http://localhost:8081/api/client?email=${email}&firstName=${firstName}&lastName=${lastName}&phoneNumber=${phoneNumber}`)).data;
+    }
+
+    public static async delete(id: string): Promise<IClient> {
+        return (await axios.delete<IClient>(`http://localhost:8081/api/client/${id}`)).data;
+    }
+
 }
 
 export interface IClient {

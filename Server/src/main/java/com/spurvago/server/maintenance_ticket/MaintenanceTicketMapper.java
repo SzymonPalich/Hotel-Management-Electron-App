@@ -18,6 +18,7 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         }
+        dest.setRoom(roomRepository.findById(src.getRoomId()).orElse(null));
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());
@@ -31,6 +32,7 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         }
+        dest.setRoom(roomRepository.findById(src.getRoomId()).orElse(null));
         dest.setName(src.getName());
         dest.setDescription(src.getDescription());
         dest.setPartsPrice(src.getPartsPrice());

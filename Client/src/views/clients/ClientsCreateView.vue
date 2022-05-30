@@ -43,6 +43,7 @@
 
                   type="text"
                   required
+                  v-model = this.result.firstName
                 />
               </dd>
             </div>
@@ -67,6 +68,7 @@
                   "
                   type="text"
                   required
+                  v-model = this.result.lastName
                 />
               </dd>
             </div>
@@ -91,6 +93,7 @@
                   "
                   type="email"
                   required
+                  v-model = this.result.email
                 />
               </dd>
             </div>
@@ -115,6 +118,7 @@
                   "
                   type="text"
                   required
+                  v-model = this.result.phoneNumber
                 />
               </dd>
             </div>
@@ -130,7 +134,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'clients' })"
+              @click="this.add()"
             >
               Dodaj
             </button>
@@ -142,7 +146,26 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import ClientsServices, { IClient } from "../../services/ClientsService";
+import { defineComponent } from "vue";
+import Utils, {IList, IPager } from "../../Utils";
 
-export default class ClientsCreateView extends Vue {}
+
+
+export default defineComponent({
+    data() {
+        return {
+            result: ClientsServices.getBlankClientTemplate()
+        };
+    },
+
+    methods: {
+        async add() : Promise<void> {
+          console.log(this.result);
+          await ClientsServices.create(this.result.email, this.result.firstName, this.result.lastName, this.result.phoneNumber);
+          this.$router.push({ name: 'clients' }); 
+        }
+    },
+});
 </script>

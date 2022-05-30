@@ -85,7 +85,7 @@
                   :to="{ name: 'employees-edit', params: { id: emp.id } }">
                   <i class="material-icons align-middle">edit</i>
                 </router-link>
-                <i class="material-icons align-middle cursor-pointer" @click="alertDisplay()">delete</i>
+                <i class="material-icons align-middle cursor-pointer" @click="alertDisplay(emp.id)">delete</i>
               </td>
             </tr>
           </tbody>
@@ -135,8 +135,8 @@ export default defineComponent({
       return EmployeeServices.setPosition(position);
     },
 
-    alertDisplay(): void {
-      Utils.alertDisplay();
+    alertDisplay(id: string): void {
+      Utils.alertDisplayDelete("employee", id);
     }
   },
 });

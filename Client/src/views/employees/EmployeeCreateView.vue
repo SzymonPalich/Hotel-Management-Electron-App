@@ -43,6 +43,7 @@
 
                   type="text"
                   required
+                  v-model = this.result.firstName
                 />
               </dd>
             </div>
@@ -67,6 +68,7 @@
                   "
                   type="text"
                   required
+                  v-model = this.result.lastName
                 />
               </dd>
             </div>
@@ -91,6 +93,7 @@
                   "
                   type="email"
                   required
+                  v-model = this.result.email
                 />
               </dd>
             </div>
@@ -115,6 +118,7 @@
                   "
                   type="text"
                   required
+                  v-model = this.result.phoneNumber
                 />
               </dd>
             </div>
@@ -128,11 +132,11 @@
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none">
-                  <option>Kierownik</option>
-                  <option>Pokojówka</option>
-                  <option>Technik</option>
-                  <option>Recepcjonista</option>
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none" @change="selectPosition($event.target.value)">
+                  <option value="1">Kierownik</option>
+                  <option value="2">Pokojówka</option>
+                  <option value="3">Technik</option>
+                  <option value="4">Recepcjonista</option>
                 </select>
               </dd>
             </div>
@@ -157,6 +161,7 @@
                   "
                   type="text"
                   required
+                  v-model = this.result.pesel
                 />
               </dd>
             </div>
@@ -181,6 +186,7 @@
                   "
                   type="date"
                   required
+                  v-model = this.result.employmentDate
                 />
               </dd>
             </div>
@@ -207,6 +213,7 @@
                   min="0"
                   maxlength="6"
                   required
+                  v-model = this.result.salary
                 />
               </dd>
             </div>
@@ -222,7 +229,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'employees' })"
+              @click="this.add()"
             >
               Dodaj
             </button>
@@ -234,7 +241,34 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
+import { defineComponent } from "vue";
+import Utils, {IList, IPager } from "../../Utils";
 
-export default class EmployeeCreateView extends Vue {}
+
+
+export default defineComponent({
+    data() {
+        return {
+            result: EmployeeServices.getBlankEmployeeTemplate(),
+        };
+    },
+
+    mounted() {
+      this.result.position = "1";
+    },
+
+    methods: {
+        async add() : Promise<void> {
+          console.log(this.result);
+          await EmployeeServices.create(this.result.email, this.result.employmentDate, this.result.firstName, this.result.lastName, this.result.pesel, this.result.phoneNumber, this.result.position, this.result.salary);
+          this.$router.push({ name: 'employees' }); 
+        },
+
+        selectPosition: function(value: string) {
+          this.result.position = value;
+        },
+    },
+});
 </script>
