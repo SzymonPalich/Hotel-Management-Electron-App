@@ -2,6 +2,7 @@ package com.spurvago.server.client;
 
 
 import com.spurvago.components.Validator;
+import com.spurvago.database.Client;
 import com.spurvago.server.client.models.ClientFM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,6 @@ public class ClientValidator extends Validator {
     }
 
     //<editor-fold desc="validate()">
-
     /**
      * <b>firstName</b> nie może być puste i musi zawierać <= 48 znaków<br>
      * <b>lastName</b> nie może być puste i musi zawierać <= 48 znaków<br>
@@ -36,12 +36,34 @@ public class ClientValidator extends Validator {
             return false;
         if ((!isEmpty(model.getPhoneNumber())
                 && (clientRepository.existsByEmail(model.getEmail())
-                || !haveLength(model.getPhoneNumber(), 16))))
+                || !haveLength(model.getPhoneNumber(), 9, 9))))
             return false;
         if ((!isEmpty(model.getEmail())
                 && (clientRepository.existsByPhoneNumber(model.getPhoneNumber())
                 || !isEmail(model.getEmail()))))
             return false;
+        return true;
+    }
+
+    public boolean validate(ClientFM model, long previousId) {
+        Client previousEntity = clientRepository.findById(previousId);
+
+        if (!haveLength(model.getFirstName(), 0, 48))
+            return false;
+        if (!haveLength(model.getLastName(), 0, 48))
+            return false;
+        if (isEmpty(model.getEmail()) && isEmpty(model.getPhoneNumber()))
+            return false;
+        if (model.getPhoneNumber().equals(previousEntity.getPhoneNumber()))
+            if ((!isEmpty(model.getPhoneNumber())
+                    && (clientRepository.existsByEmail(model.getEmail())
+                    || !haveLength(model.getPhoneNumber(), 9, 9))))
+                return false;
+        if (model.getEmail().equals(previousEntity.getEmail()))
+            if ((!isEmpty(model.getEmail())
+                    && (clientRepository.existsByPhoneNumber(model.getPhoneNumber())
+                    || !isEmail(model.getEmail()))))
+                return false;
         return true;
     }
     //</editor-fold>

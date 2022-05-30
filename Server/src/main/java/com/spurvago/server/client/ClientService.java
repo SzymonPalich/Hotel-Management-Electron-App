@@ -64,7 +64,7 @@ public record ClientService(ClientRepository clientRepository,
             throw new ResponseStatusException(NOT_FOUND);
         }
 
-        if (!clientValidator.validate(newEntity)) {
+        if (!clientValidator.validate(newEntity, id)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
 
