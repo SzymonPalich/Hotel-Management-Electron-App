@@ -52,11 +52,6 @@ public class Employee {
     @Setter
     private BigDecimal salary;
 
-    @OneToMany
-    private List<MaidTicket> maidTickets;
-
-    @OneToMany
-    private List<MaintenanceTicket> maintenanceTickets;
 
     // TODO Po merge autoryzacji do wywalenia
     public static final class Position {
