@@ -1,4 +1,4 @@
-package com.spurvago.security;
+package com.spurvago.server.accommodation.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;

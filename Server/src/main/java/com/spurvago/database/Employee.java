@@ -1,7 +1,5 @@
 package com.spurvago.database;
 
-import com.spurvago.database.MaidTicket;
-import com.spurvago.database.MaintenanceTicket;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,7 +61,6 @@ public class Employee {
 
     @OneToMany
     private List<MaintenanceTicket> maintenanceTickets;
-
 
 
     public static final class Position {

@@ -2,13 +2,13 @@ package com.spurvago.server.employee;
 
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.database.Employee;
 import com.spurvago.server.employee.models.EmployeeFM;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import com.spurvago.database.Employee;
 
 import java.util.List;
 

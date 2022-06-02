@@ -1,10 +1,10 @@
 package com.spurvago.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spurvago.security.JsonObjectAuthenticationFilter;
-import com.spurvago.security.JwtAuthorizationFilter;
-import com.spurvago.security.RestAuthenticationFailureHandler;
-import com.spurvago.security.RestAuthenticationSuccessHandler;
+import com.spurvago.server.accommodation.security.JsonObjectAuthenticationFilter;
+import com.spurvago.server.accommodation.security.JwtAuthorizationFilter;
+import com.spurvago.server.accommodation.security.RestAuthenticationFailureHandler;
+import com.spurvago.server.accommodation.security.RestAuthenticationSuccessHandler;
 import com.spurvago.server.employee.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -71,6 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
+                // TODO: Usunąć, przy implementacji uprawnień
+                .antMatchers("/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()

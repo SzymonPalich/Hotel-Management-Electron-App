@@ -1,4 +1,4 @@
-package com.spurvago.security;
+package com.spurvago.server.accommodation.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

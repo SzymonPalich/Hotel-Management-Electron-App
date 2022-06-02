@@ -1,10 +1,10 @@
 package com.spurvago.server.employee;
 
+import com.spurvago.database.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import com.spurvago.database.Employee;
 
 public class EmployeeDetailsServiceImplementation implements UserDetailsService {
 

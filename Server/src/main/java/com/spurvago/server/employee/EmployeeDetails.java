@@ -1,9 +1,10 @@
 package com.spurvago.server.employee;
 
+import com.spurvago.database.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.spurvago.database.Employee;
+
 import java.util.Collection;
 import java.util.List;
 
