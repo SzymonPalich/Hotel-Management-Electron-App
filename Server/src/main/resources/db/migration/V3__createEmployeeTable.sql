@@ -4,8 +4,9 @@ CREATE TABLE IF NOT EXISTS employee
     first_name      varchar(50)   not null,
     last_name       varchar(50)   not null,
     email           varchar(50)   not null,
+    password        varchar(120)  not null,
     phone_number    varchar(9)    not null,
-    position        int(20)       not null,
+    position        varchar(25)   not null,
     pesel           varchar(11)   not null,
     employment_date date          not null,
     dismissal_date  date          null,
@@ -14,11 +15,17 @@ CREATE TABLE IF NOT EXISTS employee
     primary key (id)
 );
 
-INSERT INTO `employee` (`id`, `first_name`, `last_name`, `email`, `phone_number`, `position`, `pesel`,
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `email`, `password`, `phone_number`, `position`, `pesel`,
                         `employment_date`,
                         `dismissal_date`, `salary`)
-VALUES (NULL, 'Mariusz', 'Pudzianowski', 'mariusz.pudzian@spurvago.com', '881223295', 1, '82783123142', '2010-03-12',
+VALUES (NULL, 'Mariusz', 'Pudzianowski', 'mariusz.pudzian@spurvago.com',
+        '$2a$10$RGZ7sPf4vxkE3s8h8jHGvuxL3/HbaPp1A4B4pfGZZ2Z9c3c2fwOMe', '881223295', 'ROLE_MANAGER', '82783123142',
+        '2010-03-12',
         NULL, 3000.50),
-       (NULL, 'Adam', 'Małysz', 'malysz321@spurvago.com', '905984460', 2, '82730189231', '2015-07-21', NULL, 2500.00),
-       (NULL, 'Krzysztof', 'Balicki', 'k.balicki@spurvago.com', '905984460', 3, '83718271892', '2020-09-28', NULL,
+       (NULL, 'Adam', 'Małysz', 'malysz321@spurvago.com',
+        '$2a$10$RGZ7sPf4vxkE3s8h8jHGvuxL3/HbaPp1A4B4pfGZZ2Z9c3c2fwOMe', '905984460', 'ROLE_USER', '82730189231',
+        '2015-07-21', NULL, 2500.00),
+       (NULL, 'Krzysztof', 'Balicki', 'k.balicki@spurvago.com',
+        '$2a$10$RGZ7sPf4vxkE3s8h8jHGvuxL3/HbaPp1A4B4pfGZZ2Z9c3c2fwOMe', '905984460', 'ROLE_USER', '83718271892',
+        '2020-09-28', NULL,
         30000.32);

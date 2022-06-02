@@ -16,6 +16,8 @@ spring.jpa.show-sql=true
 spring.flyway.enabled=true
 spring.flyway.locations=classpath:/db/migration
 
+jwt.expirationTime = 3600000
+jwt.secret=5PuRv^g0
 
 
 

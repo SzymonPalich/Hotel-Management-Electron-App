@@ -29,9 +29,10 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getPhoneNumber(), 9, 9))) {
             return false;
         }
-        if (!(model.getPosition() > 0) && !(model.getPosition() < 5)) {
-            return false;
-        }
+        // TODO: dograno rolę i pozycje się zmieniły
+//        if (!(model.getPosition() > 0) && !(model.getPosition() < 5)) {
+//            return false;
+//        }
         if (!(haveLength(model.getPesel(), 11, 11))) {
             return false;
         }

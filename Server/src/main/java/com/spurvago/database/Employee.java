@@ -30,11 +30,15 @@ public class Employee {
 
     @Getter
     @Setter
+    private String password;
+
+    @Getter
+    @Setter
     private String phoneNumber;
 
     @Getter
     @Setter
-    private int position;
+    private String position;
 
     @Getter
     @Setter
@@ -60,12 +64,8 @@ public class Employee {
     @JoinTable(name = "maintenance_ticket")
     private List<MaintenanceTicket> maintenanceTickets;
 
-    // TODO Po merge autoryzacji do wywalenia
+
     public static final class Position {
-        public final static List<Integer> ACCEPTED_VALUES = List.of(1, 2, 3, 4);
-        public final static int MANAGER = 1;
-        public final static int MAID = 2;
-        public final static int TECHNICIAN = 3;
-        public final static int RECEPTIONIST = 4;
+        public final static List<String> ACCEPTED_VALUES = List.of("ROLE_MANAGER", "ROLE_MAID", "ROLE_TECHNICIAN", "ROLE_RECEPTIONIST");
     }
 }
