@@ -1,9 +1,7 @@
 package com.spurvago.server.security;
 
-import com.spurvago.server.security.models.UserRole;
+import com.spurvago.server.security.models.Role;
 import com.spurvago.server.security.models.User;
-import com.spurvago.server.security.models.UserId;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,16 +18,11 @@ public class PermissionController {
 
     @GetMapping(path = "/user")
     public User getUser() {
-        return userManager.GetUser();
-    }
-
-    @GetMapping(path = "/user/id")
-    public UserId getUserId() {
-        return userManager.GetUserId();
+        return userManager.getUser();
     }
 
     @GetMapping(path = "/user/role")
-    public UserRole getUserRole() {
-        return userManager.GetUserRole();
+    public Role getUserRole() {
+        return new Role(userManager.getRole());
     }
 }

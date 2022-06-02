@@ -9,6 +9,7 @@ import java.util.List;
 
 public record EmployeeDetails(Employee employee) implements UserDetails {
 
+    //<editor-fold desc="Basic settings">
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority role = new SimpleGrantedAuthority(employee.getPosition());
@@ -24,7 +25,9 @@ public record EmployeeDetails(Employee employee) implements UserDetails {
     public String getUsername() {
         return employee.getEmail();
     }
+    //</editor-fold>
 
+    //<editor-fold desc="Security default">
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -44,4 +47,5 @@ public record EmployeeDetails(Employee employee) implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    //</editor-fold>
 }

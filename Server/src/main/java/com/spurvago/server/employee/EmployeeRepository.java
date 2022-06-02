@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.spurvago.database.Employee;
 import javax.persistence.criteria.Predicate;
@@ -53,5 +52,5 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     Page<Employee> findAll(Pageable pageable);
 
-    Employee getEmployeeByEmail(String email);
+    Employee findByEmail(String email);
 }

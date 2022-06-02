@@ -1,18 +1,22 @@
 package com.spurvago.server.security.models;
 
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class User {
-    public UserId id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public UserRole role;
+    private long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String role;
 
-    public User(int id, String firstName, String lastName, String email, String role) {
-        this.id = new UserId(id);
+    public User(long id, String firstName, String lastName, String email, String role) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = new UserRole(role);
+        this.role = role;
     }
 }
