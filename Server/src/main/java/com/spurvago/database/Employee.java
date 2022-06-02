@@ -53,9 +53,11 @@ public class Employee {
     private BigDecimal salary;
 
     @OneToMany
+    @JoinTable(name = "maid_ticket")
     private List<MaidTicket> maidTickets;
 
     @OneToMany
+    @JoinTable(name = "maintenance_ticket")
     private List<MaintenanceTicket> maintenanceTickets;
 
     // TODO Po merge autoryzacji do wywalenia

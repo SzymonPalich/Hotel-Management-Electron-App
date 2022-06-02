@@ -20,6 +20,7 @@ public class ClientValidator extends Validator {
     }
 
     //<editor-fold desc="validate()">
+
     /**
      * <b>firstName</b> nie może być puste i musi zawierać <= 48 znaków<br>
      * <b>lastName</b> nie może być puste i musi zawierać <= 48 znaków<br>

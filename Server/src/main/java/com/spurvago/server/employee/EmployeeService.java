@@ -26,7 +26,7 @@ public record EmployeeService(EmployeeRepository employeeRepository,
     public EmployeeVM find(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         Employee entity;
-        if (optionalEmployee.isEmpty()){
+        if (optionalEmployee.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
         entity = optionalEmployee.get();
@@ -83,7 +83,7 @@ public record EmployeeService(EmployeeRepository employeeRepository,
     public void delete(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         Employee entity;
-        if (optionalEmployee.isEmpty()){
+        if (optionalEmployee.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
         entity = optionalEmployee.get();

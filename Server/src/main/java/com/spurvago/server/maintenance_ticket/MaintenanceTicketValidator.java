@@ -21,7 +21,7 @@ public class MaintenanceTicketValidator extends Validator {
     }
 
     public boolean validate(MaintenanceTicketFM model) {
-        if (!(roomRepository.existsById(model.getRoomId()))){
+        if (!(roomRepository.existsById(model.getRoomId()))) {
             return false;
         }
         if (model.getEmployeeId() != null) {

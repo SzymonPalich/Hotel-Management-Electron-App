@@ -28,11 +28,14 @@ public class Room {
     private Integer status;
 
     @OneToMany
+    @JoinTable(name = "maid_ticket")
     private List<MaidTicket> maidTickets;
 
     @OneToMany
+    @JoinTable(name = "maintenance_ticket")
     private List<MaintenanceTicket> maintenanceTickets;
 
     @OneToMany
+    @JoinTable(name = "accommodation")
     private List<Accommodation> accommodationList;
 }

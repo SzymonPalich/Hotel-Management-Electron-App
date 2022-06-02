@@ -24,5 +24,6 @@ public class RoomType {
     private BigDecimal price;
 
     @OneToMany
+    @JoinTable(name = "room")
     private List<Room> rooms;
 }

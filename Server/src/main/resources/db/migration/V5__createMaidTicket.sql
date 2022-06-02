@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS maid_ticket
     employee_id       bigint(20) default null,
     finalization_date date       default null,
     primary key (id),
-    constraint room_fk FOREIGN KEY (room_id) references room (id) on delete cascade ,
+    constraint room_fk FOREIGN KEY (room_id) references room (id) on delete cascade,
     constraint emp_fk FOREIGN KEY (employee_id) references employee (id) on delete set null
 );
 

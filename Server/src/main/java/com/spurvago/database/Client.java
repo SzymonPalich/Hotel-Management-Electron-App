@@ -32,6 +32,7 @@ public class Client {
     private String phoneNumber;
 
     @OneToMany
+    @JoinTable(name = "accommodation")
     private List<Accommodation> accommodationList;
 
     public Client() {

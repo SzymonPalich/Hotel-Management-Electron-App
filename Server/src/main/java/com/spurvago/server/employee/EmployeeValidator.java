@@ -20,13 +20,13 @@ public class EmployeeValidator extends Validator {
         if (!(haveLength(model.getFirstName(), 50))) {
             return false;
         }
-        if (!(haveLength(model.getLastName(),50))) {
+        if (!(haveLength(model.getLastName(), 50))) {
             return false;
         }
         if (!(haveLength(model.getEmail(), 50)) && !isEmail(model.getEmail())) {
             return false;
         }
-        if (!(haveLength(model.getPhoneNumber(),9, 9))) {
+        if (!(haveLength(model.getPhoneNumber(), 9, 9))) {
             return false;
         }
         if (!(model.getPosition() > 0) && !(model.getPosition() < 5)) {
@@ -38,7 +38,7 @@ public class EmployeeValidator extends Validator {
         if (model.getEmploymentDate().after(new Date())) {
             return false;
         }
-        if(model.getDismissalDate() != null) {
+        if (model.getDismissalDate() != null) {
             if (model.getDismissalDate().before(model.getEmploymentDate())) {
                 return false;
             }

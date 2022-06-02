@@ -1,6 +1,5 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.database.Client;
 import com.spurvago.database.MaidTicket;
 import com.spurvago.database.Room;
 import com.spurvago.server.employee.EmployeeRepository;
