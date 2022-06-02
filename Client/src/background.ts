@@ -1,13 +1,14 @@
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
-import windowSizes from '../windowconfig.json';
+import options from '../spurvago.config.json'
+import windowSizes from '../windowconfig.json'
 
 // Window size
 // small - 1350x700
 // large - 1800x1000
-const winSize = windowSizes.large;
 
+const winSize = options.size == "small" ? windowSizes.small : windowSizes.large;
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 
