@@ -23,7 +23,7 @@ public class Pager {
      */
     public Pager(Integer index, Integer size, String sort) {
         this.index = (index == null) ? 1 : index;
-        this.size = (index == null) ? 10 : size;
+        this.size = (size == null) ? 10 : size;
         this.sort = (Utils.isNullOrBlank(sort)) ? "id" : sort;
     }
 
