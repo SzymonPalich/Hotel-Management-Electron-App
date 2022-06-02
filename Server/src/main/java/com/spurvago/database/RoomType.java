@@ -23,4 +23,6 @@ public class RoomType {
     @Setter
     private BigDecimal price;
 
+    @OneToMany
+    private List<Room> rooms;
 }

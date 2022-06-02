@@ -85,6 +85,7 @@ public record ClientService(ClientRepository clientRepository,
             throw new ResponseStatusException(NOT_FOUND);
         }
         entity = optionalClient.get();
+
         clientRepository.delete(entity);
     }
 }

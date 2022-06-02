@@ -27,4 +27,12 @@ public class Room {
     @Setter
     private Integer status;
 
+    @OneToMany
+    private List<MaidTicket> maidTickets;
+
+    @OneToMany
+    private List<MaintenanceTicket> maintenanceTickets;
+
+    @OneToMany
+    private List<Accommodation> accommodationList;
 }
