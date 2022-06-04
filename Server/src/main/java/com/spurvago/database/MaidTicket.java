@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -28,6 +29,10 @@ public class MaidTicket {
     @Getter
     @Setter
     private Employee employee;
+
+    @ManyToMany
+    @JoinTable(name = "bar_replenish")
+    private List<Product> products;
 
     public MaidTicket() {
     }
