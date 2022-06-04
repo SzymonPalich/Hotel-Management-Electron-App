@@ -37,9 +37,14 @@
                   "
                   @change="selectEmployee($event.target.value)"
                 >
-                    <option v-for="emp in resultEmployee" :key="emp"  v-bind:value="emp.id" :selected ="emp.id == this.result.employeeId" >
-                        {{ emp.firstName }} {{ emp.lastName }}
-                    </option>
+                  <option
+                    v-for="emp in resultEmployee"
+                    :key="emp"
+                    v-bind:value="emp.id"
+                    :selected="emp.id == this.result.employeeId"
+                  >
+                    {{ emp.firstName }} {{ emp.lastName }}
+                  </option>
                 </select>
               </dd>
             </div>
@@ -62,11 +67,16 @@
                     rounded-xl
                     outline-none
                   "
-                   @change="selectRoom($event.target.value)"
+                  @change="selectRoom($event.target.value)"
                 >
-                    <option v-for="room in resultRooms.content" :key="room" v-bind:value="room.id" :selected ="room.id == this.result.roomId">
-                        {{ room.roomNumber }} {{ room.roomType }}
-                    </option>
+                  <option
+                    v-for="room in resultRooms.content"
+                    :key="room"
+                    v-bind:value="room.id"
+                    :selected="room.id == this.result.roomId"
+                  >
+                    {{ room.roomNumber }} {{ room.roomType }}
+                  </option>
                 </select>
               </dd>
             </div>
@@ -78,11 +88,19 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Data zakończenia</dt>
-              <dd v-if="this.result.finalizationDate == null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <dt class="text-sm font-medium text-gray-500">
+                Data zakończenia
+              </dt>
+              <dd
+                v-if="this.result.finalizationDate == null"
+                class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+              >
                 Nie zakończono
               </dd>
-              <dd v-if="this.result.finalizationDate != null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd
+                v-if="this.result.finalizationDate != null"
+                class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+              >
                 {{ this.result.finalizationDate }}
               </dd>
             </div>
@@ -90,29 +108,31 @@
           <div class="text-center px-4 py-3 bg-gray-50 rounded-b-xl">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
                 hover:
-                mx-4
               "
-              @click="$router.push({ name: 'maid_ticket' })"
+              @click="this.back()"
             >
-              Powrót
+              Wróć
             </button>
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
                 hover:
-                mx-4
               "
               @click="this.save()"
             >
@@ -129,61 +149,63 @@
 import { Options, Vue } from "vue-class-component";
 import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
-import Utils, {IList, IPager } from "../../Utils";
+import Utils, { IList, IPager } from "../../Utils";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 
-
-
 export default defineComponent({
-    data() {
-        return {
-            result: MaidTicketServices.getBlankMaidTicketTemplate(),
-            pager: Utils.getDefaultPager(),
-            resultEmployee: Utils.getBlankListTemplate<IEmployee>(),
-            resultRooms: Utils.getBlankListTemplate<IRoom>(),
-        };
+  data() {
+    return {
+      result: MaidTicketServices.getBlankMaidTicketTemplate(),
+      pager: Utils.getDefaultPager(),
+      resultEmployee: Utils.getBlankListTemplate<IEmployee>(),
+      resultRooms: Utils.getBlankListTemplate<IRoom>(),
+    };
+  },
+
+  mounted() {
+    console.log(this.getData());
+    console.log(this.getEmployees());
+    console.log(this.getRooms());
+    this.getData().then((data) => (this.result = data));
+    this.getEmployees().then((data) => (this.resultEmployee = data));
+    this.getRooms().then((data) => (this.resultRooms = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
     },
 
-    mounted() {
-        console.log(this.getData());
-        console.log(this.getEmployees());
-        console.log(this.getRooms());
-        this.getData().then((data) => (this.result = data));
-        this.getEmployees().then((data) => (this.resultEmployee = data));
-        this.getRooms().then((data) => (this.resultRooms = data));
+    async getData(): Promise<IMaid> {
+      return await MaidTicketServices.fetch(this.getId());
     },
 
-    methods: {
-        getId(): string {
-            return this.$route.params.id as string;
-        },
-
-        async getData(): Promise<IMaid> {
-            return await MaidTicketServices.fetch(this.getId());
-        },
-
-        async getEmployees(): Promise<IList<IEmployee>> {
-            return await EmployeeServices.getEmployeesByPosition(this.pager,"2");
-        },
-
-        async getRooms(): Promise<IList<IRoom>> {
-            return await RoomsServices.getList(this.pager);
-        },
-
-        selectRoom: function(value: number) {
-          this.result.roomId = value;
-        },
-
-        selectEmployee: function(value: number) {
-          this.result.employeeId = value;
-        },
-
-        async save(): Promise<void> {
-            await MaidTicketServices.update(this.getId(), this.result);
-            Utils.acceptedAlert();
-            this.$router.push({ name: 'maid_ticket' });
-        }
+    async getEmployees(): Promise<IList<IEmployee>> {
+      return await EmployeeServices.getEmployeesByPosition(this.pager, "2");
     },
+
+    async getRooms(): Promise<IList<IRoom>> {
+      return await RoomsServices.getList(this.pager);
+    },
+
+    selectRoom: function (value: number) {
+      this.result.roomId = value;
+    },
+
+    selectEmployee: function (value: number) {
+      this.result.employeeId = value;
+    },
+
+    async save(): Promise<void> {
+      await MaidTicketServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "maid_ticket" });
+    },
+
+    back(): void {
+      this.$router.push({ name: "maid_ticket" });
+    },
+  },
 });
 </script>

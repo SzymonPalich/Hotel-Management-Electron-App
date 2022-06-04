@@ -94,16 +94,35 @@
           <div class="text-center px-4 py-5">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
+                hover:
               "
-              @click="$router.push({ name: 'rooms' })"
+              @click="this.back()"
             >
-              Dodaj
+              Wróć
+            </button>
+            <button
+              class="
+                w-1/6
+                bg-gray-800
+                rounded-xl
+                px-6
+                mx-2
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+              "
+              @click="this.save()"
+            >
+              Zatwierdź
             </button>
           </div>
         </div>
@@ -113,6 +132,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { Vue } from "vue-class-component";
 import RoomsService, { IRoom } from "../../services/RoomsService";
 
@@ -123,15 +143,14 @@ let temp_room: IRoom = {
   status: 1,
 };
 
-export default class RoomsEditView extends Vue {
-  data() {
-    return {
-      result: temp_room,
-    };
-  }
-
-  private setStatus(room_status: number): string {
-    return RoomsService.setStatus(room_status);
-  }
-}
+export default defineComponent({
+  methods: {
+    back() {
+      this.$router.push("/repairs");
+    },
+    save() {
+      // TODO
+    },
+  },
+});
 </script>

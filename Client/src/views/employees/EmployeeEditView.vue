@@ -226,9 +226,27 @@
           <div class="text-center px-4 py-3 bg-gray-50 rounded-b-xl">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+              "
+              @click="this.back()"
+            >
+              Wróć
+            </button>
+            <button
+              class="
+                w-1/6
+                bg-gray-800
+                rounded-xl
+                px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
@@ -236,7 +254,7 @@
               "
               @click="this.save()"
             >
-              Edytuj
+              Zatwierdź
             </button>
           </div>
         </div>
@@ -249,41 +267,43 @@
 import { Options, Vue } from "vue-class-component";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
-import Utils, { IPager, IList } from '../../Utils';
-
+import Utils, { IPager, IList } from "../../Utils";
 
 export default defineComponent({
-    data() {
-        return {
-            result: EmployeeServices.getBlankEmployeeTemplate(),
-            pager: Utils.getDefaultPager(),
-        };
+  data() {
+    return {
+      result: EmployeeServices.getBlankEmployeeTemplate(),
+      pager: Utils.getDefaultPager(),
+    };
+  },
+
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
     },
 
-    mounted() {
-        console.log(this.getData());
-        this.getData().then((data) => (this.result = data));
+    async getData(): Promise<IEmployee> {
+      return await EmployeeServices.fetch(this.getId());
     },
 
-    methods: {
-        getId(): string {
-            return this.$route.params.id as string;
-        },
-
-        async getData(): Promise<IEmployee> {
-            return await EmployeeServices.fetch(this.getId());
-        },
-
-        selectPosition: function(value: string) {
-          this.result.position = value;
-        },
-
-        async save(): Promise<void> {
-            console.log(this.result)
-            await EmployeeServices.update(this.getId(), this.result);
-            Utils.acceptedAlert();
-            this.$router.push({ name: 'employees' });
-        }
+    selectPosition: function (value: string) {
+      this.result.position = value;
     },
+
+    async save(): Promise<void> {
+      console.log(this.result);
+      await EmployeeServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "employees" });
+    },
+    back(): void {
+      this.$router.push({ name: "employees" });
+    },
+  },
 });
 </script>
