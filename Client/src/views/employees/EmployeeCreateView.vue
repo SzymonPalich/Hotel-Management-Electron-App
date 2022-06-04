@@ -68,12 +68,32 @@
               </dd>
             </div>
             <div
-              class="
-                bg-gray-50
-                px-4
-                py-3
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+            >
+              <dt class="text-sm font-medium text-gray-500">Hasło</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    text-md
+                    px-2
+                    py-1
+                    outline-none
+                    focus:border-2
+                    focus:border-cyan-400 
+                    focus:rounded-xl
+                  "
+                  type="text"
+                  required
+                  v-model = this.result.password
+                />
+              </dd>
+            </div>
+            <div
+              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">E-mail</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -128,21 +148,11 @@
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectPosition($event.target.value)"
-                >
-                  <option value="1">Kierownik</option>
-                  <option value="2">Pokojówka</option>
-                  <option value="3">Technik</option>
-                  <option value="4">Recepcjonista</option>
+                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none" @change="selectPosition($event.target.value)">
+                  <option value="ROLE_MANAGER">Kierownik</option>
+                  <option value="ROLE_MAID">Pokojówka</option>
+                  <option value="ROLE_TECHNICIAN">Technik</option>
+                  <option value="ROLE_RECEPTIONIST">Recepcjonista</option>
                 </select>
               </dd>
             </div>
@@ -287,6 +297,10 @@ export default defineComponent({
       console.log(this.result);
       await EmployeeServices.create(this.result);
       this.$router.push({ name: "employees" });
+    },
+
+    mounted() {
+      this.result.position = "ROLE_MANAGER";
     },
 
     selectPosition: function (value: string) {

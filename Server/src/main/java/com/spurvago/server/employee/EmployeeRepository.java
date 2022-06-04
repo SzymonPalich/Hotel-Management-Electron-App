@@ -50,7 +50,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     Optional<Employee> findById(Long id);
 
-    List<Employee> findEmployeesByPosition(int position);
+    List<Employee> findEmployeesByPosition(String position);
 
     Page<Employee> findAll(Pageable pageable);
 

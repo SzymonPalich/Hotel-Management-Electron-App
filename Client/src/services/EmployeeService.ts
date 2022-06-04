@@ -2,18 +2,18 @@ import Utils, {IList, IPager} from "@/Utils";
 import axios from "axios";
 
 export default class EmployeeServices {
-    public static setPosition(position: number): string {
+    public static setPosition(position: string): string {
         switch (position) {
-            case 1: {
+            case "ROLE_MANAGER": {
                 return "Manager";
             }
-            case 2: {
+            case "ROLE_MAID": {
                 return "Sprzątacz";
             }
-            case 3: {
+            case "ROLE_TECHNICIAN": {
                 return "Technik";
             }
-            case 4: {
+            case "ROLE_RECEPTIONIST": {
                 return "Recepcjonista";
             }
             default: {
@@ -27,6 +27,7 @@ export default class EmployeeServices {
             id: 0,
             firstName: "",
             lastName: "",
+            password: "",
             position: "",
             salary: 0,
             email: "",
@@ -67,6 +68,7 @@ export interface IEmployee {
     id: number;
     firstName: string;
     lastName: string;
+    password: string;
     position: string;
     salary: number;
     email: string;
