@@ -72,7 +72,7 @@ public class EmployeeController {
     //<editor-fold desc="getEmployeesByPosition">
     @RequestMapping(method = RequestMethod.GET, path = "/position")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getEmployeesByPosition(@RequestParam int position) {
+    public List<Employee> getEmployeesByPosition(@RequestParam String position) {
         return employeeService.findByPosition(position);
     }
     //</editor-fold>

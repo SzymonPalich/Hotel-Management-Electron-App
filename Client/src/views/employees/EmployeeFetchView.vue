@@ -140,7 +140,7 @@ export default defineComponent({
       return await EmployeeServices.fetch(this.getId());
     },
 
-    setPosition(position: number): string {
+    setPosition(position: string): string {
       return EmployeeServices.setPosition(position);
     }
   },

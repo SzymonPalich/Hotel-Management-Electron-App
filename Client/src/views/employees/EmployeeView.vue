@@ -122,7 +122,7 @@ export default defineComponent({
     this.getData().then((data) => (this.result = data));
   },
 
-  setPosition(position: number): string {
+  setPosition(position: string): string {
     return EmployeeServices.setPosition(position);
   },
 
@@ -131,7 +131,7 @@ export default defineComponent({
       return await EmployeeServices.getList(this.pager);
     },
 
-    setPosition(position: number): string {
+    setPosition(position: string): string {
       return EmployeeServices.setPosition(position);
     },
 

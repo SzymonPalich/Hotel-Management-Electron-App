@@ -92,7 +92,7 @@ public record EmployeeService(EmployeeRepository employeeRepository,
     }
 
     // TODO Tak jak w kontrolerze pisałem
-    public List<Employee> findByPosition(int position) {
+    public List<Employee> findByPosition(String position) {
         return employeeRepository.findEmployeesByPosition(position);
     }
 }
