@@ -46,11 +46,11 @@
         <div>
           <p class="text-sm text-white">
             Showing
-            <span class="font-medium">1</span>
+            <span class="font-medium">{{ getStartingElement() }}</span>
             to
-            <span class="font-medium">10</span>
+            <span class="font-medium">{{ getEndingElement() }} </span>
             of
-            <span class="font-medium">97</span>
+            <span class="font-medium">{{ totalElements }}</span>
             results
           </p>
         </div>
@@ -102,7 +102,7 @@
             </a>
             <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
             <a
-              href="#"
+              @click="this.$parent.getPage(1)"
               aria-current="page"
               class="
                 z-10
@@ -122,7 +122,7 @@
               1
             </a>
             <a
-              href="#"
+              @click="this.$parent.getPage(2)"
               class="
                 bg-gray-300
                 border-gray-400
@@ -141,7 +141,7 @@
               2
             </a>
             <a
-              href="#"
+              @click="this.$parent.getPage(3)"
               class="
                 bg-gray-300
                 border-gray-400
@@ -159,80 +159,6 @@
               "
             >
               3
-            </a>
-            <span
-              class="
-                relative
-                inline-flex
-                items-center
-                px-4
-                py-2
-                border border-gray-400
-                bg-gray-300
-                text-sm
-                font-medium
-                text-gray-700
-              "
-            >
-              ...
-            </span>
-            <a
-              href="#"
-              class="
-                bg-gray-300
-                border-gray-400
-                text-gray-500
-                hover:bg-gray-50
-                hidden
-                md:inline-flex
-                relative
-                items-center
-                px-4
-                py-2
-                border
-                text-sm
-                font-medium
-              "
-            >
-              8
-            </a>
-            <a
-              href="#"
-              class="
-                bg-gray-300
-                border-gray-400
-                text-gray-500
-                hover:bg-gray-50
-                relative
-                inline-flex
-                items-center
-                px-4
-                py-2
-                border
-                text-sm
-                font-medium
-              "
-            >
-              9
-            </a>
-            <a
-              href="#"
-              class="
-                bg-gray-300
-                border-gray-400
-                text-gray-500
-                hover:bg-gray-50
-                relative
-                inline-flex
-                items-center
-                px-4
-                py-2
-                border
-                text-sm
-                font-medium
-              "
-            >
-              10
             </a>
             <a
               href="#"
@@ -279,6 +205,18 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "PaginationComponent",
-  methods: {},
+  methods: {
+    getStartingElement() {
+      return (this.index-1) * this.size + 1;
+    },
+    getEndingElement() {
+      var size = (this.index-1) * this.size + this.size;
+      if (size > this.totalElements) {
+        return this.totalElements;
+      }
+        return size;
+    },
+  },
+  props: ["index", "size", "totalElements", "totalPages"],
 });
 </script>

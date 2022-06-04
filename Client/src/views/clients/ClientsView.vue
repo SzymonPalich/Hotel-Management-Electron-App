@@ -9,6 +9,10 @@
           >add</i
         >
       </div>
+      <button
+        @click="this.getPage(2)">
+        Benis
+      </button>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
@@ -80,7 +84,12 @@
       </div>
     </div>
     <div class="px-6 mt-auto mb-6">
-      <pagination />
+      <pagination
+        :index="this.result.pager.index"
+        :size="this.result.pager.size"
+        :totalElements="this.result.totalElements"
+        :totalPages="this.result.totalPages"
+      />
     </div>
   </div>
 </template>
@@ -100,8 +109,7 @@ export default defineComponent({
   },
   data() {
     return {
-      result: Utils.getBlankListTemplate<IClient>(),
-      pager: Utils.getDefaultPager(),
+      result: Utils.getBlankListTemplate<IClient>()
     };
   },
   mounted() {
@@ -111,12 +119,17 @@ export default defineComponent({
 
   methods: {
     async getData(): Promise<IList<IClient>> {
-      return await ClientsServices.getList(this.pager);
+      return await ClientsServices.getList(this.result.pager);
     },
-    
+
+    async getPage(page: number) {
+      this.result.pager = Utils.getPager(page, "id");
+      this.result = await ClientsServices.getList(this.result.pager);
+    },
+
     alertDisplay(id: string): void {
-      Utils.alertDisplayDelete('client', id);
-    }
+      Utils.alertDisplayDelete("client", id);
+    },
   },
 });
 </script>
