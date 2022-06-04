@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-full flex flex-col h-screen overflow-hidden">
-    <div class="rounded-xl mx-24 mt-20">
+    <div class="rounded-xl mx-48 mt-auto mb-auto">
       <div
         class="
           bg-gray-800
