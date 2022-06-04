@@ -83,7 +83,7 @@ import { Vue } from "vue-class-component";
 
 export default class LoginView extends Vue {
   private logIn(): void {
-    this.$router.push({ path: "maid_ticket" });
+    this.$router.push({ path: "clients" });
   }
 }
 </script>
