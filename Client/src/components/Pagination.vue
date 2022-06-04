@@ -243,8 +243,9 @@ export default defineComponent({
       pagination.add(1);
       pagination.add(this.totalPages);
       pagination.add(this.index);
-      let max = (this.totalPages < 10) ? this.totalPages-3 : 10-3;
 
+      let safe = 25;
+      let max = (this.totalPages < 7) ? this.totalPages : 7;
       let curr = 1;
       while (max > 0)
       {
@@ -260,6 +261,11 @@ export default defineComponent({
           max--;
         }
         curr++;
+        safe--;
+        if (safe == 0) {
+          console.log("overflow");
+          break;
+        }
       }
       return Array.from(pagination).sort();
     },
