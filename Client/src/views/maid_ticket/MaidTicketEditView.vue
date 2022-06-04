@@ -182,7 +182,7 @@ export default defineComponent({
     },
 
     async getEmployees(): Promise<IList<IEmployee>> {
-      return await EmployeeServices.getEmployeesByPosition(this.pager, "2");
+      return await EmployeeServices.getEmployeesByPosition(this.pager, "ROLE_MAID");
     },
 
     async getRooms(): Promise<IList<IRoom>> {
