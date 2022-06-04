@@ -68,7 +68,8 @@
             aria-label="Pagination"
           >
             <a
-              href="#"
+              v-if="this.getPreviousPage()"
+              @click="this.$parent.getPage(getPreviousPage())"
               class="
                 relative
                 inline-flex
@@ -100,68 +101,89 @@
                 />
               </svg>
             </a>
-            <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
             <a
-              @click="this.$parent.getPage(1)"
+              v-else
+              class="
+                relative
+                inline-flex
+                items-center
+                px-2
+                py-2
+                rounded-l-md
+                border border-gray-400
+                bg-gray-300
+                text-sm
+                font-medium
+                text-gray-500
+                hover:bg-gray-50
+              "
+            >
+              <span class="sr-only">Previous</span>
+              <!-- Heroicon name: solid/chevron-left -->
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+            <!-- Generowanie Paginacji -->
+            <a
+              v-for="page in this.getPagination()"
+              :key="page"
+              @click="this.$parent.getPage(page)"
+              v-bind:class="
+                page == this.index
+                  ? 'z-10 bg-gray-300 border-gray-400 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+                  : 'fa-checkbox-marked bg-gray-300 border-gray-400 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium'
+              "
               aria-current="page"
+            >
+              {{ page }}
+            </a>
+            <a
+              v-if="this.getNextPage()"
+              @click="this.$parent.getPage(this.getNextPage())"
               class="
-                z-10
-                bg-gray-300
-                border-gray-400
-                text-indigo-600
                 relative
                 inline-flex
                 items-center
-                px-4
+                px-2
                 py-2
-                border
+                rounded-r-md
+                border border-gray-400
+                bg-gray-300
                 text-sm
                 font-medium
-              "
-            >
-              1
-            </a>
-            <a
-              @click="this.$parent.getPage(2)"
-              class="
-                bg-gray-300
-                border-gray-400
                 text-gray-500
                 hover:bg-gray-50
-                relative
-                inline-flex
-                items-center
-                px-4
-                py-2
-                border
-                text-sm
-                font-medium
               "
             >
-              2
+              <span class="sr-only">Next</span>
+              <!-- Heroicon name: solid/chevron-right -->
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
             </a>
             <a
-              @click="this.$parent.getPage(3)"
-              class="
-                bg-gray-300
-                border-gray-400
-                text-gray-500
-                hover:bg-gray-50
-                hidden
-                md:inline-flex
-                relative
-                items-center
-                px-4
-                py-2
-                border
-                text-sm
-                font-medium
-              "
-            >
-              3
-            </a>
-            <a
-              href="#"
+              v-else
               class="
                 relative
                 inline-flex
@@ -207,14 +229,53 @@ export default defineComponent({
   name: "PaginationComponent",
   methods: {
     getStartingElement() {
-      return (this.index-1) * this.size + 1;
+      return (this.index - 1) * this.size + 1;
     },
     getEndingElement() {
-      var size = (this.index-1) * this.size + this.size;
+      var size = (this.index - 1) * this.size + this.size;
       if (size > this.totalElements) {
         return this.totalElements;
       }
-        return size;
+      return size;
+    },
+    getPagination() {
+      let pagination = new Set<number>();
+      pagination.add(1);
+      pagination.add(this.totalPages);
+      pagination.add(this.index);
+
+      let max = (this.totalPages-1 < 4) ? this.totalPages-1 : 4;
+      if (this.index==1 || this.index==this.totalPages) max++;
+
+      let curr = 1;
+      while (max > 0)
+      {
+        if (this.index - curr > 1) {
+          pagination.add(this.index - curr);
+          max--;
+        }
+        if (max == 0) {
+          break;
+        }
+        if (this.index + curr < this.totalPages) {
+          pagination.add(this.index + curr);
+          max--;
+        }
+        curr++;
+      }
+      return Array.from(pagination).sort((a,b)=>a-b);
+    },
+    getPreviousPage() {
+      if (this.index > 1) {
+        return this.index - 1;
+      }
+      return false;
+    },
+    getNextPage() {
+      if (this.index < this.totalPages) {
+        return this.index + 1;
+      }
+      return false;
     },
   },
   props: ["index", "size", "totalElements", "totalPages"],
