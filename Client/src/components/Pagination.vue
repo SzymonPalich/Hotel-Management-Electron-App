@@ -244,8 +244,9 @@ export default defineComponent({
       pagination.add(this.totalPages);
       pagination.add(this.index);
 
-      let safe = 25;
-      let max = (this.totalPages < 7) ? this.totalPages : 7;
+      let max = (this.totalPages-1 < 4) ? this.totalPages-1 : 4;
+      if (this.index==1 || this.index==this.totalPages) max++;
+
       let curr = 1;
       while (max > 0)
       {
@@ -253,7 +254,7 @@ export default defineComponent({
           pagination.add(this.index - curr);
           max--;
         }
-        if (max <= 0) {
+        if (max == 0) {
           break;
         }
         if (this.index + curr < this.totalPages) {
@@ -261,13 +262,8 @@ export default defineComponent({
           max--;
         }
         curr++;
-        safe--;
-        if (safe == 0) {
-          console.log("overflow");
-          break;
-        }
       }
-      return Array.from(pagination).sort();
+      return Array.from(pagination).sort((a,b)=>a-b);
     },
     getPreviousPage() {
       if (this.index > 1) {
