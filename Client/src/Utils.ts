@@ -3,6 +3,7 @@ import EmployeeServices, { IEmployee } from "./services/EmployeeService";
 import MaidTicketServices, { IMaid } from "./services/MaidTicketService";
 import ClientsServices, { IClient } from "./services/ClientsService";
 import RepairServices, { IRepair } from "./services/RepairService";
+import RoomsServices, { IRoom } from "./services/RoomsService";
 
 export default class Utils {
     public static alertDisplay() {
@@ -39,6 +40,9 @@ export default class Utils {
                 window.location.reload();
               } else if (table == "technician") {
                 this.deleteTechnician(id);
+                window.location.reload();
+              } else if (table == "rooms") {
+                this.deleteRoom(id);
                 window.location.reload();
               }
             } else if (result.isDenied) {
@@ -114,6 +118,10 @@ export default class Utils {
 
     static async deleteTechnician(id: string): Promise<IRepair> {
         return await RepairServices.delete(id);
+    }
+
+    static async deleteRoom(id: string): Promise<IRoom> {
+        return await RoomsServices.delete(id);
     }
 }
 

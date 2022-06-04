@@ -31,8 +31,8 @@ export default class RoomsServices {
     public static getBlankRoomTemplate(): IRoom {
         const tempRoom: IRoom = {
             id: 0,
-            room_number: 0,
-            room_type: "",
+            roomNumber: "",
+            roomTypeId: 0,
             status: 0,
         };
         return tempRoom;
@@ -48,12 +48,20 @@ export default class RoomsServices {
 
     public static async getList(pager: IPager): Promise<IList<IRoom>> {
         return (await axios.get<IList<IRoom>>(`http://localhost:8081/api/room`, { params: pager })).data;
-    }  
+    } 
+
+    public static async delete(id: string): Promise<IRoom> {
+        return (await axios.delete(`http://localhost:8081/api/room/${id}`)).data;
+    }
+
+    public static async create(room: IRoom): Promise<IRoom> {
+        return (await axios.post<IRoom>(`http://localhost:8081/api/room`, room)).data;
+    }
 }
 
 export interface IRoom {
     id: number;
-    room_number: number;
-    room_type: string;
+    roomNumber: string;
+    roomTypeId: number;
     status: number;
 }

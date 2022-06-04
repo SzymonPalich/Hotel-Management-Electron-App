@@ -23,6 +23,7 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         dest.setRoomNumber(src.getRoomNumber());
         dest.setRoomType(src.getRoomType().getType());
         dest.setStatus(src.getStatus());
+        dest.setRoomTypeId(src.getRoomType().getId());
 
         return dest;
     }

@@ -39,7 +39,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Cena za pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                450.00 zł
+                {{ this.resultRoomTypes.price }} zł
               </dd>
             </div>
             <div
@@ -106,16 +106,19 @@
 <script lang="ts">
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
+import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
 
 export default defineComponent({
   data() {
     return {
       result: RoomsServices.getBlankRoomTemplate(),
+      resultRoomTypes: RoomTypesServices.getBlankRoomTypeTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
+    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
   methods: {
@@ -129,6 +132,11 @@ export default defineComponent({
 
     async getData(): Promise<IRoom> {
       return await RoomsServices.fetch(this.getId());
+    },
+
+    async getRoomTypes(): Promise<IRoomType> {
+      console.log(this.result);
+      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
     },
   },
 });

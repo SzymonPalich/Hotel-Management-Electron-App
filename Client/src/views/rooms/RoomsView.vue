@@ -52,7 +52,7 @@
                 <router-link :to="{ name: 'rooms-edit', params: { id: room.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
-                <router-link :to="{ name: 'rooms' }" @click="alertDisplay()">
+                <router-link :to="{ name: 'rooms' }" @click="alertDisplay(room.id)">
                   <i class="material-icons align-middle">delete</i>
                 </router-link>
               </td>
@@ -100,9 +100,9 @@ export default defineComponent({
       return RoomsServices.setStatus(status);
     },
 
-    alertDisplay(): void {
-      Utils.alertDisplay();
-    }
+    alertDisplay(id: string) {
+      Utils.alertDisplayDelete("rooms", id);
+    },
 
   }
 });

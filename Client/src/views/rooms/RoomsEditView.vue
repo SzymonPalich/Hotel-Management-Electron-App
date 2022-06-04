@@ -39,14 +39,14 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.room_number"
+                  v-model="this.result.roomNumber"
                 />
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <select
                   class="
@@ -57,10 +57,16 @@
                     rounded-xl
                     outline-none
                   "
+                  @change="selectRoomType($event.target.value)"
                 >
-                  <option>Ekonomiczny</option>
-                  <option>Drogi</option>
-                  <option>O Panie</option>
+                  <option
+                    v-for="room in resultRoomTypes.content"
+                    :key="room"
+                    v-bind:value="room.id"
+                    :selected="room.type == this.result.roomType"
+                  >
+                    {{ room.type }}
+                  </option>
                 </select>
               </dd>
             </div>
@@ -83,10 +89,16 @@
                     rounded-xl
                     outline-none
                   "
+                  @change="selectStatus($event.target.value)"
                 >
-                  <option>Gotowy</option>
-                  <option>Sprzątanie</option>
-                  <option>Zablokowany</option>
+                  <option
+                    v-for="status in statuses"
+                    :key="status"
+                    v-bind:value="status.value"
+                    :selected="status.value == this.result.status"
+                  >
+                    {{ status.text }}
+                  </option>
                 </select>
               </dd>
             </div>
@@ -132,24 +144,61 @@
 </template>
 
 <script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import RoomTypesServices, { IRoomType } from "../../services/RoomTypesService";
+import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
-import { Vue } from "vue-class-component";
-import RoomsService, { IRoom } from "../../services/RoomsService";
-
-let temp_room: IRoom = {
-  id: 1,
-  room_number: 101,
-  room_type: "Ekonomiczny",
-  status: 1,
-};
+import Utils, { IPager, IList } from "../../Utils";
 
 export default defineComponent({
+  data() {
+    return {
+      result: RoomsServices.getBlankRoomTemplate(),
+      pager: Utils.getDefaultPager(),
+      resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
+      statuses: [
+        { value: 1, text: "Wolny" },
+        { value: 2, text: "Zajęty" },
+        { value: 3, text: "Rezerwacja" }
+      ],
+    };
+  },
+
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
+  },
+
   methods: {
-    back() {
-      this.$router.push("/repairs");
+    getId(): string {
+      return this.$route.params.id as string;
     },
-    save() {
-      // TODO
+
+    async getData(): Promise<IRoom> {
+      return await RoomsServices.fetch(this.getId());
+    },
+
+    async getRoomTypes(): Promise<IList<IRoomType>> {
+      return await RoomTypesServices.getList(this.pager);
+    },
+
+    selectRoomType: function (value: number) {
+      this.result.roomTypeId = value;
+    },
+
+    selectStatus: function (value: number) {
+      this.result.status = value;
+    },
+
+    async save(): Promise<void> {
+      console.log(this.result);
+      await RoomsServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "rooms" });
+    },
+    back(): void {
+      this.$router.push({ name: "rooms" });
     },
   },
 });
