@@ -9,10 +9,6 @@
           >add</i
         >
       </div>
-      <button
-        @click="this.getPage(2)">
-        Benis
-      </button>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
       <div class="overflow-auto rounded-xl">
