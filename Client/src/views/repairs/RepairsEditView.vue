@@ -77,7 +77,9 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <textarea rows="5" maxlength="400"
+                <textarea
+                  rows="5"
+                  maxlength="400"
                   class="
                     scroll
                     border-2 border-gray-400
@@ -88,9 +90,7 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl 
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                     resize-none
                   "
                   required
@@ -102,6 +102,7 @@
           <div class="text-center px-4 py-5">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
@@ -109,10 +110,27 @@
                 text-white
                 border-2 border-black
                 hover:
+                mx-4
               "
-              @click="$router.push({ name: 'repairs' })"
+              @click="this.back()"
             >
-              Edytuj
+              Wróć
+            </button>
+            <button
+              class="
+                w-1/6
+                bg-gray-800
+                rounded-xl
+                px-6
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+                mx-4
+              "
+              @click="this.save()"
+            >
+              Zatwierdź
             </button>
           </div>
         </div>
@@ -122,13 +140,19 @@
 </template>
 
 <script lang="ts">
+import Utils from "@/Utils";
+import { defineComponent } from "vue";
 import { Vue } from "vue-class-component";
 import RepairService, { IRepair } from "../../services/RepairService";
 
-export default class RepairsEditView extends Vue {
-  data() {
-    return {
-    };
-  }
-}
+export default defineComponent({
+  methods: {
+    back() {
+      this.$router.push("/repairs");
+    },
+    save() {
+      // TODO
+    },
+  },
+});
 </script>
