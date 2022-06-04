@@ -31,7 +31,7 @@ public class Validator {
     }
 
     public boolean correctDecimal(BigDecimal decimal, int maxSize, int maxDecimalPlaces) {
-        return decimal.compareTo(BigDecimal.ZERO) > 0 &&
+        return decimal.compareTo(BigDecimal.ZERO) >= 0 &&
                 decimal.stripTrailingZeros().scale() <= maxDecimalPlaces &&
                 decimal.stripTrailingZeros().precision() - decimal.stripTrailingZeros().scale() <= maxSize;
     }

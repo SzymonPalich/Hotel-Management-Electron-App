@@ -5,15 +5,17 @@ export default class RepairService {
     public static getBlankRepairTemplate(): IRepair {
         const tempRepair: IRepair = {
             id: 0,
-            room_number: 0,
-            room_type: "",
-            employee_fristName: "",
-            employee_lastName: "",
+            roomId: 0,
+            roomNumber: 0,
+            roomType: "",
+            employeeId: undefined,
+            employeeFristName: "",
+            employeeLastName: "",
             name: "",
             description: "",
-            parts_price: 0,
-            technician_report: "",
-            finalization_date: undefined,
+            partsPrice: undefined,
+            technicianReport: "",
+            finalizationDate: undefined,
         };
         return tempRepair;
     }
@@ -23,23 +25,33 @@ export default class RepairService {
     }
 
     public static async update(id: string, repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(`http://localhost:8081/api/repairs/maintenance_ticket/${id}`, repair)).data;
+        return (await axios.put<IRepair>(`http://localhost:8081/api/maintenance_ticket/${id}`, repair)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRepair>> {
         return (await axios.get<IList<IRepair>>(`http://localhost:8081/api/maintenance_ticket`, { params: pager })).data;
-    }  
+    } 
+
+    public static async delete(id: string): Promise<IRepair> {
+        return (await axios.delete(`http://localhost:8081/api/maintenance_ticket/${id}`)).data;
+    }
+
+    public static async create(repair: IRepair): Promise<IRepair> {
+        return (await axios.post<IRepair>(`http://localhost:8081/api/maintenance_ticket`, repair)).data;
+    }
 }
 
 export interface IRepair {
     id: number;
-    room_number: number;
-    room_type: string;
-    employee_fristName: string;
-    employee_lastName: string;
+    roomId: number;
+    roomNumber: number;
+    roomType: string;
+    employeeId?: number;
+    employeeFristName: string;
+    employeeLastName: string;
     name: string;
     description: string;
-    parts_price?: number;
-    technician_report?: string;
-    finalization_date?: Date;
+    partsPrice?: number;
+    technicianReport?: string;
+    finalizationDate?: Date;
 }

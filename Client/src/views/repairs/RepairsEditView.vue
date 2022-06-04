@@ -40,31 +40,35 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.issue"
+                  v-model="this.result.name"
                 />
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Numer Pokóju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
+                <select
                   class="
-                    border-2 border-gray-400
                     w-full
-                    h-full
-                    rounded-xl
-                    text-md
+                    border-2 border-gray-400
                     px-2
-                    py-1
+                    py-0_1
+                    rounded-xl
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-                  type="number"
-                  required
-                  v-model="this.result.room_nr"
-                />
+                  @change="selectRoom($event.target.value)"
+                >
+                  <option
+                    v-for="room in resultRooms.content"
+                    :key="room"
+                    v-bind:value="room.id"
+                    :selected="room.id == this.result.roomId"
+                  >
+                    {{ room.roomNumber }} {{ room.roomType }}
+                  </option>
+                </select>
               </dd>
             </div>
             <div
@@ -94,7 +98,7 @@
                     resize-none
                   "
                   required
-                  v-model="this.result.desc"
+                  v-model="this.result.description"
                 ></textarea>
               </dd>
             </div>
@@ -140,18 +144,52 @@
 </template>
 
 <script lang="ts">
-import Utils from "@/Utils";
+import { Options, Vue } from "vue-class-component";
+import RepairServices, { IRepair } from "../../services/RepairService";
+import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
-import { Vue } from "vue-class-component";
-import RepairService, { IRepair } from "../../services/RepairService";
+import Utils, { IPager, IList } from "../../Utils";
 
 export default defineComponent({
+  data() {
+    return {
+      result: RepairServices.getBlankRepairTemplate(),
+      pager: Utils.getDefaultPager(),
+      resultRooms: Utils.getBlankListTemplate<IRoom>(),
+    };
+  },
+
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+    this.getRooms().then((data) => (this.resultRooms = data));
+  },
+
   methods: {
-    back() {
-      this.$router.push("/repairs");
+    getId(): string {
+      return this.$route.params.id as string;
     },
-    save() {
-      // TODO
+
+    async getData(): Promise<IRepair> {
+      return await RepairServices.fetch(this.getId());
+    },
+
+    async getRooms(): Promise<IList<IRoom>> {
+      return await RoomsServices.getList(this.pager);
+    },
+
+    selectRoom: function (value: number) {
+      this.result.roomId = value;
+    },
+
+    async save(): Promise<void> {
+      console.log(this.result);
+      await RepairServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "repairs" });
+    },
+    back(): void {
+      this.$router.push({ name: "repairs" });
     },
   },
 });

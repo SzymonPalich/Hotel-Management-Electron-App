@@ -35,7 +35,7 @@
               <td class="text-left py-2 px-4">{{ repair.name }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
-                <router-link :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
+                <router-link v-if="repair.technicianReport == ''" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
                   <i class="material-icons align-middle">build</i>
                 </router-link>
 
@@ -47,7 +47,7 @@
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
 
-                <router-link :to="{ name: 'repairs' }" @click="alertDisplay()">
+                <router-link :to="{ name: 'repairs' }" @click="alertDisplay(repair.id)">
                   <i class="material-icons align-middle">delete</i>
                 </router-link>
               </td>
@@ -91,9 +91,17 @@ export default defineComponent({
       return await RepairServices.getList(this.pager);
     },
 
-    alertDisplay(): void {
-      Utils.alertDisplay();
-    }
+    alertDisplay(id: string) {
+      Utils.alertDisplayDelete("technician", id);
+    },
+
+    isEmpty(text: string) {
+      if(text == ""){
+        return false;
+      } else {
+        return true;
+      }
+    },
   }
 });
 </script>

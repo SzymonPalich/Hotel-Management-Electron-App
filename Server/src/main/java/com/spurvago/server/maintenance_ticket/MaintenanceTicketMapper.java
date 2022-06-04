@@ -45,6 +45,11 @@ public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, Roo
         MaintenanceTicketVM dest = new MaintenanceTicketVM();
 
         dest.setId(src.getId());
+
+        if(src.getEmployee() != null) {
+            dest.setEmployeeId(src.getEmployee().getId());
+        }
+        dest.setRoomId(src.getRoom().getId());
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());

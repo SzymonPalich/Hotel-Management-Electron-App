@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import EmployeeServices, { IEmployee } from "./services/EmployeeService";
 import MaidTicketServices, { IMaid } from "./services/MaidTicketService";
 import ClientsServices, { IClient } from "./services/ClientsService";
+import RepairServices, { IRepair } from "./services/RepairService";
 
 export default class Utils {
     public static alertDisplay() {
@@ -35,6 +36,9 @@ export default class Utils {
                 window.location.reload();
               } else if (table == "client") {
                 this.deleteClient(id);
+                window.location.reload();
+              } else if (table == "technician") {
+                this.deleteTechnician(id);
                 window.location.reload();
               }
             } else if (result.isDenied) {
@@ -97,6 +101,10 @@ export default class Utils {
 
     static async deleteClient(id: string): Promise<IClient> {
         return await ClientsServices.delete(id);
+    }
+
+    static async deleteTechnician(id: string): Promise<IRepair> {
+        return await RepairServices.delete(id);
     }
 }
 
