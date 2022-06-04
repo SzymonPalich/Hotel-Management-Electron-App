@@ -122,6 +122,7 @@
           <div class="text-center px-4 py-3 bg-gray-50 rounded-b-xl">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
@@ -131,12 +132,13 @@
                 hover:
                 mx-4
               "
-              @click="$router.push({ name: 'clients' })"
+              @click="this.back()"
             >
-              Powrót
+              Wróć
             </button>
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
@@ -185,8 +187,12 @@ export default defineComponent({
     async save(): Promise<void> {
       await ClientsServices.update(this.getId(), this.result);
       Utils.acceptedAlert();
-      this.$router.push({ name: 'clients' });
-    }
+      this.$router.push({ name: "clients" });
+    },
+
+    back(): void {
+      this.$router.push({ name: "clients" });
+    },
   },
 });
 </script>

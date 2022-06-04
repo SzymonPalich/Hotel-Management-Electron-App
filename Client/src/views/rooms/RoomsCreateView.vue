@@ -36,11 +36,8 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-
                   type="text"
                   required
                 />
@@ -51,7 +48,17 @@
             >
               <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                <select
+                  class="
+                    w-full
+                    border-2 border-gray-400
+                    px-2
+                    py-0_1
+                    rounded-xl
+                    outline-none
+                    text-lg
+                  "
+                >
                   <option>Ekonomiczny</option>
                   <option>Drogi</option>
                   <option>O Panie</option>
@@ -68,7 +75,17 @@
             >
               <dt class="text-sm font-medium text-gray-500">Status</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none text-lg">
+                <select
+                  class="
+                    w-full
+                    border-2 border-gray-400
+                    px-2
+                    py-0_1
+                    rounded-xl
+                    outline-none
+                    text-lg
+                  "
+                >
                   <option>Gotowy</option>
                   <option>Sprzątanie</option>
                   <option>Zablokowany</option>
@@ -79,15 +96,33 @@
           <div class="text-center px-4 py-5">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'rooms' })"
+              @click="this.back()"
+            >
+              Wróć
+            </button>
+            <button
+              class="
+                w-1/6
+                bg-gray-800
+                rounded-xl
+                px-6
+                mx-2
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+              "
+              @click="this.add()"
             >
               Dodaj
             </button>
@@ -99,7 +134,17 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { Vue } from "vue-class-component";
 
-export default class RoomsCreateView extends Vue {}
+export default defineComponent({
+  methods: {
+    back() {
+      this.$router.push("/repairs");
+    },
+    add() {
+      // TODO
+    },
+  },
+});
 </script>

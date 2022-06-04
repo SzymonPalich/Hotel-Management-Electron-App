@@ -36,14 +36,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-
                   type="text"
                   required
-                  v-model = this.result.firstName
+                  v-model="this.result.firstName"
                 />
               </dd>
             </div>
@@ -62,13 +59,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
-                  v-model = this.result.lastName
+                  v-model="this.result.lastName"
                 />
               </dd>
             </div>
@@ -112,13 +107,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="email"
                   required
-                  v-model = this.result.email
+                  v-model="this.result.email"
                 />
               </dd>
             </div>
@@ -137,13 +130,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
-                  v-model = this.result.phoneNumber
+                  v-model="this.result.phoneNumber"
                 />
               </dd>
             </div>
@@ -180,20 +171,25 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
-                  v-model = this.result.pesel
+                  v-model="this.result.pesel"
                 />
               </dd>
             </div>
             <div
-              class="bg-gray-50 px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              class="
+                bg-gray-50
+                px-4
+                py-3
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
             >
-              <dt class="text-sm font-medium text-gray-500">Data zatrudnienia</dt>
+              <dt class="text-sm font-medium text-gray-500">
+                Data zatrudnienia
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -205,13 +201,11 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="date"
                   required
-                  v-model = this.result.employmentDate
+                  v-model="this.result.employmentDate"
                 />
               </dd>
             </div>
@@ -230,15 +224,13 @@
                     px-2
                     py-1
                     outline-none
-                    focus:border-2
-                    focus:border-cyan-400 
-                    focus:rounded-xl
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="number"
                   min="0"
                   maxlength="6"
                   required
-                  v-model = this.result.salary
+                  v-model="this.result.salary"
                 />
               </dd>
             </div>
@@ -246,9 +238,27 @@
           <div class="bg-gray-50 text-center px-4 py-3 rounded-b-xl">
             <button
               class="
+                w-1/6
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
+                py-2
+                text-white
+                border-2 border-black
+                hover:
+              "
+              @click="this.back()"
+            >
+              Wróć
+            </button>
+            <button
+              class="
+                w-1/6
+                bg-gray-800
+                rounded-xl
+                px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
@@ -269,31 +279,37 @@
 import { Options, Vue } from "vue-class-component";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
-import Utils, {IList, IPager } from "../../Utils";
-
-
+import Utils, { IList, IPager } from "../../Utils";
 
 export default defineComponent({
-    data() {
-        return {
-            result: EmployeeServices.getBlankEmployeeTemplate(),
-        };
+  data() {
+    return {
+      result: EmployeeServices.getBlankEmployeeTemplate(),
+    };
+  },
+
+  mounted() {
+    this.result.position = "1";
+  },
+
+  methods: {
+    async add(): Promise<void> {
+      console.log(this.result);
+      await EmployeeServices.create(this.result);
+      this.$router.push({ name: "employees" });
     },
 
     mounted() {
       this.result.position = "ROLE_MANAGER";
     },
 
-    methods: {
-        async add() : Promise<void> {
-          console.log(this.result);
-          await EmployeeServices.create(this.result);
-          this.$router.push({ name: 'employees' }); 
-        },
-
-        selectPosition: function(value: string) {
-          this.result.position = value;
-        },
+    selectPosition: function (value: string) {
+      this.result.position = value;
     },
+
+    back(): void {
+      this.$router.push({ name: "employees" });
+    },
+  },
 });
 </script>
