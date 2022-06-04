@@ -68,11 +68,20 @@ export default class Utils {
 
     public static getDefaultPager(): IPager {
         return {
-            index: 0,
+            index: 1,
             size: 10,
             sort: "id"
         };
     }
+
+    public static getPager(index: number, sort: string): IPager {
+        return {
+            index: index,
+            size: 10,
+            sort: sort
+        };
+    }
+
     public static getDefaultPagerWithSort(sort: string): IPager {
         return {
             index: 0,
