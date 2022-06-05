@@ -65,9 +65,11 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
         AccommodationVM dest = new AccommodationVM();
 
         dest.setId(src.getId());
+        dest.setRoomId(src.getRoom().getId());
         dest.setRoomNumber(src.getRoom().getRoomNumber());
         dest.setRoomType(src.getRoom().getRoomType().getType());
         dest.setRoomStatus(src.getRoom().getStatus());
+        dest.setClientId(src.getClient().getId());
         dest.setClientFirstName(src.getClient().getFirstName());
         dest.setClientLastName(src.getClient().getLastName());
         dest.setStartDate(src.getStartDate());

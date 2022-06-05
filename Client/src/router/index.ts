@@ -32,6 +32,11 @@ import ProductFetchView from '../views/product/ProductFetchView.vue'
 import ProductEditView from '../views/product/ProductEditView.vue'
 import ProductCreateView from '../views/product/ProductCreateView.vue'
 
+import AccommodationView from '../views/accommodation/AccommodationView.vue'
+import AccommodationFetchView from '../views/accommodation/AccommodationFetchView.vue'
+import AccommodationEditView from '../views/accommodation/AccommodationEditView.vue'
+import AccommodationCreateView from '../views/accommodation/AccommodationCreateView.vue'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -173,6 +178,27 @@ const routes: Array<RouteRecordRaw> = [
     path: '/product/create',
     name: 'product-create',
     component: ProductCreateView
+  },
+  // Moduł rezerwacji
+  {
+    path: '/accommodation',
+    name: 'accommodation',
+    component: AccommodationView
+  },
+  {
+    path: '/accommodation/:id',
+    name: 'accommodation-fetch',
+    component: AccommodationFetchView
+  },
+  {
+    path: '/accommodation/:id/edit',
+    name: 'accommodation-edit',
+    component: AccommodationEditView
+  },
+  {
+    path: '/accommodation/create',
+    name: 'accommodation-create',
+    component: AccommodationCreateView
   }
 ]
 

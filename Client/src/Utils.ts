@@ -5,6 +5,7 @@ import ClientsServices, { IClient } from "./services/ClientsService";
 import RepairServices, { IRepair } from "./services/RepairService";
 import RoomsServices, { IRoom } from "./services/RoomsService";
 import ProductServices, { IProduct } from "./services/ProductService";
+import AccommodationServices, { IAccommodation } from "./services/AccommodationService";
 
 export default class Utils {
     public static alertDisplay() {
@@ -48,6 +49,9 @@ export default class Utils {
                 } else if (table == "product") {
                     this.deleteProduct(id);
                     window.location.reload();
+                } else if (table == "accommodation") {
+                    this.deleteAccommodation(id);
+                    window.location.reload();
                 }
             } else if (result.isDenied) {
                 return false
@@ -78,6 +82,15 @@ export default class Utils {
         return {
             index: 1,
             size: 10,
+            sort: "id",
+            search: ""
+        };
+    }
+
+    public static getMaxPager(): IPager {
+        return {
+            index: 1,
+            size: 999999,
             sort: "id",
             search: ""
         };
@@ -132,6 +145,10 @@ export default class Utils {
 
     static async deleteProduct(id: string): Promise<IProduct> {
         return await ProductServices.delete(id);
+    }
+
+    static async deleteAccommodation(id: string): Promise<IAccommodation> {
+        return await AccommodationServices.delete(id);
     }
 }
 

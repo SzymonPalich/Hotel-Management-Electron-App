@@ -80,6 +80,18 @@
             <span class="links_name">Magazyn</span>
           </router-link>
         </li>
+        <li v-if="this.isActive('accommodation')" class="router-link-active">
+          <router-link to ="/accommodation">
+            <i class="material-icons">hotel</i>
+            <span class="links_name">Rezerwacje</span>
+          </router-link>
+        </li>
+        <li v-else>
+          <router-link to="/accommodation">
+            <i class="material-icons">hotel</i>
+            <span class="links_name">Rezerwacje</span>
+          </router-link>
+        </li>
         <li v-if="this.isActive('incomes')" class="router-link-active">
           <a href="#">
             <i class="material-icons">attach_money</i>
