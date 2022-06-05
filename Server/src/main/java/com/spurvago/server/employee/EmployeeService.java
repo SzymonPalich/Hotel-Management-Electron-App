@@ -9,6 +9,7 @@ import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,7 +22,8 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @Service
 public record EmployeeService(EmployeeRepository employeeRepository,
                               EmployeeMapper employeeMapper,
-                              EmployeeValidator employeeValidator) {
+                              EmployeeValidator employeeValidator,
+                              BCryptPasswordEncoder bCryptPasswordEncoder) {
 
     public EmployeeVM find(Long id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
@@ -57,6 +59,8 @@ public record EmployeeService(EmployeeRepository employeeRepository,
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
 
+        newEntity.setPassword(bCryptPasswordEncoder.encode(newEntity.getPassword()));
+
         Employee entity = employeeMapper.mapToEntity(newEntity);
         employeeRepository.save(entity);
         return employeeMapper.mapToVM(entity);
@@ -74,6 +78,8 @@ public record EmployeeService(EmployeeRepository employeeRepository,
             throw new ResponseStatusException(NOT_FOUND);
         }
         entity = optionalEmployee.get();
+
+        newEntity.setPassword(bCryptPasswordEncoder.encode(newEntity.getPassword()));
 
         employeeMapper.mapToEntity(entity, newEntity);
         employeeRepository.save(entity);
