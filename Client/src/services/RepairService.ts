@@ -26,15 +26,15 @@ export default class RepairService {
     }
 
     public static async update(id: string, repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(`http://localhost:8081/api/maintenance_ticket/${id}`, repair)).data;
+        return (await axios.put<IRepair>(options.apiUrl + `maintenance_ticket/${id}`, repair)).data;
     }
 
     public static async delete(id: string): Promise<IRepair> {
-        return (await axios.delete(`http://localhost:8081/api/maintenance_ticket/${id}`)).data;
+        return (await axios.delete(options.apiUrl + `maintenance_ticket/${id}`)).data;
     }
 
     public static async create(repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(options.apiUrl + `repairs/maintenance_ticket`, repair)).data;
+        return (await axios.put<IRepair>(options.apiUrl + `maintenance_ticket`, repair)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRepair>> {
