@@ -115,17 +115,10 @@ export default defineComponent({
       return RoomsServices.setStatus(status);
     },
 
-<<<<<<< HEAD
     alertDisplay(id: string) {
       Utils.alertDisplayDelete("rooms", id);
     },
 
   }
-=======
-    alertDisplay(): void {
-      Utils.alertDisplay();
-    },
-  },
->>>>>>> master
 });
 </script>

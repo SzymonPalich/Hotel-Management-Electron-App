@@ -59,16 +59,7 @@
               <td class="text-left py-2 px-4">{{ repair.name }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
-<<<<<<< HEAD
                 <router-link v-if="repair.technicianReport == ''" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
-=======
-                <router-link
-                  :to="{
-                    name: 'repairs-finalization',
-                    params: { id: repair.id },
-                  }"
-                >
->>>>>>> master
                   <i class="material-icons align-middle">build</i>
                 </router-link>
 
@@ -132,7 +123,6 @@ export default defineComponent({
       return await RepairServices.getList(this.pager);
     },
 
-<<<<<<< HEAD
     alertDisplay(id: string) {
       Utils.alertDisplayDelete("technician", id);
     },
@@ -145,11 +135,5 @@ export default defineComponent({
       }
     },
   }
-=======
-    alertDisplay(): void {
-      Utils.alertDisplay();
-    },
-  },
->>>>>>> master
 });
 </script>
