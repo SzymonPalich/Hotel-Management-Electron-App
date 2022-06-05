@@ -18,11 +18,19 @@ export default class RepairService {
     }
 
     public static async update(id: string, repair: IProduct): Promise<IProduct> {
-        return (await axios.put<IProduct>(options.apiUrl + `repairs/product/${id}`, repair)).data;
+        return (await axios.put<IProduct>(options.apiUrl + `product/${id}`, repair)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IProduct>> {
         return (await axios.get<IList<IProduct>>(options.apiUrl + `product`, { params: pager })).data;
+    }
+    
+    public static async delete(id: string): Promise<IProduct> {
+        return (await axios.delete(options.apiUrl + `product/${id}`)).data;
+    }
+
+    public static async create(product: IProduct): Promise<IProduct> {
+        return (await axios.post<IProduct>(options.apiUrl + `product`, product)).data;
     }
 }
 

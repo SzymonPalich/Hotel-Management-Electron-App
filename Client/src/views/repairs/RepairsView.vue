@@ -59,7 +59,7 @@
               <td class="text-left py-2 px-4">{{ repair.name }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
-                <router-link v-if="repair.technicianReport == ''" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
+                <router-link v-if="repair.technicianReport == null" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
                   <i class="material-icons align-middle">build</i>
                 </router-link>
 
@@ -73,10 +73,7 @@
                   :to="{ name: 'repairs-edit', params: { id: repair.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
-
-                <router-link :to="{ name: 'repairs' }" @click="alertDisplay(repair.id)">
-                  <i class="material-icons align-middle">delete</i>
-                </router-link>
+                <i @click="alertDisplay(repair.id)" class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>

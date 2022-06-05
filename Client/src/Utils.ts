@@ -4,6 +4,7 @@ import MaidTicketServices, { IMaid } from "./services/MaidTicketService";
 import ClientsServices, { IClient } from "./services/ClientsService";
 import RepairServices, { IRepair } from "./services/RepairService";
 import RoomsServices, { IRoom } from "./services/RoomsService";
+import ProductServices, { IProduct } from "./services/ProductService";
 
 export default class Utils {
     public static alertDisplay() {
@@ -29,22 +30,25 @@ export default class Utils {
             showLoaderOnConfirm: true,
         }).then((result) => {
             if (result.isConfirmed) {
-              if (table == "maid") {
-                this.deleteMaid(id);
-                window.location.reload();
-              } else if (table == "employee") {
-                this.deleteEmployee(id);
-                window.location.reload();
-              } else if (table == "client") {
-                this.deleteClient(id);
-                window.location.reload();
-              } else if (table == "technician") {
-                this.deleteTechnician(id);
-                window.location.reload();
-              } else if (table == "rooms") {
-                this.deleteRoom(id);
-                window.location.reload();
-              }
+                if (table == "maid") {
+                    this.deleteMaid(id);
+                    window.location.reload();
+                } else if (table == "employee") {
+                    this.deleteEmployee(id);
+                    window.location.reload();
+                } else if (table == "client") {
+                    this.deleteClient(id);
+                    window.location.reload();
+                } else if (table == "technician") {
+                    this.deleteTechnician(id);
+                    window.location.reload();
+                } else if (table == "rooms") {
+                    this.deleteRoom(id);
+                    window.location.reload();
+                } else if (table == "product") {
+                    this.deleteProduct(id);
+                    window.location.reload();
+                }
             } else if (result.isDenied) {
                 return false
             }
@@ -124,6 +128,10 @@ export default class Utils {
 
     static async deleteRoom(id: string): Promise<IRoom> {
         return await RoomsServices.delete(id);
+    }
+
+    static async deleteProduct(id: string): Promise<IProduct> {
+        return await ProductServices.delete(id);
     }
 }
 

@@ -62,9 +62,7 @@
                   :to="{ name: 'rooms-edit', params: { id: room.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
-                <router-link :to="{ name: 'rooms' }" @click="alertDisplay(room.id)">
-                  <i class="material-icons align-middle">delete</i>
-                </router-link>
+                <i @click="alertDisplay(room.id)" class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>

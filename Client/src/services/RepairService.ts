@@ -15,7 +15,7 @@ export default class RepairService {
             name: "",
             description: "",
             partsPrice: undefined,
-            technicianReport: "",
+            technicianReport: undefined,
             finalizationDate: undefined,
         };
         return tempRepair;
@@ -34,7 +34,7 @@ export default class RepairService {
     }
 
     public static async create(repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(options.apiUrl + `maintenance_ticket`, repair)).data;
+        return (await axios.post<IRepair>(options.apiUrl + `maintenance_ticket`, repair)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRepair>> {

@@ -66,12 +66,7 @@
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
                   ><i class="material-icons align-middle">edit</i></router-link
                 >
-                <router-link
-                  :to="{ name: 'maid_ticket' }"
-                  @click="alertDisplay(maid.id)"
-                >
-                  <i class="material-icons align-middle">delete</i>
-                </router-link>
+                <i @click="alertDisplay(maid.id)" class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>

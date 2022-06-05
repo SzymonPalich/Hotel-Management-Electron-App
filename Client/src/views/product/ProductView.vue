@@ -13,7 +13,7 @@
             material-icons
             cursor-pointer
           "
-          @click="$router.push({ name: 'repairs-create' })"
+          @click="$router.push({ name: 'product-create' })"
           >add</i
         >
       </div>
@@ -54,22 +54,20 @@
               class="bg-white"
             >
               <td class="text-left py-2 px-4">{{ product.productName }}</td>
-              <td class="text-center py-2 px-4">{{ product.retailPrice }}</td>
+              <td class="text-center py-2 px-4">{{ product.retailPrice }} zł</td>
               <td class="text-center py-2 px-4">
-                {{ product.wholesalePrice }}
+                {{ product.wholesalePrice }} zł
               </td>
               <td class="text-center py-2 px-4 w-44">
-                <router-link :to="{ name: '', params: { id: product.id } }">
+                <router-link :to="{ name: 'product-fetch', params: { id: product.id } }">
                   <i class="material-icons align-middle">description</i>
                 </router-link>
 
-                <router-link :to="{ name: '', params: { id: product.id } }"
+                <router-link :to="{ name: 'product-edit', params: { id: product.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
 
-                <router-link :to="{ name: '' }" @click="alertDisplay()">
-                  <i class="material-icons align-middle">delete</i>
-                </router-link>
+                <i @click="alertDisplay(product.id)" class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>
@@ -116,8 +114,8 @@ export default defineComponent({
       return await ProductService.getList(this.pager);
     },
 
-    alertDisplay(): void {
-      Utils.alertDisplay();
+    alertDisplay(id: string): void {
+      Utils.alertDisplayDelete("product",id);
     },
   },
 });

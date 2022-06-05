@@ -28,6 +28,9 @@ import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
 import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
 import ProductView from '../views/product/ProductView.vue'
+import ProductFetchView from '../views/product/ProductFetchView.vue'
+import ProductEditView from '../views/product/ProductEditView.vue'
+import ProductCreateView from '../views/product/ProductCreateView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -155,6 +158,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/product',
     name: 'product',
     component: ProductView
+  },
+  {
+    path: '/product/:id',
+    name: 'product-fetch',
+    component: ProductFetchView
+  },
+  {
+    path: '/product/:id/edit',
+    name: 'product-edit',
+    component: ProductEditView
+  },
+  {
+    path: '/product/create',
+    name: 'product-create',
+    component: ProductCreateView
   }
 ]
 
