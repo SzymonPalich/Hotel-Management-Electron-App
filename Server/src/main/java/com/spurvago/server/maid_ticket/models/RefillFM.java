@@ -3,10 +3,10 @@ package com.spurvago.server.maid_ticket.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 @Getter
 @Setter
 public class RefillFM {
-    private Dictionary<Long, Integer> refill;
+    private Map<Long, Integer> products;
 }

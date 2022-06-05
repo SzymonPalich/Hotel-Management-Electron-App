@@ -29,7 +29,8 @@ public class Refill {
     @Setter
     private int amount;
 
-    public Refill(Product product, int amount) {
+    public Refill(MaidTicket maidTicket, Product product, int amount) {
+        this.maidTicket = maidTicket;
         this.product = product;
         this.amount = amount;
     }

@@ -17,10 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
@@ -105,22 +102,20 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         }
         maidTicketEntity = optionalMaidTicket.get();
 
-        List<Product> products = productRepository.findAll();
-        List<Long> productId = new ArrayList<>();
-        for (Product x : products) {
-            productId.add(x.getId());
+        List<Product> availableProducts = productRepository.findAll();
+        HashSet<Long> availableProductsIds = new HashSet<>();
+        for (Product x : availableProducts) {
+            availableProductsIds.add(x.getId());
         }
 
-        while (refillEntity.getRefill().keys().hasMoreElements()) {
-            if (!productId.contains(refillEntity.getRefill().keys().nextElement())) {
-                throw new ResponseStatusException(NOT_FOUND);
-            }
-        }
+        // TODO: validacja do zrobienia
+//        if (!availableProductsIds.contains(refillEntity.getProducts().keySet())) {
+//            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+//        }
 
-        while (refillEntity.getRefill().elements().hasMoreElements()) {
-            Optional<Product> temp = productRepository.findById(refillEntity.getRefill().keys().nextElement());
-            maidTicketEntity.setProducts(Collections.singletonList(new Refill(temp.get(), refillEntity.getRefill().elements().nextElement())));
-            maidTicketRepository.save(maidTicketEntity);
+        for (Map.Entry<Long, Integer> entry : refillEntity.getProducts().entrySet()) {
+            var product = productRepository.findById(entry.getKey());
+            refillRepository.save(new Refill(maidTicketEntity, product.get(), entry.getValue()));
         }
     }
 }
