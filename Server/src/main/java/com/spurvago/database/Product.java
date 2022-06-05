@@ -29,5 +29,5 @@ public class Product {
 
     @ManyToMany
     @JoinTable(name = "bar_replenish")
-    private List<MaidTicket> maidTickets;
+    private List<Refill> maidTickets;
 }

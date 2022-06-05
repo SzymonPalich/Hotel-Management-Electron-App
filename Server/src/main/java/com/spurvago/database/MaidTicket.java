@@ -31,8 +31,10 @@ public class MaidTicket {
     private Employee employee;
 
     @ManyToMany
+    @Getter
+    @Setter
     @JoinTable(name = "bar_replenish")
-    private List<Product> products;
+    private List<Refill> products;
 
     public MaidTicket() {
     }
