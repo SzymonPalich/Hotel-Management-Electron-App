@@ -66,7 +66,8 @@ export default class Utils {
         return {
             index: 1,
             size: 10,
-            sort: "id"
+            sort: "id",
+            search: ""
         };
     }
 
@@ -74,7 +75,8 @@ export default class Utils {
         return {
             index: index,
             size: 10,
-            sort: sort
+            sort: sort,
+            search: ""
         };
     }
 
@@ -82,7 +84,8 @@ export default class Utils {
         return {
             index: 1,
             size: 10,
-            sort: sort
+            sort: sort,
+            search: "",
         };
     }
 
@@ -111,7 +114,8 @@ export default class Utils {
 export interface IPager {
     index: number,
     size: number,
-    sort: string
+    sort: string,
+    search: string
 }
 
 export interface IList<T> {
