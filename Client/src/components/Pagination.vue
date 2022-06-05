@@ -46,9 +46,9 @@
         <div>
           <p class="text-sm text-white">
             Showing
-            <span class="font-medium">{{ getStartingElement() }}</span>
+            <span class="font-medium">{{ getStartingPageNumber() }}</span>
             to
-            <span class="font-medium">{{ getEndingElement() }} </span>
+            <span class="font-medium">{{ getEndingPageNumber() }} </span>
             of
             <span class="font-medium">{{ totalElements }}</span>
             results
@@ -228,10 +228,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "PaginationComponent",
   methods: {
-    getStartingElement() {
+    getStartingPageNumber() {
       return (this.index - 1) * this.size + 1;
     },
-    getEndingElement() {
+    getEndingPageNumber() {
       var size = (this.index - 1) * this.size + this.size;
       if (size > this.totalElements) {
         return this.totalElements;
@@ -244,26 +244,27 @@ export default defineComponent({
       pagination.add(this.totalPages);
       pagination.add(this.index);
 
-      let max = (this.totalPages-1 < 4) ? this.totalPages-1 : 4;
-      if (this.index==1 || this.index==this.totalPages) max++;
+      if (this.totalPages > 3) {
+        let max = this.totalPages - 3 <= 6 ? this.totalPages - 3 : 6;
+        if (this.index == 1 || this.index == this.totalPages) max++;
 
-      let curr = 1;
-      while (max > 0)
-      {
-        if (this.index - curr > 1) {
-          pagination.add(this.index - curr);
-          max--;
+        let curr = 1;
+        while (max > 0) {
+          if (this.index - curr > 1) {
+            pagination.add(this.index - curr);
+            max--;
+          }
+          if (max == 0) {
+            break;
+          }
+          if (this.index + curr < this.totalPages) {
+            pagination.add(this.index + curr);
+            max--;
+          }
+          curr++;
         }
-        if (max == 0) {
-          break;
-        }
-        if (this.index + curr < this.totalPages) {
-          pagination.add(this.index + curr);
-          max--;
-        }
-        curr++;
       }
-      return Array.from(pagination).sort((a,b)=>a-b);
+      return Array.from(pagination).sort((a, b) => a - b);
     },
     getPreviousPage() {
       if (this.index > 1) {
