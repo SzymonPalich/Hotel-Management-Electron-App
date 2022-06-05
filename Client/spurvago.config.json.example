@@ -1,3 +1,4 @@
 {
-    "size": "small"
+    "size": "small",
+    "apiUrl": "http://localhost:8081/api/"
 }

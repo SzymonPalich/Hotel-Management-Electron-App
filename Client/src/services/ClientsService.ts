@@ -1,5 +1,6 @@
 import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class ClientsServices {
     public static getBlankClientTemplate(): IClient {
@@ -14,23 +15,23 @@ export default class ClientsServices {
     }
 
     public static async fetch(id: string): Promise<IClient> {
-        return (await axios.get<IClient>(`http://localhost:8081/api/client/${id}`)).data;
+        return (await axios.get<IClient>(options.apiUrl + `client/${id}`)).data;
     }
 
     public static async update(id: string, client: IClient): Promise<IClient> {
-        return (await axios.put<IClient>(`http://localhost:8081/api/client/${id}`, client)).data;
+        return (await axios.put<IClient>(options.apiUrl + `client/${id}`, client)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IClient>> {
-        return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager })).data;
+        return (await axios.get<IList<IClient>>(options.apiUrl + `client`, { params: pager })).data;
     }
 
     public static async create(client: IClient): Promise<IClient> {
-        return (await axios.post<IClient>(`http://localhost:8081/api/client`, client)).data;
+        return (await axios.post<IClient>(options.apiUrl + `client`, client)).data;
     }
 
     public static async delete(id: string): Promise<IClient> {
-        return (await axios.delete<IClient>(`http://localhost:8081/api/client/${id}`)).data;
+        return (await axios.delete<IClient>(options.apiUrl + `client/${id}`)).data;
     }
 
 }

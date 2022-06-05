@@ -1,5 +1,6 @@
-import Utils, {IList, IPager} from "@/Utils";
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class EmployeeServices {
     public static setPosition(position: string): string {
@@ -40,27 +41,27 @@ export default class EmployeeServices {
     }
 
     public static async fetch(id: string): Promise<IEmployee> {
-        return (await axios.get<IEmployee>(`http://localhost:8081/api/employee/${id}`)).data;
+        return (await axios.get<IEmployee>(options.apiUrl + `employee/${id}`)).data;
     }
 
     public static async update(id: string, employee: IEmployee): Promise<IEmployee> {
-        return (await axios.put<IEmployee>(`http://localhost:8081/api/employee/${id}`, employee)).data;
+        return (await axios.put<IEmployee>(options.apiUrl + `employee/${id}`, employee)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IEmployee>> {
-        return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee`, { params: pager })).data;
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee`, { params: pager })).data;
     }
 
     public static async getEmployeesByPosition(pager: IPager, position: string): Promise<IList<IEmployee>> {
-        return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee/position?position=${position}`, { params: pager })).data;
-    }  
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee/position?position=${position}`, { params: pager })).data;
+    }
 
     public static async delete(id: string): Promise<IEmployee> {
-        return (await axios.delete(`http://localhost:8081/api/employee/${id}`)).data;
+        return (await axios.delete(options.apiUrl + `employee/${id}`)).data;
     }
 
     public static async create(employee: IEmployee): Promise<IEmployee> {
-        return (await axios.post(`http://localhost:8081/api/employee`, employee)).data;
+        return (await axios.post(options.apiUrl + `employee`, employee)).data;
     }
 }
 
