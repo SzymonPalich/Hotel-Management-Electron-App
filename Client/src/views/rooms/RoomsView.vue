@@ -25,7 +25,15 @@
                 Status
               </th>
               <th
-                class="text-center py-3 px-4 uppercase font-semibold text-sm w-36"
+                class="
+                  text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                  w-36
+                "
               >
                 Akcje
               </th>
@@ -43,13 +51,15 @@
                 {{ this.setStatus(room.status) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
-                <router-link :to="{ name: 'rooms-fetch', params: { id: room.id } }" 
+                <router-link
+                  :to="{ name: 'rooms-fetch', params: { id: room.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link
                 >
                 <i class="material-icons align-middle">person</i>
-                <router-link :to="{ name: 'rooms-edit', params: { id: room.id } }"
+                <router-link
+                  :to="{ name: 'rooms-edit', params: { id: room.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
                 <router-link :to="{ name: 'rooms' }" @click="alertDisplay(room.id)">
@@ -62,7 +72,12 @@
       </div>
     </div>
     <div class="px-6 mt-auto mb-6">
-      <pagination />
+      <pagination
+        :index="this.result.pager.index"
+        :size="this.result.pager.size"
+        :totalElements="this.result.totalElements"
+        :totalPages="this.result.totalPages"
+      />
     </div>
   </div>
 </template>
@@ -100,10 +115,17 @@ export default defineComponent({
       return RoomsServices.setStatus(status);
     },
 
+<<<<<<< HEAD
     alertDisplay(id: string) {
       Utils.alertDisplayDelete("rooms", id);
     },
 
   }
+=======
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    },
+  },
+>>>>>>> master
 });
 </script>

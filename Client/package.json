@@ -13,7 +13,8 @@
     "serve": "vue-cli-service electron:serve",
     "tailwind": "npx tailwindcss -i ./public/css/tailwind_directives.css -o ./public/css/tailwind.css --watch",
     "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "postuninstall": "electron-builder install-app-deps",
+    "dev": "vue-cli-service serve"
   },
   "main": "background.js",
   "dependencies": {

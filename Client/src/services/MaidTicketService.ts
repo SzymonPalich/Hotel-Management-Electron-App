@@ -1,5 +1,6 @@
-import Utils, {IList, IPager} from "@/Utils";
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class MaidTicketServices {
     public static getBlankMaidTicketTemplate(): IMaid {
@@ -16,23 +17,23 @@ export default class MaidTicketServices {
 
 
     public static async fetch(id: string): Promise<IMaid> {
-        return (await axios.get<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`)).data;
+        return (await axios.get<IMaid>(options.apiUrl + `maid_ticket/${id}`)).data;
     }
 
     public static async update(id: string, maid: IMaid): Promise<IMaid> {
-        return (await axios.put<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`, maid)).data;
+        return (await axios.put<IMaid>(options.apiUrl + `maid_ticket/${id}`, maid)).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IMaid>> {
-        return (await axios.get<IList<IMaid>>(`http://localhost:8081/api/maid_ticket`, { params: pager })).data;
+        return (await axios.get<IList<IMaid>>(options.apiUrl + `maid_ticket`, { params: pager })).data;
     }
 
     public static async delete(id: string): Promise<IMaid> {
-        return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`)).data;
+        return (await axios.delete(options.apiUrl + `maid_ticket/${id}`)).data;
     }
 
     public static async create(maid: IMaid): Promise<IMaid> {
-        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket`, maid)).data;
+        return (await axios.post<IMaid>(options.apiUrl + `maid_ticket`, maid)).data;
     }
 }
 

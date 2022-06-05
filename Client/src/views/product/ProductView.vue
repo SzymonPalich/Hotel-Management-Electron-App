@@ -3,7 +3,16 @@
     <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
-        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons cursor-pointer"
+        <i
+          class="
+            px-2
+            py-1
+            rounded-xl
+            text-white
+            bg-gray-800
+            material-icons
+            cursor-pointer
+          "
           @click="$router.push({ name: 'repairs-create' })"
           >add</i
         >
@@ -14,32 +23,41 @@
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th
-                class="text-left py-3 px-4 uppercase font-semibold text-sm"
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Nazwa Produktu
               </th>
-              <th
-                class="text-center py-3 px-4 uppercase font-semibold text-sm"
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Cena detaliczna
               </th>
-              <th
-                class="text-center py-3 px-4 uppercase font-semibold text-sm"
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Cena hurtowa
               </th>
-              <th class="text-center py-3 px-4 uppercase font-semibold text-sm w-36">Akcje</th>
+              <th
+                class="
+                  text-center
+                  py-3
+                  px-4
+                  uppercase
+                  font-semibold
+                  text-sm
+                  w-36
+                "
+              >
+                Akcje
+              </th>
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="product in result.content"
-            :key="product"
-            class="bg-white">
-
+            <tr
+              v-for="product in result.content"
+              :key="product"
+              class="bg-white"
+            >
               <td class="text-left py-2 px-4">{{ product.productName }}</td>
               <td class="text-center py-2 px-4">{{ product.retailPrice }}</td>
-              <td class="text-center py-2 px-4">{{ product.wholesalePrice }}</td>
+              <td class="text-center py-2 px-4">
+                {{ product.wholesalePrice }}
+              </td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link :to="{ name: '', params: { id: product.id } }">
                   <i class="material-icons align-middle">description</i>
@@ -59,7 +77,12 @@
       </div>
     </div>
     <div class="px-6 mb-6">
-      <pagination />
+      <pagination
+        :index="this.result.pager.index"
+        :size="this.result.pager.size"
+        :totalElements="this.result.totalElements"
+        :totalPages="this.result.totalPages"
+      />
     </div>
   </div>
 </template>
@@ -77,7 +100,7 @@ export default defineComponent({
     Pagination,
     SearchBar,
   },
-  data(){
+  data() {
     return {
       result: Utils.getBlankListTemplate<IProduct>(),
       pager: Utils.getDefaultPager(),
@@ -95,7 +118,7 @@ export default defineComponent({
 
     alertDisplay(): void {
       Utils.alertDisplay();
-    }
-  }
+    },
+  },
 });
 </script>

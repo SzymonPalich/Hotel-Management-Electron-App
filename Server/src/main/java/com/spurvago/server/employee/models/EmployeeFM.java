@@ -11,6 +11,7 @@ import java.sql.Date;
 public class EmployeeFM {
     private String firstName;
     private String lastName;
+    private String password;
     private String email;
     private String phoneNumber;
     private String position;

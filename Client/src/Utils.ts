@@ -46,9 +46,9 @@ export default class Utils {
                 window.location.reload();
               }
             } else if (result.isDenied) {
-              return false
+                return false
             }
-          })
+        })
     }
 
     public static acceptedAlert(): void {
@@ -67,14 +67,15 @@ export default class Utils {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
-          })
+        })
     }
 
     public static getDefaultPager(): IPager {
         return {
             index: 1,
             size: 10,
-            sort: "id"
+            sort: "id",
+            search: ""
         };
     }
 
@@ -82,15 +83,17 @@ export default class Utils {
         return {
             index: index,
             size: 10,
-            sort: sort
+            sort: sort,
+            search: ""
         };
     }
 
     public static getDefaultPagerWithSort(sort: string): IPager {
         return {
-            index: 0,
+            index: 1,
             size: 10,
-            sort: sort
+            sort: sort,
+            search: "",
         };
     }
 
@@ -99,9 +102,8 @@ export default class Utils {
             content: [],
             pager: this.getDefaultPager(),
             totalElements: 0,
-            totalPages: 0
+            totalPages: 1
         }
-
     }
 
     static async deleteMaid(id: string): Promise<IMaid> {
@@ -128,7 +130,8 @@ export default class Utils {
 export interface IPager {
     index: number,
     size: number,
-    sort: string
+    sort: string,
+    search: string
 }
 
 export interface IList<T> {

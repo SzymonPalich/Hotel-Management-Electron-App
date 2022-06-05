@@ -3,7 +3,16 @@
     <div class="mt-4 flex mr-0 ml-auto">
       <search-bar />
       <div class="pr-6 flex items-center">
-        <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons cursor-pointer"
+        <i
+          class="
+            px-2
+            py-1
+            rounded-xl
+            text-white
+            bg-gray-800
+            material-icons
+            cursor-pointer
+          "
           @click="$router.push({ name: 'employees-create' })"
           >add</i
         >
@@ -14,52 +23,16 @@
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th
-                class="
-                  text-left
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Imie
               </th>
-              <th
-                class="
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Nazwisko
               </th>
-              <th
-                class="
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Stanowisko
               </th>
-              <th
-                class="
-                  text-center
-                  py-3
-                  px-4
-                  uppercase
-                  font-semibold
-                  text-sm
-                "
-              >
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Akcje
               </th>
             </tr>
@@ -76,16 +49,22 @@
                 {{ this.setPosition(emp.position) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
-                <router-link 
+                <router-link
                   :to="{ name: 'employee-info', params: { id: emp.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
-                  ></router-link>
-                <router-link 
-                  :to="{ name: 'employees-edit', params: { id: emp.id } }">
+                  ></router-link
+                >
+                <router-link
+                  :to="{ name: 'employees-edit', params: { id: emp.id } }"
+                >
                   <i class="material-icons align-middle">edit</i>
                 </router-link>
-                <i class="material-icons align-middle cursor-pointer" @click="alertDisplay(emp.id)">delete</i>
+                <i
+                  class="material-icons align-middle cursor-pointer"
+                  @click="alertDisplay(emp.id)"
+                  >delete</i
+                >
               </td>
             </tr>
           </tbody>
@@ -93,7 +72,12 @@
       </div>
     </div>
     <div class="px-6 mb-6">
-      <pagination />
+      <pagination
+        :index="this.result.pager.index"
+        :size="this.result.pager.size"
+        :totalElements="this.result.totalElements"
+        :totalPages="this.result.totalPages"
+      />
     </div>
   </div>
 </template>
@@ -137,7 +121,7 @@ export default defineComponent({
 
     alertDisplay(id: string): void {
       Utils.alertDisplayDelete("employee", id);
-    }
+    },
   },
 });
 </script>
