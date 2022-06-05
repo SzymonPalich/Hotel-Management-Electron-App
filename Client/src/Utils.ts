@@ -27,20 +27,20 @@ export default class Utils {
             showLoaderOnConfirm: true,
         }).then((result) => {
             if (result.isConfirmed) {
-              if (table == "maid") {
-                this.deleteMaid(id);
-                window.location.reload();
-              } else if (table == "employee") {
-                this.deleteEmployee(id);
-                window.location.reload();
-              } else if (table == "client") {
-                this.deleteClient(id);
-                window.location.reload();
-              }
+                if (table == "maid") {
+                    this.deleteMaid(id);
+                    window.location.reload();
+                } else if (table == "employee") {
+                    this.deleteEmployee(id);
+                    window.location.reload();
+                } else if (table == "client") {
+                    this.deleteClient(id);
+                    window.location.reload();
+                }
             } else if (result.isDenied) {
-              return false
+                return false
             }
-          })
+        })
     }
 
     public static acceptedAlert(): void {
@@ -59,7 +59,7 @@ export default class Utils {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
-          })
+        })
     }
 
     public static getDefaultPager(): IPager {
@@ -80,7 +80,7 @@ export default class Utils {
 
     public static getDefaultPagerWithSort(sort: string): IPager {
         return {
-            index: 0,
+            index: 1,
             size: 10,
             sort: sort
         };
@@ -91,9 +91,8 @@ export default class Utils {
             content: [],
             pager: this.getDefaultPager(),
             totalElements: 0,
-            totalPages: 0
+            totalPages: 1
         }
-
     }
 
     static async deleteMaid(id: string): Promise<IMaid> {
