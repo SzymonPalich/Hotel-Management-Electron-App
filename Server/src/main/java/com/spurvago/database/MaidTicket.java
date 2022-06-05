@@ -30,7 +30,7 @@ public class MaidTicket {
     @Setter
     private Employee employee;
 
-    @ManyToMany
+    @OneToMany
     @Getter
     @Setter
     @JoinTable(name = "bar_replenish")

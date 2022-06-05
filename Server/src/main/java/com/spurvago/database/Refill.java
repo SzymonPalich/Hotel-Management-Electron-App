@@ -9,20 +9,20 @@ import java.util.Optional;
 
 @Entity
 @Table (name = "bar_replenish")
-@IdClass(RefillId.class)
 public class Refill {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
+    private Long id;
+
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "maid_ticket_id")
     private MaidTicket maidTicket;
 
-    @Id
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
     @Getter
