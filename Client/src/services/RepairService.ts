@@ -2,7 +2,7 @@ import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
 import options from '../../spurvago.config.json';
 
-export default class RepairService {
+export default class RepairServices {
     public static getBlankRepairTemplate(): IRepair {
         const tempRepair: IRepair = {
             id: 0,

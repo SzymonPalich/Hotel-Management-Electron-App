@@ -87,7 +87,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import ProductService, { IProduct } from "../../services/ProductService";
+import ProductServices, { IProduct } from "../../services/ProductService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils, { IPager, IList } from "../../Utils";
@@ -111,7 +111,7 @@ export default defineComponent({
 
   methods: {
     async getData(): Promise<IList<IProduct>> {
-      return await ProductService.getList(this.pager);
+      return await ProductServices.getList(this.pager);
     },
 
     alertDisplay(id: string): void {

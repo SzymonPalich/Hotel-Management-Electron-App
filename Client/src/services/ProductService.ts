@@ -2,13 +2,13 @@ import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
 import options from '../../spurvago.config.json';
 
-export default class RepairService {
+export default class ProductServices {
     public static getBlankProductTemplate(): IProduct {
         const tempProduct: IProduct = {
             id: 0,
-            product_name: "",
-            retail_price: 0,
-            wholesale_price: 0,
+            productName: "",
+            retailPrice: 0,
+            wholesalePrice: 0,
         };
         return tempProduct;
     }
@@ -32,11 +32,15 @@ export default class RepairService {
     public static async create(product: IProduct): Promise<IProduct> {
         return (await axios.post<IProduct>(options.apiUrl + `product`, product)).data;
     }
+
+    public static async getAll(): Promise<Array<IProduct>> {
+        return (await axios.get<Array<IProduct>>(options.apiUrl+`product/select`)).data;
+    }
 }
 
 export interface IProduct {
     id: number;
-    product_name: string;
-    retail_price: number;
-    wholesale_price: number;
+    productName: string;
+    retailPrice: number;
+    wholesalePrice: number;
 }
