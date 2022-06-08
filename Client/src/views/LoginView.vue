@@ -21,6 +21,7 @@
           id="email"
           type="text"
           placeholder="p.plizga@spurva.go"
+          v-model= this.result.email
         />
       </div>
       <div class="mb-6">
@@ -47,12 +48,13 @@
           id="password"
           type="password"
           placeholder="********"
+          v-model= this.result.password
         />
         <p class="text-red-500 text-xs italic">Błędne hasło</p>
       </div>
       <div class="grid place-items-center md:divide-y-8">
         <button
-          @click="logIn()"
+        @click= "login()"
           class="
             bg-blue-500
             hover:bg-blue-700
@@ -63,9 +65,9 @@
             rounded
             focus:outline-none focus:shadow-outline
           "
-          type="button"
+          type="submit"
         >
-          Nie loguj się
+          Zaloguj
         </button>
         <hr />
       </div>
@@ -79,11 +81,27 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
+import LoginServices, { ILogin } from "../services/LoginService";
+import Utils, { IPager, IList } from "../Utils";
+import { defineComponent } from "vue";
 
-export default class LoginView extends Vue {
-  private logIn(): void {
-    this.$router.push({ path: "maid_ticket" });
+export default defineComponent({
+  data() {
+    return {
+      result: LoginServices.getBlankLoginTemplate(),
+    };
+  },
+  methods: {
+    async login(): Promise<void> {
+      await LoginServices.fetch(this.result);
+      this.$router.push({name: "clients"})
+    },
+
+    alertDisplay(): void {
+      Utils.alertDisplay();
+    }
+
   }
-}
+});
 </script>

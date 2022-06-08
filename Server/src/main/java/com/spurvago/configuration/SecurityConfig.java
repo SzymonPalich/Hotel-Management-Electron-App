@@ -21,8 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -72,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // TODO: Usunąć, przy implementacji uprawnień
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -96,6 +98,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService(), secret))
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));
+        http.cors().configurationSource(x->{
+           var cors = new CorsConfiguration();
+           cors.setAllowedOrigins(List.of("http://localhost:8080"));
+           cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
+           cors.setAllowedHeaders(List.of("*"));
+           cors.setAllowCredentials(Boolean.TRUE);
+           return cors;
+        });
     }
 
     public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
