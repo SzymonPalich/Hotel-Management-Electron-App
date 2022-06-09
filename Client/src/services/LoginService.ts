@@ -1,5 +1,5 @@
 import Utils, { IList, IPager } from "@/Utils";
-import axios from "axios";
+import axios, { AxiosResponse, AxiosResponseHeaders } from "axios";
 
 export default class LoginServices {
     public static getBlankLoginTemplate(): ILogin {
@@ -10,8 +10,13 @@ export default class LoginServices {
         return tempLogin;
     }
 
-    public static async fetch(login: ILogin): Promise<ILogin> {
-        return (await axios.post<ILogin>(`http://localhost:8081/api/auth/login`, login)).data;
+    public static async fetch(login: ILogin): Promise<AxiosResponse> {
+        let responseRequest;
+        if((responseRequest = await axios.post<ILogin>(`http://localhost:8081/api/auth/login`, login))!= undefined){
+            localStorage.setItem('token', responseRequest.headers.authorization);
+            return responseRequest;
+        }
+        return responseRequest;
     }
 
 }

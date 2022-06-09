@@ -92,10 +92,11 @@ export default defineComponent({
       result: LoginServices.getBlankLoginTemplate(),
     };
   },
+
   methods: {
     async login(): Promise<void> {
-      await LoginServices.fetch(this.result);
-      this.$router.push({name: "clients"})
+        await LoginServices.fetch(this.result);
+        this.$router.push("clients");
     },
 
     alertDisplay(): void {
