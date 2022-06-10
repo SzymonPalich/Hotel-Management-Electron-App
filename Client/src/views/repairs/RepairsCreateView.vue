@@ -49,7 +49,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
+                <v-select
                   class="
                     w-full
                     border-2 border-gray-400
@@ -58,17 +58,17 @@
                     rounded-xl
                     outline-none
                   "
-                  @change="selectRoom($event.target.value)"
+                  label="roomNumber"
+                  v-model="this.value"
+                  :options="this.resultRooms.content"
+                  :reduce="(option) => option.id"
+                  placeholder="Wybierz pokój"
                 >
-                  <option
-                    v-for="room in resultRooms.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                    :selected="room.id == this.result.roomId"
-                  >
-                    {{ room.roomNumber }} {{ room.roomType }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.roomNumber }} {{ option.roomType }}
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -146,6 +146,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import RepairServices, { IRepair } from "../../services/RepairService";
+import 'vue-select/dist/vue-select.css'
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
@@ -154,6 +155,7 @@ export default defineComponent({
   data() {
     return {
       result: RepairServices.getBlankRepairTemplate(),
+      value: null,
       pager: Utils.getDefaultPager(),
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
     };
@@ -162,9 +164,6 @@ export default defineComponent({
   mounted() {
     console.log(this.getRooms());
     this.getRooms().then((data) => (this.resultRooms = data));
-    this.getRooms().then((data) => {
-      this.result.roomId = JSON.parse(JSON.stringify(data)).content[0].id;
-    });
   },
 
   methods: {
@@ -172,14 +171,11 @@ export default defineComponent({
       return await RoomsServices.getList(this.pager);
     },
 
-    selectRoom: function (value: number) {
-      this.result.roomId = value;
-    },
-
     async add(): Promise<void> {
+      if(this.value != null){ this.result.roomId = this.value }
       console.log(this.result);
-      await RepairServices.create(this.result);
-      this.$router.push({ name: "repairs" });
+      // await RepairServices.create(this.result);
+      // this.$router.push({ name: "repairs" });
     },
 
     back(): void {
