@@ -19,15 +19,28 @@ export default class RepairService {
     }
     
     public static async fetch(id: string): Promise<IRepair> {
-        return (await axios.get<IRepair>(`http://localhost:8081/api/maintenance_ticket/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IRepair>(`http://localhost:8081/api/maintenance_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(`http://localhost:8081/api/repairs/maintenance_ticket/${id}`, repair)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IRepair>(`http://localhost:8081/api/repairs/maintenance_ticket/${id}`, repair, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRepair>> {
-        return (await axios.get<IList<IRepair>>(`http://localhost:8081/api/maintenance_ticket`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IRepair>>(`http://localhost:8081/api/maintenance_ticket`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
     }  
 }
 

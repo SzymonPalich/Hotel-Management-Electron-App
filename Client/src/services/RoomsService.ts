@@ -39,15 +39,28 @@ export default class RoomsServices {
     }
 
     public static async fetch(id: string): Promise<IRoom> {
-        return (await axios.get<IRoom>(`http://localhost:8081/api/room/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IRoom>(`http://localhost:8081/api/room/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, room: IRoom): Promise<IRoom> {
-        return (await axios.put<IRoom>(`http://localhost:8081/api/room/${id}`, room)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IRoom>(`http://localhost:8081/api/room/${id}`, room, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRoom>> {
-        return (await axios.get<IList<IRoom>>(`http://localhost:8081/api/room`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IRoom>>(`http://localhost:8081/api/room`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
     }  
 }
 

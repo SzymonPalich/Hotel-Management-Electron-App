@@ -13,15 +13,28 @@ export default class RepairService {
     }
     
     public static async fetch(id: string): Promise<IProduct> {
-        return (await axios.get<IProduct>(`http://localhost:8081/api/product/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IProduct>(`http://localhost:8081/api/product/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, repair: IProduct): Promise<IProduct> {
-        return (await axios.put<IProduct>(`http://localhost:8081/api/repairs/product/${id}`, repair)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IProduct>(`http://localhost:8081/api/repairs/product/${id}`, repair, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IProduct>> {
-        return (await axios.get<IList<IProduct>>(`http://localhost:8081/api/product`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IProduct>>(`http://localhost:8081/api/product`, { params: pager , headers:{
+            "Authorization": `${token}`
+        }})).data;
     }  
 }
 

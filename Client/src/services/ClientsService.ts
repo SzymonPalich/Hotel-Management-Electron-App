@@ -12,25 +12,48 @@ export default class ClientsServices {
         };
         return tempClient;
     }
-   
-    public static async fetch(id: string): Promise<IClient> {
-        return (await axios.get<IClient>(`http://localhost:8081/api/client/${id}`)).data;
-    }
 
-    public static async update(id: string, client: IClient): Promise<IClient> {
-        return (await axios.put<IClient>(`http://localhost:8081/api/client/${id}`, client)).data;
-    }
+       public static async fetch(id: string): Promise<IClient> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<IClient>(`http://localhost:8081/api/client/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+        }
 
-    public static async getList(pager: IPager): Promise<IList<IClient>> {
-        return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager})).data;
-    }
+        public static async update(id: string, client: IClient): Promise<IClient> {
+            const token = localStorage.getItem('token');
+            return (await axios.put<IClient>(`http://localhost:8081/api/client/${id}`, client, {
+                headers: {
+                  'Authorization': `${token}` 
+                }
+              })).data;
+        }
 
-    public static async create(client: IClient): Promise<IClient> {
-        return (await axios.post<IClient>(`http://localhost:8081/api/client`, client)).data;
+        public static async getList(pager: IPager): Promise<IList<IClient>> {    
+            const token = localStorage.getItem('token');
+            return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager, headers:{
+                "Authorization": `${token}`
+            }})).data;
+        }
+
+        public static async create(client: IClient): Promise<IClient> {
+            const token = localStorage.getItem('token');
+        return (await axios.post<IClient>(`http://localhost:8081/api/client`, client, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async delete(id: string): Promise<IClient> {
-        return (await axios.delete<IClient>(`http://localhost:8081/api/client/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete<IClient>(`http://localhost:8081/api/client/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
 }

@@ -92,13 +92,17 @@ export default defineComponent({
       badCredentials: false
     };
   },
-
+  created(){
+    if(localStorage.getItem('token')!=undefined){
+        this.$router.push("clients");
+      }
+  },
   methods: {
     async login(): Promise<void> {
-       this.badCredentials = true;
+      this.badCredentials = true;
         await LoginServices.fetch(this.result);
-
         this.$router.push("clients");
+      
     },
 
     alertDisplay(): void {

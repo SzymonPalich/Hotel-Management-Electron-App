@@ -16,23 +16,46 @@ export default class MaidTicketServices {
 
 
     public static async fetch(id: string): Promise<IMaid> {
-        return (await axios.get<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, maid: IMaid): Promise<IMaid> {
-        return (await axios.put<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`, maid)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IMaid>(`http://localhost:8081/api/maid_ticket/${id}`, maid, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IMaid>> {
-        return (await axios.get<IList<IMaid>>(`http://localhost:8081/api/maid_ticket`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IMaid>>(`http://localhost:8081/api/maid_ticket`, { params: pager , headers:{
+            "Authorization": `${token}`
+        }})).data;
     }
 
     public static async delete(id: string): Promise<IMaid> {
-        return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete(`http://localhost:8081/api/maid_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async create(maid: IMaid): Promise<IMaid> {
-        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket`, maid)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.post<IMaid>(`http://localhost:8081/api/maid_ticket`, maid, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 }
 
