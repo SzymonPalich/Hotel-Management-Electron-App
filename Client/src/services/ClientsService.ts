@@ -12,12 +12,9 @@ export default class ClientsServices {
         };
         return tempClient;
     }
-
-    private static token = localStorage.getItem('token');
-    
-
+   
     public static async fetch(id: string): Promise<IClient> {
-        return (await axios.get<IClient>(`http://localhost:8081/api/client/${id}`, { headers: { "Authorization": `${ClientsServices.token}` }, })).data;
+        return (await axios.get<IClient>(`http://localhost:8081/api/client/${id}`)).data;
     }
 
     public static async update(id: string, client: IClient): Promise<IClient> {
@@ -25,7 +22,7 @@ export default class ClientsServices {
     }
 
     public static async getList(pager: IPager): Promise<IList<IClient>> {
-        return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager, headers: { "Authorization": `${ClientsServices.token}` }, })).data;
+        return (await axios.get<IList<IClient>>(`http://localhost:8081/api/client`, { params: pager})).data;
     }
 
     public static async create(client: IClient): Promise<IClient> {

@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-xs grid min-w-full min-h-screen place-items-center">
-    <form class="bg-neutral-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/3">
+    <div class="bg-neutral-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-1/3">
       <div class="mb-4">
         <label class="block text-gray-700 text-base font-bold mb-2" for="email">
           Adres email
@@ -32,6 +32,7 @@
           Hasło
         </label>
         <input
+        @keyup.enter="login()"
           class="
             shadow
             appearance-none
@@ -64,7 +65,6 @@
             rounded
             focus:outline-none focus:shadow-outline
           "
-          type="submit"
         >
           Zaloguj
         </button>
@@ -75,7 +75,7 @@
           &copy;2022 Spur Va Go? Wszelkie prawa zastrzeżone.
         </p>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -97,7 +97,7 @@ export default defineComponent({
     async login(): Promise<void> {
        this.badCredentials = true;
         await LoginServices.fetch(this.result);
-       
+
         this.$router.push("clients");
     },
 
