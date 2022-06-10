@@ -35,13 +35,12 @@
           class="
             shadow
             appearance-none
-            border border-red-500
+            border
             rounded
             w-full
             py-2
             px-3
             text-gray-700
-            mb-3
             leading-tight
             focus:outline-none focus:shadow-outline
           "
@@ -50,7 +49,7 @@
           placeholder="********"
           v-model= this.result.password
         />
-        <p class="text-red-500 text-xs italic">Błędne hasło</p>
+        <p v-if="badCredentials" class="wrongCredentials text-red-500 text-s italic">Błędne dane logowania.</p>
       </div>
       <div class="grid place-items-center md:divide-y-8">
         <button
@@ -90,12 +89,15 @@ export default defineComponent({
   data() {
     return {
       result: LoginServices.getBlankLoginTemplate(),
+      badCredentials: false
     };
   },
 
   methods: {
     async login(): Promise<void> {
+       this.badCredentials = true;
         await LoginServices.fetch(this.result);
+       
         this.$router.push("clients");
     },
 

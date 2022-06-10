@@ -112,8 +112,8 @@
               <div class="name">Jan Spurdziński</div>
               <div class="job">Menadżer</div>
             </div>
-            <div class="logout_icon">
-            <router-link to="/">
+            <div class="logout_icon" @click="logout()">
+            <router-link to="login">
               <img src="../../public/css/fonts/outline_logout_white_18dp.png" />
             </router-link>
             </div>
@@ -134,6 +134,9 @@ export default defineComponent({
       if (this.$route.name?.toString().includes(path)) return true;
       else return false;
     },
+    logout(){
+      localStorage.removeItem('token');
+    }
   },
 });
 </script>
