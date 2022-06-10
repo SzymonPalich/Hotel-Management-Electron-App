@@ -1,5 +1,5 @@
 import Utils, { IList, IPager } from "@/Utils";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import options from '../../spurvago.config.json';
 
 export default class ProductServices {
@@ -29,8 +29,12 @@ export default class ProductServices {
         return (await axios.delete(options.apiUrl + `product/${id}`)).data;
     }
 
-    public static async create(product: IProduct): Promise<IProduct> {
-        return (await axios.post<IProduct>(options.apiUrl + `product`, product)).data;
+    public static async create(product: IProduct): Promise<AxiosResponse> {
+        return (await axios.post<IProduct>(options.apiUrl + `product`, product).then((response) => (response)));
+    }
+
+    public static async getList2(): Promise<Array<IProduct>> {
+        return (await axios.get<Array<IProduct>>(options.apiUrl + `product/select`)).data;
     }
 
     public static async getAll(): Promise<Array<IProduct>> {

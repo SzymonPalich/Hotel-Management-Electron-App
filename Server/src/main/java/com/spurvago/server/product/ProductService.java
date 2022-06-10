@@ -51,7 +51,7 @@ public record ProductService(ProductRepository productRepository,
 
     public ProductVM create(ProductFM newEntity) {
         if (!productValidator().validate(newEntity)) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "beniz");
         }
 
         Product entity = productMapper.mapToEntity(newEntity);
@@ -85,5 +85,14 @@ public record ProductService(ProductRepository productRepository,
         entity = optionalProduct.get();
 
         productRepository.delete(entity);
+    }
+
+    public List<ProductVM> findAll() {
+        List<Product> entities;
+
+            entities = productRepository.findAll();
+
+        List<ProductVM> entitiesDTO = productMapper.mapToList(entities);
+        return entitiesDTO;
     }
 }
