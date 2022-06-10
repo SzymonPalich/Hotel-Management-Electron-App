@@ -174,8 +174,8 @@ export default defineComponent({
     async add(): Promise<void> {
       if(this.value != null){ this.result.roomId = this.value }
       console.log(this.result);
-      // await RepairServices.create(this.result);
-      // this.$router.push({ name: "repairs" });
+      await RepairServices.create(this.result);
+      this.$router.push({ name: "repairs" });
     },
 
     back(): void {
