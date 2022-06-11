@@ -3,16 +3,25 @@ package com.spurvago.server.room;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
+import com.spurvago.database.Accommodation;
 import com.spurvago.database.Room;
+import com.spurvago.database.RoomType;
+import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.room.models.RoomFM;
 import com.spurvago.server.room.models.RoomSelect;
 import com.spurvago.server.room.models.RoomVM;
+import com.spurvago.server.room_type.RoomTypeRepository;
+import com.spurvago.server.room_type.RoomTypeService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +30,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @Service
 public record RoomService(RoomRepository roomRepository,
+                          RoomTypeRepository roomTypeRepository,
                           RoomMapper roomMapper,
                           RoomValidator roomValidator) {
 
@@ -53,6 +63,31 @@ public record RoomService(RoomRepository roomRepository,
 
     public List<RoomSelect> getSelectList() {
         List<Room> entities = roomRepository.findAll();
+
+        List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(entities);
+        return entitiesDTO;
+    }
+
+    public List<RoomSelect> getAvailableList(Date startDate, Date endDate, long roomTypeId) {
+        var roomType = roomTypeRepository.findById(roomTypeId);
+        if (roomType.isEmpty()) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+        }
+
+        List<Room> entities = roomRepository.findAllByRoomType(roomType.get());
+        List<Room> available = new ArrayList<>();
+
+        for (var entity: entities) {
+            for (var accommodation: entity.getAccommodationList()) {
+                if (!accommodation.getEndDate().before(startDate)
+                    || !accommodation.getStartDate().after(endDate)) {
+                    break;
+                }
+                available.add(entity);
+                if (available.size() == 5)
+                    break;
+            }
+        }
 
         List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(entities);
         return entitiesDTO;

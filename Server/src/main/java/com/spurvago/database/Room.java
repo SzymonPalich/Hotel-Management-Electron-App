@@ -29,13 +29,16 @@ public class Room {
 
     @OneToMany
     @JoinTable(name = "maid_ticket")
+    @Getter
     private List<MaidTicket> maidTickets;
 
     @OneToMany
     @JoinTable(name = "maintenance_ticket")
+    @Getter
     private List<MaintenanceTicket> maintenanceTickets;
 
     @OneToMany
     @JoinTable(name = "accommodation")
+    @Getter
     private List<Accommodation> accommodationList;
 }

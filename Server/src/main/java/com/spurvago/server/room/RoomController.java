@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -43,6 +44,14 @@ public class RoomController {
     @ResponseStatus(HttpStatus.OK)
     public List<RoomSelect> getSelectList() {
         return roomService.getSelectList();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="getAvailableList()">
+    @GetMapping(path = "/available")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RoomSelect> getAvailableList(Date startDate, Date endDate, long roomTypeId) {
+        return roomService.getAvailableList(startDate, endDate, roomTypeId);
     }
     //</editor-fold>
 
