@@ -102,6 +102,7 @@ import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils, { IPager, IList } from "../../Utils";
 import { defineComponent } from "vue";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   components: {
@@ -121,7 +122,15 @@ export default defineComponent({
 
   methods: {
     async getData(): Promise<IList<IAccommodation>> {
-      return await AccommodationServices.getList(this.pager);
+      try {
+        return await AccommodationServices.getList(this.pager);
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     alertDisplay(id: string): void {

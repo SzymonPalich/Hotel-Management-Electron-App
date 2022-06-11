@@ -161,6 +161,7 @@ import 'vue-select/dist/vue-select.css';
 import Utils, { IPager, IList } from "../../Utils";
 import ClientsServices, { IClient, IClientSelect } from "../../services/ClientsService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -198,10 +199,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      // await AccommodationServices.create(this.result);
-      // Utils.acceptedAlert();
-      // this.$router.push({ name: "accommodation" });
+      try {
+        await AccommodationServices.create(this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "accommodation" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       // console.log(this.result);

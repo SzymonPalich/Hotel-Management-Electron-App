@@ -6,6 +6,7 @@ import RepairServices, { IRepair } from "./services/RepairService";
 import RoomsServices, { IRoom } from "./services/RoomsService";
 import ProductServices, { IProduct } from "./services/ProductService";
 import AccommodationServices, { IAccommodation } from "./services/AccommodationService";
+import { AxiosError } from "axios";
 
 export default class Utils {
     public static alertDisplay() {
@@ -70,11 +71,17 @@ export default class Utils {
         });
     }
 
-    public static errorAlert(): void {
+    public static errorAlert(error: number): void {
+        let text = ""
+        if (error == 422) {
+            text = "Niepoprawne dane"
+        } else if (error == 404){
+            text = "Brak rekordu"
+        }
         Swal.fire({
             icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
+            title: 'Błąd',
+            text: text,
         })
     }
 
@@ -124,31 +131,87 @@ export default class Utils {
     }
 
     static async deleteMaid(id: string): Promise<IMaid> {
-        return await MaidTicketServices.delete(id);
+        try{
+            return await MaidTicketServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteEmployee(id: string): Promise<IEmployee> {
-        return await EmployeeServices.delete(id);
+        try{
+            return await EmployeeServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteClient(id: string): Promise<IClient> {
-        return await ClientsServices.delete(id);
+        try{
+            return await ClientsServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteTechnician(id: string): Promise<IRepair> {
-        return await RepairServices.delete(id);
+        try{
+            return await RepairServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteRoom(id: string): Promise<IRoom> {
-        return await RoomsServices.delete(id);
+        try{
+            return await RoomsServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteProduct(id: string): Promise<IProduct> {
-        return await ProductServices.delete(id);
+        try{
+            return await ProductServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 
     static async deleteAccommodation(id: string): Promise<IAccommodation> {
-        return await AccommodationServices.delete(id);
+        try{
+            return await AccommodationServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
     }
 }
 
