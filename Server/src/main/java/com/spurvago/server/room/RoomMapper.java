@@ -3,6 +3,7 @@ package com.spurvago.server.room;
 import com.spurvago.database.Room;
 import com.spurvago.database.RoomType;
 import com.spurvago.server.room.models.RoomFM;
+import com.spurvago.server.room.models.RoomSelect;
 import com.spurvago.server.room.models.RoomVM;
 import com.spurvago.server.room_type.RoomTypeRepository;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,15 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         dest.setStatus(src.getStatus());
         dest.setRoomTypeId(src.getRoomType().getId());
 
+        return dest;
+    }
+
+    RoomSelect mapToSelect(Room src) {
+        RoomSelect dest = new RoomSelect();
+
+        dest.setId(src.getId());
+        String label = src.getRoomNumber() + " " + src.getRoomType().getType();
+        dest.setRoomLabel(label);
         return dest;
     }
 
@@ -59,6 +69,15 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         List<RoomVM> destList = new ArrayList<>();
         for (Room srcEntity : srcList) {
             destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
+    }
+
+    List<RoomSelect> mapToSelectList(List<Room> srcList) {
+        List<RoomSelect> destList = new ArrayList<>();
+        for (Room srcEntity : srcList) {
+            destList.add(mapToSelect(srcEntity));
         }
 
         return destList;

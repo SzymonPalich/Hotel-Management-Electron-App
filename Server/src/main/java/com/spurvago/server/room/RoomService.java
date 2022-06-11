@@ -5,6 +5,7 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Room;
 import com.spurvago.server.room.models.RoomFM;
+import com.spurvago.server.room.models.RoomSelect;
 import com.spurvago.server.room.models.RoomVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +49,13 @@ public record RoomService(RoomRepository roomRepository,
         List<RoomVM> entitiesDTO = roomMapper.mapToList(entities.getContent());
         return new ListPaginated<>(entitiesDTO, pager,
                 entities.getTotalElements(), entities.getTotalPages());
+    }
+
+    public List<RoomSelect> getSelectList() {
+        List<Room> entities = roomRepository.findAll();
+
+        List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(entities);
+        return entitiesDTO;
     }
 
     public RoomVM create(RoomFM newEntity) {
