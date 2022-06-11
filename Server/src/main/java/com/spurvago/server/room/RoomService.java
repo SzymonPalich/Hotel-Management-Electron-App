@@ -79,12 +79,8 @@ public record RoomService(RoomRepository roomRepository,
             boolean isAvailable = true;
             accommodations = accommodationRepository.findAllByRoom(entity);
             for (var accommodation: accommodations) {
-                // TODO: Warunek
-                if ((startDate.after(accommodation.getStartDate())
-                        && startDate.before(accommodation.getEndDate()))
-                        ||
-                        (endDate.after((accommodation.getStartDate()))
-                        && endDate.before(accommodation.getEndDate()))) {
+                if (!checkAvailability(accommodation.getStartDate(),
+                        accommodation.getEndDate(), startDate, endDate)) {
                     isAvailable = false;
                     break;
                 }
@@ -96,7 +92,7 @@ public record RoomService(RoomRepository roomRepository,
                 break;
         }
 
-        List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(entities);
+        List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(available);
         return entitiesDTO;
     }
 
@@ -136,5 +132,43 @@ public record RoomService(RoomRepository roomRepository,
         entity = optionalRoom.get();
 
         roomRepository.delete(entity);
+    }
+
+    private boolean checkAvailability(Date startDate, Date endDate,
+                                      Date targetStartDate, Date targetEndDate) {
+        long nStartDate = startDate.getTime();
+        long nEndDate = endDate.getTime();
+        long nTargetStartDate = targetStartDate.getTime();
+        long nTargetEndDate = targetEndDate.getTime();
+
+        if (nTargetStartDate <= nStartDate && nTargetEndDate >= nEndDate) {
+            return false;
+        }
+
+        if (nTargetStartDate >= nStartDate && nTargetStartDate <= nEndDate) {
+            return false;
+        }
+
+        if (nTargetEndDate >= nStartDate && nTargetEndDate <= nEndDate) {
+            return false;
+        }
+
+        return true;
+//        if (tpmStartDate.before(accommodation.getStartDate())
+//                && tpmEndDate.after(accommodation.getEndDate())) {
+//            isAvailable = false;
+//            break;
+//        }
+//        if (startDate.after(accommodation.getStartDate())
+//                && startDate.before(accommodation.getEndDate())) {
+//            isAvailable = false;
+//            break;
+//        }
+//        if (endDate.after(accommodation.getStartDate())
+//                && endDate.before(accommodation.getEndDate())) {
+//            isAvailable = false;
+//            break;
+//        }
+
     }
 }
