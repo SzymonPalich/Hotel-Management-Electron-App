@@ -87,12 +87,12 @@ public record ProductService(ProductRepository productRepository,
         productRepository.delete(entity);
     }
 
-    public List<ProductVM> findAll() {
-        List<Product> entities;
-
-            entities = productRepository.findAll();
-
-        List<ProductVM> entitiesDTO = productMapper.mapToList(entities);
-        return entitiesDTO;
-    }
+//    public List<ProductVM> findAll() {
+//        List<Product> entities;
+//
+//            entities = productRepository.findAll();
+//
+//        List<ProductVM> entitiesDTO = productMapper.mapToList(entities);
+//        return entitiesDTO;
+//    }
 }

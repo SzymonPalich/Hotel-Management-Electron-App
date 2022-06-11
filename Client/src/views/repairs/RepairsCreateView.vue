@@ -68,6 +68,17 @@
                     <span :class="option.icon"></span>
                     {{ option.roomNumber }} {{ option.roomType }}
                   </template>
+                  <template #selected-option="option">
+                    <div style="display: flex; align-items: baseline">
+                      {{ option.roomNumber }} {{ option.roomType }}
+                    </div>
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
                 </v-select>
               </dd>
             </div>
@@ -156,7 +167,7 @@ export default defineComponent({
     return {
       result: RepairServices.getBlankRepairTemplate(),
       value: null,
-      pager: Utils.getDefaultPager(),
+      pager: Utils.getMaxPager(),
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
     };
   },
