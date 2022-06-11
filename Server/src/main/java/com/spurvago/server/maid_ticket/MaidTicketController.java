@@ -5,6 +5,7 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.MaidTicketVM;
+import com.spurvago.server.maid_ticket.models.RefillFM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +61,13 @@ public class MaidTicketController {
     }
     //</editor-fold>
 
+    //<editor-fold desc="refill()">
+    @PostMapping(path = "/{id}/refill")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void refill(@PathVariable Long id, @RequestBody RefillFM refillEntity) {
+        maidTicketService.refill(id, refillEntity);
+    }
+    //</editor-fold>
+
     // TODO Dorobić endpoint na dodawanie zlecenia sprzątania przez recepcjonistę
-    // TODO Dorobić endpoint pozwalający na zakańczanie zlecenia przez pokojówkę
 }

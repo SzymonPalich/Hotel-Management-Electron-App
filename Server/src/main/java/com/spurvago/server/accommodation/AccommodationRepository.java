@@ -54,5 +54,7 @@ public interface AccommodationRepository
 
     Optional<Accommodation> findById(Long id);
 
+    List<Accommodation> findAllByRoom(Room room);
+
     Page<Accommodation> findAll(Pageable pageable);
 }

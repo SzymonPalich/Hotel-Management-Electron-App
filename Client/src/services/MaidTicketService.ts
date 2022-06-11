@@ -35,6 +35,11 @@ export default class MaidTicketServices {
     public static async create(maid: IMaid): Promise<IMaid> {
         return (await axios.post<IMaid>(options.apiUrl + `maid_ticket`, maid)).data;
     }
+
+    public static async refill(id: string, refill: IRefill): Promise<IRefill> {
+        return (await axios.post<IRefill>(options.apiUrl + `maid_ticket/${id}/refill`, refill)).data;
+    }
+
 }
 
 export interface IMaid {
@@ -45,4 +50,8 @@ export interface IMaid {
     employeeId: number;
     employeeFirstName?: string;
     employeeLastName?: string;
+}
+
+export interface IRefill {
+    products: Map<number,number>;
 }

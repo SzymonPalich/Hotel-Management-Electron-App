@@ -56,12 +56,15 @@
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link
+                  :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
+                  <i class="material-icons align-middle">local_bar</i>
+                  </router-link>
+                <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
                   ><i class="material-icons align-middle"
                     >description</i
                   ></router-link
                 >
-                <i class="material-icons align-middle">person</i>
                 <router-link
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
                   ><i class="material-icons align-middle">edit</i></router-link
