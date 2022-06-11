@@ -33,9 +33,6 @@ public class MaidTicketValidator extends Validator {
     }
 
     public boolean validate(MaidTicket model) {
-        if (!(model.getEmployee() == null)) {
-            return false;
-        }
         return model.getFinalizationDate() == null;
     }
 

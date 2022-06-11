@@ -70,5 +70,4 @@ public class MaidTicketController {
     //</editor-fold>
 
     // TODO Dorobić endpoint na dodawanie zlecenia sprzątania przez recepcjonistę
-    // TODO Dorobić endpoint pozwalający na zakańczanie zlecenia przez pokojówkę
 }

@@ -11,6 +11,7 @@ import MaidTicketView from '../views/maid_ticket/MaidTicketView.vue'
 import MaidTicketFetchView from '../views/maid_ticket/MaidTicketFetchView.vue'
 import MaidTicketEditView from '../views/maid_ticket/MaidTicketEditView.vue'
 import MaidTicketCreateView from '../views/maid_ticket/MaidTicketCreateView.vue'
+import MaidTicketFinalizationView from '../views/maid_ticket/MaidTicketFinalizationView.vue'
 
 import ClientsView from '../views/clients/ClientsView.vue'
 import ClientsFetchView from '../views/clients/ClientsFetchView.vue'
@@ -68,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
     path:'/maid_ticket/create',
     name: 'maid_ticket-create',
     component: MaidTicketCreateView
+  },
+  {
+    path: '/maid_ticket/:id/finalize',
+    name: 'maid-ticket-finalize',
+    component: MaidTicketFinalizationView
   },
   // Moduł napraw
   {
