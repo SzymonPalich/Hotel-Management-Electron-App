@@ -4,8 +4,16 @@
       <search-bar />
       <div class="pr-6 flex items-center">
         <i
-          class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
-          @click="$router.push({ name: 'rooms-create' })"
+          class="
+            px-2
+            py-1
+            rounded-xl
+            text-white
+            bg-gray-800
+            material-icons
+            cursor-pointer
+          "
+          @click="$router.push({ name: 'accommodation-create' })"
           >add</i
         >
       </div>
@@ -16,13 +24,16 @@
           <thead class="bg-gray-800 text-white">
             <tr>
               <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Numer Pokoju
+                Klient
               </th>
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
-                Typ
+                Pokój
               </th>
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
-                Status
+                Początek rezerwacji
+              </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Koniec rezerwacji
               </th>
               <th
                 class="
@@ -40,36 +51,40 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="room in result.content" :key="room" class="bg-white">
+            <tr
+              v-for="accommodation in result.content"
+              :key="accommodation"
+              class="bg-white"
+            >
               <td class="text-left py-2 px-4">
-                {{ room.roomNumber }}
+                  {{ accommodation.clientFirstName }} {{ accommodation.clientLastName }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ room.roomType }}
+                  {{ accommodation.roomNumber }} {{ accommodation.roomType }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ this.setStatus(room.status) }}
+                {{ accommodation.startDate }}
               </td>
-              <td class="text-center py-2 px-4 w-36">
-                <router-link
-                  :to="{ name: 'rooms-fetch', params: { id: room.id } }"
-                  ><i class="material-icons align-middle"
-                    >description</i
-                  ></router-link
-                >
-                <i class="material-icons align-middle">person</i>
-                <router-link
-                  :to="{ name: 'rooms-edit', params: { id: room.id } }"
+              <td class="text-center py-2 px-4">
+                {{ accommodation.endDate }}
+              </td>
+              <td class="text-center py-2 px-4 w-44">
+                <router-link :to="{ name: 'accommodation-fetch', params: { id: accommodation.id } }">
+                  <i class="material-icons align-middle">description</i>
+                </router-link>
+
+                <router-link :to="{ name: 'accommodation-edit', params: { id: accommodation.id } }"
                   ><i class="material-icons align-middle">edit</i>
                 </router-link>
-                <i @click="alertDisplay(room.id)" class="material-icons align-middle">delete</i>
+
+                <i @click="alertDisplay(accommodation.id)" class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="px-6 mt-auto mb-6">
+    <div class="px-6 mb-6">
       <pagination
         :index="this.result.pager.index"
         :size="this.result.pager.size"
@@ -82,7 +97,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import AccommodationServices, { IAccommodation } from "../../services/AccommodationService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils, { IPager, IList } from "../../Utils";
@@ -95,7 +110,7 @@ export default defineComponent({
   },
   data() {
     return {
-      result: Utils.getBlankListTemplate<IRoom>(),
+      result: Utils.getBlankListTemplate<IAccommodation>(),
       pager: Utils.getDefaultPager(),
     };
   },
@@ -105,18 +120,13 @@ export default defineComponent({
   },
 
   methods: {
-    async getData(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
+    async getData(): Promise<IList<IAccommodation>> {
+      return await AccommodationServices.getList(this.pager);
     },
 
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
+    alertDisplay(id: string): void {
+      Utils.alertDisplayDelete("accommodation",id);
     },
-
-    alertDisplay(id: string) {
-      Utils.alertDisplayDelete("rooms", id);
-    },
-
-  }
+  },
 });
 </script>

@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Pokój #{{ this.result.roomNumber }}
+            Pokój {{ this.result.roomNumber }} {{ this.result.roomType }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,9 +24,9 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Klient</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.roomType }}
+                {{ this.result.clientFirstName }} {{ this.result.clientLastName }}
               </dd>
             </div>
             <div
@@ -37,47 +37,36 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Cena za pokój</dt>
+              <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.resultRoomTypes.price }} zł
+                {{ this.result.roomNumber }} {{ this.result.roomType }}
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Status pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Początek rezerwacji</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.setStatus(this.result.status) }}
+                {{ this.result.startDate }} zł
               </dd>
             </div>
             <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">
-                Osoba wynajmująca
-              </dt>
+              <dt class="text-sm font-medium text-gray-500">Koniec rezerwacji</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Brak
+                {{ this.result.endDate }}
               </dd>
             </div>
             <div
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">
-                Czas wynajmu
-              </dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                03.04.2022 - 22.04.2022
+              <dt class="text-sm font-medium text-gray-500">Dostępność</dt>
+              <dd v-if="this.result.reservationOnly == true" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                Tylko za rezerwacją
+              </dd>
+              <dd v-else class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                Dowolna
               </dd>
             </div>
           </dl>
@@ -92,7 +81,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'rooms' })"
+              @click="$router.push({ name: 'accommodation' })"
             >
               Powrót
             </button>
@@ -104,21 +93,18 @@
 </template>
 
 <script lang="ts">
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import AccommodationServices, { IAccommodation } from "../../services/AccommodationService";
 import { defineComponent } from "vue";
-import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
 
 export default defineComponent({
   data() {
     return {
-      result: RoomsServices.getBlankRoomTemplate(),
-      resultRoomTypes: RoomTypesServices.getBlankRoomTypeTemplate(),
+      result: AccommodationServices.getBlankAccommodationTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
-    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
   methods: {
@@ -126,17 +112,8 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
-    },
-
-    async getData(): Promise<IRoom> {
-      return await RoomsServices.fetch(this.getId());
-    },
-
-    async getRoomTypes(): Promise<IRoomType> {
-      console.log(this.result);
-      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
+    async getData(): Promise<IAccommodation> {
+      return await AccommodationServices.fetch(this.getId());
     },
   },
 });

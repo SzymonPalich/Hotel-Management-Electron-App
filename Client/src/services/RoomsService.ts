@@ -32,11 +32,19 @@ export default class RoomsServices {
     public static getBlankRoomTemplate(): IRoom {
         const tempRoom: IRoom = {
             id: 0,
-            room_number: 0,
-            room_type: "",
+            roomNumber: "",
+            roomTypeId: 0,
             status: 0,
         };
         return tempRoom;
+    }
+
+    public static getBlankRoomSelectTemplate(): IRoomSelect {
+        const tempRoomSelect: IRoomSelect = {
+            id: 0,
+            roomLabel: "",
+        };
+        return tempRoomSelect
     }
 
     public static async fetch(id: string): Promise<IRoom> {
@@ -63,11 +71,40 @@ export default class RoomsServices {
             "Authorization": `${token}`
         }})).data;
     }  
+    public static async delete(id: string): Promise<IRoom> {
+        const token = localStorage.getItem('token');
+        return (await axios.delete(options.apiUrl + `room/${id}`,{ headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }
+
+    public static async create(room: IRoom): Promise<IRoom> {
+        const token = localStorage.getItem('token');
+        return (await axios.post<IRoom>(options.apiUrl + `room`, room, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
+
+    public static async getSelectList(): Promise<Array<IRoomSelect>> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IRoomSelect>>(options.apiUrl + `room/select-list`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
 }
 
 export interface IRoom {
     id: number;
-    room_number: number;
-    room_type: string;
+    roomNumber: string;
+    roomTypeId: number;
     status: number;
+}
+
+export interface IRoomSelect {
+    id: number;
+    roomLabel: string;
 }

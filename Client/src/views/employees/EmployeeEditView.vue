@@ -139,10 +139,14 @@
                   "
                   @change="selectPosition($event.target.value)"
                 >
-                  <option value="1">Manager</option>
-                  <option value="2">Pokojówka</option>
-                  <option value="3">Technik</option>
-                  <option value="4">Recepcjonista</option>
+                  <option
+                    v-for="positions in position"
+                    :key="positions"
+                    v-bind:value="positions.value"
+                    :selected="positions.value == this.result.position"
+                  >
+                    {{ positions.text }}
+                  </option>
                 </select>
               </dd>
             </div>
@@ -274,6 +278,12 @@ export default defineComponent({
     return {
       result: EmployeeServices.getBlankEmployeeTemplate(),
       pager: Utils.getDefaultPager(),
+      position: [
+        { value: "ROLE_MANAGER", text: "Manager" },
+        { value: "ROLE_MAID", text: "Pokojówka" },
+        { value: "ROLE_TECHNICIAN", text: "Technik" },
+        { value: "ROLE_RECEPTIONIST", text: "Recepcjonista" }
+      ],
     };
   },
 

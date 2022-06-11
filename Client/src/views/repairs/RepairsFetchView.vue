@@ -50,8 +50,50 @@
                 {{ this.result.description }}
               </dd>
             </div>
+            <div v-if="this.result.technicianReport !== ''"
+              class="
+                bg-white
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Raport technika</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.technicianReport }}
+              </dd>
+            </div>
+            <div v-if="this.result.technicianReport !== ''"
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Data finalizacji</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.finalizationDate }}
+              </dd>
+            </div>
+            <div v-if="this.result.technicianReport !== ''"
+              class="
+                bg-white
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Cena części</dt>
+              <dd v-if="this.result.partsPrice > 0" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {{ this.result.partsPrice }} zł
+              </dd>
+              <dd v-else class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                Brak Kosztów
+              </dd>
+            </div>
           </dl>
-          <div class="text-center px-4 py-5">
+          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
             <button
               class="
                 bg-gray-800
@@ -64,7 +106,7 @@
               "
               @click="$router.push({ name: 'repairs' })"
             >
-              Zatwierdź
+              Wróć
             </button>
           </div>
         </div>

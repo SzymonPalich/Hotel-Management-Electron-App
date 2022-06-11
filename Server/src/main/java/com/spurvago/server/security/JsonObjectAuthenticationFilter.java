@@ -1,4 +1,4 @@
-package com.spurvago.server.accommodation.security;
+package com.spurvago.server.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -9,8 +9,10 @@ import java.sql.Date;
 @Setter
 public class AccommodationVM {
     private Long id;
+    private Long clientId;
     private String clientFirstName;
     private String clientLastName;
+    private Long roomId;
     private int roomNumber;
     private String roomType;
     private int roomStatus;

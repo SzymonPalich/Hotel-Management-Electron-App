@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Dodaj pokój
+            Edytuj {{ this.result.productName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,7 +24,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Nazwa Produktu</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
@@ -32,43 +32,37 @@
                     w-full
                     h-full
                     rounded-xl
-                    text-md
                     px-2
-                    py-1
+                    py-0_1
                     outline-none
                     focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
                   type="text"
                   required
-                  v-model = this.result.roomNumber
+                  v-model="this.result.productName"
                 />
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-                            <dt class="text-sm font-medium text-gray-500">Pokój</dt>
+              <dt class="text-sm font-medium text-gray-500">Cena detaliczna</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
+                <input
                   class="
-                    w-full
                     border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
                     px-2
                     py-0_1
-                    rounded-xl
                     outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-                  @change="selectRoomType($event.target.value)"
-                >
-                  <option
-                    v-for="room in resultRoomTypes.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                    :selected="room.type == this.result.roomType"
-                  >
-                    {{ room.type }}
-                  </option>
-                </select>
+                  type="number"
+                  required
+                  v-model="this.result.retailPrice"
+                />
               </dd>
             </div>
             <div
@@ -79,28 +73,23 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Status</dt>
+              <dt class="text-sm font-medium text-gray-500">Cena hurtowa</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
+                <input
                   class="
-                    w-full
                     border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
                     px-2
                     py-0_1
-                    rounded-xl
                     outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-                  @change="selectStatus($event.target.value)"
-                >
-                  <option
-                    v-for="status in statuses"
-                    :key="status"
-                    v-bind:value="status.value"
-                    :selected="status.value == this.result.status"
-                  >
-                    {{ status.text }}
-                  </option>
-                </select>
+                  type="number"
+                  required
+                  v-model="this.result.wholesalePrice"
+                />
               </dd>
             </div>
           </dl>
@@ -133,9 +122,9 @@
                 border-2 border-black
                 hover:
               "
-              @click="this.add()"
+              @click="this.save()"
             >
-              Dodaj
+              Zatwierdź
             </button>
           </div>
         </div>
@@ -146,53 +135,40 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import RoomTypesServices, { IRoomType } from "../../services/RoomTypesService";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import ProductServices, { IProduct } from "../../services/ProductService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
 
 export default defineComponent({
   data() {
     return {
-      result: RoomsServices.getBlankRoomTemplate(),
+      result: ProductServices.getBlankProductTemplate(),
       pager: Utils.getDefaultPager(),
-      resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
-      statuses: [
-        { value: 1, text: "Wolny" },
-        { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" }
-      ],
     };
   },
 
   mounted() {
-    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
-    this.getRoomTypes().then((data) => {
-      this.result.roomTypeId = JSON.parse(JSON.stringify(data)).content[0].id;
-    });
-    this.result.status = 1;
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
   },
 
   methods: {
-    async getRoomTypes(): Promise<IList<IRoomType>> {
-      return await RoomTypesServices.getList(this.pager);
+    getId(): string {
+      return this.$route.params.id as string;
     },
 
-    selectRoomType: function (value: number) {
-      this.result.roomTypeId = value;
+    async getData(): Promise<IProduct> {
+      return await ProductServices.fetch(this.getId());
     },
 
-    selectStatus: function (value: number) {
-      this.result.status = value;
-    },
-
-    async add(): Promise<void> {
+    async save(): Promise<void> {
       console.log(this.result);
-      await RoomsServices.create(this.result);
-      this.$router.push({ name: "rooms" });
+      await ProductServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "product" });
     },
     back(): void {
-      this.$router.push({ name: "rooms" });
+      this.$router.push({ name: "product" });
     },
   },
 });

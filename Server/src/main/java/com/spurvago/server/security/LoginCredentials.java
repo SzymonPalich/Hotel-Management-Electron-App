@@ -1,4 +1,4 @@
-package com.spurvago.server.accommodation.security;
+package com.spurvago.server.security;
 
 import lombok.Getter;
 

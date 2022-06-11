@@ -47,4 +47,8 @@ public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, 
     Optional<Room> findById(Long id);
 
     Page<Room> findAll(Pageable pageable);
+
+    List<Room> findAll();
+
+    List<Room> findAllByRoomType(RoomType roomType);
 }

@@ -1,10 +1,10 @@
 package com.spurvago.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spurvago.server.accommodation.security.JsonObjectAuthenticationFilter;
-import com.spurvago.server.accommodation.security.JwtAuthorizationFilter;
-import com.spurvago.server.accommodation.security.RestAuthenticationFailureHandler;
-import com.spurvago.server.accommodation.security.RestAuthenticationSuccessHandler;
+import com.spurvago.server.security.JsonObjectAuthenticationFilter;
+import com.spurvago.server.security.JwtAuthorizationFilter;
+import com.spurvago.server.security.RestAuthenticationFailureHandler;
+import com.spurvago.server.security.RestAuthenticationSuccessHandler;
 import com.spurvago.server.employee.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

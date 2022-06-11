@@ -26,7 +26,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Usterka</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.issue }}
+                {{ this.result.name }}
               </dd>
             </div>
             <div
@@ -34,7 +34,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.room_nr }}
+                {{ this.result.roomNumber }}
               </dd>
             </div>
             <div
@@ -47,7 +47,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Opis</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.desc }}
+                {{ this.result.description }}
               </dd>
             </div>
             <div
@@ -58,7 +58,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Uwagi</dt>
+              <dt class="text-sm font-medium text-gray-500">Raport Technika</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <textarea rows="5" maxlength="400"
                   class="
@@ -77,6 +77,7 @@
                     resize-none
                   "
                   required
+                  v-model = this.result.technicianReport
                 ></textarea>
               </dd>
             </div>
@@ -104,7 +105,7 @@
                   "
                   type="number"
                   required
-                  
+                  v-model = this.result.partsPrice
                 />
               </dd>
             </div>
@@ -120,7 +121,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'repairs' })"
+              @click="save()"
             >
               Finalizuj
             </button>
@@ -132,14 +133,44 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import RepairService, { IRepair } from "../../services/RepairService";
+import { Options, Vue } from "vue-class-component";
+import RepairServices, { IRepair } from "../../services/RepairService";
+import { defineComponent } from "vue";
+import Utils, { IPager, IList } from "../../Utils";
 
-
-export default class RepairsFinalizationView extends Vue {
+export default defineComponent({
   data() {
     return {
+      result: RepairServices.getBlankRepairTemplate(),
+      pager: Utils.getDefaultPager(),
     };
-  }
-}
+  },
+
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  },
+
+  methods: {
+    getId(): string {
+      return this.$route.params.id as string;
+    },
+
+    async getData(): Promise<IRepair> {
+      return await RepairServices.fetch(this.getId());
+    },
+
+    async save(): Promise<void> {
+      console.log(this.result);
+      this.result.employeeId = 1;
+      this.result.finalizationDate = new Date(Date.now());
+      await RepairServices.update(this.getId(), this.result);
+      Utils.acceptedAlert();
+      this.$router.push({ name: "repairs" });
+    },
+    back(): void {
+      this.$router.push({ name: "repairs" });
+    },
+  },
+});
 </script>

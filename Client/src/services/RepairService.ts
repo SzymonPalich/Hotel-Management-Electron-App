@@ -2,19 +2,21 @@ import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
 import options from '../../spurvago.config.json';
 
-export default class RepairService {
+export default class RepairServices {
     public static getBlankRepairTemplate(): IRepair {
         const tempRepair: IRepair = {
             id: 0,
-            room_number: 0,
-            room_type: "",
-            employee_fristName: "",
-            employee_lastName: "",
+            roomId: 0,
+            roomNumber: 0,
+            roomType: "",
+            employeeId: undefined,
+            employeeFristName: "",
+            employeeLastName: "",
             name: "",
             description: "",
-            parts_price: 0,
-            technician_report: "",
-            finalization_date: undefined,
+            partsPrice: undefined,
+            technicianReport: undefined,
+            finalizationDate: undefined,
         };
         return tempRepair;
     }
@@ -37,6 +39,24 @@ export default class RepairService {
           })).data;
     }
 
+    public static async delete(id: string): Promise<IRepair> {
+        const token = localStorage.getItem('token');
+        return (await axios.delete(options.apiUrl + `maintenance_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
+
+    public static async create(repair: IRepair): Promise<IRepair> {
+        const token = localStorage.getItem('token');
+        return (await axios.post<IRepair>(options.apiUrl + `maintenance_ticket`, repair, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
+
     public static async getList(pager: IPager): Promise<IList<IRepair>> {
         const token = localStorage.getItem('token');
         return (await axios.get<IList<IRepair>>(options.apiUrl + `maintenance_ticket`, { params: pager, headers:{
@@ -47,13 +67,15 @@ export default class RepairService {
 
 export interface IRepair {
     id: number;
-    room_number: number;
-    room_type: string;
-    employee_fristName: string;
-    employee_lastName: string;
+    roomId: number;
+    roomNumber: number;
+    roomType: string;
+    employeeId?: number;
+    employeeFristName: string;
+    employeeLastName: string;
     name: string;
     description: string;
-    parts_price?: number;
-    technician_report?: string;
-    finalization_date?: Date;
+    partsPrice?: number;
+    technicianReport?: string;
+    finalizationDate?: Date;
 }

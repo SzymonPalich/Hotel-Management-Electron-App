@@ -58,6 +58,16 @@ export default class MaidTicketServices {
             }
           })).data;
     }
+
+    public static async refill(id: string, refill: IRefill): Promise<IRefill> {
+       const token = localStorage.getItem('token');
+        return (await axios.post<IRefill>(options.apiUrl + `maid_ticket/${id}/refill`, refill, {
+          headers: {
+            'Authorization': `${token}` 
+          }
+        })).data;
+    }
+
 }
 
 export interface IMaid {
@@ -68,4 +78,8 @@ export interface IMaid {
     employeeId: number;
     employeeFirstName?: string;
     employeeLastName?: string;
+}
+
+export interface IRefill {
+    products: Map<number,number>;
 }

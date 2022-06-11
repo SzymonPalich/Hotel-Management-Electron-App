@@ -11,6 +11,7 @@ import MaidTicketView from '../views/maid_ticket/MaidTicketView.vue'
 import MaidTicketFetchView from '../views/maid_ticket/MaidTicketFetchView.vue'
 import MaidTicketEditView from '../views/maid_ticket/MaidTicketEditView.vue'
 import MaidTicketCreateView from '../views/maid_ticket/MaidTicketCreateView.vue'
+import MaidTicketFinalizationView from '../views/maid_ticket/MaidTicketFinalizationView.vue'
 
 import ClientsView from '../views/clients/ClientsView.vue'
 import ClientsFetchView from '../views/clients/ClientsFetchView.vue'
@@ -28,6 +29,14 @@ import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
 import EmployeeEditView from '../views/employees/EmployeeEditView.vue'
 
 import ProductView from '../views/product/ProductView.vue'
+import ProductFetchView from '../views/product/ProductFetchView.vue'
+import ProductEditView from '../views/product/ProductEditView.vue'
+import ProductCreateView from '../views/product/ProductCreateView.vue'
+
+import AccommodationView from '../views/accommodation/AccommodationView.vue'
+import AccommodationFetchView from '../views/accommodation/AccommodationFetchView.vue'
+import AccommodationEditView from '../views/accommodation/AccommodationEditView.vue'
+import AccommodationCreateView from '../views/accommodation/AccommodationCreateView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -60,6 +69,11 @@ const routes: Array<RouteRecordRaw> = [
     path:'/maid_ticket/create',
     name: 'maid_ticket-create',
     component: MaidTicketCreateView
+  },
+  {
+    path: '/maid_ticket/:id/finalize',
+    name: 'maid-ticket-finalize',
+    component: MaidTicketFinalizationView
   },
   // Moduł napraw
   {
@@ -155,6 +169,42 @@ const routes: Array<RouteRecordRaw> = [
     path: '/product',
     name: 'product',
     component: ProductView
+  },
+  {
+    path: '/product/:id',
+    name: 'product-fetch',
+    component: ProductFetchView
+  },
+  {
+    path: '/product/:id/edit',
+    name: 'product-edit',
+    component: ProductEditView
+  },
+  {
+    path: '/product/create',
+    name: 'product-create',
+    component: ProductCreateView
+  },
+  // Moduł rezerwacji
+  {
+    path: '/accommodation',
+    name: 'accommodation',
+    component: AccommodationView
+  },
+  {
+    path: '/accommodation/:id',
+    name: 'accommodation-fetch',
+    component: AccommodationFetchView
+  },
+  {
+    path: '/accommodation/:id/edit',
+    name: 'accommodation-edit',
+    component: AccommodationEditView
+  },
+  {
+    path: '/accommodation/create',
+    name: 'accommodation-create',
+    component: AccommodationCreateView
   }
 ]
 

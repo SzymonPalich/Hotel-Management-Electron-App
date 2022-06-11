@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Pokój #{{ this.result.roomNumber }}
+            {{ this.result.productName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,9 +24,9 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Nazwa Produktu</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.roomType }}
+                {{ this.result.productName }}
               </dd>
             </div>
             <div
@@ -37,47 +37,17 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Cena za pokój</dt>
+              <dt class="text-sm font-medium text-gray-500">Cena detaliczna</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.resultRoomTypes.price }} zł
+                {{ this.result.retailPrice }} zł
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Status pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Cena hurtowa</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.setStatus(this.result.status) }}
-              </dd>
-            </div>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
-            >
-              <dt class="text-sm font-medium text-gray-500">
-                Osoba wynajmująca
-              </dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Brak
-              </dd>
-            </div>
-            <div
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
-            >
-              <dt class="text-sm font-medium text-gray-500">
-                Czas wynajmu
-              </dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                03.04.2022 - 22.04.2022
+                {{ this.result.wholesalePrice }} zł
               </dd>
             </div>
           </dl>
@@ -92,7 +62,7 @@
                 border-2 border-black
                 hover:
               "
-              @click="$router.push({ name: 'rooms' })"
+              @click="$router.push({ name: 'product' })"
             >
               Powrót
             </button>
@@ -104,21 +74,18 @@
 </template>
 
 <script lang="ts">
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import ProductServices, { IProduct } from "../../services/ProductService";
 import { defineComponent } from "vue";
-import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
 
 export default defineComponent({
   data() {
     return {
-      result: RoomsServices.getBlankRoomTemplate(),
-      resultRoomTypes: RoomTypesServices.getBlankRoomTypeTemplate(),
+      result: ProductServices.getBlankProductTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
-    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
   methods: {
@@ -126,17 +93,8 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
-    },
-
-    async getData(): Promise<IRoom> {
-      return await RoomsServices.fetch(this.getId());
-    },
-
-    async getRoomTypes(): Promise<IRoomType> {
-      console.log(this.result);
-      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
+    async getData(): Promise<IProduct> {
+      return await ProductServices.fetch(this.getId());
     },
   },
 });

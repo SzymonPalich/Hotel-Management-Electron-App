@@ -3,6 +3,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
+import 'vue-select/dist/vue-select.css'
 
 // Window size
 // small - 1350x700

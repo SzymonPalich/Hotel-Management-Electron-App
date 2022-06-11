@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center">
-            Edytuj #{{ this.result.id }}
+            Edytuj rezerwacje dla pokoju {{ this.result.roomNumber }} {{ this.result.roomType }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -24,30 +24,34 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Usterka</dt>
+              <dt class="text-sm font-medium text-gray-500">Klient</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <input
+                <select
                   class="
-                    border-2 border-gray-400
                     w-full
-                    h-full
-                    rounded-xl
-                    text-md
+                    border-2 border-gray-400
                     px-2
-                    py-1
+                    py-0_1
+                    rounded-xl
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
                   "
-                  type="text"
-                  required
-                  v-model="this.result.name"
-                />
+                  @change="selectClient($event.target.value)"
+                >
+                  <option
+                    v-for="client in resultClients.content"
+                    :key="client"
+                    v-bind:value="client.id"
+                    :selected="client.id == this.result.clientId"
+                  >
+                    {{ client.firstName }} {{ client.lastName }}
+                  </option>
+                </select>
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Numer Pokóju</dt>
+              <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <select
                   class="
@@ -79,27 +83,82 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Opis</dt>
+              <dt class="text-sm font-medium text-gray-500">Początek rezerwacji</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <textarea
-                  rows="5"
-                  maxlength="400"
+                <input
                   class="
-                    scroll
                     border-2 border-gray-400
                     w-full
                     h-full
                     rounded-xl
-                    text-md
                     px-2
-                    py-1
+                    py-0_1
                     outline-none
                     focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                    resize-none
                   "
+                  type="date"
                   required
-                  v-model="this.result.description"
-                ></textarea>
+                  v-model="this.result.startDate"
+                />
+              </dd>
+            </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Koniec rezerwacji</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    px-2
+                    py-0_1
+                    outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                  "
+                  type="date"
+                  required
+                  v-model="this.result.endDate"
+                />
+              </dd>
+            </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Dostępność</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <select
+                  class="
+                    w-full
+                    border-2 border-gray-400
+                    px-2
+                    py-0_1
+                    rounded-xl
+                    outline-none
+                  "
+                  @change="selectAccess($event.target.value)"
+                >
+                  <option
+                    v-for="access in accessibility"
+                    :key="access"
+                    v-bind:value="access.onlyreserv"
+                    :selected="access.onlyreserv == this.result.reservationOnly"
+                  >
+                    {{ access.text }}
+                  </option>
+                </select>
               </dd>
             </div>
           </dl>
@@ -110,11 +169,11 @@
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
                 hover:
-                mx-4
               "
               @click="this.back()"
             >
@@ -126,11 +185,11 @@
                 bg-gray-800
                 rounded-xl
                 px-6
+                mx-2
                 py-2
                 text-white
                 border-2 border-black
                 hover:
-                mx-4
               "
               @click="this.save()"
             >
@@ -145,23 +204,31 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import RepairServices, { IRepair } from "../../services/RepairService";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import AccommodationServices, { IAccommodation } from "../../services/AccommodationService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import ClientsServices, { IClient } from "../../services/ClientsService";
+import RoomsServices, { IRoom } from "../../services/RoomsService";
 
 export default defineComponent({
   data() {
     return {
-      result: RepairServices.getBlankRepairTemplate(),
-      pager: Utils.getDefaultPager(),
+      result: AccommodationServices.getBlankAccommodationTemplate(),
+      pager: Utils.getMaxPager(),
+      resultClients: Utils.getBlankListTemplate<IClient>(),
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
+      accessibility: [
+        { onlyreserv: true, text:"Tylko za rezerwacją" },
+        { onlyreserv: false, text:"Dowolna" }
+      ],
     };
   },
 
   mounted() {
     console.log(this.getData());
+    console.log(this.getClients());
     this.getData().then((data) => (this.result = data));
+    this.getClients().then((data) => (this.resultClients = data));
     this.getRooms().then((data) => (this.resultRooms = data));
   },
 
@@ -170,8 +237,12 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    async getData(): Promise<IRepair> {
-      return await RepairServices.fetch(this.getId());
+    async getData(): Promise<IAccommodation> {
+      return await AccommodationServices.fetch(this.getId());
+    },
+
+    async getClients(): Promise<IList<IClient>> {
+      return await ClientsServices.getList(this.pager);
     },
 
     async getRooms(): Promise<IList<IRoom>> {
@@ -182,15 +253,22 @@ export default defineComponent({
       this.result.roomId = value;
     },
 
+    selectClient: function (value: number) {
+      this.result.clientId = value;
+    },
+
+    selectAccess: function (value: boolean) {
+      this.result.reservationOnly = value;
+    },
+
     async save(): Promise<void> {
       console.log(this.result);
-      await RepairServices.update(this.getId(), this.result);
+      await AccommodationServices.update(this.getId(), this.result);
       Utils.acceptedAlert();
-      this.$router.push({ name: "repairs" });
+      this.$router.push({ name: "accommodation" });
     },
-    
     back(): void {
-      this.$router.push({ name: "repairs" });
+      this.$router.push({ name: "accommodation" });
     },
   },
 });
