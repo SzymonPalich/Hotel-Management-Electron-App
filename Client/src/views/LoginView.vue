@@ -80,10 +80,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
 import LoginServices, { ILogin } from "../services/LoginService";
-import Utils, { IPager, IList } from "../Utils";
+import Utils from "../Utils";
 import { defineComponent } from "vue";
+import { Extension } from "electron";
 
 export default defineComponent({
   data() {
@@ -100,13 +100,15 @@ export default defineComponent({
   },
   methods: {
     async login(): Promise<void> {
-      this.badCredentials = true;
-        await LoginServices.login(this.result);
+      try{
+      await LoginServices.login(this.result);
+      }
+      catch(e){
+        this.badCredentials = true;
+      }
         await this.getData().then((data) => (this.result = data));
          this.redirect(this.result.role);
-    
 
-      
     },
     async getData(): Promise<ILogin> {
       return await LoginServices.fetch();
@@ -134,9 +136,6 @@ export default defineComponent({
           console.log("Rola nie ma przypisanego widoku!")
         }
     }
-
- 
-
   }
 });
 </script>
