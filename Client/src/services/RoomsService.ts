@@ -1,5 +1,6 @@
-import Utils, {IList, IPager} from "@/Utils";
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class RoomsServices {
     public static setStatus(status: number): string {
@@ -40,7 +41,7 @@ export default class RoomsServices {
 
     public static async fetch(id: string): Promise<IRoom> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IRoom>(`http://localhost:8081/api/room/${id}`, {
+        return (await axios.get<IRoom>(options.apiUrl + `room/${id}`, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -49,7 +50,7 @@ export default class RoomsServices {
 
     public static async update(id: string, room: IRoom): Promise<IRoom> {
         const token = localStorage.getItem('token');
-        return (await axios.put<IRoom>(`http://localhost:8081/api/room/${id}`, room, {
+        return (await axios.put<IRoom>(options.apiUrl + `room/${id}`, room, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -58,7 +59,7 @@ export default class RoomsServices {
 
     public static async getList(pager: IPager): Promise<IList<IRoom>> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IList<IRoom>>(`http://localhost:8081/api/room`, { params: pager, headers:{
+        return (await axios.get<IList<IRoom>>(options.apiUrl + `room`, { params: pager, headers:{
             "Authorization": `${token}`
         }})).data;
     }  

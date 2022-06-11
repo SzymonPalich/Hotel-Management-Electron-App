@@ -119,6 +119,7 @@ export default defineComponent({
       Utils.alertDisplay();
     },
 
+<<<<<<< HEAD
     redirect(role: string): void{
       if(role=="ROLE_MANAGER"){
          this.$router.push("clients");
@@ -136,6 +137,11 @@ export default defineComponent({
           console.log("Rola nie ma przypisanego widoku!")
         }
     }
+=======
+export default class LoginView extends Vue {
+  private logIn(): void {
+    this.$router.push({ path: "clients" });
+>>>>>>> master
   }
 });
 </script>

@@ -29,6 +29,7 @@ public record EmployeeMapper() {
     void mapToEntity(Employee dest, EmployeeFM src) {
         dest.setFirstName(src.getFirstName());
         dest.setLastName(src.getLastName());
+        dest.setPassword(src.getPassword());
         dest.setEmail(src.getEmail());
         dest.setPhoneNumber(src.getPhoneNumber());
         dest.setPosition(src.getPosition());
@@ -42,6 +43,7 @@ public record EmployeeMapper() {
         Employee dest = new Employee();
         dest.setFirstName(src.getFirstName());
         dest.setLastName(src.getLastName());
+        dest.setPassword(src.getPassword());
         dest.setEmail(src.getEmail());
         dest.setPhoneNumber(src.getPhoneNumber());
         dest.setPosition(src.getPosition());

@@ -1,5 +1,6 @@
-import Utils, {IList, IPager} from "@/Utils";
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class EmployeeServices {
     public static setPosition(position: string): string {
@@ -41,7 +42,7 @@ export default class EmployeeServices {
 
     public static async fetch(id: string): Promise<IEmployee> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IEmployee>(`http://localhost:8081/api/employee/${id}`, {
+        return (await axios.get<IEmployee>(options.apiUrl + `employee/${id}`, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -50,7 +51,7 @@ export default class EmployeeServices {
 
     public static async update(id: string, employee: IEmployee): Promise<IEmployee> {
         const token = localStorage.getItem('token');
-        return (await axios.put<IEmployee>(`http://localhost:8081/api/employee/${id}`, employee, {
+        return (await axios.put<IEmployee>(options.apiUrl + `employee/${id}`, employee, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -59,21 +60,21 @@ export default class EmployeeServices {
 
     public static async getList(pager: IPager): Promise<IList<IEmployee>> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee`, { params: pager, headers:{
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee`, { params: pager, headers:{
             "Authorization": `${token}`
         }})).data;
     }
 
     public static async getEmployeesByPosition(pager: IPager, position: string): Promise<IList<IEmployee>> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IList<IEmployee>>(`http://localhost:8081/api/employee/position?position=${position}`, { params: pager , headers:{
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee/position?position=${position}`, { params: pager , headers:{
             "Authorization": `${token}`
         }})).data;
     }  
 
     public static async delete(id: string): Promise<IEmployee> {
         const token = localStorage.getItem('token');
-        return (await axios.delete(`http://localhost:8081/api/employee/${id}`, {
+        return (await axios.delete(options.apiUrl + `employee/${id}`, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -82,7 +83,7 @@ export default class EmployeeServices {
 
     public static async create(employee: IEmployee): Promise<IEmployee> {
         const token = localStorage.getItem('token');
-        return (await axios.post(`http://localhost:8081/api/employee`, employee, {
+        return (await axios.post(options.apiUrl + `employee`, employee, {
             headers: {
               'Authorization': `${token}` 
             }

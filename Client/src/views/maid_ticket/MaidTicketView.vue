@@ -4,10 +4,9 @@
       <search-bar />
       <div class="pr-6 flex items-center">
         <router-link :to="{ name: 'maid_ticket-create' }">
-        <i
-          class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
-          >add</i
-        >
+          <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+            >add</i
+          >
         </router-link>
       </div>
     </div>
@@ -16,24 +15,32 @@
         <table class="min-w-full">
           <thead class="bg-gray-800 text-white">
             <tr>
-              <th class="text-left py-2 px-4 uppercase font-semibold text-sm w-1/5">
-                Numer Pokoju
-              </th>
-              <th class="text-center
-                  py-3
+              <th
+                class="
+                  text-left
+                  py-2
                   px-4
                   uppercase
                   font-semibold
-                  text-sm">
+                  text-sm
+                  w-1/5
+                "
+              >
+                Numer Pokoju
+              </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Sprzątacz
               </th>
               <th
-                class="text-center
+                class="
+                  text-center
                   py-3
                   px-4
                   uppercase
                   font-semibold
-                  text-sm w-36"
+                  text-sm
+                  w-36
+                "
               >
                 Akcje
               </th>
@@ -57,11 +64,12 @@
                 <i class="material-icons align-middle">person</i>
                 <router-link
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
-                  ><i class="material-icons align-middle"
-                    >edit</i
-                  ></router-link
+                  ><i class="material-icons align-middle">edit</i></router-link
                 >
-                <router-link :to="{ name: 'maid_ticket' }" @click="alertDisplay(maid.id)" >
+                <router-link
+                  :to="{ name: 'maid_ticket' }"
+                  @click="alertDisplay(maid.id)"
+                >
                   <i class="material-icons align-middle">delete</i>
                 </router-link>
               </td>
@@ -71,7 +79,12 @@
       </div>
     </div>
     <div class="px-6 mt-auto mb-6">
-      <pagination />
+      <pagination
+        :index="this.result.pager.index"
+        :size="this.result.pager.size"
+        :totalElements="this.result.totalElements"
+        :totalPages="this.result.totalPages"
+      />
     </div>
   </div>
 </template>
@@ -107,8 +120,7 @@ export default defineComponent({
 
     alertDisplay(id: string) {
       Utils.alertDisplayDelete("maid", id);
-    }
-
-  }
+    },
+  },
 });
 </script>

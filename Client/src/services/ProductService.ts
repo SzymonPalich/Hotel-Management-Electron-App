@@ -1,5 +1,6 @@
-import Utils, {IList, IPager} from "@/Utils";
+import Utils, { IList, IPager } from "@/Utils";
 import axios from "axios";
+import options from '../../spurvago.config.json';
 
 export default class RepairService {
     public static getBlankProductTemplate(): IProduct {
@@ -11,10 +12,10 @@ export default class RepairService {
         };
         return tempProduct;
     }
-    
+
     public static async fetch(id: string): Promise<IProduct> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IProduct>(`http://localhost:8081/api/product/${id}`, {
+        return (await axios.get<IProduct>(options.apiUrl + `product/${id}`, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -23,7 +24,7 @@ export default class RepairService {
 
     public static async update(id: string, repair: IProduct): Promise<IProduct> {
         const token = localStorage.getItem('token');
-        return (await axios.put<IProduct>(`http://localhost:8081/api/repairs/product/${id}`, repair, {
+        return (await axios.put<IProduct>(options.apiUrl + `repairs/product/${id}`, repair, {
             headers: {
               'Authorization': `${token}` 
             }
@@ -32,7 +33,7 @@ export default class RepairService {
 
     public static async getList(pager: IPager): Promise<IList<IProduct>> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IList<IProduct>>(`http://localhost:8081/api/product`, { params: pager , headers:{
+        return (await axios.get<IList<IProduct>>(options.apiUrl + `product`, { params: pager , headers:{
             "Authorization": `${token}`
         }})).data;
     }  
