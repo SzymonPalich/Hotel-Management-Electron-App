@@ -109,13 +109,11 @@
         <div class="user">
           <div class="user_details">
             <div class="name_job">
-              <div class="name">Jan Spurdziński</div>
-              <div class="job">Menadżer</div>
+              <div class="name"> {{ this.result.firstName }} {{ this.result.lastName }}</div>
+              <div class="job"> {{ setPosition(this.result.role) }}</div>
             </div>
             <div class="logout_icon" @click="logout()">
-            <router-link to="login">
               <img src="../../public/css/fonts/outline_logout_white_18dp.png" />
-            </router-link>
             </div>
           </div>
         </div>
@@ -126,8 +124,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
+import LoginServices, { ILogin } from "../services/LoginService";
+import EmployeeServices from "../services/EmployeeService";
 export default defineComponent({
+  data() {
+    return {
+      result: LoginServices.getBlankLoginTemplate(),
+    };
+  },
+  mounted() {
+    console.log(this.getData());
+    this.getData().then((data) => (this.result = data));
+  }, 
   name: "SidebarComponent",
   methods: {
     isActive(path: string): boolean {
@@ -136,7 +144,16 @@ export default defineComponent({
     },
     logout(){
       localStorage.removeItem('token');
-    }
+      this.$router.push("login");
+    },
+
+   async getData(): Promise<ILogin> {
+      return await LoginServices.fetch();
+    },
+
+    setPosition(role: string){
+      return EmployeeServices.setPosition(role);
+    },
   },
 });
 </script>

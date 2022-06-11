@@ -100,7 +100,7 @@ export default defineComponent({
   methods: {
     async login(): Promise<void> {
       this.badCredentials = true;
-        await LoginServices.fetch(this.result);
+        await LoginServices.login(this.result);
         this.$router.push("clients");
       
     },
