@@ -47,4 +47,6 @@ public interface ClientRepository
     Boolean existsByPhoneNumber(String phoneNumber);
 
     Boolean existsByEmail(String email);
+
+    List<Client> findAll();
 }

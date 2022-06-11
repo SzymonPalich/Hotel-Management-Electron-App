@@ -3,10 +3,13 @@ package com.spurvago.server.client;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.server.client.models.ClientFM;
+import com.spurvago.server.client.models.ClientSelect;
 import com.spurvago.server.client.models.ClientVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -33,6 +36,14 @@ public class ClientController {
     @ResponseStatus(HttpStatus.OK)
     public ListPaginated<ClientVM> getList(Pager pager, String search) {
         return clientService.getList(pager, search);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="getSelectList()">
+    @GetMapping(path = "/select-list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ClientSelect> getSelectList() {
+        return clientService.getSelectList();
     }
     //</editor-fold>
 

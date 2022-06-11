@@ -14,6 +14,14 @@ export default class ClientsServices {
         return tempClient;
     }
 
+    public static getBlankClientSelectTemplate(): IClientSelect {
+        const tempClientSelect: IClientSelect = {
+            id: 0,
+            clientLabel: "",
+        };
+        return tempClientSelect;
+    }
+
     public static async fetch(id: string): Promise<IClient> {
         return (await axios.get<IClient>(options.apiUrl + `client/${id}`)).data;
     }
@@ -34,6 +42,10 @@ export default class ClientsServices {
         return (await axios.delete<IClient>(options.apiUrl + `client/${id}`)).data;
     }
 
+    public static async getSelectList(): Promise<Array<IClientSelect>> {
+        return (await axios.get<Array<IClientSelect>>(options.apiUrl + `client/select-list`)).data;
+    }
+
 }
 
 export interface IClient {
@@ -42,4 +54,9 @@ export interface IClient {
     lastName: string;
     email: string;
     phoneNumber: string;
+}
+
+export interface IClientSelect {
+    id: number;
+    clientLabel: string;
 }
