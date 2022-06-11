@@ -15,7 +15,7 @@ export default class LoginServices {
 
     public static async login(login: ILogin): Promise<AxiosResponse> {
         let responseRequest;
-        if((responseRequest = await axios.post<ILogin>(options.apiUrl + `login`, login))!= undefined){
+        if((responseRequest = await axios.post<ILogin>(options.apiUrl + `auth/login`, login))!= undefined){
             localStorage.setItem('token', responseRequest.headers.authorization);
             return responseRequest;
         }
