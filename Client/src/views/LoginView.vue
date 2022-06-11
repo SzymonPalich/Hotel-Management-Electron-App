@@ -92,22 +92,50 @@ export default defineComponent({
       badCredentials: false
     };
   },
-  created(){
+  async created(){
     if(localStorage.getItem('token')!=undefined){
-        this.$router.push("clients");
+      await this.getData().then((data) => (this.result = data));
+        this.redirect(this.result.role);
       }
   },
   methods: {
     async login(): Promise<void> {
       this.badCredentials = true;
         await LoginServices.login(this.result);
-        this.$router.push("clients");
+        await this.getData().then((data) => (this.result = data));
+         this.redirect(this.result.role);
+    
+
+      
+    },
+    async getData(): Promise<ILogin> {
+      return await LoginServices.fetch();
       
     },
 
     alertDisplay(): void {
       Utils.alertDisplay();
+    },
+
+    redirect(role: string): void{
+      if(role=="ROLE_MANAGER"){
+         this.$router.push("clients");
+        }
+      else if (role=="ROLE_MAID"){
+         this.$router.push("maid_ticket");
+        }
+      else if (role=="ROLE_TECHNICIAN"){
+         this.$router.push("rooms");
+        }
+      else if (role=="ROLE_RECEPTIONIST"){
+          this.$router.push("clients");
+        }
+      else{
+          console.log("Rola nie ma przypisanego widoku!")
+        }
     }
+
+ 
 
   }
 });
