@@ -18,9 +18,16 @@ import Sidebar from "./components/Sidebar.vue";
 })
 export default class App extends Vue {
   private checkIfLoginPage(): boolean {
+        if(localStorage.getItem('token')==undefined){
+      this.$router.push("login");
+    }
     return this.$router.currentRoute.value.name === "login";
   }
+
+
 }
+
+
 </script>
 
 <style>
