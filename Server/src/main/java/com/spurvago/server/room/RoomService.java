@@ -5,17 +5,13 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Accommodation;
 import com.spurvago.database.Room;
-import com.spurvago.database.RoomType;
-import com.spurvago.server.accommodation.models.AccommodationVM;
+import com.spurvago.server.accommodation.AccommodationRepository;
 import com.spurvago.server.room.models.RoomFM;
 import com.spurvago.server.room.models.RoomSelect;
 import com.spurvago.server.room.models.RoomVM;
 import com.spurvago.server.room_type.RoomTypeRepository;
-import com.spurvago.server.room_type.RoomTypeService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,6 +27,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 @Service
 public record RoomService(RoomRepository roomRepository,
                           RoomTypeRepository roomTypeRepository,
+                          AccommodationRepository accommodationRepository,
                           RoomMapper roomMapper,
                           RoomValidator roomValidator) {
 
@@ -77,16 +74,26 @@ public record RoomService(RoomRepository roomRepository,
         List<Room> entities = roomRepository.findAllByRoomType(roomType.get());
         List<Room> available = new ArrayList<>();
 
+        List<Accommodation> accommodations;
         for (var entity: entities) {
-            for (var accommodation: entity.getAccommodationList()) {
-                if (!accommodation.getEndDate().before(startDate)
-                    || !accommodation.getStartDate().after(endDate)) {
+            boolean isAvailable = true;
+            accommodations = accommodationRepository.findAllByRoom(entity);
+            for (var accommodation: accommodations) {
+                // TODO: Warunek
+                if ((startDate.after(accommodation.getStartDate())
+                        && startDate.before(accommodation.getEndDate()))
+                        ||
+                        (endDate.after((accommodation.getStartDate()))
+                        && endDate.before(accommodation.getEndDate()))) {
+                    isAvailable = false;
                     break;
                 }
-                available.add(entity);
-                if (available.size() == 5)
-                    break;
             }
+            if (isAvailable) {
+                available.add(entity);
+            }
+            if (available.size() == 5)
+                break;
         }
 
         List<RoomSelect> entitiesDTO = roomMapper.mapToSelectList(entities);

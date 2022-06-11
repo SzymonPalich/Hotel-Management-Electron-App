@@ -43,5 +43,5 @@ public class Room {
     @JoinTable(name = "accommodation")
     @Getter
     @Setter
-    private List<Accommodation> accommodationList;
+    private List<Accommodation> accommodations;
 }
