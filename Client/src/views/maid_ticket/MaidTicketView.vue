@@ -57,7 +57,7 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
-                  <i class="material-icons align-middle">local_bar</i>
+                  <i v-if="this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID'" class="material-icons align-middle">local_bar</i>
                   </router-link>
                 <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
@@ -92,6 +92,7 @@ import { Options, Vue } from "vue-class-component";
 import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import LoginServices, { ILogin } from "../../services/LoginService";
 import Utils, { IPager, IList } from "../../Utils";
 import { defineComponent } from "vue";
 
@@ -104,16 +105,23 @@ export default defineComponent({
     return {
       result: Utils.getBlankListTemplate<IMaid>(),
       pager: Utils.getDefaultPager(),
+      loginResult: LoginServices.getBlankLoginTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
+     this.getRank().then((data) => (this.loginResult = data));
     this.getData().then((data) => (this.result = data));
+   
   },
 
   methods: {
     async getData(): Promise<IList<IMaid>> {
       return await MaidTicketServices.getList(this.pager);
+    },
+
+   async getRank(): Promise<ILogin> {
+      return await LoginServices.fetch();
     },
 
     alertDisplay(id: string) {

@@ -104,9 +104,6 @@ export default defineComponent({
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
-    if(localStorage.getItem('token')==undefined){
-      this.$router.push("login");
-    }
   },
 
   setPosition(position: string): string {
