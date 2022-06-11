@@ -149,6 +149,7 @@ import RoomTypesServices, { IRoomType } from "../../services/RoomTypesService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -176,7 +177,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRoom> {
-      return await RoomsServices.fetch(this.getId());
+      try {
+        return await RoomsServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async getRoomTypes(): Promise<IList<IRoomType>> {
@@ -192,10 +201,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      await RoomsServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "rooms" });
+      try {
+        await RoomsServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "rooms" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "rooms" });

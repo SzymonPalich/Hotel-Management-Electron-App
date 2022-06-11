@@ -118,6 +118,8 @@
 <script lang="ts">
 import RepairServices, { IRepair } from "../../services/RepairService";
 import { defineComponent } from "vue";
+import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -136,7 +138,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRepair> {
-      return await RepairServices.fetch(this.getId());
+      try {
+        return await RepairServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
   },
 });

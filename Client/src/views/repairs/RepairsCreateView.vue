@@ -156,6 +156,7 @@ import 'vue-select/dist/vue-select.css'
 import RoomsServices, { IRoom, IRoomSelect } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -179,9 +180,15 @@ export default defineComponent({
 
     async add(): Promise<void> {
       if(this.value != null){ this.result.roomId = this.value }
-      console.log(this.result);
-      await RepairServices.create(this.result);
-      this.$router.push({ name: "repairs" });
+      try {
+        await RepairServices.create(this.result);
+        this.$router.push({ name: "repairs" }); 
+      } catch (error) {
+        const err = error as AxiosError
+        if(err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     back(): void {

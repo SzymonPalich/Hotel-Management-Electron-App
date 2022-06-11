@@ -137,6 +137,7 @@ import { Options, Vue } from "vue-class-component";
 import RepairServices, { IRepair } from "../../services/RepairService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -157,7 +158,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRepair> {
-      return await RepairServices.fetch(this.getId());
+      try {
+        return await RepairServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        } 
+        return Promise.reject()
+      }
     },
 
     async save(): Promise<void> {

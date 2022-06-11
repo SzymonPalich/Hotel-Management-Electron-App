@@ -107,6 +107,8 @@
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
+import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -131,12 +133,27 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRoom> {
-      return await RoomsServices.fetch(this.getId());
+      try {
+        return await RoomsServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async getRoomTypes(): Promise<IRoomType> {
-      console.log(this.result);
-      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
+      try {
+        return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
   },
 });
