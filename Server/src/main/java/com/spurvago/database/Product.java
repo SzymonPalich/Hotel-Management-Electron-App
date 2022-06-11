@@ -27,7 +27,7 @@ public class Product {
     @Setter
     private BigDecimal wholesalePrice;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "bar_replenish")
-    private List<MaidTicket> maidTickets;
+    private List<Refill> maidTickets;
 }

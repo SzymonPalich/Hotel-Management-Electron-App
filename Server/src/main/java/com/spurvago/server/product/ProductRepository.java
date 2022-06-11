@@ -44,4 +44,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
     Optional<Product> findById(Long id);
 
     Page<Product> findAll(Pageable pageable);
+
+    List<Product> findAll();
 }

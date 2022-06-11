@@ -23,6 +23,10 @@ public record UserManager(EmployeeRepository employeeRepository) {
         return getUser().getId();
     }
 
+    public Employee getEmployee() {
+        return employeeRepository.findByEmail(getEmail());
+    }
+
     public String getRole() {
         Authentication auth = getAuth();
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
