@@ -280,6 +280,7 @@ import { Options, Vue } from "vue-class-component";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -294,9 +295,15 @@ export default defineComponent({
 
   methods: {
     async add(): Promise<void> {
-      console.log(this.result);
-      await EmployeeServices.create(this.result);
-      this.$router.push({ name: "employees" });
+      try {
+        await EmployeeServices.create(this.result);
+        this.$router.push({ name: "employees" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     mounted() {

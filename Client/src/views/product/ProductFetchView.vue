@@ -76,6 +76,8 @@
 <script lang="ts">
 import ProductServices, { IProduct } from "../../services/ProductService";
 import { defineComponent } from "vue";
+import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -94,7 +96,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IProduct> {
-      return await ProductServices.fetch(this.getId());
+      try {
+        return await ProductServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
   },
 });

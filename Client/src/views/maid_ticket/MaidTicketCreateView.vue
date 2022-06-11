@@ -123,6 +123,7 @@ import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -165,11 +166,15 @@ export default defineComponent({
     },
 
     async add(): Promise<void> {
-      console.log(this.result.employeeId);
-      console.log(this.result.roomId);
-      console.log(this.result);
-      await MaidTicketServices.create(this.result);
-      this.$router.push({ name: "maid_ticket" });
+      try {
+        await MaidTicketServices.create(this.result);
+        this.$router.push({ name: "maid_ticket" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     back(): void {

@@ -152,6 +152,7 @@ import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -198,9 +199,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      await MaidTicketServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "maid_ticket" });
+      try {
+        await MaidTicketServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "maid_ticket" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     back(): void {

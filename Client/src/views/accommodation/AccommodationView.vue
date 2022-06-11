@@ -122,15 +122,7 @@ export default defineComponent({
 
   methods: {
     async getData(): Promise<IList<IAccommodation>> {
-      try {
-        return await AccommodationServices.getList(this.pager);
-      } catch (error) {
-        const err = error as AxiosError
-        if (err.response) {
-          Utils.errorAlert(err.response.status)
-        }
-        return Promise.reject()
-      }
+      return await AccommodationServices.getList(this.pager);
     },
 
     alertDisplay(id: string): void {
