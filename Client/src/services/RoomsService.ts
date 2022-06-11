@@ -39,6 +39,14 @@ export default class RoomsServices {
         return tempRoom;
     }
 
+    public static getBlankRoomSelectTemplate(): IRoomSelect {
+        const tempRoomSelect: IRoomSelect = {
+            id: 0,
+            roomLabel: "",
+        };
+        return tempRoomSelect
+    }
+
     public static async fetch(id: string): Promise<IRoom> {
         return (await axios.get<IRoom>(options.apiUrl + `room/${id}`)).data;
     }
@@ -58,6 +66,10 @@ export default class RoomsServices {
     public static async create(room: IRoom): Promise<IRoom> {
         return (await axios.post<IRoom>(options.apiUrl + `room`, room)).data;
     }
+
+    public static async getSelectList(): Promise<Array<IRoomSelect>> {
+        return (await axios.get<Array<IRoomSelect>>(options.apiUrl + `room/select-list`)).data;
+    }
 }
 
 export interface IRoom {
@@ -65,4 +77,9 @@ export interface IRoom {
     roomNumber: string;
     roomTypeId: number;
     status: number;
+}
+
+export interface IRoomSelect {
+    id: number;
+    roomLabel: string;
 }

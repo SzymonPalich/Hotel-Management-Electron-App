@@ -58,20 +58,15 @@
                     rounded-xl
                     outline-none
                   "
-                  label="roomNumber"
+                  label="roomLabel"
                   v-model="this.value"
-                  :options="this.resultRooms.content"
+                  :options="this.resultRooms"
                   :reduce="(option) => option.id"
                   placeholder="Wybierz pokój"
                 >
                   <template v-slot:option="option">
                     <span :class="option.icon"></span>
-                    {{ option.roomNumber }} {{ option.roomType }}
-                  </template>
-                  <template #selected-option="option">
-                    <div style="display: flex; align-items: baseline">
-                      {{ option.roomNumber }} {{ option.roomType }}
-                    </div>
+                    {{ option.roomLabel }}
                   </template>
                   <template v-slot:no-options="{ search, searching }">
                     <template v-if="searching">
@@ -158,7 +153,7 @@
 import { Options, Vue } from "vue-class-component";
 import RepairServices, { IRepair } from "../../services/RepairService";
 import 'vue-select/dist/vue-select.css'
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import RoomsServices, { IRoom, IRoomSelect } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
 
@@ -168,7 +163,7 @@ export default defineComponent({
       result: RepairServices.getBlankRepairTemplate(),
       value: null,
       pager: Utils.getMaxPager(),
-      resultRooms: Utils.getBlankListTemplate<IRoom>(),
+      resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
     };
   },
 
@@ -178,8 +173,8 @@ export default defineComponent({
   },
 
   methods: {
-    async getRooms(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
+    async getRooms(): Promise<Array<IRoomSelect>> {
+      return await RoomsServices.getSelectList();
     },
 
     async add(): Promise<void> {
