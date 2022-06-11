@@ -110,7 +110,7 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         maidTicketEntity = optionalMaidTicket.get();
 
         if (!maidTicketValidator.validate(maidTicketEntity)) {
-            throw new ResponseStatusException(NOT_FOUND);
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
 
         List<Product> availableProducts = productRepository.findAll();

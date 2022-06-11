@@ -188,6 +188,7 @@ export default defineComponent({
       Utils.acceptedAlert();
       this.$router.push({ name: "repairs" });
     },
+    
     back(): void {
       this.$router.push({ name: "repairs" });
     },
