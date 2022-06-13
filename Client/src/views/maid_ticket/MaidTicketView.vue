@@ -57,7 +57,7 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
-                  <i v-if="maid.employeeId==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">local_bar</i>
+                  <i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">local_bar</i>
                   </router-link>
                 <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
@@ -67,7 +67,7 @@
                 >
                 <router-link
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
-                  ><i v-if="maid.employeeId==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">edit</i></router-link
+                  ><i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">edit</i></router-link
                 >
                 <i @click="alertDisplay(maid.id)" class="material-icons align-middle">delete</i>
               </td>
