@@ -47,6 +47,9 @@
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Cena hurtowa
               </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Ilość
+              </th>
               <th
                 class="
                   text-center
@@ -73,6 +76,7 @@
               <td class="text-center py-2 px-4">
                 {{ product.wholesalePrice }} zł
               </td>
+              <td class="text-center py-2 px-4">{{ product.productAmount }}</td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link :to="{ name: 'product-fetch', params: { id: product.id } }">
                   <i class="material-icons align-middle">description</i>

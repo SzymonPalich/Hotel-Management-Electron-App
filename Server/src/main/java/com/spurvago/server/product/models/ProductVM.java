@@ -12,6 +12,7 @@ public class ProductVM {
     private String productName;
     private BigDecimal retailPrice;
     private BigDecimal wholesalePrice;
+    private int productAmount;
 
     public ProductVM() {
     }

@@ -17,6 +17,7 @@ public record ProductMapper() {
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());
         dest.setWholesalePrice(src.getWholesalePrice());
+        dest.setProductAmount(src.getProductAmount());
 
         return dest;
     }
@@ -26,6 +27,7 @@ public record ProductMapper() {
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());
         dest.setWholesalePrice(src.getWholesalePrice());
+        dest.setProductAmount(src.getProductAmount());
         return dest;
     }
 
@@ -33,6 +35,7 @@ public record ProductMapper() {
         dest.setProductName(src.getProductName());
         dest.setRetailPrice(src.getRetailPrice());
         dest.setWholesalePrice(src.getWholesalePrice());
+        dest.setProductAmount(src.getProductAmount());
     }
 
     List<ProductVM> mapToList(List<Product> srcList) {

@@ -27,7 +27,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, L
                         b.or(
                                 b.like(r.get("productName"), asLikeQuery(searchWord)),
                                 b.like(r.get("retailPrice").as(String.class), asLikeQuery(searchWord)),
-                                b.like(r.get("wholesalePrice").as(String.class), asLikeQuery(searchWord))
+                                b.like(r.get("wholesalePrice").as(String.class), asLikeQuery(searchWord)),
+                                b.like(r.get("productAmount").as(String.class), asLikeQuery(searchWord))
                         );
                 if (searchWord.equals(searchWords.get(0)))
                     predicate = tempPredicate;
