@@ -10,7 +10,7 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center">
+          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2 mb-2">
             Edytuj {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
@@ -125,7 +125,7 @@
                 w-1/6
                 bg-gray-800
                 rounded-xl
-                px-6
+                px-8
                 py-2
                 text-white
                 border-2 border-black
@@ -136,7 +136,7 @@
             >
               Wróć
             </button>
-            <button
+            <button style="margin-left:0.6rem"
               class="
                 w-1/6
                 bg-gray-800

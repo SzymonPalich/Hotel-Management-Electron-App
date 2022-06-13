@@ -10,7 +10,7 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center">
+          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
             Pokój #{{ this.result.roomNumber }}
           </h1>
         </div>
@@ -86,7 +86,7 @@
               class="
                 bg-gray-800
                 rounded-xl
-                px-2
+                px-8
                 py-2
                 text-white
                 border-2 border-black
@@ -107,8 +107,6 @@
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
-import { AxiosError } from "axios";
-import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -119,7 +117,7 @@ export default defineComponent({
   },
   mounted() {
     console.log(this.getData());
-    this.getData().then((data) => (this.result = data));
+        this.getData().then((data) => (this.result = data));
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
@@ -133,27 +131,12 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRoom> {
-      try {
-        return await RoomsServices.fetch(this.getId());
-      } catch (error) {
-        const err = error as AxiosError
-        if (err.response) {
-          Utils.errorAlert(err.response.status)
-        }
-        return Promise.reject()
-      }
+      return await RoomsServices.fetch(this.getId());
     },
 
     async getRoomTypes(): Promise<IRoomType> {
-      try {
-        return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
-      } catch (error) {
-        const err = error as AxiosError
-        if (err.response) {
-          Utils.errorAlert(err.response.status)
-        }
-        return Promise.reject()
-      }
+      console.log(this.result);
+      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
     },
   },
 });

@@ -10,7 +10,7 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center">
+          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2 mb-2">
             Klient: {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
@@ -65,7 +65,7 @@
                 w-1/6
                 bg-gray-800
                 rounded-xl
-                px-2
+                px-8
                 py-2
                 text-white
                 border-2 border-black
