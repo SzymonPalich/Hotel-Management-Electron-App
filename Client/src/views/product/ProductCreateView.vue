@@ -116,6 +116,11 @@
                   type="number"
                   required
                   v-model="this.result.productAmount"
+                  @keypress="(event) => {
+                    if (!event.key.match(/[0-9]/g)) {
+                      event.preventDefault();
+                    }
+                  }"
                   @keyup="this.block()"
                   min="0"
                 />
@@ -176,9 +181,6 @@ export default defineComponent({
     };
   },
   methods: {
-    // input(event: Event) {
-    //   this.result.productAmount = this.result.productAmount.mat
-    // },
     async save(): Promise<void> {
       try {
         await ProductServices.create(this.result);

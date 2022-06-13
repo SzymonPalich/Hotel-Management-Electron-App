@@ -92,6 +92,40 @@
                 />
               </dd>
             </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Ilość</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    px-2
+                    py-0_1
+                    outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                  "
+                  type="number"
+                  required
+                  v-model="this.result.productAmount"
+                  @keypress="(event) => {
+                    if (!event.key.match(/[0-9]/g)) {
+                      event.preventDefault();
+                    }
+                  }"
+                  @keyup="this.block()"
+                  min="0"
+                />
+              </dd>
+            </div>
           </dl>
           <div class="text-center px-4 py-5">
             <button
@@ -185,6 +219,14 @@ export default defineComponent({
     back(): void {
       this.$router.push({ name: "product" });
     },
+    block(): void {
+      if (this.result.productAmount < 0) {
+        this.result.productAmount = 0;
+      }
+      if (this.result.productAmount > 99) {
+        this.result.productAmount = 99;
+      }
+    }
   },
 });
 </script>
