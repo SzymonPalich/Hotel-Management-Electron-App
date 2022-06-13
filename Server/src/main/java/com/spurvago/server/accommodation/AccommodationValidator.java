@@ -31,12 +31,7 @@ public class AccommodationValidator extends Validator {
             return false;
         }
         Optional<Room> optionalRoom = roomRepository.findById(model.getRoomId());
-        Room room;
         if (optionalRoom.isEmpty()) {
-            return false;
-        }
-        room = optionalRoom.get();
-        if (room.getStatus() != RoomStatus.FREE.intValue) {
             return false;
         }
         if (model.getStartDate().before(new Date())) {
