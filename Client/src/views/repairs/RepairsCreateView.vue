@@ -50,14 +50,6 @@
               <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <v-select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
                   label="roomLabel"
                   v-model="this.value"
                   :options="this.resultRooms"

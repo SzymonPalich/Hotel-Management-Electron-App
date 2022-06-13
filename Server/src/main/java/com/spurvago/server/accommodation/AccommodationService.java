@@ -56,7 +56,6 @@ public record AccommodationService(AccommodationRepository accommodationReposito
     }
 
     public AccommodationVM create(AccommodationFM newEntity) {
-        // TODO Walidacja poprawności FK client oraz FK room -- Done I Guess
         if (!accommodationValidator().validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
@@ -76,11 +75,6 @@ public record AccommodationService(AccommodationRepository accommodationReposito
     }
 
     public AccommodationVM update(Long id, AccommodationFM newEntity) {
-        // TODO Walidacja poprawności FK client oraz FK room - Done I Guess
-        // TODO Nie powinno się dać zarezerwować pokoju z innym statusem niż
-        //      dostępny lub zarezerwowany, należy sprawdzać okres czasu
-        //      na który jest nałożona rezerwacja
-        // TODO Po rezerwacji pokoju powinien się zmieniać jego status na zarezerwowany
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;
         if (optionalAccommodation.isEmpty()) {
@@ -94,11 +88,6 @@ public record AccommodationService(AccommodationRepository accommodationReposito
     }
 
     public void delete(Long id) {
-        // TODO Po usunięciu rezerwacji na pokój nakładamy status do posprzątania
-        //      Dodałem enumerator, aby było łatwiej, niżej test jako przykład,
-        //      Pojawia się problem z tym, że rezerwacja powinna się usuwać również
-        //      automatycznie co będzie prawdopodobnie wymagało ustawienia joba na
-        //      dany termin. Ew temat do przemyślenia.
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;
         if (optionalAccommodation.isEmpty()) {

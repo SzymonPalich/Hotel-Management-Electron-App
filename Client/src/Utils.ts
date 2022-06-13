@@ -103,6 +103,15 @@ export default class Utils {
         };
     }
 
+    public static getRoomsPager(): IPager {
+        return {
+            index: 1,
+            size: 5,
+            sort: "id",
+            search: ""
+        };        
+    }
+
     public static getPager(index: number, sort: string): IPager {
         return {
             index: index,

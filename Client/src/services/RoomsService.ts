@@ -70,6 +70,10 @@ export default class RoomsServices {
     public static async getSelectList(): Promise<Array<IRoomSelect>> {
         return (await axios.get<Array<IRoomSelect>>(options.apiUrl + `room/select-list`)).data;
     }
+
+    public static async getAvailableList(startDate: Date, endDate: Date, roomTypeId: string) {
+        return (await axios.get<Array<IRoom>>(options.apiUrl + `room/available?endDate=${endDate}&roomTypeId=${roomTypeId}&startDate=${startDate}`)).data;
+    }
 }
 
 export interface IRoom {

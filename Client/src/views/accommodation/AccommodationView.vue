@@ -73,11 +73,7 @@
                   <i class="material-icons align-middle">description</i>
                 </router-link>
 
-                <router-link :to="{ name: 'accommodation-edit', params: { id: accommodation.id } }"
-                  ><i class="material-icons align-middle">edit</i>
-                </router-link>
-
-                <i @click="alertDisplay(accommodation.id)" class="material-icons align-middle">delete</i>
+                <i class="material-icons align-middle">delete</i>
               </td>
             </tr>
           </tbody>

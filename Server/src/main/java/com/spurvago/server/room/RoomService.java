@@ -75,6 +75,10 @@ public record RoomService(RoomRepository roomRepository,
         List<Room> available = new ArrayList<>();
 
         List<Accommodation> accommodations;
+
+        if (startDate.after(endDate))
+            return roomMapper.mapToSelectList(available);
+
         for (var entity: entities) {
             boolean isAvailable = true;
             accommodations = accommodationRepository.findAllByRoom(entity);
