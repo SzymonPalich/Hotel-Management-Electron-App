@@ -9,6 +9,7 @@ export default class ProductServices {
             productName: "",
             retailPrice: 0,
             wholesalePrice: 0,
+            productAmount: 0
         };
         return tempProduct;
     }
@@ -47,4 +48,5 @@ export interface IProduct {
     productName: string;
     retailPrice: number;
     wholesalePrice: number;
+    productAmount: number;
 }

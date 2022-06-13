@@ -92,6 +92,39 @@
                 />
               </dd>
             </div>
+            <div
+              class="
+                bg-gray-50
+                px-4
+                py-5
+                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
+              "
+            >
+              <dt class="text-sm font-medium text-gray-500">Ilość</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                <input
+                  class="
+                    border-2 border-gray-400
+                    w-full
+                    h-full
+                    rounded-xl
+                    px-2
+                    py-0_1
+                    outline-none
+                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                  "
+                  type="number"
+                  required
+                  v-model="this.result.productAmount"
+                  @keypress="(event) => {
+                      if (!event.key.match(/[0-9]{0,2}/g)) {
+                        event.preventDefault();
+                      }
+                  }"
+                  min="0"
+                />
+              </dd>
+            </div>
           </dl>
           <div class="text-center px-4 py-5">
             <button
@@ -147,15 +180,18 @@ export default defineComponent({
     };
   },
   methods: {
+    // input(event: Event) {
+    //   this.result.productAmount = this.result.productAmount.mat
+    // },
     async save(): Promise<void> {
       try {
         await ProductServices.create(this.result);
         Utils.acceptedAlert();
-        this.$router.push({ name: "product" }); 
-      } catch(error) {
-        const err = error as AxiosError
+        this.$router.push({ name: "product" });
+      } catch (error) {
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+          Utils.errorAlert(err.response.status);
         }
       }
     },
