@@ -122,7 +122,14 @@ export default defineComponent({
     },
 
     alertDisplay(id: string): void {
-      Utils.alertDisplayDelete("accommodation",id);
+      try {
+        Utils.alertDisplayDelete("accommodation",id);
+      } catch(error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
   },
 });

@@ -71,12 +71,12 @@ export default class Utils {
         });
     }
 
-    public static errorAlert(error: number): void {
+    public static errorAlert(err: number): void {
         let text = ""
-        if (error == 422) {
+        if (err == 422) {
             text = "Niepoprawne dane"
-        } else if (error == 404){
-            text = "Brak rekordu"
+        } else if (err == 404){
+            text = "Brak podanego rekordu"
         }
         Swal.fire({
             icon: 'error',

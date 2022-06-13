@@ -227,10 +227,10 @@ export default defineComponent({
         await AccommodationServices.create(this.result);
         Utils.acceptedAlert();
         this.$router.push({ name: "accommodation" });
-      } catch (error) {
+      } catch(error) {
         const err = error as AxiosError
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+           Utils.errorAlert(err.response.status)
         }
       }
     },

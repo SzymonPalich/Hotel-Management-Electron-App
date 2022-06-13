@@ -28,6 +28,6 @@ public class Pager {
     }
 
     public Pageable makePageable() {
-        return PageRequest.of(this.index, this.size, Sort.by(this.sort)).previousOrFirst();
+        return PageRequest.of(this.index, this.size, Sort.by(this.sort).descending()).previousOrFirst();
     }
 }

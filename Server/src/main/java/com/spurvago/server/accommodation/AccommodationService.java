@@ -39,6 +39,7 @@ public record AccommodationService(AccommodationRepository accommodationReposito
     }
 
     public ListPaginated<AccommodationVM> getList(Pager pager, String search) {
+        pager.sort = "startDate";
         Pageable pageable = pager.makePageable();
         Page<Accommodation> entities;
 
