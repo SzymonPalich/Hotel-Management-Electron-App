@@ -209,7 +209,7 @@ import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
 import ClientsServices, { IClient } from "../../services/ClientsService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
-import { AxiosError } from "axios";
+import { Axios, AxiosError } from "axios";
 
 export default defineComponent({
   data() {

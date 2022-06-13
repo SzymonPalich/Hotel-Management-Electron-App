@@ -116,8 +116,8 @@ export default defineComponent({
 
     async getData(): Promise<IAccommodation> {
       try {
-        return await AccommodationServices.fetch(this.getId());
-      } catch (error) {
+         return await AccommodationServices.fetch(this.getId());
+      } catch(error) {
         const err = error as AxiosError
         if (err.response) {
           Utils.errorAlert(err.response.status)
