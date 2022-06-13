@@ -1,7 +1,22 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
     <div class="mt-4 flex mr-0 ml-auto">
-      <search-bar />
+      <div class="flex flex-row pr-4 rounded-xl">
+        <div class="flex border-2 border-gray-400 ml-4 rounded-xl">
+          <input
+            v-on:keyup.enter="this.find()"
+            v-model="this.search"
+            type="text"
+            class="bg-gray-600 px-2 rounded-l-xl outline-none text-lg"
+          />
+          <div
+            @click="this.find()"
+            class="flex items-center bg-gray-600 rounded-r-xl"
+          >
+            <i class="material-icons">search</i>
+          </div>
+        </div>
+      </div>
       <div class="pr-6 flex items-center">
         <router-link :to="{ name: 'maid_ticket-create' }">
           <i v-if="this.loginResult.role=='ROLE_MANAGER'" class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
@@ -31,6 +46,9 @@
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Sprzątacz
               </th>
+                  <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Data finalizacji
+              </th>
               <th
                 class="
                   text-center
@@ -53,6 +71,9 @@
               </td>
               <td class="text-center py-2 px-4">
                 {{ maid.employeeFirstName }} {{ maid.employeeLastName }}
+              </td>
+              <td class="text-center py-2 px-4">
+                {{ maid.finalizationDate }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link
@@ -99,13 +120,13 @@ import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     Pagination,
-    SearchBar,
   },
   data() {
     return {
       result: Utils.getBlankListTemplate<IMaid>(),
       pager: Utils.getDefaultPager(),
       loginResult: LoginServices.getBlankLoginTemplate(),
+      search: "",
     };
   },
   mounted() {
@@ -122,6 +143,17 @@ export default defineComponent({
 
    async getRank(): Promise<ILogin> {
       return await LoginServices.fetch();
+    },
+
+    async find(): Promise<void> {
+      this.result.pager.search = this.search;
+      this.result = await MaidTicketServices.getList(this.result.pager);
+    },
+
+    async getPage(page: number) {
+      this.result.pager = Utils.getPager(page, "id");
+      this.result.pager.search = this.search;
+      this.result = await MaidTicketServices.getList(this.result.pager);
     },
 
     alertDisplay(id: string) {

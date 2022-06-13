@@ -1,7 +1,22 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
     <div class="mt-4 flex mr-0 ml-auto">
-      <search-bar />
+            <div class="flex flex-row pr-4 rounded-xl">
+        <div class="flex border-2 border-gray-400 ml-4 rounded-xl">
+          <input
+            v-on:keyup.enter="this.find()"
+            v-model="this.search"
+            type="text"
+            class="bg-gray-600 px-2 rounded-l-xl outline-none text-lg"
+          />
+          <div
+            @click="this.find()"
+            class="flex items-center bg-gray-600 rounded-r-xl"
+          >
+            <i class="material-icons">search</i>
+          </div>
+        </div>
+      </div>
       <div class="pr-6 flex items-center">
         <i
           class="
@@ -93,12 +108,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     Pagination,
-    SearchBar,
   },
   data() {
     return {
       result: Utils.getBlankListTemplate<IEmployee>(),
       pager: Utils.getDefaultPager(),
+      search: "",
     };
   },
   mounted() {
@@ -115,6 +130,16 @@ export default defineComponent({
       return await EmployeeServices.getList(this.pager);
     },
 
+    async find(): Promise<void> {
+      this.result.pager.search = this.search;
+      this.result = await EmployeeServices.getList(this.result.pager);
+    },
+
+    async getPage(page: number) {
+      this.result.pager = Utils.getPager(page, "id");
+      this.result.pager.search = this.search;
+      this.result = await EmployeeServices.getList(this.result.pager);
+    },
     setPosition(position: string): string {
       return EmployeeServices.setPosition(position);
     },

@@ -1,7 +1,22 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
     <div class="mt-4 flex mr-0 ml-auto">
-      <search-bar />
+      <div class="flex flex-row pr-4 rounded-xl">
+        <div class="flex border-2 border-gray-400 ml-4 rounded-xl">
+          <input
+            v-on:keyup.enter="this.find()"
+            v-model="this.search"
+            type="text"
+            class="bg-gray-600 px-2 rounded-l-xl outline-none text-lg"
+          />
+          <div
+            @click="this.find()"
+            class="flex items-center bg-gray-600 rounded-r-xl"
+          >
+            <i class="material-icons">search</i>
+          </div>
+        </div>
+      </div>
       <div class="pr-6 flex items-center">
         <i
           class="
@@ -25,6 +40,9 @@
             <tr>
               <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Usterka
+              </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Opis
               </th>
               <th
                 class="
@@ -57,6 +75,7 @@
           <tbody class="text-gray-700">
             <tr v-for="repair in result.content" :key="repair" class="bg-white">
               <td class="text-left py-2 px-4">{{ repair.name }}</td>
+              <td class="text-center py-2 px-4">{{ repair.description }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link v-if="repair.technicianReport == null" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
@@ -102,12 +121,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     Pagination,
-    SearchBar,
   },
   data() {
     return {
       result: Utils.getBlankListTemplate<IRepair>(),
       pager: Utils.getDefaultPager(),
+      search: "",
     };
   },
   mounted() {
@@ -121,6 +140,18 @@ export default defineComponent({
   methods: {
     async getData(): Promise<IList<IRepair>> {
       return await RepairServices.getList(this.pager);
+    },
+
+
+    async find(): Promise<void> {
+      this.result.pager.search = this.search;
+      this.result = await RepairServices.getList(this.result.pager);
+    },
+
+    async getPage(page: number) {
+      this.result.pager = Utils.getPager(page, "id");
+      this.result.pager.search = this.search;
+      this.result = await RepairServices.getList(this.result.pager);
     },
 
     alertDisplay(id: string) {
