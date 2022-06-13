@@ -36,7 +36,6 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
         dest.setClient(client);
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
-        dest.setReservationOnly(src.getReservationOnly());
 
         return dest;
     }
@@ -58,7 +57,6 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
         dest.setClient(client);
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
-        dest.setReservationOnly(src.getReservationOnly());
     }
 
     AccommodationVM mapToVM(Accommodation src) {
@@ -74,7 +72,6 @@ public record AccommodationMapper(ClientRepository clientRepository, RoomReposit
         dest.setClientLastName(src.getClient().getLastName());
         dest.setStartDate(src.getStartDate());
         dest.setEndDate(src.getEndDate());
-        dest.setReservationOnly(src.getReservationOnly());
 
         return dest;
     }
