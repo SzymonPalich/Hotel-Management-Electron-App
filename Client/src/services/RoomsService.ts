@@ -48,27 +48,52 @@ export default class RoomsServices {
     }
 
     public static async fetch(id: string): Promise<IRoom> {
-        return (await axios.get<IRoom>(options.apiUrl + `room/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IRoom>(options.apiUrl + `room/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, room: IRoom): Promise<IRoom> {
-        return (await axios.put<IRoom>(options.apiUrl + `room/${id}`, room)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IRoom>(options.apiUrl + `room/${id}`, room, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRoom>> {
-        return (await axios.get<IList<IRoom>>(options.apiUrl + `room`, { params: pager })).data;
-    } 
-
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IRoom>>(options.apiUrl + `room`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }  
     public static async delete(id: string): Promise<IRoom> {
-        return (await axios.delete(options.apiUrl + `room/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete(options.apiUrl + `room/${id}`,{ headers:{
+            "Authorization": `${token}`
+        }})).data;
     }
 
     public static async create(room: IRoom): Promise<IRoom> {
-        return (await axios.post<IRoom>(options.apiUrl + `room`, room)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.post<IRoom>(options.apiUrl + `room`, room, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getSelectList(): Promise<Array<IRoomSelect>> {
-        return (await axios.get<Array<IRoomSelect>>(options.apiUrl + `room/select-list`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IRoomSelect>>(options.apiUrl + `room/select-list`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getAvailableList(startDate: Date, endDate: Date, roomTypeId: string) {

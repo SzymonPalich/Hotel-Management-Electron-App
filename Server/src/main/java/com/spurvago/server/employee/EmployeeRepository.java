@@ -31,7 +31,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
                                 b.like(r.get("lastName"), asLikeQuery(searchWord)),
                                 b.like(r.get("email"), asLikeQuery(searchWord)),
                                 b.like(r.get("phoneNumber"), asLikeQuery(searchWord)),
-                                b.like(r.get("peesl"), asLikeQuery(searchWord)),
+                                b.like(r.get("pesel"), asLikeQuery(searchWord)),
                                 b.like(r.get("employmentDate").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("dismissalDate").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("salary").as(String.class), asLikeQuery(searchWord))

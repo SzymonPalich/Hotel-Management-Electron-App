@@ -21,23 +21,46 @@ export default class AccommodationServices {
     }
 
     public static async fetch(id: string): Promise<IAccommodation> {
-        return (await axios.get<IAccommodation>(options.apiUrl + `accommodation/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IAccommodation>(options.apiUrl + `accommodation/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, accommodation: IAccommodation): Promise<IAccommodation> {
-        return (await axios.put<IAccommodation>(options.apiUrl + `accommodation/${id}`, accommodation)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IAccommodation>(options.apiUrl + `accommodation/${id}`, accommodation, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IAccommodation>> {
-        return (await axios.get<IList<IAccommodation>>(options.apiUrl + `accommodation`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IAccommodation>>(options.apiUrl + `accommodation`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
     }
 
     public static async create(accommodation: IAccommodation): Promise<IAccommodation> {
-        return (await axios.post<IAccommodation>(options.apiUrl + `accommodation`, accommodation)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.post<IAccommodation>(options.apiUrl + `accommodation`, accommodation, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async delete(id: string): Promise<IAccommodation> {
-        return (await axios.delete<IAccommodation>(options.apiUrl + `accommodation/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete<IAccommodation>(options.apiUrl + `accommodation/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
 }

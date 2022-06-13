@@ -126,6 +126,10 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         for (Map.Entry<Long, Integer> entry : refillEntity.getProducts().entrySet()) {
             var product = productRepository.findById(entry.getKey());
             refillRepository.save(new Refill(maidTicketEntity, product.get(), entry.getValue()));
+
+            var productEntity = product.get();
+            productEntity.setProductAmount(productEntity.getProductAmount() - entry.getValue());
+            productRepository.save(productEntity);
         }
 
         maidTicketEntity.setEmployee(userManager.getEmployee());

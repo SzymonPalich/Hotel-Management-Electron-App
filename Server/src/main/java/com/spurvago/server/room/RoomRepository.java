@@ -29,7 +29,7 @@ public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, 
                 tempPredicate =
                         b.or(
                                 b.like(r.get("roomNumber").as(String.class), asLikeQuery(searchWord)),
-                                b.like(join.get("Type"), asLikeQuery(searchWord)),
+                                b.like(join.get("type"), asLikeQuery(searchWord)),
                                 b.like(r.get("status").as(String.class), asLikeQuery(searchWord))
                         );
                 if (searchWord.equals(searchWords.get(0))) {

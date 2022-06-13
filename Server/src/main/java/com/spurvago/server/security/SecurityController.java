@@ -1,6 +1,5 @@
 package com.spurvago.server.security;
 
-import com.spurvago.server.accommodation.security.LoginCredentials;
 import com.spurvago.server.security.models.Role;
 import com.spurvago.server.security.models.User;
 import org.springframework.beans.factory.annotation.Autowired;

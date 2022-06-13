@@ -3,6 +3,7 @@ package com.spurvago.server.accommodation;
 import com.spurvago.database.Accommodation;
 import com.spurvago.database.Client;
 import com.spurvago.database.Room;
+import com.spurvago.database.RoomType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,6 +26,7 @@ public interface AccommodationRepository
         return (r, q, b) -> {
             Join<Accommodation, Client> joinClient = r.join("client");
             Join<Accommodation, Room> joinRoom = r.join("room");
+            Join<Room, RoomType> joinRoomType = joinRoom.join("roomType");
             Predicate predicate = null;
             Predicate tempPredicate;
 
@@ -35,8 +37,8 @@ public interface AccommodationRepository
                                 b.like(joinClient.get("firstName"), asLikeQuery(searchWord)),
                                 b.like(joinClient.get("lastName"), asLikeQuery(searchWord)),
                                 b.like(joinRoom.get("roomNumber").as(String.class), asLikeQuery(searchWord)),
-                                b.like(joinRoom.get("roomType"), asLikeQuery(searchWord)),
-                                b.like(joinRoom.get("roomStatus").as(String.class), asLikeQuery(searchWord)),
+                                b.like(joinRoomType.get("type"), asLikeQuery(searchWord)),
+                                b.like(joinRoom.get("status").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("startDate").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("endDate").as(String.class), asLikeQuery(searchWord))
                         );

@@ -1,7 +1,22 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
     <div class="mt-4 flex mr-0 ml-auto">
-      <search-bar />
+     <div class="flex flex-row pr-4 rounded-xl">
+        <div class="flex border-2 border-gray-400 ml-4 rounded-xl">
+          <input
+            v-on:keyup.enter="this.find()"
+            v-model="this.search"
+            type="text"
+            class="bg-gray-600 px-2 rounded-l-xl outline-none text-lg"
+          />
+          <div
+            @click="this.find()"
+            class="flex items-center bg-gray-600 rounded-r-xl"
+          >
+            <i class="material-icons">search</i>
+          </div>
+        </div>
+      </div>
       <div class="pr-6 flex items-center">
         <i
           class="
@@ -32,6 +47,9 @@
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Cena hurtowa
               </th>
+              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
+                Ilość
+              </th>
               <th
                 class="
                   text-center
@@ -58,6 +76,7 @@
               <td class="text-center py-2 px-4">
                 {{ product.wholesalePrice }} zł
               </td>
+              <td class="text-center py-2 px-4">{{ product.productAmount }}</td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link :to="{ name: 'product-fetch', params: { id: product.id } }">
                   <i class="material-icons align-middle">description</i>
@@ -96,12 +115,12 @@ import { defineComponent } from "vue";
 export default defineComponent({
   components: {
     Pagination,
-    SearchBar,
   },
   data() {
     return {
       result: Utils.getBlankListTemplate<IProduct>(),
       pager: Utils.getDefaultPager(),
+      search: "",
     };
   },
   mounted() {
@@ -112,6 +131,17 @@ export default defineComponent({
   methods: {
     async getData(): Promise<IList<IProduct>> {
       return await ProductServices.getList(this.pager);
+    },
+
+        async find(): Promise<void> {
+      this.result.pager.search = this.search;
+      this.result = await ProductServices.getList(this.result.pager);
+    },
+
+    async getPage(page: number) {
+      this.result.pager = Utils.getPager(page, "id");
+      this.result.pager.search = this.search;
+      this.result = await ProductServices.getList(this.result.pager);
     },
 
     alertDisplay(id: string): void {

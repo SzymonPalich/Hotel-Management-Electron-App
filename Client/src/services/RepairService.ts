@@ -22,24 +22,47 @@ export default class RepairServices {
     }
 
     public static async fetch(id: string): Promise<IRepair> {
-        return (await axios.get<IRepair>(options.apiUrl + `maintenance_ticket/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IRepair>(options.apiUrl + `maintenance_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, repair: IRepair): Promise<IRepair> {
-        return (await axios.put<IRepair>(options.apiUrl + `maintenance_ticket/${id}`, repair)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IRepair>(options.apiUrl + `repairs/maintenance_ticket/${id}`, repair, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async delete(id: string): Promise<IRepair> {
-        return (await axios.delete(options.apiUrl + `maintenance_ticket/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete(options.apiUrl + `maintenance_ticket/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async create(repair: IRepair): Promise<IRepair> {
-        return (await axios.post<IRepair>(options.apiUrl + `maintenance_ticket`, repair)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.post<IRepair>(options.apiUrl + `maintenance_ticket`, repair, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRepair>> {
-        return (await axios.get<IList<IRepair>>(options.apiUrl + `maintenance_ticket`, { params: pager })).data;
-    }
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IRepair>>(options.apiUrl + `maintenance_ticket`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }  
 }
 
 export interface IRepair {
