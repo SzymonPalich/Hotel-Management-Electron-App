@@ -11,4 +11,5 @@ public class ProductFM {
     private String productName;
     private BigDecimal retailPrice;
     private BigDecimal wholesalePrice;
+    private int productAmount;
 }

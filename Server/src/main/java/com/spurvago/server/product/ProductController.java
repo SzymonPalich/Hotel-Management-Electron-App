@@ -58,7 +58,4 @@ public class ProductController {
         productService.delete(id);
     }
     //</editor-fold>
-
-    // TODO Zastanowić się w jaki sposób ilość produktów w magazynie będzie aktualizowana
-    //      prawdopodobnie kolejny endpoint
 }
