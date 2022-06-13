@@ -138,6 +138,7 @@ import { Options, Vue } from "vue-class-component";
 import ProductServices, { IProduct } from "../../services/ProductService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -158,14 +159,28 @@ export default defineComponent({
     },
 
     async getData(): Promise<IProduct> {
-      return await ProductServices.fetch(this.getId());
+      try {
+        return await ProductServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      await ProductServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "product" });
+      try {
+        await ProductServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "product" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "product" });

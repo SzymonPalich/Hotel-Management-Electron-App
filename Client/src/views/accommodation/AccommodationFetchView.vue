@@ -95,6 +95,8 @@
 <script lang="ts">
 import AccommodationServices, { IAccommodation } from "../../services/AccommodationService";
 import { defineComponent } from "vue";
+import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -113,7 +115,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IAccommodation> {
-      return await AccommodationServices.fetch(this.getId());
+      try {
+        return await AccommodationServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
   },
 });

@@ -2,6 +2,7 @@ package com.spurvago.server.client;
 
 import com.spurvago.database.Client;
 import com.spurvago.server.client.models.ClientFM;
+import com.spurvago.server.client.models.ClientSelect;
 import com.spurvago.server.client.models.ClientVM;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,15 @@ public record ClientMapper() {
         dest.setEmail(src.getEmail());
         dest.setPhoneNumber(src.getPhoneNumber());
 
+        return dest;
+    }
+
+    ClientSelect mapToSelect(Client src) {
+        ClientSelect dest = new ClientSelect();
+
+        dest.setId(src.getId());
+        String label = src.getFirstName() + " " + src.getLastName();
+        dest.setClientLabel(label);
         return dest;
     }
 
@@ -43,6 +53,15 @@ public record ClientMapper() {
         List<ClientVM> destList = new ArrayList<>();
         for (Client srcEntity : srcList) {
             destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
+    }
+
+    List<ClientSelect> mapToSelectList(List<Client> srcList) {
+        List<ClientSelect> destList = new ArrayList<>();
+        for (Client srcEntity : srcList) {
+            destList.add(mapToSelect(srcEntity));
         }
 
         return destList;

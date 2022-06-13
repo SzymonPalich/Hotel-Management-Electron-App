@@ -272,6 +272,7 @@ import { Options, Vue } from "vue-class-component";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -298,7 +299,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IEmployee> {
-      return await EmployeeServices.fetch(this.getId());
+      try {
+        return await EmployeeServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     selectPosition: function (value: string) {
@@ -306,10 +315,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      await EmployeeServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "employees" });
+      try {
+        await EmployeeServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "employees" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "employees" });

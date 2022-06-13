@@ -164,6 +164,7 @@ import { Options, Vue } from "vue-class-component";
 import ClientsServices, { IClient } from "../../services/ClientsService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -174,9 +175,15 @@ export default defineComponent({
 
   methods: {
     async add(): Promise<void> {
-      console.log(this.result);
-      await ClientsServices.create(this.result);
-      this.$router.push({ name: "clients" });
+      try {
+        await ClientsServices.create(this.result);
+        this.$router.push({ name: "clients" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     back(): void {

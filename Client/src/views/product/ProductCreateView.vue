@@ -138,7 +138,7 @@ import { Options, Vue } from "vue-class-component";
 import ProductServices, { IProduct } from "../../services/ProductService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -148,12 +148,16 @@ export default defineComponent({
   },
   methods: {
     async save(): Promise<void> {
-      axios.post('http://localhost:8081/api/product', this.result).then( response =>  {
-         console.log(response.data);
-        }).catch(error => {console.log(error.response.data.message)});
-      // (await ProductServices.create(this.result).catch((headers) => console.log(headers))).data;
-      Utils.acceptedAlert();
-      // this.$router.push({ name: "product" });
+      try {
+        await ProductServices.create(this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "product" }); 
+      } catch(error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "product" });

@@ -150,6 +150,7 @@ import RoomTypesServices, { IRoomType } from "../../services/RoomTypesService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -187,9 +188,15 @@ export default defineComponent({
     },
 
     async add(): Promise<void> {
-      console.log(this.result);
-      await RoomsServices.create(this.result);
-      this.$router.push({ name: "rooms" });
+      try {
+        await RoomsServices.create(this.result);
+        this.$router.push({ name: "rooms" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "rooms" });

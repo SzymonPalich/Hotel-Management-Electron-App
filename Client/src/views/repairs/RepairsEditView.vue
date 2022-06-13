@@ -149,6 +149,7 @@ import RepairServices, { IRepair } from "../../services/RepairService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -171,7 +172,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IRepair> {
-      return await RepairServices.fetch(this.getId());
+      try {
+        return await RepairServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async getRooms(): Promise<IList<IRoom>> {
@@ -183,10 +192,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      await RepairServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "repairs" });
+      try {
+        await RepairServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "repairs" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     
     back(): void {

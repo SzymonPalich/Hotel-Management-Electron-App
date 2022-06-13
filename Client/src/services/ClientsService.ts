@@ -22,6 +22,14 @@ export default class ClientsServices {
             }
           })).data;
         }
+    public static getBlankClientSelectTemplate(): IClientSelect {
+        const tempClientSelect: IClientSelect = {
+            id: 0,
+            clientLabel: "",
+        };
+        return tempClientSelect;
+    }
+
 
         public static async update(id: string, client: IClient): Promise<IClient> {
             const token = localStorage.getItem('token');
@@ -57,6 +65,15 @@ export default class ClientsServices {
           })).data;
     }
 
+    public static async getSelectList(): Promise<Array<IClientSelect>> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IClientSelect>>(options.apiUrl + `client/select-list`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
+
 }
 
 export interface IClient {
@@ -65,4 +82,9 @@ export interface IClient {
     lastName: string;
     email: string;
     phoneNumber: string;
+}
+
+export interface IClientSelect {
+    id: number;
+    clientLabel: string;
 }

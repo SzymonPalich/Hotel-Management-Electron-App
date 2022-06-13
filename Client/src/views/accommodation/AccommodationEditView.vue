@@ -209,6 +209,7 @@ import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
 import ClientsServices, { IClient } from "../../services/ClientsService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -238,7 +239,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IAccommodation> {
-      return await AccommodationServices.fetch(this.getId());
+      try {
+        return await AccommodationServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async getClients(): Promise<IList<IClient>> {
@@ -262,10 +271,16 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      await AccommodationServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "accommodation" });
+      try {
+        await AccommodationServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "accommodation" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
     back(): void {
       this.$router.push({ name: "accommodation" });

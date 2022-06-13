@@ -5,6 +5,7 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Client;
 import com.spurvago.server.client.models.ClientFM;
+import com.spurvago.server.client.models.ClientSelect;
 import com.spurvago.server.client.models.ClientVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,6 +50,13 @@ public record ClientService(ClientRepository clientRepository,
         List<ClientVM> entitiesDTO = clientMapper.mapToList(entities.getContent());
         return new ListPaginated<>(entitiesDTO, pager,
                 entities.getTotalElements(), entities.getTotalPages());
+    }
+
+    public List<ClientSelect> getSelectList() {
+        List<Client> entities = clientRepository.findAll();
+
+        List<ClientSelect> entitiesDTO = clientMapper.mapToSelectList(entities);
+        return entitiesDTO;
     }
 
     public ClientVM create(ClientFM newEntity) {

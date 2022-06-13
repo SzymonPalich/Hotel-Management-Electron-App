@@ -163,6 +163,7 @@
 import ClientsServices, { IClient } from "../../services/ClientsService";
 import { defineComponent } from "vue";
 import Utils from "../../Utils";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -181,13 +182,28 @@ export default defineComponent({
     },
 
     async getData(): Promise<IClient> {
-      return await ClientsServices.fetch(this.getId());
+      try {
+        return await ClientsServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async save(): Promise<void> {
-      await ClientsServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "clients" });
+      try {
+        await ClientsServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "clients" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        } 
+      }
     },
 
     back(): void {

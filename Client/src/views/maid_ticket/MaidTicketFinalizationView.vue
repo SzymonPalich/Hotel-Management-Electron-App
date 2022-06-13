@@ -128,6 +128,7 @@ import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
 import ProductServices, {IProduct} from "../../services/ProductService";
 import { numberLiteralTypeAnnotation } from "@babel/types";
+import { AxiosError } from "axios";
 
 export default defineComponent({
   data() {
@@ -161,7 +162,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IMaid> {
-      return await MaidTicketServices.fetch(this.getId());
+      try {
+        return await MaidTicketServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
 
     async getProducts(): Promise<IList<IProduct>> {
@@ -176,9 +185,16 @@ export default defineComponent({
       });
 
       var refill: IRefill = {products: this.final};
-      await MaidTicketServices.refill(this.getId(), refill);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "maid_ticket" });
+      try {
+        await MaidTicketServices.refill(this.getId(), refill);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "maid_ticket" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+      }
     },
 
     back(): void {

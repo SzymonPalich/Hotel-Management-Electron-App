@@ -80,42 +80,19 @@
             <span class="links_name">Magazyn</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('accommodation')" class="router-link-active">
+        <li v-if="this.isActive('accommodation') && this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST'" class="router-link-active">
           <router-link to ="/accommodation">
             <i class="material-icons">hotel</i>
             <span class="links_name">Rezerwacje</span>
           </router-link>
         </li>
-        <li v-else>
+        <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/accommodation">
             <i class="material-icons">hotel</i>
             <span class="links_name">Rezerwacje</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('incomes')" class="router-link-active">
-          <a href="#">
-            <i class="material-icons">attach_money</i>
-            <span class="links_name">Przychody</span>
-          </a>
-        </li>
-        <li v-else>
-          <a href="#">
-            <i class="material-icons">attach_money</i>
-            <span class="links_name">Przychody</span>
-          </a>
-        </li>
-        <li v-if="this.isActive('reports')" class="router-link-active">
-          <a href="#">
-            <i class="material-icons">receipt</i>
-            <span class="links_name">Raporty</span>
-          </a>
-        </li>
-        <li v-else>
-          <a href="#">
-            <i class="material-icons">receipt</i>
-            <span class="links_name">Raporty</span>
-          </a>
-        </li>
+
       </ul>
       <div class="content">
         <div class="user">

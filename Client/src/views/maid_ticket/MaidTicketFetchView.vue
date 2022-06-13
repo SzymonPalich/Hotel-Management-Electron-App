@@ -84,6 +84,8 @@
 <script lang="ts">
 import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
+import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
@@ -102,7 +104,15 @@ export default defineComponent({
     },
 
     async getData(): Promise<IMaid> {
-      return await MaidTicketServices.fetch(this.getId());
+      try {
+        return await MaidTicketServices.fetch(this.getId());
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
   },
 });
