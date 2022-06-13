@@ -116,11 +116,7 @@
                   type="number"
                   required
                   v-model="this.result.productAmount"
-                  @keypress="(event) => {
-                      if (!event.key.match(/[0-9]{0,2}/g)) {
-                        event.preventDefault();
-                      }
-                  }"
+                  @keyup="this.block()"
                   min="0"
                 />
               </dd>
@@ -198,6 +194,15 @@ export default defineComponent({
     back(): void {
       this.$router.push({ name: "product" });
     },
+    block(): void {
+      if (this.result.productAmount < 0) {
+        this.result.productAmount = 0;
+      }
+      if (this.result.productAmount > 99) {
+        this.result.productAmount = 99;
+
+      }
+    }
   },
 });
 </script>
