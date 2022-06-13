@@ -86,7 +86,7 @@
                     focus:border-cyan-400 
                     focus:rounded-xl
                   "
-                  type="text"
+                  type="password"
                   required
                   v-model = this.result.password
                 />
