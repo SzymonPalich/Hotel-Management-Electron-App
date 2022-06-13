@@ -4,7 +4,7 @@
       <search-bar />
       <div class="pr-6 flex items-center">
         <router-link :to="{ name: 'maid_ticket-create' }">
-          <i class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
+          <i v-if="this.loginResult.role=='ROLE_MANAGER'" class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
             >add</i
           >
         </router-link>
@@ -57,7 +57,7 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
-                  <i class="material-icons align-middle">local_bar</i>
+                  <i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">local_bar</i>
                   </router-link>
                 <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
@@ -67,7 +67,7 @@
                 >
                 <router-link
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
-                  ><i class="material-icons align-middle">edit</i></router-link
+                  ><i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">edit</i></router-link
                 >
                 <i @click="alertDisplay(maid.id)" class="material-icons align-middle">delete</i>
               </td>
@@ -92,6 +92,7 @@ import { Options, Vue } from "vue-class-component";
 import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import LoginServices, { ILogin } from "../../services/LoginService";
 import Utils, { IPager, IList } from "../../Utils";
 import { defineComponent } from "vue";
 
@@ -104,16 +105,23 @@ export default defineComponent({
     return {
       result: Utils.getBlankListTemplate<IMaid>(),
       pager: Utils.getDefaultPager(),
+      loginResult: LoginServices.getBlankLoginTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
+     this.getRank().then((data) => (this.loginResult = data));
     this.getData().then((data) => (this.result = data));
+   
   },
 
   methods: {
     async getData(): Promise<IList<IMaid>> {
       return await MaidTicketServices.getList(this.pager);
+    },
+
+   async getRank(): Promise<ILogin> {
+      return await LoginServices.fetch();
     },
 
     alertDisplay(id: string) {

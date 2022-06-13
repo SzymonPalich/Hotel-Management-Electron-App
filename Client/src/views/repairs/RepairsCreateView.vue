@@ -152,7 +152,7 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import RepairServices, { IRepair } from "../../services/RepairService";
-import 'vue-select/dist/vue-select.css'
+import 'vue-select/dist/vue-select.css';
 import RoomsServices, { IRoom, IRoomSelect } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";

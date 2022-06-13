@@ -1,4 +1,4 @@
-package com.spurvago.server.accommodation.security;
+package com.spurvago.server.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-
+@CrossOrigin
 @Component
 public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final long expirationTime;

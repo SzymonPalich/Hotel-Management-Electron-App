@@ -129,6 +129,9 @@ export default defineComponent({
 
   methods: {
     async getData(): Promise<IList<IClient>> {
+      if(localStorage.getItem('token')==undefined){
+      this.$router.push("login");
+    }
       return await ClientsServices.getList(this.result.pager);
     },
 

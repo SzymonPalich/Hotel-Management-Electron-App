@@ -1,10 +1,10 @@
 package com.spurvago.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spurvago.server.accommodation.security.JsonObjectAuthenticationFilter;
-import com.spurvago.server.accommodation.security.JwtAuthorizationFilter;
-import com.spurvago.server.accommodation.security.RestAuthenticationFailureHandler;
-import com.spurvago.server.accommodation.security.RestAuthenticationSuccessHandler;
+import com.spurvago.server.security.JsonObjectAuthenticationFilter;
+import com.spurvago.server.security.JwtAuthorizationFilter;
+import com.spurvago.server.security.RestAuthenticationFailureHandler;
+import com.spurvago.server.security.RestAuthenticationSuccessHandler;
 import com.spurvago.server.employee.EmployeeDetailsServiceImplementation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.web.cors.CorsConfiguration;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -72,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // TODO: Usunąć, przy implementacji uprawnień
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -86,7 +88,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-resources/configuration/ui").permitAll()
                 .antMatchers("/swagger-resources/configuration/**").permitAll()
-                .antMatchers("/api/client/**", "/api/employee/**", "/api/**").hasRole("MANAGER")
+//                .antMatchers("/api/**").hasRole("MANAGER")
+                .antMatchers("/api/accommodation/**").hasAnyRole("MANAGER", "RECEPTIONIST")
+                .antMatchers("/api/accommodation").hasAnyRole("MANAGER", "RECEPTIONIST")
+                .antMatchers("/api/client/**").hasAnyRole("MANAGER", "RECEPTIONIST")
+                .antMatchers("/api/client").hasAnyRole("MANAGER", "RECEPTIONIST")
+                .antMatchers("/api/employee/**").hasAnyRole("MANAGER")
+                .antMatchers("/api/employee").hasAnyRole("MANAGER")
+                .antMatchers("/api/maid_ticket/**").hasAnyRole("MANAGER", "MAID", "RECEPTIONIST")
+                .antMatchers("/api/maid_ticket?**").hasAnyRole("MANAGER", "MAID", "RECEPTIONIST")
+                .antMatchers("/api/maintenance_ticket/**").hasAnyRole("MANAGER", "TECHNICIAN", "RECEPTIONIST")
+                .antMatchers("/api/maintenance_ticket").hasAnyRole("MANAGER", "TECHNICIAN", "RECEPTIONIST")
+                .antMatchers("/api/product/**").hasAnyRole("MANAGER", "MAID")
+                .antMatchers("/api/product").hasAnyRole("MANAGER", "MAID")
+                .antMatchers("/api/room/**").hasAnyRole("MANAGER", "RECEPTIONIST", "TECHNICIAN")
+                .antMatchers("/api/room").hasAnyRole("MANAGER", "RECEPTIONIST", "TECHNICIAN")
+                .antMatchers("/api/room_type/**").hasAnyRole("MANAGER", "RECEPTIONIST")
+                .antMatchers("/api/room_type").hasAnyRole("MANAGER", "RECEPTIONIST")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
@@ -96,6 +114,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsService(), secret))
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));
+        http.cors().configurationSource(x->{
+           var cors = new CorsConfiguration();
+           cors.setAllowedOrigins(List.of("http://localhost:8080"));
+           cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
+           cors.setAllowedHeaders(List.of("*"));
+           cors.setAllowCredentials(Boolean.TRUE);
+           cors.setExposedHeaders(List.of("Authorization"));
+           return cors;
+        });
     }
 
     public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {

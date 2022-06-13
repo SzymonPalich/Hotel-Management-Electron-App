@@ -41,27 +41,53 @@ export default class EmployeeServices {
     }
 
     public static async fetch(id: string): Promise<IEmployee> {
-        return (await axios.get<IEmployee>(options.apiUrl + `employee/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IEmployee>(options.apiUrl + `employee/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, employee: IEmployee): Promise<IEmployee> {
-        return (await axios.put<IEmployee>(options.apiUrl + `employee/${id}`, employee)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IEmployee>(options.apiUrl + `employee/${id}`, employee, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IEmployee>> {
-        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
     }
 
     public static async getEmployeesByPosition(pager: IPager, position: string): Promise<IList<IEmployee>> {
-        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee/position?position=${position}`, { params: pager })).data;
-    }
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee/position?position=${position}`, { params: pager , headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }  
 
     public static async delete(id: string): Promise<IEmployee> {
-        return (await axios.delete(options.apiUrl + `employee/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete(options.apiUrl + `employee/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async create(employee: IEmployee): Promise<IEmployee> {
-        return (await axios.post(options.apiUrl + `employee`, employee)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.post(options.apiUrl + `employee`, employee, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 }
 

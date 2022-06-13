@@ -14,15 +14,28 @@ export default class RoomTypesServices {
     }
 
     public static async fetch(id: number): Promise<IRoomType> {
-        return (await axios.get<IRoomType>(options.apiUrl + `room_type/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IRoomType>(options.apiUrl + `room_type/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async update(id: string, room: IRoomType): Promise<IRoomType> {
-        return (await axios.put<IRoomType>(options.apiUrl + `room_type/${id}`, room)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.put<IRoomType>(options.apiUrl + `room_type/${id}`, room, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getList(pager: IPager): Promise<IList<IRoomType>> {
-        return (await axios.get<IList<IRoomType>>(options.apiUrl + `room_type`, { params: pager })).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IRoomType>>(options.apiUrl + `room_type`, { params: pager, headers:{
+            "Authorization": `${token}`
+        }})).data;
     }  
 }
 

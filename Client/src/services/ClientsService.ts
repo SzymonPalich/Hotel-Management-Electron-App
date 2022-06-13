@@ -14,6 +14,14 @@ export default class ClientsServices {
         return tempClient;
     }
 
+       public static async fetch(id: string): Promise<IClient> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<IClient>(options.apiUrl + `client/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+        }
     public static getBlankClientSelectTemplate(): IClientSelect {
         const tempClientSelect: IClientSelect = {
             id: 0,
@@ -22,28 +30,48 @@ export default class ClientsServices {
         return tempClientSelect;
     }
 
-    public static async fetch(id: string): Promise<IClient> {
-        return (await axios.get<IClient>(options.apiUrl + `client/${id}`)).data;
-    }
 
-    public static async update(id: string, client: IClient): Promise<IClient> {
-        return (await axios.put<IClient>(options.apiUrl + `client/${id}`, client)).data;
-    }
+        public static async update(id: string, client: IClient): Promise<IClient> {
+            const token = localStorage.getItem('token');
+            return (await axios.put<IClient>(options.apiUrl + `client/${id}`, client, {
+                headers: {
+                  'Authorization': `${token}` 
+                }
+              })).data;
+        }
 
-    public static async getList(pager: IPager): Promise<IList<IClient>> {
-        return (await axios.get<IList<IClient>>(options.apiUrl + `client`, { params: pager })).data;
-    }
+        public static async getList(pager: IPager): Promise<IList<IClient>> {    
+            const token = localStorage.getItem('token');
+            return (await axios.get<IList<IClient>>(options.apiUrl + `client`, { params: pager, headers:{
+                "Authorization": `${token}`
+            }})).data;
+        }
 
-    public static async create(client: IClient): Promise<IClient> {
-        return (await axios.post<IClient>(options.apiUrl + `client`, client)).data;
+        public static async create(client: IClient): Promise<IClient> {
+            const token = localStorage.getItem('token');
+        return (await axios.post<IClient>(options.apiUrl + `client`, client, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async delete(id: string): Promise<IClient> {
-        return (await axios.delete<IClient>(options.apiUrl + `client/${id}`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.delete<IClient>(options.apiUrl + `client/${id}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
     public static async getSelectList(): Promise<Array<IClientSelect>> {
-        return (await axios.get<Array<IClientSelect>>(options.apiUrl + `client/select-list`)).data;
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IClientSelect>>(options.apiUrl + `client/select-list`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
     }
 
 }
