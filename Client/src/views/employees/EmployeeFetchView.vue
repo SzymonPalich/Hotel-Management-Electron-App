@@ -10,7 +10,7 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center">
+          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
             Pracownik: {{ this.result.firstName }} {{this.result.lastName}}
           </h1>
         </div>
@@ -99,7 +99,7 @@
               class="
                 bg-gray-800
                 rounded-xl
-                px-2
+                px-8
                 py-2
                 text-white
                 border-2 border-black
@@ -138,6 +138,7 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
+    
     async getData(): Promise<IEmployee> {
       try {
         return await EmployeeServices.fetch(this.getId());

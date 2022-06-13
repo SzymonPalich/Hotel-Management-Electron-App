@@ -72,7 +72,6 @@
                     >description</i
                   ></router-link
                 >
-                <i class="material-icons align-middle">person</i>
                 <router-link
                   :to="{ name: 'rooms-edit', params: { id: room.id } }"
                   ><i class="material-icons align-middle">edit</i>
@@ -124,15 +123,7 @@ export default defineComponent({
       return await RoomsServices.getList(this.pager);
     },
 
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
-    },
-
-    alertDisplay(id: string) {
-      Utils.alertDisplayDelete("rooms", id);
-    },
-
-        async find(): Promise<void> {
+      async find(): Promise<void> {
       this.result.pager.search = this.search;
       this.result = await RoomsServices.getList(this.result.pager);
     },
@@ -141,6 +132,14 @@ export default defineComponent({
       this.result.pager = Utils.getPager(page, "id");
       this.result.pager.search = this.search;
       this.result = await RoomsServices.getList(this.result.pager);
+    },
+
+    setStatus(status: number): string {
+      return RoomsServices.setStatus(status);
+    },
+
+    alertDisplay(id: string) {
+      Utils.alertDisplayDelete("rooms", id);
     },
 
   }
