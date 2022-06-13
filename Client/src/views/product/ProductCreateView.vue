@@ -200,7 +200,6 @@ export default defineComponent({
       }
       if (this.result.productAmount > 99) {
         this.result.productAmount = 99;
-
       }
     }
   },
