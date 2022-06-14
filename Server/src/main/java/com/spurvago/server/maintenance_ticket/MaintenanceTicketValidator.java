@@ -1,5 +1,6 @@
 package com.spurvago.server.maintenance_ticket;
 
+import com.spurvago.components.Utils;
 import com.spurvago.components.Validator;
 import com.spurvago.server.employee.EmployeeRepository;
 import com.spurvago.server.maintenance_ticket.models.MaintenanceTicketFM;
@@ -29,19 +30,32 @@ public class MaintenanceTicketValidator extends Validator {
                 return false;
             }
         }
+        if (Utils.isNullOrBlank(model.getName())) {
+            return false;
+        }
         if (!(haveLength(model.getName(), 50))) {
+            return false;
+        }
+        if(Utils.isNullOrBlank(model.getDescription())){
             return false;
         }
         if (!(haveLength(model.getDescription(), 50))) {
             return false;
         }
-        if (model.getPartsPrice() != null 
+
+        if (model.getPartsPrice() != null
                 && !(correctDecimal(model.getPartsPrice(), 8, 2))) {
             return false;
         }
-        if (isEmpty(model.getTechnicianReport())) {
-            return false;
+
+        if (model.getTechnicianReport() != null) {
+            if (isEmpty(model.getTechnicianReport())) {
+                return false;
+            }
+            if (!(haveLength(model.getTechnicianReport(), 300))) {
+                return false;
+            }
         }
-        return haveLength(model.getTechnicianReport(), 300);
+        return true;
     }
 }
