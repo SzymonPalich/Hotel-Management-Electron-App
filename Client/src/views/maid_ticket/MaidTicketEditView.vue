@@ -29,7 +29,7 @@
                 <v-select
                   label="label"
                   v-model="this.selectedEmployee"
-                  :options="this.resultEmployee.content"
+                  :options="this.resultEmployee"
                   :reduce="(option) => option.id"
                   :clearable="false"
                   placeholder="Wybierz pracownika"
@@ -157,7 +157,7 @@ export default defineComponent({
     return {
       result: MaidTicketServices.getBlankMaidTicketTemplate(),
       pager: Utils.getDefaultPager(),
-      resultEmployee: Utils.getBlankListTemplate<IEmployeeSelect>(),
+      resultEmployee: [EmployeeServices.getBlankEmployeeSelectTemplate()],
       resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
       selectedRoom: null,
       selectedEmployee: null
@@ -165,9 +165,10 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log(this.getData());
-    console.log(this.getEmployees());
-    console.log(this.getRooms());
+    // console.log(this.getData());
+    // console.log(this.getEmployees());
+    // console.log(this.getRooms());
+    
     this.getData().then((data) => (this.result = data));
     this.getEmployees().then((data) => (this.resultEmployee = data));
     this.getRooms().then((data) => (this.resultRooms = data));
@@ -182,7 +183,7 @@ export default defineComponent({
       return await MaidTicketServices.fetch(this.getId());
     },
 
-    async getEmployees(): Promise<IList<IEmployeeSelect>> {
+    async getEmployees(): Promise<Array<IEmployeeSelect>> {
       return await EmployeeServices.getEmployeesByPositionSelect("ROLE_MAID");
     },
 

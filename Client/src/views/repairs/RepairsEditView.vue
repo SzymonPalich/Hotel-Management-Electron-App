@@ -55,6 +55,7 @@
                   :options="this.resultRooms"
                   :reduce="(option) => option.id"
                   placeholder="Wybierz pokój"
+                  :clearable="false"
                 >
                   <template v-slot:option="option">
                     <span :class="option.icon"></span>

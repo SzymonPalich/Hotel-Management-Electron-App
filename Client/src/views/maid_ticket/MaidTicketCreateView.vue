@@ -29,7 +29,7 @@
                 <v-select
                   label="label"
                   v-model="this.selectedEmployee"
-                  :options="this.resultEmployee.content"
+                  :options="this.resultEmployee"
                   :reduce="(option) => option.id"
                   :clearable="false"
                   placeholder="Wybierz pracownika"
@@ -128,7 +128,7 @@ export default defineComponent({
     return {
       result: MaidTicketServices.getBlankMaidTicketTemplate(),
       pager: Utils.getDefaultPager(),
-      resultEmployee: Utils.getBlankListTemplate<IEmployeeSelect>(),
+      resultEmployee: [EmployeeServices.getBlankEmployeeSelectTemplate()],
       resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
       selectedRoom: null,
       selectedEmployee: null
@@ -149,7 +149,7 @@ export default defineComponent({
   },
 
   methods: {
-    async getEmployees(): Promise<IList<IEmployeeSelect>> {
+    async getEmployees(): Promise<Array<IEmployeeSelect>> {
       return await EmployeeServices.getEmployeesByPositionSelect("ROLE_MAID");
     },
 

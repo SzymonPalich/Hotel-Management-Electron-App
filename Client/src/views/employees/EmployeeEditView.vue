@@ -130,9 +130,10 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <v-select
                   label="label"
-                  v-model="this.value.role"
+                  v-model="this.value"
                   :options="this.roles"
                   :reduce="(option) => option.role"
+                  :clearable="false"
                 >
                   <template v-slot:option="option">
                     <span :class="option.icon"></span>

@@ -40,6 +40,14 @@ export default class EmployeeServices {
         return tempEmployee;
     }
 
+    public static getBlankEmployeeSelectTemplate(): IEmployeeSelect {
+        const tempEmployee: IEmployeeSelect = {
+            id: 0,
+            label: ""
+        };
+        return tempEmployee;
+    }
+
     public static async fetch(id: string): Promise<IEmployee> {
         const token = localStorage.getItem('token');
         return (await axios.get<IEmployee>(options.apiUrl + `employee/${id}`, {
@@ -79,9 +87,9 @@ export default class EmployeeServices {
         }})).data;
     }  
 
-    public static async getEmployeesByPositionSelect(position: string): Promise<IList<IEmployeeSelect>> {
+    public static async getEmployeesByPositionSelect(position: string): Promise<Array<IEmployeeSelect>> {
         const token = localStorage.getItem('token');
-        return (await axios.get<IList<IEmployeeSelect>>(options.apiUrl + `employee/select-list/position?position=${position}`, { headers:{
+        return (await axios.get<Array<IEmployeeSelect>>(options.apiUrl + `employee/select-list/position?position=${position}`, { headers:{
             "Authorization": `${token}`
         }})).data;
     }
