@@ -1,5 +1,8 @@
 package com.spurvago.server.room;
 
+/**
+ * Enumerator ze statusami pokoi
+ */
 public enum RoomStatus {
     FREE(1),
     FULL(2),

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * Walidator rezerwacji
+ */
 @Component
 public class AccommodationValidator extends Validator {
     private final RoomRepository roomRepository;

@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 
+/**
+ * Rezerwacje
+ */
 @Entity
 @Table
 public class Accommodation {

@@ -26,6 +26,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import javax.sql.DataSource;
 import java.util.List;
 
+/**
+ * Konfiguracja security
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -63,6 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
+    /**
+     * Konfiguracja endpointów security
+     * @param auth
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());

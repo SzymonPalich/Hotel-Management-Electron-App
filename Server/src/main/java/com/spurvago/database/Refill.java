@@ -7,6 +7,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Optional;
 
+/**
+ * Uzupełnianie minibaru
+ */
 @Entity
 @Table (name = "bar_replenish")
 public class Refill {

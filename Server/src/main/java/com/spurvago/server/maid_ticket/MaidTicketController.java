@@ -68,6 +68,4 @@ public class MaidTicketController {
         maidTicketService.refill(id, refillEntity);
     }
     //</editor-fold>
-
-    // TODO Dorobić endpoint na dodawanie zlecenia sprzątania przez recepcjonistę
 }

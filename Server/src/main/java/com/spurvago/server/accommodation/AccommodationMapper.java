@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Mapper do rezerwacji
+ * @param clientRepository
+ * @param roomRepository
+ */
 @Component
 public record AccommodationMapper(ClientRepository clientRepository, RoomRepository roomRepository) {
 

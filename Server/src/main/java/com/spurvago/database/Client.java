@@ -6,7 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-
+/**
+ * Klienci
+ */
 @Entity
 @Table
 public class Client {

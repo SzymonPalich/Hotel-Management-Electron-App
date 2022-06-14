@@ -5,6 +5,9 @@ import com.spurvago.server.security.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Endpointy do autentykacji
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/auth")
