@@ -33,7 +33,7 @@ async function createWindow() {
     resizable: false
   })
 
-  const jarPath = app.getAppPath() + '\\Server.jar';
+  const jarPath = app.getAppPath() + 'Server.jar';
   const child = child_process.spawn(
     'java', ['-jar', jarPath, '']
   );
@@ -53,7 +53,7 @@ async function createWindow() {
   }
 
   win.on('closed', function () {
-      process.on('SIGTERM', () => process.exit());
+    child.kill('SIGHUP')
   })
 }
 
