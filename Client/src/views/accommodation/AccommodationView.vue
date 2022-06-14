@@ -85,6 +85,8 @@
                 <img class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-delete-25.png"
                     />
+                <i class="material-icons align-middle">delete</i>
+                <i class="material-icons align-middle" @click="invoice(accommodation.id)">description</i>
               </td>
             </tr>
           </tbody>
@@ -130,6 +132,10 @@ export default defineComponent({
   methods: {
     async getData(): Promise<IList<IAccommodation>> {
       return await AccommodationServices.getList(this.pager);
+    },
+
+    async invoice(id: string): Promise<void> {
+      return await AccommodationServices.invoice(id);
     },
 
     async find(): Promise<void> {

@@ -39,7 +39,6 @@ public class AccommodationController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public AccommodationVM create(@RequestBody AccommodationFM newEntity) {
-
         return accommodationService.create(newEntity);
     }
     //</editor-fold>
@@ -59,4 +58,12 @@ public class AccommodationController {
         accommodationService.delete(id);
     }
     //</editor-fold>
+
+//    <editor-fold desc="invoice()">
+    @PutMapping(path = "/{id}/invoice")
+    @ResponseStatus(HttpStatus.OK)
+    public void generateInvoice(@PathVariable Long id) {
+        accommodationService.generateInvoice(id);
+    }
+//    </editor-fold>
 }
