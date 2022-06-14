@@ -3,6 +3,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
+import * as child_process from 'child_process'
 
 // Window size
 // small - 1350x700
@@ -32,6 +33,12 @@ async function createWindow() {
     resizable: false
   })
 
+  const jarPath = app.getAppPath() + '\\Server.jar';
+  const child = child_process.spawn(
+    'java', ['-jar', jarPath, '']
+  );
+
+
   win.removeMenu()
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -44,7 +51,12 @@ async function createWindow() {
     win.loadURL('app://./index.html')
     win.webContents.openDevTools()
   }
+
+  win.on('closed', function () {
+      process.on('SIGTERM', () => process.exit());
+  })
 }
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
