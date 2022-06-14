@@ -65,7 +65,7 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-            <tr v-for="maid in result.content.filter(emp => emp.employeeFirstName === this.loginResult.firstName && emp.employeeLastName === this.loginResult.lastName)" :key="maid" class="bg-white">
+            <tr v-for="maid in result.content.filter(emp => (emp.employeeFirstName === this.loginResult.firstName && emp.employeeLastName === this.loginResult.lastName) || this.loginResult.role =='ROLE_MANAGER' )" :key="maid" class="bg-white">
               <td class="text-left py-2 px-4">
                 {{ maid.roomNumber }}
               </td>
