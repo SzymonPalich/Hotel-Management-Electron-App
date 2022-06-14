@@ -39,7 +39,9 @@ public class MaintenanceTicketValidator extends Validator {
                 && !(correctDecimal(model.getPartsPrice(), 8, 2))) {
             return false;
         }
-        return isEmpty(model.getTechnicianReport()) || haveLength(model.getTechnicianReport(), 300);
-        // DATA TODO TODO TODO TODO TODO TODO TODOOOOO
+        if (isEmpty(model.getTechnicianReport())) {
+            return false;
+        }
+        return haveLength(model.getTechnicianReport(), 300);
     }
 }

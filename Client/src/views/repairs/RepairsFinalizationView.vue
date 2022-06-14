@@ -173,9 +173,17 @@ export default defineComponent({
       console.log(this.result);
       this.result.employeeId = 1;
       this.result.finalizationDate = new Date(Date.now());
-      await RepairServices.update(this.getId(), this.result);
-      Utils.acceptedAlert();
-      this.$router.push({ name: "repairs" });
+      try {
+        await RepairServices.update(this.getId(), this.result);
+        Utils.acceptedAlert();
+        this.$router.push({ name: "repairs" });
+      } catch (error) {
+        const err = error as AxiosError
+        if (err.response) {
+          Utils.errorAlert(err.response.status)
+        }
+        return Promise.reject()
+      }
     },
     back(): void {
       this.$router.push({ name: "repairs" });
