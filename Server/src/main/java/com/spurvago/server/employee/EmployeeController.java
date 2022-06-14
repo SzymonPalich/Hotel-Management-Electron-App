@@ -4,7 +4,9 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.database.Employee;
 import com.spurvago.server.employee.models.EmployeeFM;
+import com.spurvago.server.employee.models.EmployeeSelect;
 import com.spurvago.server.employee.models.EmployeeVM;
+import com.spurvago.server.room.models.RoomSelect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +76,22 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployeesByPosition(@RequestParam String position) {
         return employeeService.findByPosition(position);
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="getSelectList()">
+    @GetMapping(path = "/select-list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EmployeeSelect> getSelectList() {
+        return employeeService.getSelectList();
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="getSelectListPosition()">
+    @RequestMapping(method = RequestMethod.GET, path = "/select-list/position")
+    @ResponseStatus(HttpStatus.OK)
+    public List<EmployeeSelect> getPositionSelectList(@RequestParam String position) {
+        return employeeService.findByPositionSelect(position);
     }
     //</editor-fold>
 }

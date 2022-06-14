@@ -148,12 +148,23 @@
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select class="w-full border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none" @change="selectPosition($event.target.value)">
-                  <option value="ROLE_MANAGER">Kierownik</option>
-                  <option value="ROLE_MAID">Pokojówka</option>
-                  <option value="ROLE_TECHNICIAN">Technik</option>
-                  <option value="ROLE_RECEPTIONIST">Recepcjonista</option>
-                </select>
+                <v-select
+                  label="label"
+                  v-model="this.value"
+                  :options="this.roles"
+                  :reduce="(option) => option.role"
+                >
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.label }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -281,20 +292,38 @@ import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
 import { AxiosError } from "axios";
+import 'vue-select/dist/vue-select.css';
 
 export default defineComponent({
   data() {
     return {
       result: EmployeeServices.getBlankEmployeeTemplate(),
+      value: "ROLE_MANAGER",
+      roles: [{
+        label: "Kierownik",
+        role: "ROLE_MANAGER"
+      },
+      {
+        label: "Pokojówka",
+        role: "ROLE_MAID"
+      },
+      {
+        label: "Technik",
+        role: "ROLE_TECHNICIAN"
+      },
+      {
+        label: "Recepcjonista",
+        role: "ROLE_RECEPTIONIST"
+      }],
     };
   },
 
   mounted() {
-    this.result.position = "1";
+    this.result.position = "ROLE_MANAGER";
   },
-
   methods: {
     async add(): Promise<void> {
+      this.result.position = this.value;
       try {
         await EmployeeServices.create(this.result);
         this.$router.push({ name: "employees" });
@@ -306,17 +335,10 @@ export default defineComponent({
       }
     },
 
-    mounted() {
-      this.result.position = "ROLE_MANAGER";
-    },
-
-    selectPosition: function (value: string) {
-      this.result.position = value;
-    },
-
     back(): void {
       this.$router.push({ name: "employees" });
     },
   },
-});
+}
+);
 </script>

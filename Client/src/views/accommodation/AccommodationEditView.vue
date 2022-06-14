@@ -26,26 +26,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Klient</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectClient($event.target.value)"
+                <v-select
+                  label="clientLabel"
+                  v-model="this.selectedClient"
+                  :options="this.resultClients"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz klienta"
                 >
-                  <option
-                    v-for="client in resultClients.content"
-                    :key="client"
-                    v-bind:value="client.id"
-                    :selected="client.id == this.result.clientId"
-                  >
-                    {{ client.firstName }} {{ client.lastName }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.clientLabel }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -53,26 +52,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectRoom($event.target.value)"
+                <v-select
+                  label="roomLabel"
+                  v-model="this.selectedRoom"
+                  :options="this.resultRooms"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz typ"
                 >
-                  <option
-                    v-for="room in resultRooms.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                    :selected="room.id == this.result.roomId"
-                  >
-                    {{ room.roomNumber }} {{ room.roomType }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.roomLabel }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -139,26 +137,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Dostępność</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectAccess($event.target.value)"
+                <v-select
+                  label="text"
+                  v-model="this.selectedAccessibility"
+                  :options="this.accessibility"
+                  :reduce="(option) => option.onlyreserv"
+                  :clearable="false"
+                  placeholder="Wybierz dostępność"
                 >
-                  <option
-                    v-for="access in accessibility"
-                    :key="access"
-                    v-bind:value="access.onlyreserv"
-                    :selected="access.onlyreserv == this.result.reservationOnly"
-                  >
-                    {{ access.text }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.text }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
           </dl>
@@ -207,8 +204,8 @@ import { Options, Vue } from "vue-class-component";
 import AccommodationServices, { IAccommodation } from "../../services/AccommodationService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
-import ClientsServices, { IClient } from "../../services/ClientsService";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import ClientsServices, { IClient, IClientSelect } from "../../services/ClientsService";
+import RoomsServices, { IRoom, IRoomSelect } from "../../services/RoomsService";
 import { Axios, AxiosError } from "axios";
 
 export default defineComponent({
@@ -216,12 +213,15 @@ export default defineComponent({
     return {
       result: AccommodationServices.getBlankAccommodationTemplate(),
       pager: Utils.getMaxPager(),
-      resultClients: Utils.getBlankListTemplate<IClient>(),
-      resultRooms: Utils.getBlankListTemplate<IRoom>(),
+      resultClients: [ClientsServices.getBlankClientSelectTemplate()],
+      resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
       accessibility: [
         { onlyreserv: true, text:"Tylko za rezerwacją" },
         { onlyreserv: false, text:"Dowolna" }
       ],
+      selectedRoom: null,
+      selectedClient: null,
+      selectedAccessibility: null
     };
   },
 
@@ -250,27 +250,18 @@ export default defineComponent({
       }
     },
 
-    async getClients(): Promise<IList<IClient>> {
-      return await ClientsServices.getList(this.pager);
+    async getClients(): Promise<Array<IClientSelect>> {
+      return await ClientsServices.getSelectList();
     },
 
-    async getRooms(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
-    },
-
-    selectRoom: function (value: number) {
-      this.result.roomId = value;
-    },
-
-    selectClient: function (value: number) {
-      this.result.clientId = value;
-    },
-
-    selectAccess: function (value: boolean) {
-      this.result.reservationOnly = value;
+    async getRooms(): Promise<Array<IRoomSelect>> {
+      return await RoomsServices.getSelectList();
     },
 
     async save(): Promise<void> {
+      this.result.roomId = this.selectedRoom || 0;
+      this.result.clientId = this.selectedClient || 0;
+      this.result.reservationOnly = this.selectedAccessibility || false;
       try {
         await AccommodationServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

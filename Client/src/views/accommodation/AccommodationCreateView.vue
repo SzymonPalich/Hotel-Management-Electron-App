@@ -62,13 +62,25 @@
               <div class="float-left">
                 <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  <select class="border-2 border-gray-400 h-full w-full rounded-xl px-2 py-0_1 outline-none focus:border-2 focus:border-cyan-400 focus:rounded-xl">
-                    <option selected disabled>Wybierz typ</option>
-                    <option value="0">Wszystkie</option>
-                    <option value="1">Ekonomiczny</option>
-                    <option value="2">Standardowy</option>
-                    <option value="3">Deluxe</option>
-                  </select>
+                <v-select
+                  label="type"
+                  v-model="this.roomValue"
+                  :options="this.resultRoomTypes.content"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz typ"
+                >
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.type }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
                 </dd>
               </div>
             </div>
@@ -162,6 +174,7 @@ import Utils, { IPager, IList } from "../../Utils";
 import ClientsServices, { IClient, IClientSelect } from "../../services/ClientsService";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { AxiosError } from "axios";
+import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
 
 export default defineComponent({
   data() {
@@ -171,17 +184,24 @@ export default defineComponent({
       valueClient: null,
       resultClients: [ClientsServices.getBlankClientSelectTemplate()],
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
+      resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
+      roomValue: null,
     };
   },
 
   mounted() {
     this.getClients().then((data) => (this.resultClients = data));
     this.getRooms().then((data) => (this.resultRooms = data));
+    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
   methods: {
     async getClients(): Promise<Array<IClientSelect>> {
       return await ClientsServices.getSelectList();
+    },
+
+    async getRoomTypes(): Promise<IList<IRoomType>> {
+      return await RoomTypesServices.getList(this.pager);
     },
 
     async getRooms(): Promise<IList<IRoom>> {
