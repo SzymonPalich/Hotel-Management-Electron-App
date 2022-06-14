@@ -65,12 +65,26 @@ export default class EmployeeServices {
         }})).data;
     }
 
+    public static async getSelectList(): Promise<Array<IEmployeeSelect>> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IEmployeeSelect>>(options.apiUrl + `employee/select-list`, { headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }
+
     public static async getEmployeesByPosition(pager: IPager, position: string): Promise<IList<IEmployee>> {
         const token = localStorage.getItem('token');
         return (await axios.get<IList<IEmployee>>(options.apiUrl + `employee/position?position=${position}`, { params: pager , headers:{
             "Authorization": `${token}`
         }})).data;
     }  
+
+    public static async getEmployeesByPositionSelect(position: string): Promise<IList<IEmployeeSelect>> {
+        const token = localStorage.getItem('token');
+        return (await axios.get<IList<IEmployeeSelect>>(options.apiUrl + `employee/select-list/position?position=${position}`, { headers:{
+            "Authorization": `${token}`
+        }})).data;
+    }
 
     public static async delete(id: string): Promise<IEmployee> {
         const token = localStorage.getItem('token');
@@ -103,4 +117,9 @@ export interface IEmployee {
     pesel: string;
     employmentDate: Date;
     dismissalDate?: Date;
+}
+
+export interface IEmployeeSelect {
+    id: number;
+    label: string;
 }

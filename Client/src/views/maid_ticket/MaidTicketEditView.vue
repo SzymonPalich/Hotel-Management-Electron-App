@@ -26,26 +26,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Sprzątacz</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectEmployee($event.target.value)"
+                <v-select
+                  label="label"
+                  v-model="this.selectedEmployee"
+                  :options="this.resultEmployee.content"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz pracownika"
                 >
-                  <option
-                    v-for="emp in resultEmployee"
-                    :key="emp"
-                    v-bind:value="emp.id"
-                    :selected="emp.id == this.result.employeeId"
-                  >
-                    {{ emp.firstName }} {{ emp.lastName }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.label }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -58,26 +57,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectRoom($event.target.value)"
+               <v-select
+                  label="roomLabel"
+                  v-model="this.selectedRoom"
+                  :options="this.resultRooms"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz pokój"
                 >
-                  <option
-                    v-for="room in resultRooms.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                    :selected="room.id == this.result.roomId"
-                  >
-                    {{ room.roomNumber }} {{ room.roomType }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.roomLabel }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -150,8 +148,8 @@ import { Options, Vue } from "vue-class-component";
 import MaidTicketServices, { IMaid } from "../../services/MaidTicketService";
 import { defineComponent } from "vue";
 import Utils, { IList, IPager } from "../../Utils";
-import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
+import EmployeeServices, { IEmployee, IEmployeeSelect } from "../../services/EmployeeService";
+import RoomsServices, { IRoom, IRoomSelect } from "../../services/RoomsService";
 import { AxiosError } from "axios";
 
 export default defineComponent({
@@ -159,8 +157,10 @@ export default defineComponent({
     return {
       result: MaidTicketServices.getBlankMaidTicketTemplate(),
       pager: Utils.getDefaultPager(),
-      resultEmployee: Utils.getBlankListTemplate<IEmployee>(),
-      resultRooms: Utils.getBlankListTemplate<IRoom>(),
+      resultEmployee: Utils.getBlankListTemplate<IEmployeeSelect>(),
+      resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
+      selectedRoom: null,
+      selectedEmployee: null
     };
   },
 
@@ -182,23 +182,17 @@ export default defineComponent({
       return await MaidTicketServices.fetch(this.getId());
     },
 
-    async getEmployees(): Promise<IList<IEmployee>> {
-      return await EmployeeServices.getEmployeesByPosition(this.pager, "ROLE_MAID");
+    async getEmployees(): Promise<IList<IEmployeeSelect>> {
+      return await EmployeeServices.getEmployeesByPositionSelect("ROLE_MAID");
     },
 
-    async getRooms(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
-    },
-
-    selectRoom: function (value: number) {
-      this.result.roomId = value;
-    },
-
-    selectEmployee: function (value: number) {
-      this.result.employeeId = value;
+    async getRooms(): Promise<Array<IRoomSelect>> {
+      return await RoomsServices.getSelectList();
     },
 
     async save(): Promise<void> {
+      this.result.employeeId = this.selectedEmployee || 0
+      this.result.roomId = this.selectedRoom || 0
       try {
         await MaidTicketServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

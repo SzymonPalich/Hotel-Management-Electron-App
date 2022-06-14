@@ -2,6 +2,7 @@ package com.spurvago.server.employee;
 
 import com.spurvago.database.Employee;
 import com.spurvago.server.employee.models.EmployeeFM;
+import com.spurvago.server.employee.models.EmployeeSelect;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.stereotype.Component;
 
@@ -59,6 +60,23 @@ public record EmployeeMapper() {
         List<EmployeeVM> destList = new ArrayList<>();
         for (Employee srcEntity : srcList) {
             destList.add(mapToVM(srcEntity));
+        }
+
+        return destList;
+    }
+
+    EmployeeSelect mapToSelect(Employee src) {
+        EmployeeSelect dest = new EmployeeSelect();
+        dest.setId(src.getId());
+        dest.setLabel(src.getFirstName() + " " + src.getLastName());
+
+        return dest;
+    }
+
+    List<EmployeeSelect> mapToSelectList(List<Employee> srcList) {
+        List<EmployeeSelect> destList = new ArrayList<>();
+        for (Employee src : srcList) {
+            destList.add(mapToSelect(src));
         }
 
         return destList;

@@ -128,26 +128,23 @@
             >
               <dt class="text-sm font-medium text-gray-500">Stanowisko</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectPosition($event.target.value)"
+                <v-select
+                  label="label"
+                  v-model="this.value.role"
+                  :options="this.roles"
+                  :reduce="(option) => option.role"
                 >
-                  <option
-                    v-for="positions in position"
-                    :key="positions"
-                    v-bind:value="positions.value"
-                    :selected="positions.value == this.result.position"
-                  >
-                    {{ positions.text }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.label }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -273,18 +270,30 @@ import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import { defineComponent } from "vue";
 import Utils, { IPager, IList } from "../../Utils";
 import { AxiosError } from "axios";
+import 'vue-select/dist/vue-select.css';
 
 export default defineComponent({
   data() {
     return {
       result: EmployeeServices.getBlankEmployeeTemplate(),
       pager: Utils.getDefaultPager(),
-      position: [
-        { value: "ROLE_MANAGER", text: "Manager" },
-        { value: "ROLE_MAID", text: "Pokojówka" },
-        { value: "ROLE_TECHNICIAN", text: "Technik" },
-        { value: "ROLE_RECEPTIONIST", text: "Recepcjonista" }
-      ],
+      value: "Wybierz role",
+      roles: [{
+        label: "Kierownik",
+        role: "ROLE_MANAGER"
+      },
+      {
+        label: "Pokojówka",
+        role: "ROLE_MAID"
+      },
+      {
+        label: "Technik",
+        role: "ROLE_TECHNICIAN"
+      },
+      {
+        label: "Recepcjonista",
+        role: "ROLE_RECEPTIONIST"
+      }],
     };
   },
 
@@ -310,11 +319,8 @@ export default defineComponent({
       }
     },
 
-    selectPosition: function (value: string) {
-      this.result.position = value;
-    },
-
     async save(): Promise<void> {
+      this.result.position = this.value;
       try {
         await EmployeeServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

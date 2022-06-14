@@ -5,6 +5,7 @@ import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Employee;
 import com.spurvago.server.employee.models.EmployeeFM;
+import com.spurvago.server.employee.models.EmployeeSelect;
 import com.spurvago.server.employee.models.EmployeeVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -100,5 +101,17 @@ public record EmployeeService(EmployeeRepository employeeRepository,
     // TODO Tak jak w kontrolerze pisałem
     public List<Employee> findByPosition(String position) {
         return employeeRepository.findEmployeesByPosition(position);
+    }
+
+    List<EmployeeSelect> findByPositionSelect(String position) {
+        List<Employee> entities = employeeRepository.findEmployeesByPosition(position);
+
+        return employeeMapper.mapToSelectList(entities);
+    }
+
+    public List<EmployeeSelect> getSelectList() {
+        List<Employee> entities = employeeRepository.findAll();
+
+        return employeeMapper.mapToSelectList(entities);
     }
 }

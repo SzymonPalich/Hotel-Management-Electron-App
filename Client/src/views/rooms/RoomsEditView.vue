@@ -48,26 +48,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectRoomType($event.target.value)"
+                <v-select
+                  label="type"
+                  v-model="this.roomValue"
+                  :options="this.resultRoomTypes.content"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  placeholder="Wybierz typ"
                 >
-                  <option
-                    v-for="room in resultRoomTypes.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                    :selected="room.type == this.result.roomType"
-                  >
-                    {{ room.type }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.type }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
             <div
@@ -80,26 +79,25 @@
             >
               <dt class="text-sm font-medium text-gray-500">Status</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <select
-                  class="
-                    w-full
-                    border-2 border-gray-400
-                    px-2
-                    py-0_1
-                    rounded-xl
-                    outline-none
-                  "
-                  @change="selectStatus($event.target.value)"
+                <v-select
+                  label="text"
+                  v-model="status"
+                  :options="this.statuses"
+                  :reduce="(option) => option.value"
+                  :clearable="false"
+                  placeholder="Wybierz fristajlo"
                 >
-                  <option
-                    v-for="status in statuses"
-                    :key="status"
-                    v-bind:value="status.value"
-                    :selected="status.value == this.result.status"
-                  >
-                    {{ status.text }}
-                  </option>
-                </select>
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.text }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
+                    </template>
+                  </template>
+                </v-select>
               </dd>
             </div>
           </dl>
@@ -162,6 +160,8 @@ export default defineComponent({
         { value: 2, text: "Zajęty" },
         { value: 3, text: "Rezerwacja" }
       ],
+      roomValue: null,
+      status: null
     };
   },
 
@@ -192,15 +192,9 @@ export default defineComponent({
       return await RoomTypesServices.getList(this.pager);
     },
 
-    selectRoomType: function (value: number) {
-      this.result.roomTypeId = value;
-    },
-
-    selectStatus: function (value: number) {
-      this.result.status = value;
-    },
-
     async save(): Promise<void> {
+      this.result.roomTypeId = this.roomValue || 0;
+      this.result.status = this.status || 0;
       try {
         await RoomsServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

@@ -2,11 +2,14 @@ package com.spurvago.server.room_type;
 
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
+import com.spurvago.server.room.models.RoomSelect;
 import com.spurvago.server.room_type.models.RoomTypeFM;
 import com.spurvago.server.room_type.models.RoomTypeVM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController

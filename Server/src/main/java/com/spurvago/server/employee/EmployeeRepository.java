@@ -2,6 +2,7 @@ package com.spurvago.server.employee;
 
 
 import com.spurvago.database.Employee;
+import com.spurvago.server.employee.models.EmployeeSelect;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -55,4 +56,6 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     Page<Employee> findAll(Pageable pageable);
 
     Employee findByEmail(String email);
+
+    List<Employee> findAll();
 }
