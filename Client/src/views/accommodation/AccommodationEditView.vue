@@ -219,18 +219,19 @@ export default defineComponent({
         { onlyreserv: true, text:"Tylko za rezerwacją" },
         { onlyreserv: false, text:"Dowolna" }
       ],
-      selectedRoom: null,
-      selectedClient: null,
-      selectedAccessibility: null
+      selectedRoom: null as any,
+      selectedClient: null as any,
+      selectedAccessibility: null as any
     };
   },
 
   mounted() {
-    console.log(this.getData());
-    console.log(this.getClients());
     this.getData().then((data) => (this.result = data));
     this.getClients().then((data) => (this.resultClients = data));
     this.getRooms().then((data) => (this.resultRooms = data));
+    this.getData().then((data) => (this.selectedClient = data.clientId))
+    this.getData().then((data) => (this.selectedRoom = data.roomId))
+    this.getData().then((data) => (this.selectedAccessibility = data.reservationOnly))
   },
 
   methods: {

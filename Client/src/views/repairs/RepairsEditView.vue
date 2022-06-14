@@ -152,7 +152,7 @@ export default defineComponent({
   data() {
     return {
       result: RepairServices.getBlankRepairTemplate(),
-      value: null,
+      value: null as any,
       pager: Utils.getMaxPager(),
       resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
     };
@@ -162,6 +162,7 @@ export default defineComponent({
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
     this.getRooms().then((data) => (this.resultRooms = data));
+    this.getData().then((data) => (this.value = data.roomId))
   },
 
   methods: {
