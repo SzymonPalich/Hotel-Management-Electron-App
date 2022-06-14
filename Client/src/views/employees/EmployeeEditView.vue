@@ -28,15 +28,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="text"
                   required
@@ -51,15 +50,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="text"
                   required
@@ -79,15 +77,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="email"
                   required
@@ -102,15 +99,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="text"
                   required
@@ -155,15 +151,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="text"
                   required
@@ -185,15 +180,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="date"
                   required
@@ -208,15 +202,14 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                    border-2 border-gray-400
+                     border border-gray-300
                     w-full
                     h-full
-                    rounded-xl
-                    text-md
+                    rounded-md
                     px-2
-                    py-1
+                    py-1_5
                     outline-none
-                    focus:border-2 focus:border-cyan-400 focus:rounded-xl
+                    focus:border focus:border-cyan-400 focus:rounded-md
                   "
                   type="number"
                   required

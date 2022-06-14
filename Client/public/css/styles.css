@@ -25,6 +25,16 @@ option:hover {
     padding-bottom: 0.1rem;
 }
 
+.py-1_5 {
+    padding-top: 0.36rem;
+    padding-bottom: 0.36rem;
+}
+
+.border-gray-300 {
+    --tw-border-opacity: 1;
+    border-color: rgb(201 201 202 / var(--tw-border-opacity));
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

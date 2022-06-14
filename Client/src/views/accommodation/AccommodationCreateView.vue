@@ -24,15 +24,15 @@
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
                     class="
-                      border-2 border-gray-400
-                      h-full
-                      w-full
-                      rounded-xl
-                      px-2
-                      py-0_1
-                      outline-none
-                      focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                    "
+                    border border-gray-300
+                    w-full
+                    h-full
+                    rounded-md
+                    px-2
+                    py-1_5
+                    outline-none
+                    focus:border focus:border-cyan-400 focus:rounded-md
+                  "
                     type="date"
                     required
                     v-model="this.result.startDate"
@@ -44,15 +44,15 @@
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
                     class="
-                      border-2 border-gray-400
-                      h-full
+                      border border-gray-300
                       w-full
-                      rounded-xl
+                      h-full
+                      rounded-md
                       px-2
-                      py-0_1
+                      py-1_5
                       outline-none
-                      focus:border-2 focus:border-cyan-400 focus:rounded-xl
-                    "
+                      focus:border focus:border-cyan-400 focus:rounded-md
+                  "
                     type="date"
                     required
                     v-model="this.result.endDate"
@@ -84,7 +84,7 @@
                 </dd>
               </div>
             </div>
-            <div class="border-2 border-gray-400 px-2 py-0_1 rounded-xl outline-none mx-6">
+            <div class="border border-gray-300 px-2 py-0_1 rounded-md outline-none mx-6">
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 p-2">
                 <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none" @change="selectRoom($event.target.value)">
                   <option class="hover:bg-gray-200 hover:rounded-xl focus:visible focus:bg-slate-500 focus:ring" v-for="room in resultRooms.content" :key="room" v-bind:value="room.id">
