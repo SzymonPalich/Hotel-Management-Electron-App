@@ -301,6 +301,7 @@ export default defineComponent({
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
+    this.getData().then((data) => (this.value = data.position))
   },
 
   methods: {

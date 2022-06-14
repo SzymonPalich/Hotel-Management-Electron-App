@@ -159,8 +159,8 @@ export default defineComponent({
       pager: Utils.getDefaultPager(),
       resultEmployee: [EmployeeServices.getBlankEmployeeSelectTemplate()],
       resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
-      selectedRoom: null,
-      selectedEmployee: null
+      selectedRoom: null as any,
+      selectedEmployee: null as any
     };
   },
 
@@ -172,6 +172,8 @@ export default defineComponent({
     this.getData().then((data) => (this.result = data));
     this.getEmployees().then((data) => (this.resultEmployee = data));
     this.getRooms().then((data) => (this.resultRooms = data));
+    this.getData().then((data) => (this.selectedRoom = data.roomId))
+    this.getData().then((data) => (this.selectedEmployee = data.employeeId))
   },
 
   methods: {

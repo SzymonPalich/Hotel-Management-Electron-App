@@ -160,8 +160,8 @@ export default defineComponent({
         { value: 2, text: "Zajęty" },
         { value: 3, text: "Rezerwacja" }
       ],
-      roomValue: null,
-      status: null
+      roomValue: null as any,
+      status: null as any
     };
   },
 
@@ -169,6 +169,8 @@ export default defineComponent({
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
+    this.getData().then((data) => (this.roomValue = data.roomTypeId));
+    this.getData().then((data) => (this.status = data.status))
   },
 
   methods: {
