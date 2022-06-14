@@ -19,9 +19,10 @@
       </div>
       <div class="pr-6 flex items-center">
         <router-link :to="{ name: 'maid_ticket-create' }">
-          <i v-if="this.loginResult.role=='ROLE_MANAGER'" class="px-2 py-1 rounded-xl text-white bg-gray-800 material-icons"
-            >add</i
-          >
+          <img v-if="this.loginResult.role=='ROLE_MANAGER'"
+          class="px-2 py-1 rounded-xl text-white bg-gray-800"
+          src="../../../public/css/fonts/icons8-plus-25.png"
+          />
         </router-link>
       </div>
     </div>
@@ -78,19 +79,19 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
-                  <i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">local_bar</i>
+                  <img v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle" src="../../../public/css/fonts/icons8-cocktail-25.png"/>
                   </router-link>
                 <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"
-                  ><i class="material-icons align-middle"
-                    >description</i
-                  ></router-link
+                  ><img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-document-30.png"
+                  /></router-link
                 >
                 <router-link
                   :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
-                  ><i v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle">edit</i></router-link
+                  ><img v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle" src="../../../public/css/fonts/icons8-edit-25.png"/></router-link
                 >
-                <i @click="alertDisplay(maid.id)" class="material-icons align-middle">delete</i>
+                <img @click="alertDisplay(maid.id)" class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
               </td>
             </tr>
           </tbody>

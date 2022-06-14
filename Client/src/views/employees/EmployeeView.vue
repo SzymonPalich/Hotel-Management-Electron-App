@@ -18,19 +18,11 @@
         </div>
       </div>
       <div class="pr-6 flex items-center">
-        <i
-          class="
-            px-2
-            py-1
-            rounded-xl
-            text-white
-            bg-gray-800
-            material-icons
-            cursor-pointer
-          "
+        <img
+         class="px-2 py-1 rounded-xl text-white bg-gray-800"
+         src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'employees-create' })"
-          >add</i
-        >
+          />
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
@@ -66,20 +58,21 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'employee-info', params: { id: emp.id } }"
-                  ><i class="material-icons align-middle"
-                    >description</i
-                  ></router-link
+                  ><img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-document-30.png"
+                  /></router-link
                 >
                 <router-link
                   :to="{ name: 'employees-edit', params: { id: emp.id } }"
                 >
-                  <i class="material-icons align-middle">edit</i>
+                  <img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-edit-25.png"
+                  />
                 </router-link>
-                <i
-                  class="material-icons align-middle cursor-pointer"
+                <img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-delete-25.png"
                   @click="alertDisplay(emp.id)"
-                  >delete</i
-                >
+                  />
               </td>
             </tr>
           </tbody>
