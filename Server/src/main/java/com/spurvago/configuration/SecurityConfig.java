@@ -73,8 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
-                // TODO: Usunąć, przy implementacji uprawnień
-//                .antMatchers("/**").permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
@@ -116,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));
         http.cors().configurationSource(x->{
            var cors = new CorsConfiguration();
-           cors.setAllowedOrigins(List.of("http://localhost:8080"));
+           cors.setAllowedOrigins(List.of("http://localhost:8080", "[::1]:8081", "*"));
            cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
            cors.setAllowedHeaders(List.of("*"));
            cors.setAllowCredentials(Boolean.TRUE);
