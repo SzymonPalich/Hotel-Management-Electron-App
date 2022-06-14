@@ -290,7 +290,7 @@ export default defineComponent({
   },
 
   mounted() {
-    this.result.position = "1";
+    this.result.position = "ROLE_MANAGER";
   },
 
   methods: {

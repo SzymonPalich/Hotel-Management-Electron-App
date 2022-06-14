@@ -32,7 +32,7 @@ export default class RepairServices {
 
     public static async update(id: string, repair: IRepair): Promise<IRepair> {
         const token = localStorage.getItem('token');
-        return (await axios.put<IRepair>(options.apiUrl + `repairs/maintenance_ticket/${id}`, repair, {
+        return (await axios.put<IRepair>(options.apiUrl + `maintenance_ticket/${id}`, repair, {
             headers: {
               'Authorization': `${token}` 
             }
