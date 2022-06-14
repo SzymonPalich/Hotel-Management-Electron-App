@@ -25,7 +25,7 @@ export default class ProductServices {
 
     public static async update(id: string, repair: IProduct): Promise<IProduct> {
         const token = localStorage.getItem('token');
-        return (await axios.put<IProduct>(options.apiUrl + `repairs/product/${id}`, repair, {
+        return (await axios.put<IProduct>(options.apiUrl + `product/${id}`, repair, {
             headers: {
               'Authorization': `${token}` 
             }
