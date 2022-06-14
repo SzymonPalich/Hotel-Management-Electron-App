@@ -114,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new HttpStatusEntryPoint((HttpStatus.UNAUTHORIZED)));
         http.cors().configurationSource(x->{
            var cors = new CorsConfiguration();
-           cors.setAllowedOrigins(List.of("http://localhost:8080", "[::1]:8081", "*"));
+           cors.addAllowedOriginPattern("*");
            cors.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
            cors.setAllowedHeaders(List.of("*"));
            cors.setAllowCredentials(Boolean.TRUE);
