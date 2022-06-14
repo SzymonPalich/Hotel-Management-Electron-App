@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Tworznie JWT
+ */
 @CrossOrigin
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private static final String TOKEN_HEADER = "Authorization";

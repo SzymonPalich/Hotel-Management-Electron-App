@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
+/**
+ * Zwrócenie encji zalogowanego urzytkownika
+ * @param employeeRepository
+ */
 @Component
 public record UserManager(EmployeeRepository employeeRepository) {
 

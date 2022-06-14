@@ -8,6 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+/**
+ * Klasa main aplikacji
+ */
 @Configuration
 @ComponentScan({"com.spurvago.configuration"})
 @SpringBootApplication

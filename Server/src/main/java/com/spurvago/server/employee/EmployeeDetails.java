@@ -8,6 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Połączenie pracowników z autoryzacją
+ * @param employee
+ */
 public record EmployeeDetails(Employee employee) implements UserDetails {
 
     //<editor-fold desc="Basic settings">

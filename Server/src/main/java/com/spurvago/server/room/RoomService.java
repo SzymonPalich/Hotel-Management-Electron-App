@@ -58,6 +58,10 @@ public record RoomService(RoomRepository roomRepository,
                 entities.getTotalElements(), entities.getTotalPages());
     }
 
+    /**
+     * Lista pokojów do listy rozwijanej
+     * @return
+     */
     public List<RoomSelect> getSelectList() {
         List<Room> entities = roomRepository.findAll();
 
@@ -65,6 +69,13 @@ public record RoomService(RoomRepository roomRepository,
         return entitiesDTO;
     }
 
+    /**
+     * Pobranie listy dostępnych pokoi
+     * @param startDate
+     * @param endDate
+     * @param roomTypeId
+     * @return
+     */
     public List<RoomSelect> getAvailableList(Date startDate, Date endDate, long roomTypeId) {
         var roomType = roomTypeRepository.findById(roomTypeId);
         if (roomType.isEmpty()) {
@@ -134,6 +145,14 @@ public record RoomService(RoomRepository roomRepository,
         roomRepository.delete(entity);
     }
 
+    /**
+     * Sprawdzenie dostępności pokoju
+     * @param startDate
+     * @param endDate
+     * @param targetStartDate
+     * @param targetEndDate
+     * @return
+     */
     private boolean checkAvailability(Date startDate, Date endDate,
                                       Date targetStartDate, Date targetEndDate) {
         long nStartDate = startDate.getTime();
@@ -154,21 +173,7 @@ public record RoomService(RoomRepository roomRepository,
         }
 
         return true;
-//        if (tpmStartDate.before(accommodation.getStartDate())
-//                && tpmEndDate.after(accommodation.getEndDate())) {
-//            isAvailable = false;
-//            break;
-//        }
-//        if (startDate.after(accommodation.getStartDate())
-//                && startDate.before(accommodation.getEndDate())) {
-//            isAvailable = false;
-//            break;
-//        }
-//        if (endDate.after(accommodation.getStartDate())
-//                && endDate.before(accommodation.getEndDate())) {
-//            isAvailable = false;
-//            break;
-//        }
+
 
     }
 }

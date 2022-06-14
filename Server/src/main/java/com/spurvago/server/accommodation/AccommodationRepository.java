@@ -22,6 +22,11 @@ import static com.spurvago.components.Utils.asLikeQuery;
 public interface AccommodationRepository
         extends PagingAndSortingRepository<Accommodation, Long>, JpaSpecificationExecutor<Accommodation> {
 
+    /**
+     * Wyszukiwanie z rezerwacjach
+     * @param searchWords
+     * @return
+     */
     static Specification<Accommodation> search(List<String> searchWords) {
         return (r, q, b) -> {
             Join<Accommodation, Client> joinClient = r.join("client");

@@ -1,7 +1,9 @@
 package com.spurvago.server.employee;
 
+/**
+ * Role pracowników
+ */
 public enum EmployeePosition {
-    // TODO: Uzupełnić o pozostałe role
     MANAGER("ROLE_MANAGER"),
     MAID("ROLE_MAID"),
     TECHNICIAN("ROLE_TECHNICIAN"),

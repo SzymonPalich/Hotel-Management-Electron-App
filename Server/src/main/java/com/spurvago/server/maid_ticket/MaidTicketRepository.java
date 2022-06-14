@@ -24,7 +24,6 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
         return (r, q, b) -> {
             Join<MaidTicket, Employee> joinEmp = r.join("employee");
             Join<MaidTicket, Room> joinRoom = r.join("room");
-            Join<Room, RoomType> joinRoomType = joinRoom.join("roomType");
             Predicate predicate = null;
             Predicate tempPredicate;
 

@@ -4,6 +4,10 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+/**
+ * Lista z paginacja
+ * @param <T>
+ */
 public class ListPaginated<T> {
     public List<T> content;
     public Pager pager;

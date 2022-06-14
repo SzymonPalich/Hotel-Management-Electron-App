@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Map;
 
+/**
+ * Lista produktów uzupełnionych w minibarku wraz z ilością
+ */
 @Getter
 @Setter
 public class RefillFM {

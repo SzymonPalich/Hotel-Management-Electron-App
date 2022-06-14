@@ -101,6 +101,11 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         maidTicketRepository.delete(entity);
     }
 
+    /**
+     * Finalizowanie sprzątania po uzupełnieniu minibarku przez osobę sprzątającą
+     * @param id
+     * @param refillEntity
+     */
     public void refill(Long id, RefillFM refillEntity) {
         Optional<MaidTicket> optionalMaidTicket = maidTicketRepository.findById(id);
         MaidTicket maidTicketEntity;

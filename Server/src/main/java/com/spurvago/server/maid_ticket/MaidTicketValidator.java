@@ -36,6 +36,12 @@ public class MaidTicketValidator extends Validator {
         return model.getFinalizationDate() == null;
     }
 
+    /**
+     * Walidacja czy produkty wprowadzone podczas finalizacji sprzątania istnieją w magazynie
+     * @param availableProductIds
+     * @param refillEntity
+     * @return
+     */
     public boolean validate(HashSet<Long> availableProductIds, RefillFM refillEntity) {
         for (var x : refillEntity.getProducts().keySet()) {
             if (!(availableProductIds.contains(x))) {

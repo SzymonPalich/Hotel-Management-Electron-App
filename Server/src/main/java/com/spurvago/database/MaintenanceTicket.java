@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+/**
+ * Naprawy
+ */
 @Entity
 @Table
 public class MaintenanceTicket {

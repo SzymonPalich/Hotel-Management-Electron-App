@@ -69,8 +69,6 @@ public class EmployeeController {
     }
     //</editor-fold>
 
-    // TODO To można przenieść do zwykłego getList() front wtedy będzie wysyłał do search wartość
-    //      Zmieni się to po zaimplementowaniu autoryzacji
     //<editor-fold desc="getEmployeesByPosition">
     @RequestMapping(method = RequestMethod.GET, path = "/position")
     @ResponseStatus(HttpStatus.OK)

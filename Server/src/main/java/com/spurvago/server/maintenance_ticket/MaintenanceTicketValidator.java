@@ -13,6 +13,12 @@ public class MaintenanceTicketValidator extends Validator {
     private final RoomRepository roomRepository;
     private final EmployeeRepository employeeRepository;
 
+    /**
+     *
+     * @param maintenanceTicketRepository
+     * @param roomRepository
+     * @param employeeRepository
+     */
     @Autowired
     public MaintenanceTicketValidator(MaintenanceTicketRepository maintenanceTicketRepository, RoomRepository roomRepository, EmployeeRepository employeeRepository) {
         this.maintenanceTicketRepository = maintenanceTicketRepository;
@@ -20,6 +26,11 @@ public class MaintenanceTicketValidator extends Validator {
         this.employeeRepository = employeeRepository;
     }
 
+    /**
+     *
+     * @param model
+     * @return
+     */
     public boolean validate(MaintenanceTicketFM model) {
         if (!(roomRepository.existsById(model.getRoomId()))) {
             return false;

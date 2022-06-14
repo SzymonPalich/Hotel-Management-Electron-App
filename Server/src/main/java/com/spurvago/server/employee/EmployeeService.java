@@ -98,11 +98,15 @@ public record EmployeeService(EmployeeRepository employeeRepository,
         employeeRepository.delete(entity);
     }
 
-    // TODO Tak jak w kontrolerze pisałem
     public List<Employee> findByPosition(String position) {
         return employeeRepository.findEmployeesByPosition(position);
     }
 
+    /**
+     * Metody wykorzystywane przy listach rozwijanych
+     * @param position
+     * @return
+     */
     List<EmployeeSelect> findByPositionSelect(String position) {
         List<Employee> entities = employeeRepository.findEmployeesByPosition(position);
 

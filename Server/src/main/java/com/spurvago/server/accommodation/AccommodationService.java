@@ -27,6 +27,11 @@ public record AccommodationService(AccommodationRepository accommodationReposito
                                    AccommodationValidator accommodationValidator,
                                    RoomRepository roomRepository) {
 
+    /**
+     * Wyszukiwanie rezerwacji po id oraz sprawdzenie czy istnieje taka rezerwacja
+     * @param id
+     * @return
+     */
     public AccommodationVM find(Long id) {
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;
@@ -38,6 +43,12 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         return accommodationMapper.mapToVM(entity);
     }
 
+    /**
+     * Pobieranie listy rezerwacji wraz z wyszukiwaniem
+     * @param pager
+     * @param search
+     * @return
+     */
     public ListPaginated<AccommodationVM> getList(Pager pager, String search) {
         pager.sort = "startDate";
         Pageable pageable = pager.makePageable();
@@ -56,8 +67,12 @@ public record AccommodationService(AccommodationRepository accommodationReposito
                 entities.getTotalElements(), entities.getTotalPages());
     }
 
+    /**
+     * Utworznie rezerwacji po walidacji wprowadzonych danych
+     * @param newEntity
+     * @return
+     */
     public AccommodationVM create(AccommodationFM newEntity) {
-        // TODO Walidacja poprawności FK client oraz FK room -- Done I Guess
         if (!accommodationValidator().validate(newEntity)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
         }
@@ -76,12 +91,13 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         return accommodationMapper.mapToVM(entity);
     }
 
+    /**
+     * Aktualizacja rezerwacji po walidacji wprowadzonych danych
+     * @param id
+     * @param newEntity
+     * @return
+     */
     public AccommodationVM update(Long id, AccommodationFM newEntity) {
-        // TODO Walidacja poprawności FK client oraz FK room - Done I Guess
-        // TODO Nie powinno się dać zarezerwować pokoju z innym statusem niż
-        //      dostępny lub zarezerwowany, należy sprawdzać okres czasu
-        //      na który jest nałożona rezerwacja
-        // TODO Po rezerwacji pokoju powinien się zmieniać jego status na zarezerwowany
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;
         if (optionalAccommodation.isEmpty()) {
@@ -94,12 +110,11 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         return accommodationMapper.mapToVM(entity);
     }
 
+    /**
+     * Usunięcie rezerwacji
+     * @param id
+     */
     public void delete(Long id) {
-        // TODO Po usunięciu rezerwacji na pokój nakładamy status do posprzątania
-        //      Dodałem enumerator, aby było łatwiej, niżej test jako przykład,
-        //      Pojawia się problem z tym, że rezerwacja powinna się usuwać również
-        //      automatycznie co będzie prawdopodobnie wymagało ustawienia joba na
-        //      dany termin. Ew temat do przemyślenia.
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;
         if (optionalAccommodation.isEmpty()) {
