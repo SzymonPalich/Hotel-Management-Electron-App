@@ -64,12 +64,12 @@ export default class AccommodationServices {
     }
 
     public static async invoice(id: string): Promise<void> {
-      const token = localStorage.getItem('token');
-      return (await axios.put<void>(options.apiUrl + `accommodation/${id}/invoice`, {
-          headers: {
-            'Authorization': `${token}`
-          }
-      })).data
+    const token = localStorage.getItem('token');
+      return (await axios.put<void>(options.apiUrl + `accommodation/${id}/invoice`,{}, {
+        headers: {
+          'Authorization': `${token}` 
+        }
+      })).data;
     }
 
 }
