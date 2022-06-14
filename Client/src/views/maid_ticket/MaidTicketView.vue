@@ -65,11 +65,7 @@
             </tr>
           </thead>
           <tbody class="text-gray-700">
-<<<<<<< HEAD
-            <tr v-for="maid in result.content.filter(emp => emp.employeeFirstName == this.loginResult.employeeFirstName && emp.employeeLastName == this.loginResult.employeeLastName)" :key="maid" class="bg-white">
-=======
             <tr v-for="maid in result.content.filter(emp => emp.employeeFirstName === this.loginResult.firstName && emp.employeeLastName === this.loginResult.lastName)" :key="maid" class="bg-white">
->>>>>>> 2be7759 (maidTicketView fix)
               <td class="text-left py-2 px-4">
                 {{ maid.roomNumber }}
               </td>
