@@ -63,6 +63,15 @@ export default class AccommodationServices {
           })).data;
     }
 
+    public static async invoice(id: string): Promise<void> {
+    const token = localStorage.getItem('token');
+      return (await axios.put<void>(options.apiUrl + `accommodation/${id}/invoice`,{}, {
+        headers: {
+          'Authorization': `${token}` 
+        }
+      })).data;
+    }
+
 }
 
 export interface IAccommodation {

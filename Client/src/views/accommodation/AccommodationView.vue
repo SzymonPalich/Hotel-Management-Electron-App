@@ -18,19 +18,11 @@
         </div>
       </div>
       <div class="pr-6 flex items-center">
-        <i
-          class="
-            px-2
-            py-1
-            rounded-xl
-            text-white
-            bg-gray-800
-            material-icons
-            cursor-pointer
-          "
+        <img
+         class="px-2 py-1 rounded-xl text-white bg-gray-800"
+         src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'accommodation-create' })"
-          >add</i
-        >
+          />
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
@@ -85,14 +77,16 @@
               </td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link :to="{ name: 'accommodation-fetch', params: { id: accommodation.id } }">
-                  <i class="material-icons align-middle">description</i>
+                  <img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-document-30.png"
+                  />
                 </router-link>
 
-                <router-link :to="{ name: 'accommodation-edit', params: { id: accommodation.id } }"
-                  ><i class="material-icons align-middle">edit</i>
-                </router-link>
-
-                <i @click="alertDisplay(accommodation.id)" class="material-icons align-middle">delete</i>
+                <img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-delete-25.png"
+                    />
+                <i class="material-icons align-middle">delete</i>
+                <i class="material-icons align-middle" @click="invoice(accommodation.id)">description</i>
               </td>
             </tr>
           </tbody>
@@ -138,6 +132,10 @@ export default defineComponent({
   methods: {
     async getData(): Promise<IList<IAccommodation>> {
       return await AccommodationServices.getList(this.pager);
+    },
+
+    async invoice(id: string): Promise<void> {
+      return await AccommodationServices.invoice(id);
     },
 
     async find(): Promise<void> {

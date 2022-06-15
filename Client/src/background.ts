@@ -3,6 +3,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
+import * as child_process from 'child_process'
 
 // Window size
 // small - 1350x700
@@ -32,6 +33,12 @@ async function createWindow() {
     resizable: false
   })
 
+  const jarPath = app.getAppPath() + 'Server.jar';
+  const child = child_process.spawn(
+    'java', ['-jar', jarPath, '']
+  );
+
+
   win.removeMenu()
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -42,8 +49,14 @@ async function createWindow() {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
+    win.webContents.openDevTools()
   }
+
+  win.on('closed', function () {
+    child.kill('SIGHUP')
+  })
 }
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -64,7 +77,6 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
       await installExtension(VUEJS3_DEVTOOLS)
@@ -78,20 +90,5 @@ app.on('ready', async () => {
       }
     }
     createWindow()
-  }
 })
 
-// Exit cleanly on request from parent process in development mode.
-if (isDevelopment) {
-  if (process.platform === 'win32') {
-    process.on('message', (data) => {
-      if (data === 'graceful-exit') {
-        app.quit()
-      }
-    })
-  } else {
-    process.on('SIGTERM', () => {
-      app.quit()
-    })
-  }
-}

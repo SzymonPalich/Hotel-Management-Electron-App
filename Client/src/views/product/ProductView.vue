@@ -18,19 +18,11 @@
         </div>
       </div>
       <div class="pr-6 flex items-center">
-        <i
-          class="
-            px-2
-            py-1
-            rounded-xl
-            text-white
-            bg-gray-800
-            material-icons
-            cursor-pointer
-          "
+        <img
+          class="px-2 py-1 rounded-xl text-white bg-gray-800"
+          src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'product-create' })"
-          >add</i
-        >
+          />
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
@@ -79,14 +71,18 @@
               <td class="text-center py-2 px-4">{{ product.productAmount }}</td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link :to="{ name: 'product-fetch', params: { id: product.id } }">
-                  <i class="material-icons align-middle">description</i>
+                  <img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-document-30.png"
+                  />
                 </router-link>
 
                 <router-link :to="{ name: 'product-edit', params: { id: product.id } }"
-                  ><i class="material-icons align-middle">edit</i>
+                  ><img class="align-middle material-icons"
+                    src="../../../public/css/fonts/icons8-edit-25.png"
+                  />
                 </router-link>
 
-                <i @click="alertDisplay(product.id)" class="material-icons align-middle">delete</i>
+                <img @click="alertDisplay(product.id)" class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
               </td>
             </tr>
           </tbody>

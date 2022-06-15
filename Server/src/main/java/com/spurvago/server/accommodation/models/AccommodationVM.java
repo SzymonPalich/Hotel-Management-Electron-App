@@ -18,7 +18,6 @@ public class AccommodationVM {
     private int roomStatus;
     private Date startDate;
     private Date endDate;
-    private Boolean reservationOnly;
 
     public AccommodationVM() {
     }

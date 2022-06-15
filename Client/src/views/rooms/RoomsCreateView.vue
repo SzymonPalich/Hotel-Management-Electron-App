@@ -40,6 +40,12 @@
                   type="text"
                   required
                   v-model = this.result.roomNumber
+                  @keypress="(event) => {
+                    if (!event.key.match(/[0-9]/g)) {
+                      event.preventDefault();
+                    }
+                  }"
+                  @keyup="this.block()"
                 />
               </dd>
             </div>
@@ -176,6 +182,23 @@ export default defineComponent({
   methods: {
     async getRoomTypes(): Promise<IList<IRoomType>> {
       return await RoomTypesServices.getList(this.pager);
+    },
+
+    selectRoomType: function (value: number) {
+      this.result.roomTypeId = value;
+    },
+
+    selectStatus: function (value: number) {
+      this.result.status = value;
+    },
+    
+    block(): void {
+      if (parseInt(this.result.roomNumber) < 0) {
+        this.result.roomNumber = "0";
+      }
+      if (parseInt(this.result.roomNumber) > 999) {
+        this.result.roomNumber = "999";
+      }
     },
 
     async add(): Promise<void> {

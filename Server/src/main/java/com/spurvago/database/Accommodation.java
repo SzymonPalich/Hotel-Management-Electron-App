@@ -35,10 +35,6 @@ public class Accommodation {
     @Setter
     private Date endDate;
 
-    @Getter
-    @Setter
-    private Boolean reservationOnly;
-
     public Accommodation() {
     }
 }

@@ -13,7 +13,7 @@
         class="bg-gray-600 px-2 rounded-l-xl outline-none text-lg"
       />
       <div class="flex items-center bg-gray-600 rounded-r-xl">
-        <i class="material-icons">search</i>
+        <img class="material-icons" src="../../public/css/fonts/icons8-search-25.png"/>
       </div>
     </div>
   </div>

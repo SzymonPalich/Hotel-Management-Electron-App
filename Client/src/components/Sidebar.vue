@@ -3,92 +3,92 @@
     <div class="sidebar">
       <div class="logo_content">
         <div class="logo">
-          <i class="material-icons">hotel</i>
+          <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
           <div class="logo_name">SpurVaGo</div>
         </div>
       </div>
       <ul class="nav_list">
         <li v-if="this.isActive('clients') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/clients">
-            <i class="material-icons">people</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-user-male-25.png"/>
             <span class="links_name">Klienci</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/clients">
-            <i class="material-icons">people</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-user-male-25.png"/>
             <span class="links_name">Klienci</span>
           </router-link>
         </li>
         <li v-if="this.isActive('employees') && (this.result.role=='ROLE_MANAGER')" class="router-link-active">
           <router-link to="/employees">
-            <i class="material-icons">contact_mail</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-contact-25.png"/>
             <span class="links_name">Pracownicy</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'">
           <router-link to="/employees">
-            <i class="material-icons">contact_mail</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-contact-25.png"/>
             <span class="links_name">Pracownicy</span>
           </router-link>
         </li>
         <li v-if="this.isActive('rooms') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN')" class="router-link-active">
           <router-link to="/rooms">
-            <i class="material-icons">home</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
             <span class="links_name">Pokoje</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN'">
           <router-link to="/rooms">
-            <i class="material-icons">home</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
             <span class="links_name">Pokoje</span>
           </router-link>
         </li>
         <li v-if="this.isActive('maid_ticket')&& (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/maid_ticket">
-            <i class="material-icons">rowing</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-broom-25.png"/>
             <span class="links_name">Pokojówka</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/maid_ticket">
-            <i class="material-icons">rowing</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-broom-25.png"/>
             <span class="links_name">Pokojówka</span>
           </router-link>
         </li>
         <li v-if="this.isActive('repairs') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_TECHNICIAN'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/repairs">
-            <i class="material-icons">build</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-wrench-25.png"/>
             <span class="links_name">Naprawy</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_TECHNICIAN'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/repairs">
-            <i class="material-icons">build</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-wrench-25.png"/>
             <span class="links_name">Naprawy</span>
           </router-link>
         </li>
         <li v-if="this.isActive('product') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID')" class="router-link-active">
           <router-link to ="/product">
-            <i class="material-icons">storage</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-stack-25.png"/>
             <span class="links_name">Magazyn</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_MAID'">
           <router-link to="/product">
-            <i class="material-icons">storage</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-stack-25.png"/>
             <span class="links_name">Magazyn</span>
           </router-link>
         </li>
         <li v-if="this.isActive('accommodation') && (this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to ="/accommodation">
-            <i class="material-icons">hotel</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
             <span class="links_name">Rezerwacje</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/accommodation">
-            <i class="material-icons">hotel</i>
+            <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
             <span class="links_name">Rezerwacje</span>
           </router-link>
         </li>

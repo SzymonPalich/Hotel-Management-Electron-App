@@ -12,5 +12,4 @@ public class AccommodationFM {
     private Long ClientId;
     private Date startDate;
     private Date endDate;
-    private Boolean reservationOnly;
 }

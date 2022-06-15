@@ -1,12 +1,6 @@
 <template>
   <div class="max-w-xs grid min-w-full min-h-screen place-items-center">
     <div class="logo flex m-auto">
-      <i
-        class="material-icons"
-        style="font-size: 8rem; margin-top: 1rem; margin-right: 0.5rem"
-        >hotel</i
-      >
-      <div class="logo_name" style="font-size: 6.5rem">SpurVaGo</div>
     </div>
 
     <div

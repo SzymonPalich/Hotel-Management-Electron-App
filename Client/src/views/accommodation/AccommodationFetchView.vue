@@ -47,30 +47,19 @@
             >
               <dt class="text-sm font-medium text-gray-500">Początek rezerwacji</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.startDate }} zł
+                {{ this.result.startDate }}
               </dd>
             </div>
             <div
-              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+              class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Koniec rezerwacji</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {{ this.result.endDate }}
               </dd>
             </div>
-            <div
-              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-            >
-              <dt class="text-sm font-medium text-gray-500">Dostępność</dt>
-              <dd v-if="this.result.reservationOnly == true" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Tylko za rezerwacją
-              </dd>
-              <dd v-else class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                Dowolna
-              </dd>
-            </div>
           </dl>
-          <div class="text-center px-4 py-5 bg-gray-50 rounded-b-xl">
+          <div class="text-center px-4 py-5 bg-white rounded-b-xl">
             <button
               class="
                 bg-gray-800

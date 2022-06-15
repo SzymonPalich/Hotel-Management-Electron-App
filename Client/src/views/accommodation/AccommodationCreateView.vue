@@ -17,7 +17,7 @@
         <div class="bg-white h-full rounded-b-xl text-black">
           <dl class="p-2">
              <div
-              class="bg-gray-50 px-2 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 relative"
+              class="bg-gray-50 px-2 py-5 sm:grid sm:grid-cols-3 sm:gap-3 sm:px-6 relative"
             > 
               <div class="float-left">
                 <dt class="text-sm font-medium text-gray-500">Początek rezerwacji</dt>
@@ -34,8 +34,10 @@
                     focus:border focus:border-cyan-400 focus:rounded-md
                   "
                     type="date"
+                    min="new Date()"
                     required
                     v-model="this.result.startDate"
+                    v-on:change="clearDate"
                   />
                 </dd>
               </div>
@@ -56,6 +58,7 @@
                     type="date"
                     required
                     v-model="this.result.endDate"
+                    v-on:change="clearDate"
                   />
                 </dd>
               </div>
@@ -86,9 +89,9 @@
             </div>
             <div class="border border-gray-300 px-2 py-0_1 rounded-md outline-none mx-6">
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 p-2">
-                <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none" @change="selectRoom($event.target.value)">
+                <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none" @change="selectRoom($event.target.value)" >
                   <option class="hover:bg-gray-200 hover:rounded-xl focus:visible focus:bg-slate-500 focus:ring" v-for="room in resultRooms.content" :key="room" v-bind:value="room.id">
-                    {{ room.roomNumber }} {{ room.roomType }}
+                    {{ room.roomLabel }}
                   </option>  
                 </select>
               </dd>
@@ -101,7 +104,7 @@
                 py-5
               "
             >
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 grid-col">
                 <v-select
                   label="clientLabel"
                   :options="this.resultClients"
@@ -180,12 +183,13 @@ export default defineComponent({
   data() {
     return {
       result: AccommodationServices.getBlankAccommodationTemplate(),
-      pager: Utils.getMaxPager(),
+      pager: Utils.getRoomsPager(),
       valueClient: null,
       resultClients: [ClientsServices.getBlankClientSelectTemplate()],
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
       resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
       roomValue: null,
+      roomTypeId: 0
     };
   },
 
@@ -208,6 +212,10 @@ export default defineComponent({
       return await RoomsServices.getList(this.pager);
     },
 
+    async getAvailableList(startDate: Date, endDate: Date, roomTypeId: string): Promise<Array<IRoom>> {
+      return await RoomsServices.getAvailableList(startDate, endDate, roomTypeId);
+    },
+
     selectRoom: function (value: number) {
       this.result.roomId = value;
     },
@@ -216,6 +224,24 @@ export default defineComponent({
       if(this.valueClient != null){
         this.result.clientId = this.valueClient;
       }
+    },
+
+    clearDate() {
+      this.resultRooms.content = [];
+      this.result.roomId = 0;
+      this.$forceUpdate;
+    },
+
+    selectRoomTypeId: function(value: number) {
+      this.resultRooms.content = [];
+      this.result.roomId = 0;
+      this.roomTypeId = value;
+      this.$forceUpdate;
+    },
+
+    filterRooms(startDate: Date, endDate: Date, roomTypeId: string) {
+      this.getAvailableList(startDate, endDate, roomTypeId).then((data) => (this.resultRooms.content = data));
+      this.$forceUpdate;
     },
 
     async save(): Promise<void> {

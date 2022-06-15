@@ -95,6 +95,15 @@ export default class RoomsServices {
             }
           })).data;
     }
+
+    public static async getAvailableList(startDate: Date, endDate: Date, roomTypeId: string) {
+        const token = localStorage.getItem('token');
+        return (await axios.get<Array<IRoom>>(options.apiUrl + `room/available?endDate=${endDate}&roomTypeId=${roomTypeId}&startDate=${startDate}`, {
+            headers: {
+              'Authorization': `${token}` 
+            }
+          })).data;
+    }
 }
 
 export interface IRoom {

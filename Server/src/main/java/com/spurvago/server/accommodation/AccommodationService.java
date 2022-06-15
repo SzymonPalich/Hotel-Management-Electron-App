@@ -14,6 +14,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.spurvago.InvoiceGenerator.InvoiceGenerator;
+import com.spurvago.InvoiceGenerator.InvoiceDetails;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import java.util.List;
 import java.util.Optional;
@@ -132,5 +137,31 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         roomRepository.save(room);
 
         accommodationRepository.delete(entity);
+    }
+
+    public void generateInvoice(Long id) {
+        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
+        Accommodation entity;
+        if (optionalAccommodation.isEmpty()) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+        entity = optionalAccommodation.get();
+
+        LocalDate start = entity.getStartDate().toLocalDate();
+        LocalDate end = entity.getEndDate().toLocalDate();
+        int days = Math.abs((int) ChronoUnit.DAYS.between(end, start));
+        InvoiceGenerator inv = new InvoiceGenerator();
+        InvoiceDetails invoiceDetails = new InvoiceDetails(
+                entity.getClient().getFirstName() + " " + entity.getClient().getLastName(),
+                entity.getRoom().getRoomNumber() + " " + entity.getRoom().getRoomType().getType(),
+                days, entity.getStartDate(), entity.getEndDate(),
+                entity.getRoom().getRoomType().getPrice()
+        );
+
+        try {
+            inv.generatePDF(invoiceDetails);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
