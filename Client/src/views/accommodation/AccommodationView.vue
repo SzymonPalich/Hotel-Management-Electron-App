@@ -85,8 +85,7 @@
                 <img class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-delete-25.png"
                     />
-                <i class="material-icons align-middle">delete</i>
-                <i class="material-icons align-middle" @click="invoice(accommodation.id)">description</i>
+                <img src="../../../public/css/fonts/pdf.png" class="material-icons align-middle" @click="invoice(accommodation.id)"/>
               </td>
             </tr>
           </tbody>
