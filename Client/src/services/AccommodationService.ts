@@ -72,7 +72,7 @@ export default class AccommodationServices {
       })).data;
     }
 
-}
+ }
 
 export interface IAccommodation {
     id: number;

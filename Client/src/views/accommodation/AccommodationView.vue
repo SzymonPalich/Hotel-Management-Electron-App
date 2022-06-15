@@ -134,6 +134,7 @@ export default defineComponent({
     },
 
     async invoice(id: string): Promise<void> {
+      Utils.invoiceAlert();
       return await AccommodationServices.invoice(id);
     },
 
