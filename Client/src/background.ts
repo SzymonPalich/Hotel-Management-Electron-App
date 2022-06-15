@@ -33,7 +33,7 @@ async function createWindow() {
     resizable: false
   })
 
-  const jarPath = app.getAppPath() + 'Server.jar';
+  const jarPath = app.getAppPath() + '\\Server.jar';
   const child = child_process.spawn(
     'java', ['-jar', jarPath, '']
   );
@@ -49,7 +49,6 @@ async function createWindow() {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
-    win.webContents.openDevTools()
   }
 
   win.on('closed', function () {

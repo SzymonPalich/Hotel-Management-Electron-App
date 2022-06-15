@@ -6,8 +6,8 @@ export default class LoginServices {
         const tempLogin: ILogin = {
             firstName: "",
             lastName: "",
-            email: "mariusz.pudzian@spurvago.com",
-            password: "pass",
+            email: "",
+            password: "",
             role: ""
         };
         return tempLogin;
