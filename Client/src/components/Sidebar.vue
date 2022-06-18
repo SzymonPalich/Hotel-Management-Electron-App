@@ -3,105 +3,105 @@
     <div class="sidebar">
       <div class="logo_content">
         <div class="logo">
-          <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
+          <img class="material-icons ml-3" src="../../public/css/fonts/icons8-occupied-bed-25.png" style="margin-bottom:0.3rem"/>
           <div class="logo_name">SpurVaGo</div>
         </div>
       </div>
       <ul class="nav_list">
         <li v-if="this.isActive('clients') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/clients">
-            <img class="material-icons" src="../../public/css/fonts/icons8-user-male-25.png"/>
-            <span class="links_name">Klienci</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-user-male-25.png"/>
+            <span class="links_name ml-3">Klienci</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/clients">
-            <img class="material-icons" src="../../public/css/fonts/icons8-user-male-25.png"/>
-            <span class="links_name">Klienci</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-user-male-25.png"/>
+            <span class="links_name ml-3">Klienci</span>
           </router-link>
         </li>
         <li v-if="this.isActive('employees') && (this.result.role=='ROLE_MANAGER')" class="router-link-active">
           <router-link to="/employees">
-            <img class="material-icons" src="../../public/css/fonts/icons8-contact-25.png"/>
-            <span class="links_name">Pracownicy</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-contact-25.png"/>
+            <span class="links_name ml-3 ml-3">Pracownicy</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'">
           <router-link to="/employees">
-            <img class="material-icons" src="../../public/css/fonts/icons8-contact-25.png"/>
-            <span class="links_name">Pracownicy</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-contact-25.png"/>
+            <span class="links_name ml-3">Pracownicy</span>
           </router-link>
         </li>
         <li v-if="this.isActive('rooms') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN')" class="router-link-active">
           <router-link to="/rooms">
-            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
-            <span class="links_name">Pokoje</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-hotel-room-key-25.png" style='-webkit-filter: invert(1);filter: invert(1);'/>
+            <span class="links_name ml-3">Pokoje</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN'">
           <router-link to="/rooms">
-            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
-            <span class="links_name">Pokoje</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-hotel-room-key-25.png" style='-webkit-filter: invert(1);filter: invert(1);'/>
+            <span class="links_name ml-3">Pokoje</span>
           </router-link>
         </li>
         <li v-if="this.isActive('room_types') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN')" class="router-link-active">
           <router-link to="/room_types">
-            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
-            <span class="links_name">Typy pokoi</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-home-25.png"/>
+            <span class="links_name ml-3">Typy pokoi</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN'">
           <router-link to="/room_types">
-            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
-            <span class="links_name">Typy pokoi</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-home-25.png"/>
+            <span class="links_name ml-3">Typy pokoi</span>
           </router-link>
         </li>
         <li v-if="this.isActive('maid_ticket')&& (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/maid_ticket">
-            <img class="material-icons" src="../../public/css/fonts/icons8-broom-25.png"/>
-            <span class="links_name">Pokojówka</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-broom-25.png"/>
+            <span class="links_name ml-3">Pokojówka</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/maid_ticket">
-            <img class="material-icons" src="../../public/css/fonts/icons8-broom-25.png"/>
-            <span class="links_name">Pokojówka</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-broom-25.png"/>
+            <span class="links_name ml-3">Pokojówka</span>
           </router-link>
         </li>
         <li v-if="this.isActive('repairs') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_TECHNICIAN'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/repairs">
-            <img class="material-icons" src="../../public/css/fonts/icons8-wrench-25.png"/>
-            <span class="links_name">Naprawy</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-wrench-25.png"/>
+            <span class="links_name ml-3">Naprawy</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_TECHNICIAN'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/repairs">
-            <img class="material-icons" src="../../public/css/fonts/icons8-wrench-25.png"/>
-            <span class="links_name">Naprawy</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-wrench-25.png"/>
+            <span class="links_name ml-3">Naprawy</span>
           </router-link>
         </li>
         <li v-if="this.isActive('product') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID')" class="router-link-active">
           <router-link to ="/product">
-            <img class="material-icons" src="../../public/css/fonts/icons8-stack-25.png"/>
-            <span class="links_name">Magazyn</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-stack-25.png"/>
+            <span class="links_name ml-3">Magazyn</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_MAID'">
           <router-link to="/product">
-            <img class="material-icons" src="../../public/css/fonts/icons8-stack-25.png"/>
-            <span class="links_name">Magazyn</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-stack-25.png"/>
+            <span class="links_name ml-3">Magazyn</span>
           </router-link>
         </li>
         <li v-if="this.isActive('accommodation') && (this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to ="/accommodation">
-            <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
-            <span class="links_name">Rezerwacje</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
+            <span class="links_name ml-3">Rezerwacje</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/accommodation">
-            <img class="material-icons" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
-            <span class="links_name">Rezerwacje</span>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
+            <span class="links_name ml-3">Rezerwacje</span>
           </router-link>
         </li>
 
