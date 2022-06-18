@@ -4,6 +4,8 @@ import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
 import * as child_process from 'child_process'
+import * as fs from 'fs'
+import kill from 'tree-kill'
 
 // Window size
 // small - 1350x700
@@ -39,7 +41,7 @@ async function createWindow() {
     'java', ['-jar', jarPath]
   );
 
-  win.removeMenu()
+  // win.removeMenu()
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -53,7 +55,9 @@ async function createWindow() {
   }
 
   win.on('closed', function () {
-    child.kill('SIGHUP')
+    if (child.pid) {
+      kill(child.pid)
+    }
   })
 }
 
@@ -91,4 +95,3 @@ app.on('ready', async () => {
   }
   createWindow()
 })
-

@@ -132,7 +132,7 @@ export default defineComponent({
     },
     logout(){
       localStorage.removeItem('token');
-      window.location.replace("login");
+      this.$router.push('login');
     },
 
    async getData(): Promise<ILogin> {
