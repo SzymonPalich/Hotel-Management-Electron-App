@@ -21,6 +21,12 @@ public class RoomTypeValidator extends Validator {
         if (!haveLength(model.getType(), 50)) {
             return false;
         }
-        return correctDecimal(model.getPrice(), 8, 2);
+        if (!correctDecimal(model.getPrice(), 8, 2)) {
+            return false;
+        }
+        if (model.getPrice().equals(0)) {
+            return false;
+        }
+        return true;
     }
 }

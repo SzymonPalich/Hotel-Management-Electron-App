@@ -11,24 +11,19 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Edytuj #{{ this.result.id }}
+            Edytuj: {{ this.result.type }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
           <dl>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+                        <div
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Numer pokoju</dt>
+              <dt class="text-sm font-medium text-gray-500">Nazwa</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                     border border-gray-300
+                    border border-gray-300
                     w-full
                     h-full
                     rounded-md
@@ -39,65 +34,30 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.roomNumber"
+                  v-model="this.tempType"
                 />
               </dd>
             </div>
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Pokój</dt>
+              <dt class="text-sm font-medium text-gray-500">Cena</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <v-select
-                  label="type"
-                  v-model="this.roomValue"
-                  :options="this.resultRoomTypes.content"
-                  :reduce="(option) => option.id"
-                  :clearable="false"
-                  placeholder="Wybierz typ"
-                >
-                  <template v-slot:option="option">
-                    <span :class="option.icon"></span>
-                    {{ option.type }}
-                  </template>
-                  <template v-slot:no-options="{ search, searching }">
-                    <template v-if="searching">
-                      Brak wyników dla <em>{{ search }}</em
-                      >.
-                    </template>
-                  </template>
-                </v-select>
-              </dd>
-            </div>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
-            >
-              <dt class="text-sm font-medium text-gray-500">Status</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <v-select
-                  label="text"
-                  v-model="status"
-                  :options="this.statuses"
-                  :reduce="(option) => option.value"
-                  :clearable="false"
-                  placeholder="Wybierz fristajlo"
-                >
-                  <template v-slot:option="option">
-                    <span :class="option.icon"></span>
-                    {{ option.text }}
-                  </template>
-                  <template v-slot:no-options="{ search, searching }">
-                    <template v-if="searching">
-                      Brak wyników dla <em>{{ search }}</em
-                      >.
-                    </template>
-                  </template>
-                </v-select>
+                <input
+                  class="
+                    border border-gray-300
+                    w-full
+                    h-full
+                    rounded-md
+                    px-2
+                    py-1_5
+                    outline-none
+                    focus:border focus:border-cyan-400 focus:rounded-md
+                  "
+                  type="number"
+                  required
+                  v-model="this.result.price"
+                />
               </dd>
             </div>
           </dl>
@@ -142,35 +102,21 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
 import RoomTypesServices, { IRoomType } from "../../services/RoomTypesService";
-import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
-import Utils, { IPager, IList } from "../../Utils";
 import { AxiosError } from "axios";
+import Utils from "@/Utils";
 
 export default defineComponent({
   data() {
     return {
-      result: RoomsServices.getBlankRoomTemplate(),
-      pager: Utils.getDefaultPager(),
-      resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
-      statuses: [
-        { value: 1, text: "Wolny" },
-        { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" }
-      ],
-      roomValue: null as any,
-      status: null as any
+      result: RoomTypesServices.getBlankRoomTypeTemplate(),
+      tempType: ""
     };
   },
 
   mounted() {
-    console.log(this.getData());
     this.getData().then((data) => (this.result = data));
-    this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
-    this.getData().then((data) => (this.roomValue = data.roomTypeId));
-    this.getData().then((data) => (this.status = data.status))
   },
 
   methods: {
@@ -178,9 +124,9 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    async getData(): Promise<IRoom> {
+    async getData(): Promise<IRoomType> {
       try {
-        return await RoomsServices.fetch(this.getId());
+        return await RoomTypesServices.fetch(this.getId());
       } catch (error) {
         const err = error as AxiosError
         if (err.response) {
@@ -190,17 +136,12 @@ export default defineComponent({
       }
     },
 
-    async getRoomTypes(): Promise<IList<IRoomType>> {
-      return await RoomTypesServices.getList(this.pager);
-    },
-
     async save(): Promise<void> {
-      this.result.roomTypeId = this.roomValue || 0;
-      this.result.status = this.status || 0;
+      this.result.type = this.tempType;
       try {
-        await RoomsServices.update(this.getId(), this.result);
+        await RoomTypesServices.update(this.getId(), this.result);
         Utils.acceptedAlert();
-        this.$router.push({ name: "rooms" });
+        this.$router.push({ name: "room_types" });
       } catch (error) {
         const err = error as AxiosError
         if (err.response) {
@@ -209,7 +150,7 @@ export default defineComponent({
       }
     },
     back(): void {
-      this.$router.push({ name: "rooms" });
+      this.$router.push({ name: "room_types" });
     },
   },
 });

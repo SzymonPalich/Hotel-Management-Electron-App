@@ -136,7 +136,8 @@ export default defineComponent({
 
     async getRoomTypes(): Promise<IRoomType> {
       console.log(this.result);
-      return await RoomTypesServices.fetch((await this.getData()).roomTypeId);
+      var id = (await this.getData()).roomTypeId as unknown as string
+      return await RoomTypesServices.fetch(id);
     },
   },
 });

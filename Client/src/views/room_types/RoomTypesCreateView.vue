@@ -137,7 +137,8 @@ export default defineComponent({
     async add(): Promise<void> {
       try {
         await RoomTypesService.create(this.result);
-        this.$router.push({ name: "rooms" });
+        Utils.acceptedAlert();
+        this.$router.push({ name: "room_types" });
       } catch (error) {
         const err = error as AxiosError;
         if (err.response) {
@@ -146,7 +147,7 @@ export default defineComponent({
       }
     },
     back(): void {
-      this.$router.push({ name: "rooms" });
+      this.$router.push({ name: "room_types" });
     },
   },
 });

@@ -13,7 +13,7 @@ export default class RoomTypesServices {
         return tempRoom;
     }
 
-    public static async fetch(id: number): Promise<IRoomType> {
+    public static async fetch(id: string): Promise<IRoomType> {
         const token = localStorage.getItem('token');
         return (await axios.get<IRoomType>(options.apiUrl + `room_type/${id}`, {
             headers: {
