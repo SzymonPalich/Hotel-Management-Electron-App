@@ -18,7 +18,7 @@ public class RoomTypeValidator extends Validator {
     }
 
     public boolean validate(RoomTypeFM model) {
-        if (!haveLength(model.getType(), 50)) {
+        if (!haveLength(model.getType(),0, 50)) {
             return false;
         }
         if (!correctDecimal(model.getPrice(), 8, 2)) {

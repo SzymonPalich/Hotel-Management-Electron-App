@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Edytuj #{{ this.result.id }}
+            Edytuj: {{ this.result.name }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -39,7 +39,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.name"
+                  v-model="this.tempName"
                 />
               </dd>
             </div>
@@ -155,6 +155,7 @@ export default defineComponent({
       value: null as any,
       pager: Utils.getMaxPager(),
       resultRooms: [RoomsServices.getBlankRoomSelectTemplate()],
+      tempName: "",
     };
   },
 
@@ -163,6 +164,7 @@ export default defineComponent({
     this.getData().then((data) => (this.result = data));
     this.getRooms().then((data) => (this.resultRooms = data));
     this.getData().then((data) => (this.value = data.roomId))
+    this.getData().then((data) => (this.tempName = data.name))
   },
 
   methods: {

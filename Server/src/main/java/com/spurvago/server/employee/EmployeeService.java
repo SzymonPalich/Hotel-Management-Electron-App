@@ -87,7 +87,7 @@ public record EmployeeService(EmployeeRepository employeeRepository,
         }
         entity = optionalEmployee.get();
 
-        newEntity.setPassword(bCryptPasswordEncoder.encode(newEntity.getPassword()));
+        newEntity.setPassword(entity.getPassword());
 
         employeeMapper.mapToEntity(entity, newEntity);
         employeeRepository.save(entity);

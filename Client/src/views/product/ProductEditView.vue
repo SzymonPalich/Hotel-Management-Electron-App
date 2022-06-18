@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Edytuj {{ this.result.productName }}
+            Edytuj: {{ this.result.productName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -39,7 +39,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.productName"
+                  v-model="this.tempProductName"
                 />
               </dd>
             </div>
@@ -179,12 +179,14 @@ export default defineComponent({
     return {
       result: ProductServices.getBlankProductTemplate(),
       pager: Utils.getDefaultPager(),
+      tempProductName: "",
     };
   },
 
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
+    this.getData().then((data) => (this.tempProductName = data.productName));
   },
 
   methods: {

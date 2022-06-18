@@ -18,12 +18,6 @@
         </div>
       </div>
       <div class="pr-6 flex items-center">
-        <router-link :to="{ name: 'maid_ticket-create' }">
-          <img v-if="this.loginResult.role=='ROLE_MANAGER'"
-          class="px-2 py-1 rounded-xl text-white bg-gray-800"
-          src="../../../public/css/fonts/icons8-plus-25.png"
-          />
-        </router-link>
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">

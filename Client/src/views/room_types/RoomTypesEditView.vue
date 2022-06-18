@@ -34,7 +34,8 @@
                   "
                   type="text"
                   required
-                  v-model="this.tempType"
+                  v-model="this.tempTypeName"
+
                 />
               </dd>
             </div>
@@ -111,12 +112,13 @@ export default defineComponent({
   data() {
     return {
       result: RoomTypesServices.getBlankRoomTypeTemplate(),
-      tempType: ""
+      tempTypeName: ""
     };
   },
 
   mounted() {
     this.getData().then((data) => (this.result = data));
+    this.getData().then((data) => this.tempTypeName= data.type)
   },
 
   methods: {
@@ -137,7 +139,6 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
-      this.result.type = this.tempType;
       try {
         await RoomTypesServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

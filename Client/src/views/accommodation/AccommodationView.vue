@@ -82,9 +82,6 @@
                   />
                 </router-link>
 
-                <img class="align-middle material-icons"
-                    src="../../../public/css/fonts/icons8-delete-25.png"
-                    />
                 <img src="../../../public/css/fonts/pdf.png" class="material-icons align-middle" @click="invoice(accommodation.id)"/>
               </td>
             </tr>

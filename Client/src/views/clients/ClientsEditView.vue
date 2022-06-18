@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2 mb-2">
-            Edytuj {{ this.result.firstName }} {{ this.result.lastName }}
+            Edytuj: {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -39,7 +39,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.firstName"
+                  v-model="this.tempFirstName"
                 />
               </dd>
             </div>
@@ -61,7 +61,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.lastName"
+                  v-model="this.tempLastName"
                 />
               </dd>
             </div>
@@ -165,11 +165,15 @@ export default defineComponent({
   data() {
     return {
       result: ClientsServices.getBlankClientTemplate(),
+      tempFirstName: "",
+      tempLastName: "",
     };
   },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
+     this.getData().then((data) => (this.tempFirstName = data.firstName));
+    this.getData().then((data) => (this.tempLastName = data.lastName));
   },
 
   methods: {

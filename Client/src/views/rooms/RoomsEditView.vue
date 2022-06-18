@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Edytuj #{{ this.result.id }}
+            Edytuj: {{ this.result.roomNumber }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -39,7 +39,7 @@
                   "
                   type="text"
                   required
-                  v-model="this.result.roomNumber"
+                  v-model="this.tempRoomNumber"
                 />
               </dd>
             </div>
@@ -161,7 +161,8 @@ export default defineComponent({
         { value: 3, text: "Rezerwacja" }
       ],
       roomValue: null as any,
-      status: null as any
+      status: null as any,
+      tempRoomNumber: "",
     };
   },
 
@@ -171,6 +172,7 @@ export default defineComponent({
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
     this.getData().then((data) => (this.roomValue = data.roomTypeId));
     this.getData().then((data) => (this.status = data.status))
+    this.getData().then((data) => (this.tempRoomNumber = data.roomNumber));
   },
 
   methods: {

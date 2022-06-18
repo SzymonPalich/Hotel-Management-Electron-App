@@ -11,7 +11,7 @@
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
           <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Edytuj rezerwacje dla pokoju {{ this.result.roomNumber }} {{ this.result.roomType }}
+            Edytuj rezerwacje dla pokoju: {{ this.result.roomNumber }} {{ this.result.roomType }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
