@@ -171,7 +171,7 @@
 
 .sidebar ul li a:hover {
     color: var(--black-color);
-    background: #ffffff;
+    background: #bebbfd;
 }
 
 li.router-link-active {

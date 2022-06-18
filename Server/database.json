@@ -1,7 +1,7 @@
 {
-  "server": "sasdasd",
-  "port": 312,
-  "database": "asdsadsadasdsad",
-  "username": "asdasdsa",
-  "password": "asdasdas"
+  "server": "localhost",
+  "port": 3306,
+  "database": "hotel",
+  "username": "root",
+  "password": ""
 }

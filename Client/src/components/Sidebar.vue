@@ -94,13 +94,13 @@
         </li>
         <li v-if="this.isActive('accommodation') && (this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to ="/accommodation">
-            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-list-view-25.png" style='-webkit-filter: invert(1);filter: invert(1);'/>
             <span class="links_name ml-3">Rezerwacje</span>
           </router-link>
         </li>
         <li v-else-if="this.result.role=='ROLE_MANAGER'|| this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/accommodation">
-            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-occupied-bed-25.png"/>
+            <img class="material-icons ml-3" src="../../public/css/fonts/icons8-list-view-25.png" style='-webkit-filter: invert(1);filter: invert(1);'/>
             <span class="links_name ml-3">Rezerwacje</span>
           </router-link>
         </li>
