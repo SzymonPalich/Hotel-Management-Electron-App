@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * Walidator pracowników
+ */
 @Component
 public class EmployeeValidator extends Validator {
     private final EmployeeRepository employeeRepository;

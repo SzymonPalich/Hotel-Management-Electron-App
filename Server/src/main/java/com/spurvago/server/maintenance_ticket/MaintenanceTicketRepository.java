@@ -18,6 +18,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Repozytorium zgłoszeń naprawy
+ */
 @Repository
 public interface MaintenanceTicketRepository extends PagingAndSortingRepository<MaintenanceTicket, Long>, JpaSpecificationExecutor<MaintenanceTicket> {
     static Specification<MaintenanceTicket> search(List<String> searchWords) {

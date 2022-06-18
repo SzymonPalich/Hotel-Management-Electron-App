@@ -26,17 +26,19 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis rezerwacji
+ * @param accommodationRepository
+ * @param accommodationMapper
+ * @param accommodationValidator
+ * @param roomRepository
+ */
 @Service
 public record AccommodationService(AccommodationRepository accommodationRepository,
                                    AccommodationMapper accommodationMapper,
                                    AccommodationValidator accommodationValidator,
                                    RoomRepository roomRepository) {
 
-    /**
-     * Wyszukiwanie rezerwacji po id oraz sprawdzenie czy istnieje taka rezerwacja
-     * @param id
-     * @return
-     */
     public AccommodationVM find(Long id) {
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
         Accommodation entity;

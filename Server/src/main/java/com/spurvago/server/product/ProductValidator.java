@@ -5,6 +5,9 @@ import com.spurvago.server.product.models.ProductFM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Walidator magazynu
+ */
 @Component
 public class ProductValidator extends Validator {
     private final ProductRepository productRepository;

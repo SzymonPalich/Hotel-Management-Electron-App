@@ -1,6 +1,5 @@
 package com.spurvago.database;
 
-import com.spurvago.server.maid_ticket.models.RefillId;
 import lombok.Getter;
 import lombok.Setter;
 

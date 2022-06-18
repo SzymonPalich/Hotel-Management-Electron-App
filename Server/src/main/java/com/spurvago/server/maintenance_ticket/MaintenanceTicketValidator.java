@@ -8,6 +8,9 @@ import com.spurvago.server.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Walidator zgłoszeń naprawy
+ */
 @Component
 public class MaintenanceTicketValidator extends Validator {
     private final MaintenanceTicketRepository maintenanceTicketRepository;

@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.sql.Date;
 
+/**
+ * Model formularza rezerwacji
+ */
 @Getter
 @Setter
 public class AccommodationFM {

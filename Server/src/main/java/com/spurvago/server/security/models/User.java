@@ -3,6 +3,9 @@ package com.spurvago.server.security.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Model użytkownika
+ */
 @Getter
 @Setter
 public class User {

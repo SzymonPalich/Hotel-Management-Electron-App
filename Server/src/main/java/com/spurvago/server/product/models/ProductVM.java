@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * Model wyświetlania magazynu
+ */
 @Getter
 @Setter
 public class ProductVM {

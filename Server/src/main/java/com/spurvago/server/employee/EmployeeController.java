@@ -16,6 +16,9 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Kontroler pracowników
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/employee")

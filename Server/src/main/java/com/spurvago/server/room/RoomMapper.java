@@ -15,6 +15,10 @@ import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+/**
+ * Mapper pokojów
+ * @param roomTypeRepository
+ */
 @Component
 public record RoomMapper(RoomTypeRepository roomTypeRepository) {
     RoomVM mapToVM(Room src) {

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontroler klientów
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/client")

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Model pracownika do list rozwijanych
+ * Model wyświetlania pracowników w listach rozwijanych
  */
 @Getter
 @Setter

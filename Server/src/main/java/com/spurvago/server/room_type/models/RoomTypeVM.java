@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ *  Model wyświetlania typów pokojów
+ */
 @Getter
 @Setter
 public class RoomTypeVM {

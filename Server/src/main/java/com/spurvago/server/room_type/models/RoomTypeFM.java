@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
+/**
+ * Model formularza typów pokojów
+ */
 @Getter
 @Setter
 public class RoomTypeFM {

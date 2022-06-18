@@ -10,6 +10,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper zgłoszeń naprawy
+ * @param employeeRepository
+ * @param roomRepository
+ */
 @Component
 public record MaintenanceTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
 

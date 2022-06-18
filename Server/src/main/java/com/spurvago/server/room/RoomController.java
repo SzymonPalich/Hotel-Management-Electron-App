@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Kontroler pokojów
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/room")

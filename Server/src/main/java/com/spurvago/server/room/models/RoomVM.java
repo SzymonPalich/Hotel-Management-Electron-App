@@ -3,6 +3,9 @@ package com.spurvago.server.room.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Model wyświetlania pokojów
+ */
 @Getter
 @Setter
 public class RoomVM {

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 
+/**
+ * Walidator zgłoszeń sprzątania
+ */
 @Component
 public class MaidTicketValidator extends Validator {
     private final EmployeeRepository employeeRepository;

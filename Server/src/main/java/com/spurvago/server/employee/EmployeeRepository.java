@@ -16,6 +16,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Role pracowników
+ */
 @Repository
 public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 

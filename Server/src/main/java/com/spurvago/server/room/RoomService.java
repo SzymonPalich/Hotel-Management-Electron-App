@@ -24,6 +24,14 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis pokojów
+ * @param roomRepository
+ * @param roomTypeRepository
+ * @param accommodationRepository
+ * @param roomMapper
+ * @param roomValidator
+ */
 @Service
 public record RoomService(RoomRepository roomRepository,
                           RoomTypeRepository roomTypeRepository,

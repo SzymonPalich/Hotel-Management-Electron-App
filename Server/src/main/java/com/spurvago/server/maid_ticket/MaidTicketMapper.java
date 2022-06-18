@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Mapper zgłoszeń sprzątania
+ * @param employeeRepository
+ * @param roomRepository
+ */
 @Component
 public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
     MaidTicket mapToEntity(MaidTicketFM src) {

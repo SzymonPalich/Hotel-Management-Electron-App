@@ -14,6 +14,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Repozytorium magazynu
+ */
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     static Specification<Product> search(List<String> searchWords) {

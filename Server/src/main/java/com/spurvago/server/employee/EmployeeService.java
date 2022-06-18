@@ -20,6 +20,13 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis pracowników
+ * @param employeeRepository
+ * @param employeeMapper
+ * @param employeeValidator
+ * @param bCryptPasswordEncoder
+ */
 @Service
 public record EmployeeService(EmployeeRepository employeeRepository,
                               EmployeeMapper employeeMapper,

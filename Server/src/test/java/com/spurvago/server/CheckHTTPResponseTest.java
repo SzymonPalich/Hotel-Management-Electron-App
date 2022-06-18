@@ -9,6 +9,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+/**
+ * Klasa sprawdzająca czy serwer jest uruchomiony
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CheckHTTPResponseTest {
     @LocalServerPort
