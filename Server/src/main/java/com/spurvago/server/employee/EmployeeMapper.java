@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper pracowników
+ */
 @Component
 public record EmployeeMapper() {
     EmployeeVM mapToVM(Employee src) {

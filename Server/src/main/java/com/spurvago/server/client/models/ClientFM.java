@@ -3,6 +3,9 @@ package com.spurvago.server.client.models;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Model formularza klientów
+ */
 @Getter
 @Setter
 public class ClientFM {

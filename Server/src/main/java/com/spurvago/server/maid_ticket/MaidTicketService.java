@@ -24,6 +24,15 @@ import java.util.*;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis zgłoszeń sprzątania
+ * @param maidTicketRepository
+ * @param maidTicketMapper
+ * @param maidTicketValidator
+ * @param productRepository
+ * @param refillRepository
+ * @param userManager
+ */
 @Service
 public record MaidTicketService(MaidTicketRepository maidTicketRepository,
                                 MaidTicketMapper maidTicketMapper,

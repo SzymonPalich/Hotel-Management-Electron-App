@@ -19,6 +19,12 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis klientów
+ * @param clientRepository
+ * @param clientMapper
+ * @param clientValidator
+ */
 @Service
 public record ClientService(ClientRepository clientRepository,
                             ClientMapper clientMapper,

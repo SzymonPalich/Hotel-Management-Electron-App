@@ -18,6 +18,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Repozytorium rezerwacji
+ */
 @Repository
 public interface AccommodationRepository
         extends PagingAndSortingRepository<Accommodation, Long>, JpaSpecificationExecutor<Accommodation> {

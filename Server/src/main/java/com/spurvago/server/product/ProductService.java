@@ -18,6 +18,12 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis magazynu
+ * @param productRepository
+ * @param productMapper
+ * @param productValidator
+ */
 @Service
 public record ProductService(ProductRepository productRepository,
                              ProductMapper productMapper,

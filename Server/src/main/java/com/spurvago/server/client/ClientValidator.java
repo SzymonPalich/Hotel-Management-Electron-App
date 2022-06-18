@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-
+/**
+ * Walidator klientów
+ */
 @Component
 public class ClientValidator extends Validator {
     private final ClientRepository clientRepository;

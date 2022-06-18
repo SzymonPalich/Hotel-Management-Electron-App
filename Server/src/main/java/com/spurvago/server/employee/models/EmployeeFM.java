@@ -6,6 +6,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+/**
+ * Model formularza pracowników
+ */
 @Getter
 @Setter
 public class EmployeeFM {

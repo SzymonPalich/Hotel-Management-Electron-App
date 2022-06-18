@@ -18,6 +18,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Repozytorium zgłoszeń sprzątania
+ */
 @Repository
 public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTicket, Long>, JpaSpecificationExecutor<MaidTicket> {
     static Specification<MaidTicket> search(List<String> searchWords) {

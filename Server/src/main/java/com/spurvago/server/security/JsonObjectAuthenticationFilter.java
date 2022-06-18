@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-
+/**
+ * Wywołanie autoryzacji
+ */
 @CrossOrigin
 public class JsonObjectAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

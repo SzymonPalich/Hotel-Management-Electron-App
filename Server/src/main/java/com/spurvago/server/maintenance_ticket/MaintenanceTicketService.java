@@ -18,6 +18,12 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis zgłoszeń naprawy
+ * @param maintenanceTicketRepository
+ * @param maintenanceTicketMapper
+ * @param maintenanceTicketValidator
+ */
 @Service
 public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTicketRepository,
                                        MaintenanceTicketMapper maintenanceTicketMapper,

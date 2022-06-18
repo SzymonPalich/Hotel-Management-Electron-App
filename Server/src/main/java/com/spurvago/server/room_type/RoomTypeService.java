@@ -18,6 +18,12 @@ import java.util.Optional;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
+/**
+ * Serwis typów pokojów
+ * @param roomTypeRepository
+ * @param roomTypeMapper
+ * @param roomTypeValidator
+ */
 @Service
 public record RoomTypeService(RoomTypeRepository roomTypeRepository,
                               RoomTypeMapper roomTypeMapper,

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontroler typów pokojów
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/api/room_type")

@@ -6,6 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * Logowanie za pomocą konta pracownika
+ */
 public class EmployeeDetailsServiceImplementation implements UserDetailsService {
 
     @Autowired

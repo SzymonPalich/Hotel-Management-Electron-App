@@ -16,6 +16,9 @@ import java.util.Optional;
 
 import static com.spurvago.components.Utils.asLikeQuery;
 
+/**
+ * Repozytorium pokojów
+ */
 @Repository
 public interface RoomRepository extends PagingAndSortingRepository<Room, Long>, JpaSpecificationExecutor<Room> {
     static Specification<Room> search(List<String> searchWords) {

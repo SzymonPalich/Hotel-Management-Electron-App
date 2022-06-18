@@ -13,6 +13,9 @@ import java.util.Optional;
 import static com.spurvago.components.Utils.asLikeQuery;
 
 
+/**
+ * Repozytorium klientów
+ */
 @Repository
 public interface ClientRepository
         extends PagingAndSortingRepository<Client, Long>, JpaSpecificationExecutor<Client> {

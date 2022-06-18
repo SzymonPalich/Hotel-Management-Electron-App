@@ -6,6 +6,9 @@ import com.spurvago.server.room_type.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Walidator pokojów
+ */
 @Component
 public class RoomValidator extends Validator {
     private final RoomTypeRepository roomTypeRepository;

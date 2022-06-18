@@ -6,6 +6,9 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+/**
+ * Model wyświetlania zgłoszeń naprawy
+ */
 @Getter
 @Setter
 public class MaintenanceTicketVM {

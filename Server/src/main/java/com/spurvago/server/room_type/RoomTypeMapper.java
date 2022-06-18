@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper typów pokojów
+ */
 @Component
 public record RoomTypeMapper() {
     RoomTypeVM mapToVM(RoomType src) {

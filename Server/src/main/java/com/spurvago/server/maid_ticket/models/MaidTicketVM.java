@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.sql.Date;
 
+/**
+ * Model wyświetlania zgłoszeń sprzątania
+ */
 @Getter
 @Setter
 public class MaidTicketVM {

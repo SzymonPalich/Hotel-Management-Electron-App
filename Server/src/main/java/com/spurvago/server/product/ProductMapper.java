@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapper magazynu
+ */
 @Component
 public record ProductMapper() {
     ProductVM mapToVM(Product src) {
