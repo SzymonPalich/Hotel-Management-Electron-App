@@ -14,17 +14,23 @@ public class InvoiceDetails {
     private final BigDecimal grossValue;
     private final BigDecimal vatValue;
     private final BigDecimal netValue;
+    private final BigDecimal miniBar;
 
-    public InvoiceDetails(String buyerName, String roomName, int numberOfNights, Date startDate, Date endDate, BigDecimal grossValue) {
-        MathContext mathContext = new MathContext(2, RoundingMode.CEILING);
+    private final BigDecimal accommodation;
+
+    public InvoiceDetails(String buyerName, String roomName, int numberOfNights, Date startDate, Date endDate, BigDecimal accommodation, BigDecimal miniBar) {
+        MathContext mathContext = new MathContext(0, RoundingMode.CEILING);
         this.buyerName = buyerName;
         this.roomName = roomName;
         this.numberOfNights = numberOfNights;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.miniBar = miniBar.round(mathContext).setScale(2);
+        this.accommodation = accommodation.round(mathContext).setScale(2);
+        this.grossValue = accommodation.add(miniBar).round(mathContext).setScale(2);
         this.vatValue = new BigDecimal("0.23").multiply(grossValue).round(mathContext).setScale(2);
         this.netValue = new BigDecimal("0.77").multiply(grossValue).round(mathContext).setScale(2);
-        this.grossValue = grossValue.round(mathContext).setScale(2);
+
     }
 
     public String getBuyerName() {
@@ -57,5 +63,13 @@ public class InvoiceDetails {
 
     public String getNetValue() {
         return netValue.toString() + " zł";
+    }
+
+    public String getMiniBarValue() {
+        return miniBar.toString() + " zł";
+    }
+
+    public String getAccommodation() {
+        return accommodation.toString() + " zł";
     }
 }

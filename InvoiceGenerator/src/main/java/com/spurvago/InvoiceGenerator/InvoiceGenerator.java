@@ -22,7 +22,7 @@ public class InvoiceGenerator {
         //</editor-fold>
 
         var invoiceNr = System.currentTimeMillis();
-        var document = createDocument("Faktura" + invoiceNr + ".pdf");
+        var document = createDocument("Faktura " + invoiceDetails.getBuyerName() + " " + invoiceDetails.getEndDate() + ".pdf");
         var dateNow = getDate();
 
 
@@ -84,21 +84,37 @@ public class InvoiceGenerator {
         //</editor-fold>
 
         //<editor-fold desc="Price details">
-        PdfPTable priceDetailsTable = new PdfPTable(4);
+        PdfPTable priceDetailsTable = new PdfPTable(2);
         priceDetailsTable.setWidthPercentage(100);
-        priceDetailsTable.setWidths(new float[]{25, 15, 30, 30});
-        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("Cena netto", fontBold)));
-        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("VAT %", fontBold)));
-        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("Wartość VAT", fontBold)));
-        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("Cena brutto", fontBold)));
+        priceDetailsTable.setWidths(new float[]{30, 30});
 
-        priceDetailsTable.addCell(new Paragraph(invoiceDetails.getNetValue(), font));
-        priceDetailsTable.addCell(new Paragraph("23%", font));
-        priceDetailsTable.addCell(new Paragraph(invoiceDetails.getVatValue(), font));
-        priceDetailsTable.addCell(new Paragraph(invoiceDetails.getGrossValue(), font));
+        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("Zakwaterowanie brutto", fontBold)));
+        priceDetailsTable.addCell(getCellWOBorder(new Paragraph("Minibar brutto", fontBold)));
+
+
+        priceDetailsTable.addCell(new Paragraph(invoiceDetails.getAccommodation(), font));
+        priceDetailsTable.addCell(new Paragraph(invoiceDetails.getMiniBarValue(), font));
+
 
         document.add(priceDetailsTable);
         //</editor-fold>
+
+        PdfPTable summaryCostsTable = new PdfPTable(4);
+        summaryCostsTable.setWidthPercentage(100);
+        summaryCostsTable.setWidths(new float[]{30, 30, 15, 30});
+
+        summaryCostsTable.addCell(getCellWOBorder(new Paragraph("Cena brutto", fontBold)));
+        summaryCostsTable.addCell(getCellWOBorder(new Paragraph("Cena netto", fontBold)));
+        summaryCostsTable.addCell(getCellWOBorder(new Paragraph("VAT %", fontBold)));
+        summaryCostsTable.addCell(getCellWOBorder(new Paragraph("Wartość VAT", fontBold)));
+
+
+        summaryCostsTable.addCell(new Paragraph(invoiceDetails.getGrossValue(), font));
+        summaryCostsTable.addCell(new Paragraph(invoiceDetails.getNetValue(), font));
+        summaryCostsTable.addCell(new Paragraph("23%", font));
+        summaryCostsTable.addCell(new Paragraph(invoiceDetails.getVatValue(), font));
+
+        document.add(summaryCostsTable);
 
         Image image = Image.getInstance("src/main/resources/logo.jpg");
         image.scaleAbsolute(150f, 150f);
