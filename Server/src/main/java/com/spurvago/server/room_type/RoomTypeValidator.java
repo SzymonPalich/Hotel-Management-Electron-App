@@ -18,9 +18,6 @@ public class RoomTypeValidator extends Validator {
     }
 
     public boolean validate(RoomTypeFM model) {
-        if (!roomTypeRepository.existsById(model.getId())) {
-            return false;
-        }
         if (!haveLength(model.getType(), 50)) {
             return false;
         }

@@ -7,6 +7,7 @@ import RoomsServices, { IRoom } from "./services/RoomsService";
 import ProductServices, { IProduct } from "./services/ProductService";
 import AccommodationServices, { IAccommodation } from "./services/AccommodationService";
 import { AxiosError } from "axios";
+import RoomTypesServices, { IRoomType } from "./services/RoomTypesService";
 
 export default class Utils {
     public static alertDisplay() {
@@ -37,6 +38,9 @@ export default class Utils {
                     window.location.reload();
                 } else if (table == "employee") {
                     this.deleteEmployee(id);
+                    window.location.reload();
+                } else if (table == "room_types") {
+                    this.deleteRoomType(id);
                     window.location.reload();
                 } else if (table == "client") {
                     this.deleteClient(id);
@@ -173,6 +177,19 @@ export default class Utils {
             return Promise.reject()
         }
     }
+
+    static async deleteRoomType(id: string): Promise<IRoomType> {
+        try{
+            return await RoomTypesServices.delete(id);
+        } catch (error) {
+            const err = error as AxiosError
+            if (err.response) {
+                Utils.errorAlert(err.response.status)
+            }
+            return Promise.reject()
+        }
+    }
+
 
     static async deleteClient(id: string): Promise<IClient> {
         try{

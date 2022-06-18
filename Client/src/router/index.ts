@@ -23,6 +23,11 @@ import RoomsFetchView from '../views/rooms/RoomsFetchView.vue'
 import RoomsCreateView from '../views/rooms/RoomsCreateView.vue'
 import RoomsEditView from '../views/rooms/RoomsEditView.vue'
 
+import RoomTypesView from '../views/room_types/RoomTypesView.vue'
+import RoomTypesFetchView from '../views/room_types/RoomTypesFetchView.vue'
+import RoomTypesCreateView from '../views/room_types/RoomTypesCreateView.vue'
+import RoomTypesEditView from '../views/room_types/RoomTypesEditView.vue'
+
 import EmployeeView from '../views/employees/EmployeeView.vue'
 import EmployeeCreateView from '../views/employees/EmployeeCreateView.vue'
 import EmployeeFetchView from '../views/employees/EmployeeFetchView.vue'
@@ -66,7 +71,7 @@ const routes: Array<RouteRecordRaw> = [
     component: MaidTicketEditView
   },
   {
-    path:'/maid_ticket/create',
+    path: '/maid_ticket/create',
     name: 'maid_ticket-create',
     component: MaidTicketCreateView
   },
@@ -121,6 +126,27 @@ const routes: Array<RouteRecordRaw> = [
     path: '/rooms/:id/edit',
     name: 'rooms-edit',
     component: RoomsEditView
+  },
+  // Moduł typów pokoi
+  {
+    path: '/room_types',
+    name: 'room_types',
+    component: RoomTypesView
+  },
+  {
+    path: '/room_types/:id',
+    name: 'room_types-fetch',
+    component: RoomTypesFetchView
+  },
+  {
+    path: '/room_types/create',
+    name: 'room_types-create',
+    component: RoomTypesCreateView
+  },
+  {
+    path: '/room_types/:id/edit',
+    name: 'room_types-edit',
+    component: RoomTypesEditView
   },
   // Moduł klientów
   {

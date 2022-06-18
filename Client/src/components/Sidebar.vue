@@ -44,6 +44,18 @@
             <span class="links_name">Pokoje</span>
           </router-link>
         </li>
+        <li v-if="this.isActive('room_types') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN')" class="router-link-active">
+          <router-link to="/room_types">
+            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
+            <span class="links_name">Typy pokoi</span>
+          </router-link>
+        </li>
+        <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN'">
+          <router-link to="/room_types">
+            <img class="material-icons" src="../../public/css/fonts/icons8-home-25.png"/>
+            <span class="links_name">Typy pokoi</span>
+          </router-link>
+        </li>
         <li v-if="this.isActive('maid_ticket')&& (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_MAID'|| this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/maid_ticket">
             <img class="material-icons" src="../../public/css/fonts/icons8-broom-25.png"/>
