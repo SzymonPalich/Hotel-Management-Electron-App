@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @EntityScan("com.spurvago.database")
 @CrossOrigin
 public class ServerApplication extends SpringBootServletInitializer {
+
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
     }
