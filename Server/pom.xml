@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.spurvago</groupId>
     <artifactId>Server</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>api</name>
     <description>Server</description>
     <version>0.1.0</version>
