@@ -12,6 +12,7 @@ import com.spurvago.database.Room;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.maid_ticket.MaidTicketRepository;
+import com.spurvago.server.maid_ticket.MaidTicketService;
 import com.spurvago.server.product.ProductRepository;
 import com.spurvago.server.refill.RefillRepository;
 import com.spurvago.server.room.RoomRepository;
@@ -100,9 +101,14 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         room = temp.get();
         room.setStatus(RoomStatus.CLEANING.intValue);
         roomRepository.save(room);
-
+        
         Accommodation entity = accommodationMapper.mapToEntity(newEntity);
-        accommodationRepository.save(entity);
+        entity = accommodationRepository.save(entity);
+
+
+        var maidTicket = new MaidTicket();
+        maidTicket.setAccommodation(entity);
+        maidTicketRepository.save(maidTicket);
 
         return accommodationMapper.mapToVM(entity);
     }
