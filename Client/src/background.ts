@@ -10,8 +10,6 @@ import * as child_process from 'child_process'
 // large - 1800x1000
 
 const winSize = options.size == "small" ? windowSizes.small : windowSizes.large;
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -33,11 +31,13 @@ async function createWindow() {
     resizable: false
   })
 
-  const jarPath = app.getAppPath() + '\\Server.jar';
-  const child = child_process.spawn(
-    'java', ['-jar', jarPath, '']
-  );
 
+
+  // const jarPath = __dirname + '\\Server.jar';
+  const jarPath = app.getPath("exe").replace('\\hotel.exe', '') + "\\resources" + '\\Server.jar';
+  const child = child_process.spawn(
+    'java', ['-jar', jarPath]
+  );
 
   win.removeMenu()
 
@@ -49,6 +49,7 @@ async function createWindow() {
     createProtocol('app')
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
+    win.webContents.openDevTools()
   }
 
   win.on('closed', function () {
@@ -76,18 +77,18 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-    // Install Vue Devtools
-    try {
-      await installExtension(VUEJS3_DEVTOOLS)
+  // Install Vue Devtools
+  try {
+    await installExtension(VUEJS3_DEVTOOLS)
+  }
+  catch (e: unknown) {
+    if (typeof e === "string") {
+      console.error('Vue Devtools failed to install:', e.toString())
     }
-    catch (e: unknown) {
-      if (typeof e === "string") {
-        console.error('Vue Devtools failed to install:', e.toString())
-      }
-      else {
-        console.error("Unknown error")
-      }
+    else {
+      console.error("Unknown error")
     }
-    createWindow()
+  }
+  createWindow()
 })
 
