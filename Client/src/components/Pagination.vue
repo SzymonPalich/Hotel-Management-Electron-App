@@ -241,27 +241,28 @@ export default defineComponent({
     getPagination() {
       let pagination = new Set<number>();
       pagination.add(1);
+      if (this.totalElements > 10) {
       pagination.add(this.totalPages);
       pagination.add(this.index);
+        if (this.totalPages > 3) {
+          let max = this.totalPages - 3 <= 6 ? this.totalPages - 3 : 6;
+          if (this.index == 1 || this.index == this.totalPages) max++;
 
-      if (this.totalPages > 3) {
-        let max = this.totalPages - 3 <= 6 ? this.totalPages - 3 : 6;
-        if (this.index == 1 || this.index == this.totalPages) max++;
-
-        let curr = 1;
-        while (max > 0) {
-          if (this.index - curr > 1) {
-            pagination.add(this.index - curr);
-            max--;
+          let curr = 1;
+          while (max > 0) {
+            if (this.index - curr > 1) {
+              pagination.add(this.index - curr);
+              max--;
+            }
+            if (max == 0) {
+              break;
+            }
+            if (this.index + curr < this.totalPages) {
+              pagination.add(this.index + curr);
+              max--;
+            }
+            curr++;
           }
-          if (max == 0) {
-            break;
-          }
-          if (this.index + curr < this.totalPages) {
-            pagination.add(this.index + curr);
-            max--;
-          }
-          curr++;
         }
       }
       return Array.from(pagination).sort((a, b) => a - b);
