@@ -12,7 +12,7 @@ import java.sql.Date;
 @Setter
 public class MaidTicketVM {
     private Long id;
-    private long roomId;
+    private long accommodationId;
     private int roomNumber;
     private String roomType;
     private int roomStatus;

@@ -5,7 +5,7 @@ import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
 import * as child_process from 'child_process'
 import * as fs from 'fs'
-import kill from 'tree-kill'
+import * as kp from 'kill-port-process'
 
 // Window size
 // small - 1350x700
@@ -55,9 +55,7 @@ async function createWindow() {
   }
 
   win.on('closed', function () {
-    if (child.pid) {
-      kill(child.pid)
-    }
+    kp.killPortProcess(8081)
   })
 }
 

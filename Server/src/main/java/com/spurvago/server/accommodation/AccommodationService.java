@@ -4,9 +4,14 @@ import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
 import com.spurvago.database.Accommodation;
+import com.spurvago.database.MaidTicket;
+import com.spurvago.database.Refill;
 import com.spurvago.database.Room;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
+import com.spurvago.server.maid_ticket.MaidTicketRepository;
+import com.spurvago.server.product.ProductRepository;
+import com.spurvago.server.refill.RefillRepository;
 import com.spurvago.server.room.RoomRepository;
 import com.spurvago.server.room.RoomStatus;
 import org.springframework.data.domain.Page;
@@ -14,11 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.spurvago.InvoiceGenerator.InvoiceGenerator;
-import com.spurvago.InvoiceGenerator.InvoiceDetails;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +37,10 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 public record AccommodationService(AccommodationRepository accommodationRepository,
                                    AccommodationMapper accommodationMapper,
                                    AccommodationValidator accommodationValidator,
-                                   RoomRepository roomRepository) {
+                                   RoomRepository roomRepository,
+                                   MaidTicketRepository maidTicketRepository,
+                                   ProductRepository productRepository,
+                                   RefillRepository refillRepository) {
 
     public AccommodationVM find(Long id) {
         Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
@@ -141,29 +144,40 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         accommodationRepository.delete(entity);
     }
 
-    public void generateInvoice(Long id) {
-        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
-        Accommodation entity;
-        if (optionalAccommodation.isEmpty()) {
-            throw new ResponseStatusException(NOT_FOUND);
-        }
-        entity = optionalAccommodation.get();
+    /**
+     * Generowanie faktury
+     * @param id
+     */
+//    public void generateInvoice(Long id) {
+//        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(id);
+//        Accommodation entity;
+//        if (optionalAccommodation.isEmpty()) {
+//            throw new ResponseStatusException(NOT_FOUND);
+//        }
+//        entity = optionalAccommodation.get();
+//
+//        LocalDate start = entity.getStartDate().toLocalDate();
+//        LocalDate end = entity.getEndDate().toLocalDate();
+//        int days = Math.abs((int) ChronoUnit.DAYS.between(end, start));
+//        InvoiceGenerator inv = new InvoiceGenerator();
+//        InvoiceDetails invoiceDetails = new InvoiceDetails(
+//                entity.getClient().getFirstName() + " " + entity.getClient().getLastName(),
+//                entity.getRoom().getRoomNumber() + " " + entity.getRoom().getRoomType().getType(),
+//                days, entity.getStartDate(), entity.getEndDate(),
+//                entity.getRoom().getRoomType().getPrice()
+//        );
+//
+//        try {
+//            inv.generatePDF(invoiceDetails);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-        LocalDate start = entity.getStartDate().toLocalDate();
-        LocalDate end = entity.getEndDate().toLocalDate();
-        int days = Math.abs((int) ChronoUnit.DAYS.between(end, start));
-        InvoiceGenerator inv = new InvoiceGenerator();
-        InvoiceDetails invoiceDetails = new InvoiceDetails(
-                entity.getClient().getFirstName() + " " + entity.getClient().getLastName(),
-                entity.getRoom().getRoomNumber() + " " + entity.getRoom().getRoomType().getType(),
-                days, entity.getStartDate(), entity.getEndDate(),
-                entity.getRoom().getRoomType().getPrice()
-        );
+    public void temp(Long id) {
+        Optional<Accommodation> acc = accommodationRepository.findById(id);
+        Optional<MaidTicket> mt = maidTicketRepository.findByAccommodation(acc.get());
+        MaidTicket mtw = mt.get();
 
-        try {
-            inv.generatePDF(invoiceDetails);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
