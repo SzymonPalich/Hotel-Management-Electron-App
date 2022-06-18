@@ -62,17 +62,12 @@ public class AccommodationController {
     }
     //</editor-fold>
 
-//    <editor-fold desc="invoice()">
-//    @PutMapping(path = "/{id}/invoice")
-//    @ResponseStatus(HttpStatus.OK)
-//    public void generateInvoice(@PathVariable Long id) {
-//        accommodationService.generateInvoice(id);
-//    }
-//    </editor-fold>
 
-    @GetMapping(path = "/{id}/temp")
+    //<editor-fold desc="invoice()">
+    @PutMapping(path = "/{id}/invoice")
     @ResponseStatus(HttpStatus.OK)
-    public void temp(@PathVariable Long id) {
-        accommodationService.temp(id);
+    public void generateInvoice(@PathVariable Long id) {
+        accommodationService.generateInvoice(id);
     }
+    //</editor-fold>
 }
