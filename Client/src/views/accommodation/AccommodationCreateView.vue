@@ -25,7 +25,7 @@
                   <input
                     class="
                     border border-gray-300
-                    w-full
+                    w-3/4
                     h-full
                     rounded-md
                     px-2
@@ -47,7 +47,7 @@
                   <input
                     class="
                       border border-gray-300
-                      w-full
+                      w-3/4
                       h-full
                       rounded-md
                       px-2
@@ -66,11 +66,13 @@
                 <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <v-select
+                  class="w-3/4"
                   label="type"
                   v-model="this.roomValue"
                   :options="this.resultRoomTypes.content"
                   :reduce="(option) => option.id"
                   :clearable="false"
+                  @option:selecting="selectRoomTypeId"
                   placeholder="Wybierz typ"
                 >
                   <template v-slot:option="option">
@@ -84,6 +86,9 @@
                     </template>
                   </template>
                 </v-select>
+                <div class="float-right border-gray-400 rounded-2xl w-8">
+                  <img src="../../../public/css/fonts/icons8-search-25.png" class="align-middle material-icons" @click="filterRooms(this.result.startDate, this.result.endDate, this.roomValue)"/>
+                </div>
                 </dd>
               </div>
             </div>
@@ -189,13 +194,11 @@ export default defineComponent({
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
       resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
       roomValue: null,
-      roomTypeId: 0
     };
   },
 
   mounted() {
     this.getClients().then((data) => (this.resultClients = data));
-    this.getRooms().then((data) => (this.resultRooms = data));
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
@@ -206,10 +209,6 @@ export default defineComponent({
 
     async getRoomTypes(): Promise<IList<IRoomType>> {
       return await RoomTypesServices.getList(this.pager);
-    },
-
-    async getRooms(): Promise<IList<IRoom>> {
-      return await RoomsServices.getList(this.pager);
     },
 
     async getAvailableList(startDate: Date, endDate: Date, roomTypeId: string): Promise<Array<IRoom>> {
@@ -232,10 +231,9 @@ export default defineComponent({
       this.$forceUpdate;
     },
 
-    selectRoomTypeId: function(value: number) {
+    selectRoomTypeId() {
       this.resultRooms.content = [];
       this.result.roomId = 0;
-      this.roomTypeId = value;
       this.$forceUpdate;
     },
 
@@ -245,6 +243,7 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
+      // console.log(this.result);
       try {
         await AccommodationServices.create(this.result);
         Utils.acceptedAlert();
