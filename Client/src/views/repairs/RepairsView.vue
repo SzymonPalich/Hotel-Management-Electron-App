@@ -13,7 +13,10 @@
             @click="this.find()"
             class="flex items-center bg-custom-gray rounded-r-xl"
           >
-            <img class="material-icons" src="../../../public/css/fonts/icons8-search-25.png"/>
+            <img
+              class="material-icons"
+              src="../../../public/css/fonts/icons8-search-25.png"
+            />
           </div>
         </div>
       </div>
@@ -22,7 +25,7 @@
           class="px-2 py-1 rounded-xl text-white bg-gray-800"
           src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'repairs-create' })"
-          />
+        />
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
@@ -70,8 +73,15 @@
               <td class="text-center py-2 px-4">{{ repair.description }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
-                <router-link v-if="repair.technicianReport == null" :to="{ name: 'repairs-finalization', params: { id: repair.id } }">
-                  <img class="align-middle material-icons"
+                <router-link
+                  v-if="repair.technicianReport == null"
+                  :to="{
+                    name: 'repairs-finalization',
+                    params: { id: repair.id },
+                  }"
+                >
+                  <img
+                    class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-open-end-wrench-25.png"
                   />
                 </router-link>
@@ -79,18 +89,24 @@
                 <router-link
                   :to="{ name: 'repairs-fetch', params: { id: repair.id } }"
                 >
-                  <img class="align-middle material-icons"
+                  <img
+                    class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-document-30.png"
                   />
                 </router-link>
 
                 <router-link
                   :to="{ name: 'repairs-edit', params: { id: repair.id } }"
-                  ><img class="align-middle material-icons"
+                  ><img
+                    class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-edit-25.png"
                   />
                 </router-link>
-                <img @click="alertDisplay(repair.id)" class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
+                <img
+                  @click="alertDisplay(repair.id)"
+                  class="material-icons align-middle"
+                  src="../../../public/css/fonts/icons8-delete-25.png"
+                />
               </td>
             </tr>
           </tbody>
@@ -130,7 +146,7 @@ export default defineComponent({
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
-    if(localStorage.getItem('token')==undefined){
+    if (localStorage.getItem("token") == undefined) {
       this.$router.push("login");
     }
   },
@@ -139,7 +155,6 @@ export default defineComponent({
     async getData(): Promise<IList<IRepair>> {
       return await RepairServices.getList(this.pager);
     },
-
 
     async find(): Promise<void> {
       this.result.pager.search = this.search;
@@ -157,12 +172,12 @@ export default defineComponent({
     },
 
     isEmpty(text: string) {
-      if(text == ""){
+      if (text == "") {
         return false;
       } else {
         return true;
       }
     },
-  }
+  },
 });
 </script>

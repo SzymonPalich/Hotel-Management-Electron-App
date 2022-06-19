@@ -40,7 +40,8 @@ public record MaintenanceTicketService(MaintenanceTicketRepository maintenanceTi
     }
 
     public ListPaginated<MaintenanceTicketVM> getList(Pager pager, String search) {
-        Pageable pageable = pager.makePageable();
+        pager.sort = "finalizationDate";
+        Pageable pageable = pager.makePageableAsc();
         Page<MaintenanceTicket> entities;
         if (Utils.isNullOrBlank(search)) {
             entities = maintenanceTicketRepository.findAll(pageable);

@@ -30,4 +30,8 @@ public class Pager {
     public Pageable makePageable() {
         return PageRequest.of(this.index, this.size, Sort.by(this.sort).descending()).previousOrFirst();
     }
+
+    public Pageable makePageableAsc() {
+        return PageRequest.of(this.index, this.size, Sort.by(this.sort).ascending()).previousOrFirst();
+    }
 }

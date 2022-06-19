@@ -10,7 +10,9 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
+          <h1
+            class="text-2xl leading-6 font-medium text-white text-center mb-2"
+          >
             Realizacja naprawy
           </h1>
         </div>
@@ -51,16 +53,13 @@
               </dd>
             </div>
             <div
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Raport Technika</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <textarea rows="5" maxlength="400"
+                <textarea
+                  rows="5"
+                  maxlength="400"
                   class="
                     scroll
                     border border-gray-300
@@ -74,7 +73,7 @@
                     resize-none
                   "
                   required
-                  v-model = this.result.technicianReport
+                  v-model="this.result.technicianReport"
                 ></textarea>
               </dd>
             </div>
@@ -90,7 +89,7 @@
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   class="
-                     border border-gray-300
+                    border border-gray-300
                     w-full
                     h-full
                     rounded-md
@@ -101,7 +100,7 @@
                   "
                   type="number"
                   required
-                  v-model = this.result.partsPrice
+                  v-model="this.result.partsPrice"
                 />
               </dd>
             </div>
@@ -144,7 +143,6 @@ export default defineComponent({
   },
 
   mounted() {
-    console.log(this.getData());
     this.getData().then((data) => (this.result = data));
   },
 
@@ -157,28 +155,30 @@ export default defineComponent({
       try {
         return await RepairServices.fetch(this.getId());
       } catch (error) {
-        const err = error as AxiosError
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
-        } 
-        return Promise.reject()
+          Utils.errorAlert(err.response.status);
+        }
+        return Promise.reject();
       }
     },
 
     async save(): Promise<void> {
-      console.log(this.result);
-      this.result.employeeId = 1;
+      this.result.employeeId = undefined;
       this.result.finalizationDate = new Date(Date.now());
       try {
+        if (!this.result.technicianReport) {
+          this.result.technicianReport = "Gotowe";
+        }
         await RepairServices.update(this.getId(), this.result);
         Utils.acceptedAlert();
         this.$router.push({ name: "repairs" });
       } catch (error) {
-        const err = error as AxiosError
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+          Utils.errorAlert(err.response.status);
         }
-        return Promise.reject()
+        return Promise.reject();
       }
     },
     back(): void {
