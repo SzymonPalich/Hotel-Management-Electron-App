@@ -64,7 +64,7 @@
                 {{ room_type.type }}
               </td>
               <td class="text-center py-2 px-4">
-                {{ room_type.price }}
+                {{ this.currencyFormat(room_type.price) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link
@@ -148,6 +148,10 @@ export default defineComponent({
 
     alertDisplay(id: string) {
       Utils.alertDisplayDelete("room_types", id);
+    },
+
+    currencyFormat(value: number): string {
+      return Utils.currencyFormat(value);
     },
   },
 });

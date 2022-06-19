@@ -10,13 +10,15 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
+          <h1
+            class="text-2xl leading-6 font-medium text-white text-center mb-2"
+          >
             Nazwa: {{ this.result.type }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
           <dl>
-             <div
+            <div
               class="
                 bg-gray-50
                 px-4
@@ -39,7 +41,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Cena</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.price }} zł
+                {{ this.currencyFormat(this.result.price) }}
               </dd>
             </div>
           </dl>
@@ -86,17 +88,21 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
+    currencyFormat(value: number): string {
+      return Utils.currencyFormat(value);
+    },
+
     async getData(): Promise<IRoomType> {
       try {
         return await RoomTypesServices.fetch(this.getId());
-      } catch(error) {
-        const err = error as AxiosError
+      } catch (error) {
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+          Utils.errorAlert(err.response.status);
         }
-        return Promise.reject()
+        return Promise.reject();
       }
-    }
+    },
   },
 });
 </script>

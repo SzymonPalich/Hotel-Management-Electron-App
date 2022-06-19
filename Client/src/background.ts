@@ -33,8 +33,6 @@ async function createWindow() {
   })
 
 
-
-  // const jarPath = __dirname + '\\Server.jar';
   const jarPath = app.getPath("exe").replace('\\hotel.exe', '') + "\\resources" + '\\Server.jar';
   const child = child_process.spawn(
     'java', ['-jar', jarPath]

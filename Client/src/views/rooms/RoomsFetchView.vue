@@ -10,19 +10,16 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
+          <h1
+            class="text-2xl leading-6 font-medium text-white text-center mb-2"
+          >
             Pokój #{{ this.result.roomNumber }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
           <dl>
             <div
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -39,7 +36,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Cena za pokój</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.resultRoomTypes.price }} zł
+                {{ this.currencyFormat(this.resultRoomTypes.price) }}
               </dd>
             </div>
             <div
@@ -66,16 +63,9 @@
               </dd>
             </div>
             <div
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">
-                Czas wynajmu
-              </dt>
+              <dt class="text-sm font-medium text-gray-500">Czas wynajmu</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 03.04.2022 - 22.04.2022
               </dd>
@@ -107,6 +97,7 @@
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import { defineComponent } from "vue";
 import RoomTypesServices, { IRoomType } from "@/services/RoomTypesService";
+import Utils from '@/Utils'
 
 export default defineComponent({
   data() {
@@ -116,14 +107,17 @@ export default defineComponent({
     };
   },
   mounted() {
-    console.log(this.getData());
-        this.getData().then((data) => (this.result = data));
+    this.getData().then((data) => (this.result = data));
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
   },
 
   methods: {
     getId(): string {
       return this.$route.params.id as string;
+    },
+
+    currencyFormat(value: number): string {
+      return Utils.currencyFormat(value);
     },
 
     setStatus(status: number): string {
@@ -136,7 +130,7 @@ export default defineComponent({
 
     async getRoomTypes(): Promise<IRoomType> {
       console.log(this.result);
-      var id = (await this.getData()).roomTypeId as unknown as string
+      var id = (await this.getData()).roomTypeId as unknown as string;
       return await RoomTypesServices.fetch(id);
     },
   },

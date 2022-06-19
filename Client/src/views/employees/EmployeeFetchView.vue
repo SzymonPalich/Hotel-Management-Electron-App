@@ -10,8 +10,10 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
-            Pracownik: {{ this.result.firstName }} {{this.result.lastName}}
+          <h1
+            class="text-2xl leading-6 font-medium text-white text-center mb-2"
+          >
+            Pracownik: {{ this.result.firstName }} {{ this.result.lastName }}
           </h1>
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
@@ -34,7 +36,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Wynagrodzenie</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.salary }}
+                {{ this.currencyFormat(this.result.salary) }}
               </dd>
             </div>
             <div
@@ -74,13 +76,18 @@
             <div
               class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
-              <dt class="text-sm font-medium text-gray-500">Data zatrudnienia</dt>
+              <dt class="text-sm font-medium text-gray-500">
+                Data zatrudnienia
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.employmentDate}}
+                {{ this.result.employmentDate }}
               </dd>
             </div>
-                <div
-                v-if="this.result.dismissal_date != null && this.result.dismissal_date != undefined"
+            <div
+              v-if="
+                this.result.dismissal_date != null &&
+                this.result.dismissal_date != undefined
+              "
               class="
                 bg-gray-50
                 px-4
@@ -90,7 +97,7 @@
             >
               <dt class="text-sm font-medium text-gray-500">Data zwolnienia</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.dismissalDate}}
+                {{ this.result.dismissalDate }}
               </dd>
             </div>
           </dl>
@@ -125,9 +132,9 @@ import Utils from "@/Utils";
 export default defineComponent({
   data() {
     return {
-        result: EmployeeServices.getBlankEmployeeTemplate(),
+      result: EmployeeServices.getBlankEmployeeTemplate(),
     };
-      },
+  },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
@@ -138,22 +145,24 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
-    
     async getData(): Promise<IEmployee> {
       try {
         return await EmployeeServices.fetch(this.getId());
       } catch (error) {
-        const err = error as AxiosError
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+          Utils.errorAlert(err.response.status);
         }
-        return Promise.reject()
+        return Promise.reject();
       }
+    },
+    currencyFormat(value: number): string {
+      return Utils.currencyFormat(value);
     },
 
     setPosition(position: string): string {
       return EmployeeServices.setPosition(position);
-    }
+    },
   },
 });
 </script>

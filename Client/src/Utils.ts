@@ -10,6 +10,14 @@ import { AxiosError } from "axios";
 import RoomTypesServices, { IRoomType } from "./services/RoomTypesService";
 
 export default class Utils {
+    public static currencyFormat(value: number): string {
+        const formatter = new Intl.NumberFormat("pl-PL", {
+            style: "currency",
+            currency: "PLN",
+        });
+        return formatter.format(value);
+    }
+
     public static alertDisplay() {
         Swal.fire({
             title: "Jesteś pewien?",
@@ -90,7 +98,7 @@ export default class Utils {
         let text = ""
         if (err == 422) {
             text = "Niepoprawne dane"
-        } else if (err == 404){
+        } else if (err == 404) {
             text = "Brak podanego rekordu"
         }
         Swal.fire({
@@ -124,7 +132,7 @@ export default class Utils {
             size: 5,
             sort: "id",
             search: ""
-        };        
+        };
     }
 
     public static getPager(index: number, sort: string): IPager {
@@ -155,7 +163,7 @@ export default class Utils {
     }
 
     static async deleteMaid(id: string): Promise<IMaid> {
-        try{
+        try {
             return await MaidTicketServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -167,7 +175,7 @@ export default class Utils {
     }
 
     static async deleteEmployee(id: string): Promise<IEmployee> {
-        try{
+        try {
             return await EmployeeServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -179,7 +187,7 @@ export default class Utils {
     }
 
     static async deleteRoomType(id: string): Promise<IRoomType> {
-        try{
+        try {
             return await RoomTypesServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -192,7 +200,7 @@ export default class Utils {
 
 
     static async deleteClient(id: string): Promise<IClient> {
-        try{
+        try {
             return await ClientsServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -204,7 +212,7 @@ export default class Utils {
     }
 
     static async deleteTechnician(id: string): Promise<IRepair> {
-        try{
+        try {
             return await RepairServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -216,7 +224,7 @@ export default class Utils {
     }
 
     static async deleteRoom(id: string): Promise<IRoom> {
-        try{
+        try {
             return await RoomsServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -228,7 +236,7 @@ export default class Utils {
     }
 
     static async deleteProduct(id: string): Promise<IProduct> {
-        try{
+        try {
             return await ProductServices.delete(id);
         } catch (error) {
             const err = error as AxiosError
@@ -240,7 +248,7 @@ export default class Utils {
     }
 
     static async deleteAccommodation(id: string): Promise<IAccommodation> {
-        try{
+        try {
             return await AccommodationServices.delete(id);
         } catch (error) {
             const err = error as AxiosError

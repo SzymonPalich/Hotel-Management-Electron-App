@@ -10,7 +10,9 @@
         "
       >
         <div class="px-4 py-5 sm:px-6 mt-2">
-          <h1 class="text-2xl leading-6 font-medium text-white text-center mb-2">
+          <h1
+            class="text-2xl leading-6 font-medium text-white text-center mb-2"
+          >
             Podgląd
           </h1>
         </div>
@@ -50,20 +52,17 @@
                 {{ this.result.description }}
               </dd>
             </div>
-            <div v-if="this.result.technicianReport !== ''"
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+            <div
+              v-if="this.result.technicianReport !== ''"
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Raport technika</dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {{ this.result.technicianReport }}
               </dd>
             </div>
-            <div v-if="this.result.technicianReport !== ''"
+            <div
+              v-if="this.result.technicianReport !== ''"
               class="
                 bg-gray-50
                 px-4
@@ -71,24 +70,28 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Data finalizacji</dt>
+              <dt class="text-sm font-medium text-gray-500">
+                Data finalizacji
+              </dt>
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 {{ this.result.finalizationDate }}
               </dd>
             </div>
-            <div v-if="this.result.technicianReport !== ''"
-              class="
-                bg-white
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
+            <div
+              v-if="this.result.technicianReport !== ''"
+              class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
             >
               <dt class="text-sm font-medium text-gray-500">Cena części</dt>
-              <dd v-if="this.result.partsPrice > 0" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                {{ this.result.partsPrice }} zł
+              <dd
+                v-if="this.result.partsPrice > 0"
+                class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+              >
+                {{ this.currencyFormat(this.result.partsPrice) }}
               </dd>
-              <dd v-else class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <dd
+                v-else
+                class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+              >
                 Brak Kosztów
               </dd>
             </div>
@@ -127,6 +130,7 @@ export default defineComponent({
       result: RepairServices.getBlankRepairTemplate(),
     };
   },
+
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
@@ -137,15 +141,19 @@ export default defineComponent({
       return this.$route.params.id as string;
     },
 
+    currencyFormat(value: number): string {
+      return Utils.currencyFormat(value);
+    },
+
     async getData(): Promise<IRepair> {
       try {
         return await RepairServices.fetch(this.getId());
       } catch (error) {
-        const err = error as AxiosError
+        const err = error as AxiosError;
         if (err.response) {
-          Utils.errorAlert(err.response.status)
+          Utils.errorAlert(err.response.status);
         }
-        return Promise.reject()
+        return Promise.reject();
       }
     },
   },

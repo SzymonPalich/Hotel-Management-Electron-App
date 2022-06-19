@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-between flex-col h-screen">
     <div class="mt-4 flex mr-0 ml-auto">
-            <div class="flex flex-row pr-4 rounded-xl">
-               <div class="flex border-gray-400 ml-4 rounded-xl">
+      <div class="flex flex-row pr-4 rounded-xl">
+        <div class="flex border-gray-400 ml-4 rounded-xl">
           <input
             v-on:keyup.enter="this.find()"
             v-model="this.search"
@@ -13,16 +13,19 @@
             @click="this.find()"
             class="flex items-center bg-custom-gray rounded-r-xl"
           >
-            <img class="material-icons" src="../../../public/css/fonts/icons8-search-25.png"/>
+            <img
+              class="material-icons"
+              src="../../../public/css/fonts/icons8-search-25.png"
+            />
           </div>
         </div>
       </div>
       <div class="pr-6 flex items-center">
         <img
-         class="px-2 py-1 rounded-xl text-white bg-gray-800"
-         src="../../../public/css/fonts/icons8-plus-25.png"
+          class="px-2 py-1 rounded-xl text-white bg-gray-800"
+          src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'employees-create' })"
-          />
+        />
       </div>
     </div>
     <div class="px-6 pb-4 pt-7 w-full h-full">
@@ -58,21 +61,23 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'employee-info', params: { id: emp.id } }"
-                  ><img class="align-middle material-icons"
+                  ><img
+                    class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-document-30.png"
-                  /></router-link
-                >
+                /></router-link>
                 <router-link
                   :to="{ name: 'employees-edit', params: { id: emp.id } }"
                 >
-                  <img class="align-middle material-icons"
+                  <img
+                    class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-edit-25.png"
                   />
                 </router-link>
-                <img class="align-middle material-icons"
-                    src="../../../public/css/fonts/icons8-delete-25.png"
+                <img
+                  class="align-middle material-icons"
+                  src="../../../public/css/fonts/icons8-delete-25.png"
                   @click="alertDisplay(emp.id)"
-                  />
+                />
               </td>
             </tr>
           </tbody>
