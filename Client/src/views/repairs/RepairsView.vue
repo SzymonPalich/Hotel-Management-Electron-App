@@ -70,7 +70,7 @@
           <tbody class="text-gray-700">
             <tr v-for="repair in result.content" :key="repair" class="bg-white">
               <td class="text-left py-2 px-4">{{ repair.name }}</td>
-              <td class="text-center py-2 px-4">{{ repair.description }}</td>
+              <td class="text-center py-2 px-4 w-44">{{ repair.description }}</td>
               <td class="text-center py-2 px-4">{{ repair.roomNumber }}</td>
               <td class="text-center py-2 px-4 w-44">
                 <router-link
