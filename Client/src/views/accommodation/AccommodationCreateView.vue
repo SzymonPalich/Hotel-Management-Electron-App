@@ -95,9 +95,9 @@
                 </div>
               </div>
             </div>
-            <div class="border border-gray-300 px-2 py-0_1 rounded-md outline-none mx-6">
+            <div class="border border-gray-300 px-2 py-0_1 outline-none mx-6">
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 p-2">
-                <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none" @change="selectRoom($event.target.value)" >
+                <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none px-4 py-1" @change="selectRoom($event.target.value)" >
                   <option class="hover:bg-gray-200 hover:rounded-xl focus:visible focus:bg-slate-500 focus:ring" v-for="room in resultRooms.content" :key="room" v-bind:value="room.id">
                     {{ room.roomLabel }}
                   </option>  
