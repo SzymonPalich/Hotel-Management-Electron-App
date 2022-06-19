@@ -20,7 +20,7 @@ public class DbConfig {
     public DataSource getDataSource() {
         JSONParser jsonParser = new JSONParser();
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        try(Reader reader = new FileReader("database.json")) {
+        try(Reader reader = new FileReader("data.json")) {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
             dataSourceBuilder.url("jdbc:mysql://" + jsonObject.get("server") + ":" + jsonObject.get("port") + "/" + jsonObject.get("database"));
             dataSourceBuilder.username(String.valueOf(jsonObject.get("username")));
