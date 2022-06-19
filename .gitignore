@@ -1,1 +1,3 @@
 *.pdf
+Server/libraries/InvoiceGenerator.jar
+InvoiceGenerator/src/main/java/META-INF/MANIFEST.MF
