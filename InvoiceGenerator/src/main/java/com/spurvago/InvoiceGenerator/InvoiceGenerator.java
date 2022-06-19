@@ -7,6 +7,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -116,18 +117,15 @@ public class InvoiceGenerator {
 
         document.add(summaryCostsTable);
 
-        Image image = Image.getInstance("src/main/resources/logo.jpg");
-        image.scaleAbsolute(150f, 150f);
-        image.setAbsolutePosition(445f, 0f);
-        document.add(image);
-
         document.close();
     }
 
 
     private Document createDocument(String documentName) throws FileNotFoundException, DocumentException {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(documentName));
+        File dir = new File("./faktury");
+        dir.mkdir();
+        PdfWriter.getInstance(document, new FileOutputStream("./faktury/" + documentName));
         document.addAuthor("SpurVa.Go");
         document.addCreator("SpurVa.Go");
         document.addTitle("Faktura");

@@ -97,8 +97,8 @@
             <groupId>com.spurvago</groupId>
             <artifactId>InvoiceGenerator</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libraries/InvoiceGenerator.jar</systemPath>
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/libraries/InvoiceGenerator.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
