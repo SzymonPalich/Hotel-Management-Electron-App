@@ -317,6 +317,7 @@ export default defineComponent({
       this.result.position = this.value;
       try {
         await EmployeeServices.create(this.result);
+        Utils.createdAlert();
         this.$router.push({ name: "employees" });
       } catch (error) {
         const err = error as AxiosError

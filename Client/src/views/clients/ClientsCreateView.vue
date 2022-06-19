@@ -173,6 +173,7 @@ export default defineComponent({
     async add(): Promise<void> {
       try {
         await ClientsServices.create(this.result);
+        Utils.createdAlert();
         this.$router.push({ name: "clients" });
       } catch (error) {
         const err = error as AxiosError

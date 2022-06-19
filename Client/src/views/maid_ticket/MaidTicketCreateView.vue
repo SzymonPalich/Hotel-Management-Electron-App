@@ -162,6 +162,7 @@ export default defineComponent({
       this.result.roomId = this.selectedRoom || 0
       try {
         await MaidTicketServices.create(this.result);
+        Utils.createdAlert();
         this.$router.push({ name: "maid_ticket" });
       } catch (error) {
         const err = error as AxiosError

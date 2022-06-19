@@ -83,6 +83,17 @@ export default class Utils {
         });
     }
 
+    public static createdAlert(): void {
+        Swal.fire({
+            icon: 'success',
+            title: "Pomyślnie dodano rekord!",
+            showConfirmButton: true,
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#3f5137",
+            timer: 1500
+        });
+    }
+
     public static invoiceAlert(): void {
         Swal.fire({
             icon: 'success',

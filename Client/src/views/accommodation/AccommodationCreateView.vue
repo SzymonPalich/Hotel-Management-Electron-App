@@ -18,31 +18,23 @@
         </div>
         <div class="bg-white h-full rounded-b-xl text-black">
           <dl class="p-2">
-            <div
-              class="
-                bg-gray-50
-                px-2
-                py-5
-                sm:grid sm:grid-cols-4 sm:gap-3 sm:px-6
-                relative
-              "
-            >
-              <div class="float-left">
-                <dt class="text-sm font-medium text-gray-500">
-                  Początek rezerwacji
-                </dt>
+             <div
+              class="bg-gray-50 px-2 py-5 sm:grid sm:grid-cols-3 sm:gap-3 sm:px-6 relative"
+            > 
+              <div class="float-left" style='margin-right:2rem;'>
+                <dt class="text-sm font-medium text-gray-500">Początek rezerwacji</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
                     class="
-                      border border-gray-300
-                      w-full
-                      h-full
-                      rounded-md
-                      px-2
-                      py-1_5
-                      outline-none
-                      focus:border focus:border-cyan-400 focus:rounded-md
-                    "
+                    border border-gray-300
+                    w-full
+                    h-full
+                    rounded-md
+                    px-2
+                    py-1_5
+                    outline-none
+                    focus:border focus:border-cyan-400 focus:rounded-md
+                  "
                     type="date"
                     min="new Date()"
                     required
@@ -51,15 +43,13 @@
                   />
                 </dd>
               </div>
-              <div class="float-left">
-                <dt class="text-sm font-medium text-gray-500">
-                  Koniec rezerwacji
-                </dt>
+              <div class="float-left" style='margin-right:2rem;'>
+                <dt class="text-sm font-medium text-gray-500">Koniec rezerwacji</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                   <input
                     class="
                       border border-gray-300
-                      w-3/4
+                      w-full
                       h-full
                       rounded-md
                       px-2
@@ -74,92 +64,57 @@
                   />
                 </dd>
               </div>
-              <div class="float-left">
+              <div class="float-left sm:grid sm:grid-cols-3">
+                <div class="float-left sm:col-span-2">
                 <dt class="text-sm font-medium text-gray-500">Typ pokoju</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                  <v-select
-                    label="type"
-                    v-model="this.roomValue"
-                    :options="this.resultRoomTypes.content"
-                    :reduce="(option) => option.id"
-                    :clearable="false"
-                    placeholder="Wybierz typ"
-                  >
-                    <template v-slot:option="option">
-                      <span :class="option.icon"></span>
-                      {{ option.type }}
+                <v-select
+                  class="w-full"
+                  label="type"
+                  v-model="this.roomValue"
+                  :options="this.resultRoomTypes.content"
+                  :reduce="(option) => option.id"
+                  :clearable="false"
+                  @option:selecting="selectRoomTypeId"
+                  placeholder="Wybierz typ"
+                >
+                  <template v-slot:option="option">
+                    <span :class="option.icon"></span>
+                    {{ option.type }}
+                  </template>
+                  <template v-slot:no-options="{ search, searching }">
+                    <template v-if="searching">
+                      Brak wyników dla <em>{{ search }}</em
+                      >.
                     </template>
-                    <template v-slot:no-options="{ search, searching }">
-                      <template v-if="searching">
-                        Brak wyników dla <em>{{ search }}</em
-                        >.
-                      </template>
-                    </template>
-                  </v-select>
-                  <div
-                    class="float-right bg-gray-400 rounded-2xl w-8 text-center"
-                  >
-                    <img
-                      src="../../../public/css/fonts/icons8-search-25.png"
-                      class="material-icons align-middle"
-                      @click="
-                        filterRooms(
-                          this.result.startDate,
-                          this.result.endDate,
-                          this.roomTypeId
-                        )
-                      "
-                    />
-                  </div>
+                  </template>
+                </v-select>
+              
                 </dd>
+                </div>
+                  <div class="float-right border-gray-400 rounded-2xl mt-6 ml-3">
+                  <img src="../../../public/css/fonts/icons8-search-25.png" class="align-middle material-icons" @click="filterRooms(this.result.startDate, this.result.endDate, this.roomValue)"/>
+                </div>
               </div>
             </div>
-            <div
-              class="
-                border border-gray-300
-                px-2
-                py-0_1
-                rounded-md
-                outline-none
-                mx-6
-              "
-            >
+            <div class="border border-gray-300 px-2 py-0_1 outline-none mx-6">
               <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 p-2">
-                <select
-                  size="5"
-                  class="
-                    overflow-hidden
-                    w-full
-                    h-full
-                    border-0
-                    outline-none
-                    focus:outline-none
-                  "
-                  @change="selectRoom($event.target.value)"
-                >
-                  <option
-                    class="
-                      hover:bg-gray-200 hover:rounded-xl
-                      focus:visible focus:bg-slate-500 focus:ring
-                    "
-                    v-for="room in resultRooms.content"
-                    :key="room"
-                    v-bind:value="room.id"
-                  >
+                <select size="5" class="overflow-hidden w-full h-full border-0 outline-none focus:outline-none px-4 py-1" @change="selectRoom($event.target.value)" >
+                  <option class="hover:bg-gray-200 hover:rounded-xl focus:visible focus:bg-slate-500 focus:ring" v-for="room in resultRooms.content" :key="room" v-bind:value="room.id">
                     {{ room.roomLabel }}
                   </option>
                 </select>
               </dd>
             </div>
-            <div class="bg-gray-50 w-full px-6 py-5">
-              <dd
-                class="
-                  mt-1
-                  text-sm text-gray-900
-                  sm:mt-0 sm:col-span-2
-                  grid-col
-                "
-              >
+            <div
+              class="
+                bg-gray-50
+                w-full
+                px-6
+                py-5
+              " style='margin-right:3rem;'
+            >
+              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 grid-col" style="margin-right: 6.5rem;">
                 <v-select
                   label="clientLabel"
                   :options="this.resultClients"
@@ -310,7 +265,7 @@ export default defineComponent({
       // console.log(this.result);
       try {
         await AccommodationServices.create(this.result);
-        Utils.acceptedAlert();
+        Utils.createdAlert();
         this.$router.push({ name: "accommodation" });
       } catch (error) {
         const err = error as AxiosError;
