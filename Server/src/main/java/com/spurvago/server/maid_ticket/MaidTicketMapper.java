@@ -1,7 +1,9 @@
 package com.spurvago.server.maid_ticket;
 
+import com.spurvago.database.Accommodation;
 import com.spurvago.database.MaidTicket;
 import com.spurvago.database.Room;
+import com.spurvago.server.accommodation.AccommodationRepository;
 import com.spurvago.server.employee.EmployeeRepository;
 import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.MaidTicketVM;
@@ -20,16 +22,17 @@ import java.util.Optional;
  * @param roomRepository
  */
 @Component
-public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
+public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomRepository roomRepository, AccommodationRepository accommodationRepository) {
     MaidTicket mapToEntity(MaidTicketFM src) {
         MaidTicket dest = new MaidTicket();
-        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
-        Room room;
-        if (optionalRoom.isEmpty()) {
+        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(src.getAccommodationId());
+        Accommodation accommodation;
+        if (optionalAccommodation.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        room = optionalRoom.get();
-        dest.setRoom(room);
+        accommodation = optionalAccommodation.get();
+
+        dest.setAccommodation(accommodation);
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         } else {
@@ -41,13 +44,14 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
     }
 
     void mapToEntity(MaidTicket dest, MaidTicketFM src) {
-        Optional<Room> optionalRoom = roomRepository.findById(src.getRoomId());
-        Room room;
-        if (optionalRoom.isEmpty()) {
+        Optional<Accommodation> optionalAccommodation = accommodationRepository.findById(src.getAccommodationId());
+        Accommodation accommodation;
+        if (optionalAccommodation.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        room = optionalRoom.get();
-        dest.setRoom(room);
+        accommodation = optionalAccommodation.get();
+
+        dest.setAccommodation(accommodation);
         if (src.getEmployeeId() != null) {
             dest.setEmployee(employeeRepository.findById(src.getEmployeeId()).orElse(null));
         }
@@ -59,10 +63,10 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
         MaidTicketVM dest = new MaidTicketVM();
 
         dest.setId(src.getId());
-        dest.setRoomId(src.getRoom().getId());
-        dest.setRoomNumber(src.getRoom().getRoomNumber());
-        dest.setRoomType(src.getRoom().getRoomType().getType());
-        dest.setRoomStatus(src.getRoom().getStatus());
+        dest.setAccommodationId(src.getAccommodation().getId());
+        dest.setRoomNumber(src.getAccommodation().getRoom().getRoomNumber());
+        dest.setRoomType(src.getAccommodation().getRoom().getRoomType().getType());
+        dest.setRoomStatus(src.getAccommodation().getRoom().getStatus());
         dest.setFinalizationDate(src.getFinalizationDate());
         if (src.getEmployee() != null) {
             dest.setEmployeeId(src.getEmployee().getId());

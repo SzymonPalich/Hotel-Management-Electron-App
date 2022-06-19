@@ -22,7 +22,7 @@ public class MaidTicket {
     @ManyToOne
     @Getter
     @Setter
-    private Room room;
+    private Accommodation accommodation;
 
     @Getter
     @Setter

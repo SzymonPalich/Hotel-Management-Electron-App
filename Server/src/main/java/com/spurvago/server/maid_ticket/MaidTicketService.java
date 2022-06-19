@@ -147,7 +147,6 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         }
 
         maidTicketEntity.setEmployee(userManager.getEmployee());
-        maidTicketEntity.setFinalizationDate(new Date(Calendar.getInstance().getTime().getTime()));
         maidTicketRepository.save(maidTicketEntity);
     }
 }

@@ -1,7 +1,9 @@
 package com.spurvago.server.maid_ticket;
 
 import com.spurvago.components.Validator;
+import com.spurvago.database.Accommodation;
 import com.spurvago.database.MaidTicket;
+import com.spurvago.server.accommodation.AccommodationRepository;
 import com.spurvago.server.employee.EmployeeRepository;
 import com.spurvago.server.maid_ticket.models.MaidTicketFM;
 import com.spurvago.server.maid_ticket.models.RefillFM;
@@ -17,12 +19,12 @@ import java.util.HashSet;
 @Component
 public class MaidTicketValidator extends Validator {
     private final EmployeeRepository employeeRepository;
-    private final RoomRepository roomRepository;
+    private final AccommodationRepository accommodationRepository;
 
     @Autowired
-    public MaidTicketValidator(EmployeeRepository employeeRepository, RoomRepository roomRepository) {
+    public MaidTicketValidator(EmployeeRepository employeeRepository, AccommodationRepository accommodationRepository) {
         this.employeeRepository = employeeRepository;
-        this.roomRepository = roomRepository;
+        this.accommodationRepository = accommodationRepository;
     }
 
     public boolean validate(MaidTicketFM model) {
@@ -32,7 +34,7 @@ public class MaidTicketValidator extends Validator {
         if (!(model.getEmployeeId() == null) && !(employeeRepository.existsById(model.getEmployeeId()))) {
             return false;
         }
-        return model.getRoomId() == null || roomRepository.existsById(model.getRoomId());
+        return model.getAccommodationId() == null || accommodationRepository.existsById(model.getAccommodationId());
     }
 
     public boolean validate(MaidTicket model) {

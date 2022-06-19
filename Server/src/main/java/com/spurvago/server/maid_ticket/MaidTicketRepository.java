@@ -1,9 +1,6 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.database.Employee;
-import com.spurvago.database.MaidTicket;
-import com.spurvago.database.Room;
-import com.spurvago.database.RoomType;
+import com.spurvago.database.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,7 +23,8 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
     static Specification<MaidTicket> search(List<String> searchWords) {
         return (r, q, b) -> {
             Join<MaidTicket, Employee> joinEmp = r.join("employee");
-            Join<MaidTicket, Room> joinRoom = r.join("room");
+            Join<MaidTicket, Accommodation> joinAccommodation = r.join("accommodation");
+            Join<Accommodation, Room> joinRoom = joinAccommodation.join("room");
             Predicate predicate = null;
             Predicate tempPredicate;
 
@@ -54,4 +52,6 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
     Optional<MaidTicket> findById(Long id);
 
     Page<MaidTicket> findAll(Pageable pageable);
+
+    Optional<MaidTicket> findByAccommodation(Accommodation accommodation);
 }

@@ -4,6 +4,7 @@ import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
 import * as child_process from 'child_process'
+import * as kp from 'kill-port-process'
 
 // Window size
 // small - 1350x700
@@ -48,7 +49,7 @@ async function createWindow() {
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    setTimeout(function() {
+    setTimeout(function () {
       win.loadURL('app://./index.html')
     }, 10000)
 
@@ -56,8 +57,7 @@ async function createWindow() {
   }
 
   win.on('closed', function () {
-    child_process.exec('taskkill /f /im java.exe');
-    child.kill();
+    kp.killPortProcess(options.port)
   })
 }
 
