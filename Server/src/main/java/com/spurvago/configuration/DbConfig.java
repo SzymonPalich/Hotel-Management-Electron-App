@@ -22,7 +22,13 @@ public class DbConfig {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         try(Reader reader = new FileReader("data.json")) {
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-            dataSourceBuilder.url("jdbc:mysql://" + jsonObject.get("server") + ":" + jsonObject.get("port") + "/" + jsonObject.get("database"));
+            if(jsonObject.get("port")!=""){
+                dataSourceBuilder.url("jdbc:mysql://" + jsonObject.get("server") + ":" + jsonObject.get("port") + "/" + jsonObject.get("database"));
+
+            }
+            else {
+                dataSourceBuilder.url("jdbc:mysql://localhost:3306/hotel");
+            }
             dataSourceBuilder.username(String.valueOf(jsonObject.get("username")));
             dataSourceBuilder.password(String.valueOf(jsonObject.get("password")));
         } catch(Exception e) {

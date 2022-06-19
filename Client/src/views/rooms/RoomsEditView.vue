@@ -158,7 +158,8 @@ export default defineComponent({
       statuses: [
         { value: 1, text: "Wolny" },
         { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" }
+        { value: 3, text: "Rezerwacja" },
+        { value: 4, text: "Sprzątanie"}
       ],
       roomValue: null as any,
       status: null as any,

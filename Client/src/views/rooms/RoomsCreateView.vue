@@ -91,7 +91,7 @@
                   :options="this.statuses"
                   :reduce="(option) => option.value"
                   :clearable="false"
-                  placeholder="Wybierz fristajlo"
+                  placeholder="Wybierz status"
                 >
                   <template v-slot:option="option">
                     <span :class="option.icon"></span>
@@ -164,7 +164,8 @@ export default defineComponent({
       statuses: [
         { value: 1, text: "Wolny" },
         { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" }
+        { value: 3, text: "Rezerwacja" },
+        { value: 4, text: "Sprzątanie"}
       ],
       roomValue: null,
       status: null

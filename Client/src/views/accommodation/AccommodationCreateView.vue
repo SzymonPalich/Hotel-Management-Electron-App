@@ -203,6 +203,7 @@ export default defineComponent({
       resultRooms: Utils.getBlankListTemplate<IRoom>(),
       resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
       roomValue: null,
+      roomTypeId: 0,
     };
   },
 
@@ -251,12 +252,15 @@ export default defineComponent({
     selectRoomTypeId: function (value: number) {
       this.resultRooms.content = [];
       this.result.roomId = 0;
+      if(this.roomValue){
+        this.roomTypeId = this.roomValue;
+      }
       this.$forceUpdate;
     },
 
     filterRooms(startDate: Date, endDate: Date, roomTypeId: string) {
       this.getAvailableList(startDate, endDate, roomTypeId).then(
-        (data) => (console.log(data))
+        (data) => (this.resultRooms.content = data)
       );
       this.$forceUpdate;
     },

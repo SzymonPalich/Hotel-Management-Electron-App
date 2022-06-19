@@ -37,7 +37,10 @@ public class AccommodationValidator extends Validator {
         if (optionalRoom.isEmpty()) {
             return false;
         }
-        if (model.getStartDate().before(new Date())) {
+        Date d = new Date();
+        d.setHours(0);
+        d.setMinutes(0);
+        if (model.getStartDate().before(d)) {
             return false;
         }
         return !model.getStartDate().after(model.getEndDate());
