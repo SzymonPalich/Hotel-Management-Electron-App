@@ -249,7 +249,7 @@ export default defineComponent({
       // console.log(this.result);
       try {
         await AccommodationServices.create(this.result);
-        Utils.acceptedAlert();
+        Utils.createdAlert();
         this.$router.push({ name: "accommodation" });
       } catch(error) {
         const err = error as AxiosError

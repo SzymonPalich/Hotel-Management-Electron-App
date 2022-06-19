@@ -184,7 +184,7 @@ export default defineComponent({
     async save(): Promise<void> {
       try {
         await ProductServices.create(this.result);
-        Utils.acceptedAlert();
+       Utils.createdAlert();
         this.$router.push({ name: "product" });
       } catch (error) {
         const err = error as AxiosError;

@@ -175,6 +175,7 @@ export default defineComponent({
       if(this.value != null){ this.result.roomId = this.value }
       try {
         await RepairServices.create(this.result);
+        Utils.createdAlert();
         this.$router.push({ name: "repairs" }); 
       } catch (error) {
         const err = error as AxiosError

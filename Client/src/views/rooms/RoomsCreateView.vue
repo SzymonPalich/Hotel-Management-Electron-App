@@ -206,6 +206,7 @@ export default defineComponent({
       this.result.status = this.status || 0;
       try {
         await RoomsServices.create(this.result);
+        Utils.createdAlert();
         this.$router.push({ name: "rooms" });
       } catch (error) {
         const err = error as AxiosError
