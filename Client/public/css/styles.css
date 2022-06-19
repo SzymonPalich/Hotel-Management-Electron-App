@@ -30,6 +30,10 @@ option:hover {
     padding-bottom: 0.42rem;
 }
 
+.w-0_75 {
+    width: 75.0%;
+}
+
 .border-gray-300 {
     --tw-border-opacity: 1;
     border-color: rgb(201 201 202 / var(--tw-border-opacity));
