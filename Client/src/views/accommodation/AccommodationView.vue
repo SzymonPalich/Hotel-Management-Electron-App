@@ -83,6 +83,7 @@
                 </router-link>
 
                 <img src="../../../public/css/fonts/pdf.png" class="material-icons align-middle" @click="invoice(accommodation.id)"/>
+                <img src="../../../public/css/fonts/icons8-delete-25.png" class="material-icons align-middle" @click="alertDisplay(accommodation.id)"/>
               </td>
             </tr>
           </tbody>

@@ -4,7 +4,6 @@ import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer'
 import options from '../spurvago.config.json'
 import windowSizes from '../windowconfig.json'
 import * as child_process from 'child_process'
-import kill from 'tree-kill'
 
 // Window size
 // small - 1350x700
@@ -34,8 +33,8 @@ async function createWindow() {
 
 
   const jarPath = app.getPath("exe").replace('\\hotel.exe', '') + "\\resources" + '\\Server.jar';
-  const child = child_process.spawn(
-    'java', ['-jar', jarPath]
+  const child = child_process.exec(
+    'java -jar ' + jarPath
   );
 
   win.removeMenu()

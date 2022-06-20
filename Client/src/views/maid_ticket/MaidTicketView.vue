@@ -81,10 +81,6 @@
                     src="../../../public/css/fonts/icons8-document-30.png"
                   /></router-link
                 >
-                <router-link
-                  :to="{ name: 'maid_ticket-edit', params: { id: maid.id } }"
-                  ><img v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle" src="../../../public/css/fonts/icons8-edit-25.png"/></router-link
-                >
                 <img @click="alertDisplay(maid.id)" class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
               </td>
             </tr>
