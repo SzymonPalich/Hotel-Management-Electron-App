@@ -73,7 +73,7 @@
                     src="../../../public/css/fonts/icons8-edit-25.png"
                   />
                 </router-link>
-                <img
+                <img v-if="emp.email != this.loginResult.email"
                   class="align-middle material-icons"
                   src="../../../public/css/fonts/icons8-delete-25.png"
                   @click="alertDisplay(emp.id)"
@@ -99,6 +99,7 @@
 import { Options, Vue } from "vue-class-component";
 import EmployeeServices, { IEmployee } from "../../services/EmployeeService";
 import Pagination from "../../components/Pagination.vue";
+import LoginServices, { ILogin } from "../../services/LoginService";
 import SearchBar from "../../components/SearchBar.vue";
 import Utils, { IPager, IList } from "../../Utils";
 import { defineComponent } from "vue";
@@ -111,12 +112,14 @@ export default defineComponent({
     return {
       result: Utils.getBlankListTemplate<IEmployee>(),
       pager: Utils.getDefaultPager(),
+      loginResult: LoginServices.getBlankLoginTemplate(),
       search: "",
     };
   },
   mounted() {
     console.log(this.getData());
     this.getData().then((data) => (this.result = data));
+    this.getRank().then((data) => (this.loginResult = data));
   },
 
   setPosition(position: string): string {
@@ -138,6 +141,11 @@ export default defineComponent({
       this.result.pager.search = this.search;
       this.result = await EmployeeServices.getList(this.result.pager);
     },
+
+    async getRank(): Promise<ILogin> {
+      return await LoginServices.fetch();
+    },
+
     setPosition(position: string): string {
       return EmployeeServices.setPosition(position);
     },
