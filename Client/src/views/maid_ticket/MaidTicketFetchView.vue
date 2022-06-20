@@ -50,7 +50,7 @@
                 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
               "
             >
-              <dt class="text-sm font-medium text-gray-500">Data zakończenia</dt>
+              <dt class="text-sm font-medium text-gray-500">Planowana data sprzątania</dt>
               <dd v-if="this.result.finalizationDate == null" class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 Nie zakończono
               </dd>

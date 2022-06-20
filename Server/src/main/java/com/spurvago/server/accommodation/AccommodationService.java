@@ -23,9 +23,11 @@ import org.springframework.web.server.ResponseStatusException;
 import com.spurvago.InvoiceGenerator.InvoiceGenerator;
 import com.spurvago.InvoiceGenerator.InvoiceDetails;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Ref;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,6 +109,7 @@ public record AccommodationService(AccommodationRepository accommodationReposito
 
         var maidTicket = new MaidTicket();
         maidTicket.setAccommodation(entity);
+        maidTicket.setFinalizationDate(newEntity.getEndDate());
         maidTicketRepository.save(maidTicket);
 
         return accommodationMapper.mapToVM(entity);

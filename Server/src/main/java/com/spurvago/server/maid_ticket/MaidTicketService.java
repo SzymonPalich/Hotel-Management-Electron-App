@@ -53,14 +53,35 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
     }
 
     public ListPaginated<MaidTicketVM> getList(Pager pager, String search) {
-        Pageable pageable = pager.makePageable();
+        Pageable pageable;
         Page<MaidTicket> entities;
+
+        var empRole = userManager.getRole();
+        boolean isMaid = Objects.equals(empRole, "ROLE_MAID");
+
+        if (!isMaid) {
+            pageable = pager.makePageable();
+        }
+        else {
+            pager.sort = "finalizationDate";
+            pageable = pager.makePageableAsc();
+        }
+
+
         if (Utils.isNullOrBlank(search)) {
-            entities = maidTicketRepository.findAll(pageable);
+            if (!isMaid) {
+                entities = maidTicketRepository.findAll(pageable);
+            }
+            else {
+                entities = maidTicketRepository.findAllByEmployeeIsNull(pageable);
+            }
         } else {
             List<String> words = List.of(search.split("\\s"));
             Specification<MaidTicket> specification = MaidTicketRepository.search(words);
-            entities = maidTicketRepository.findAll(specification, pageable);
+            if (!isMaid)
+                entities = maidTicketRepository.findAll(specification, pageable);
+            else
+                entities = maidTicketRepository.findAllByEmployeeIsNull(specification, pageable);
         }
 
         List<MaidTicketVM> entitiesDTO = maidTicketMapper.mapToList(entities.getContent());
@@ -147,7 +168,6 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         }
 
         maidTicketEntity.setEmployee(userManager.getEmployee());
-        maidTicketEntity.setFinalizationDate(new Date(Calendar.getInstance().getTime().getTime()));
         maidTicketRepository.save(maidTicketEntity);
     }
 }

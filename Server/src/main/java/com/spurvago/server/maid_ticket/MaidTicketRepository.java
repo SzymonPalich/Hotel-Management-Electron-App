@@ -1,11 +1,15 @@
 package com.spurvago.server.maid_ticket;
 
-import com.spurvago.database.*;
+import com.spurvago.database.Accommodation;
+import com.spurvago.database.Employee;
+import com.spurvago.database.MaidTicket;
+import com.spurvago.database.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.Join;
@@ -54,4 +58,8 @@ public interface MaidTicketRepository extends PagingAndSortingRepository<MaidTic
     Page<MaidTicket> findAll(Pageable pageable);
 
     Optional<MaidTicket> findByAccommodation(Accommodation accommodation);
+
+    Page<MaidTicket> findAllByEmployeeIsNull(Pageable pageable);
+
+    Page<MaidTicket> findAllByEmployeeIsNull(@Nullable Specification<MaidTicket> spec, Pageable pageable);
 }

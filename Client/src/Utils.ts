@@ -39,31 +39,31 @@ export default class Utils {
             cancelButtonText: "Nie",
             cancelButtonColor: "#374151",
             showLoaderOnConfirm: true,
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 if (table == "maid") {
-                    this.deleteMaid(id);
+                    await this.deleteMaid(id);
                     window.location.reload();
                 } else if (table == "employee") {
-                    this.deleteEmployee(id);
+                    await this.deleteEmployee(id);
                     window.location.reload();
                 } else if (table == "room_types") {
-                    this.deleteRoomType(id);
+                    await this.deleteRoomType(id);
                     window.location.reload();
                 } else if (table == "client") {
-                    this.deleteClient(id);
+                    await this.deleteClient(id);
                     window.location.reload();
                 } else if (table == "technician") {
-                    this.deleteTechnician(id);
+                    await this.deleteTechnician(id);
                     window.location.reload();
                 } else if (table == "rooms") {
-                    this.deleteRoom(id);
+                    await this.deleteRoom(id);
                     window.location.reload();
                 } else if (table == "product") {
-                    this.deleteProduct(id);
+                    await this.deleteProduct(id);
                     window.location.reload();
                 } else if (table == "accommodation") {
-                    this.deleteAccommodation(id);
+                    await this.deleteAccommodation(id);
                     window.location.reload();
                 }
             } else if (result.isDenied) {
