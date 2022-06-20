@@ -189,6 +189,7 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
+      this.result.name = this.tempName;
       if(this.value != null){ this.result.roomId = this.value }
       try {
         await RepairServices.update(this.getId(), this.result);

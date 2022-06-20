@@ -320,6 +320,8 @@ export default defineComponent({
 
     async save(): Promise<void> {
       this.result.position = this.value;
+      this.result.firstName = this.tempFirstName;
+      this.result.lastName = this.tempLastName;
       try {
         await EmployeeServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

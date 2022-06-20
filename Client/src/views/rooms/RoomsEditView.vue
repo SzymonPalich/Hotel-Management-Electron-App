@@ -200,6 +200,7 @@ export default defineComponent({
     async save(): Promise<void> {
       this.result.roomTypeId = this.roomValue || 0;
       this.result.status = this.status || 0;
+      this.result.roomNumber = this.tempRoomNumber;
       try {
         await RoomsServices.update(this.getId(), this.result);
         Utils.acceptedAlert();
