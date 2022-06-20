@@ -13,6 +13,7 @@ import java.util.List;
 @Table
 public class Room {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
@@ -30,21 +31,21 @@ public class Room {
     @Setter
     private Integer status;
 
-    @OneToMany
-    @JoinTable(name = "maid_ticket")
-    @Getter
-    @Setter
-    private List<MaidTicket> maidTickets;
-
-    @OneToMany
-    @JoinTable(name = "maintenance_ticket")
-    @Getter
-    @Setter
-    private List<MaintenanceTicket> maintenanceTickets;
-
-    @OneToMany
-    @JoinTable(name = "accommodation")
-    @Getter
-    @Setter
-    private List<Accommodation> accommodations;
+//    @OneToMany
+//    @JoinTable(name = "maid_ticket")
+//    @Getter
+//    @Setter
+//    private List<MaidTicket> maidTickets;
+//
+//    @OneToMany
+//    @JoinTable(name = "maintenance_ticket")
+//    @Getter
+//    @Setter
+//    private List<MaintenanceTicket> maintenanceTickets;
+//
+//    @OneToMany
+//    @JoinTable(name = "accommodation")
+//    @Getter
+//    @Setter
+//    private List<Accommodation> accommodations;
 }
