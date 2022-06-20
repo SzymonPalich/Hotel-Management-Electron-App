@@ -68,7 +68,7 @@
                 <router-link
                   :to="{ name: 'employees-edit', params: { id: emp.id } }"
                 >
-                  <img
+                  <img v-if="emp.email != this.loginResult.email"
                     class="align-middle material-icons"
                     src="../../../public/css/fonts/icons8-edit-25.png"
                   />
