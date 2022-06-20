@@ -139,6 +139,7 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
+      this.result.type = this.tempTypeName;
       try {
         await RoomTypesServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

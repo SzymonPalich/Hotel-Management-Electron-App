@@ -33,9 +33,9 @@ async function createWindow() {
 
 
   const jarPath = app.getPath("exe").replace('\\hotel.exe', '') + "\\resources" + '\\Server.jar';
-  const child = child_process.exec(
-    'java -jar ' + jarPath
-  );
+  const child = child_process.spawn(
+    'java', ['-jar', jarPath]
+    );
 
   win.removeMenu()
 

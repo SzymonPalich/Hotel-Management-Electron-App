@@ -194,6 +194,8 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
+      this.result.firstName = this.tempFirstName;
+      this.result.lastName = this.tempLastName;
       try {
         await ClientsServices.update(this.getId(), this.result);
         Utils.acceptedAlert();

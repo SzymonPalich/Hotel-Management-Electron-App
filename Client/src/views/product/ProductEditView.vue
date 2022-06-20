@@ -207,6 +207,7 @@ export default defineComponent({
     },
 
     async save(): Promise<void> {
+      this.result.productName = this.tempProductName;
       try {
         await ProductServices.update(this.getId(), this.result);
         Utils.acceptedAlert();
