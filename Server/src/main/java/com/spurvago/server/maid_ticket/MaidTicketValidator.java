@@ -28,9 +28,9 @@ public class MaidTicketValidator extends Validator {
     }
 
     public boolean validate(MaidTicketFM model) {
-        if (!(model.getFinalizationDate() == null)) {
-            return false;
-        }
+//        if (!(model.getFinalizationDate() == null)) {
+//            return false;
+//        }
         if (!(model.getEmployeeId() == null) && !(employeeRepository.existsById(model.getEmployeeId()))) {
             return false;
         }

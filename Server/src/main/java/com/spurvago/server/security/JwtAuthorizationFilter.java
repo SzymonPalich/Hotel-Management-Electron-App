@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Tworznie JWT
+ * Tworzenie JWT
  */
 @CrossOrigin
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {

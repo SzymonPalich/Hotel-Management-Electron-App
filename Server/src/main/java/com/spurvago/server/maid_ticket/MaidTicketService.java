@@ -144,9 +144,9 @@ public record MaidTicketService(MaidTicketRepository maidTicketRepository,
         }
         maidTicketEntity = optionalMaidTicket.get();
 
-        if (!maidTicketValidator.validate(maidTicketEntity)) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
-        }
+//        if (!maidTicketValidator.validate(maidTicketEntity)) {
+//            throw new ResponseStatusException(UNPROCESSABLE_ENTITY);
+//        }
 
         List<Product> availableProducts = productRepository.findAll();
         HashSet<Long> availableProductsIds = new HashSet<>();
