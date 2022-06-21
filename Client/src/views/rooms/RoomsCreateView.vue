@@ -75,37 +75,6 @@
                 </v-select>
               </dd>
             </div>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
-            >
-              <dt class="text-sm font-medium text-gray-500">Status</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <v-select
-                  label="text"
-                  v-model="status"
-                  :options="this.statuses"
-                  :reduce="(option) => option.value"
-                  :clearable="false"
-                  placeholder="Wybierz status"
-                >
-                  <template v-slot:option="option">
-                    <span :class="option.icon"></span>
-                    {{ option.text }}
-                  </template>
-                  <template v-slot:no-options="{ search, searching }">
-                    <template v-if="searching">
-                      Brak wyników dla <em>{{ search }}</em
-                      >.
-                    </template>
-                  </template>
-                </v-select>
-              </dd>
-            </div>
           </dl>
           <div class="text-center px-4 py-5">
             <button
@@ -161,14 +130,7 @@ export default defineComponent({
       result: RoomsServices.getBlankRoomTemplate(),
       pager: Utils.getDefaultPager(),
       resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
-      statuses: [
-        { value: 1, text: "Wolny" },
-        { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" },
-        { value: 4, text: "Sprzątanie"}
-      ],
       roomValue: null,
-      status: null
     };
   },
 
@@ -177,7 +139,6 @@ export default defineComponent({
     this.getRoomTypes().then((data) => {
       this.result.roomTypeId = JSON.parse(JSON.stringify(data)).content[0].id;
     });
-    this.result.status = 1;
   },
 
   methods: {
@@ -189,10 +150,6 @@ export default defineComponent({
       this.result.roomTypeId = value;
     },
 
-    selectStatus: function (value: number) {
-      this.result.status = value;
-    },
-    
     block(): void {
       if (parseInt(this.result.roomNumber) < 0) {
         this.result.roomNumber = "0";
@@ -204,7 +161,6 @@ export default defineComponent({
 
     async add(): Promise<void> {
       this.result.roomTypeId = this.roomValue || 0;
-      this.result.status = this.status || 0;
       try {
         await RoomsServices.create(this.result);
         Utils.createdAlert();
@@ -216,6 +172,7 @@ export default defineComponent({
         }
       }
     },
+    
     back(): void {
       this.$router.push({ name: "rooms" });
     },

@@ -27,10 +27,6 @@ public class Room {
     @Setter
     private RoomType roomType;
 
-    @Getter
-    @Setter
-    private Integer status;
-
 //    @OneToMany
 //    @JoinTable(name = "maid_ticket")
 //    @Getter

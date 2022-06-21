@@ -36,9 +36,6 @@
               <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
                 Typ
               </th>
-              <th class="text-center py-3 px-4 uppercase font-semibold text-sm">
-                Status
-              </th>
               <th
                 class="
                   text-center
@@ -61,9 +58,6 @@
               </td>
               <td class="text-center py-2 px-4">
                 {{ room.roomType }}
-              </td>
-              <td class="text-center py-2 px-4">
-                {{ this.setStatus(room.status) }}
               </td>
               <td class="text-center py-2 px-4 w-36">
                 <router-link
@@ -146,10 +140,6 @@ export default defineComponent({
     
    async getRank(): Promise<ILogin> {
       return await LoginServices.fetch();
-    },
-
-    setStatus(status: number): string {
-      return RoomsServices.setStatus(status);
     },
 
     alertDisplay(id: string) {

@@ -3,38 +3,11 @@ import axios from "axios";
 import options from '../../spurvago.config.json';
 
 export default class RoomsServices {
-    public static setStatus(status: number): string {
-        switch (status) {
-            case 1: {
-                return "Wolny";
-            }
-            case 2: {
-                return "Zajęty";
-            }
-            case 3: {
-                return "Rezerwacja";
-            }
-            case 4: {
-                return "Sprzątanie";
-            }
-            case 5: {
-                return "Usterka";
-            }
-            case 6: {
-                return "Zablokowany";
-            }
-            default: {
-                return "Błąd";
-            }
-        }
-    }
-
     public static getBlankRoomTemplate(): IRoom {
         const tempRoom: IRoom = {
             id: 0,
             roomNumber: "",
             roomTypeId: 0,
-            status: 0,
         };
         return tempRoom;
     }
@@ -115,7 +88,6 @@ export interface IRoom {
     id: number;
     roomNumber: string;
     roomTypeId: number;
-    status: number;
 }
 
 export interface IRoomSelect {

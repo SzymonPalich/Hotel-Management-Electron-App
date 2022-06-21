@@ -69,37 +69,6 @@
                 </v-select>
               </dd>
             </div>
-            <div
-              class="
-                bg-gray-50
-                px-4
-                py-5
-                sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6
-              "
-            >
-              <dt class="text-sm font-medium text-gray-500">Status</dt>
-              <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <v-select
-                  label="text"
-                  v-model="status"
-                  :options="this.statuses"
-                  :reduce="(option) => option.value"
-                  :clearable="false"
-                  placeholder="Wybierz fristajlo"
-                >
-                  <template v-slot:option="option">
-                    <span :class="option.icon"></span>
-                    {{ option.text }}
-                  </template>
-                  <template v-slot:no-options="{ search, searching }">
-                    <template v-if="searching">
-                      Brak wyników dla <em>{{ search }}</em
-                      >.
-                    </template>
-                  </template>
-                </v-select>
-              </dd>
-            </div>
           </dl>
           <div class="text-center px-4 py-5">
             <button
@@ -155,14 +124,7 @@ export default defineComponent({
       result: RoomsServices.getBlankRoomTemplate(),
       pager: Utils.getDefaultPager(),
       resultRoomTypes: Utils.getBlankListTemplate<IRoomType>(),
-      statuses: [
-        { value: 1, text: "Wolny" },
-        { value: 2, text: "Zajęty" },
-        { value: 3, text: "Rezerwacja" },
-        { value: 4, text: "Sprzątanie"}
-      ],
       roomValue: null as any,
-      status: null as any,
       tempRoomNumber: "",
     };
   },
@@ -172,7 +134,6 @@ export default defineComponent({
     this.getData().then((data) => (this.result = data));
     this.getRoomTypes().then((data) => (this.resultRoomTypes = data));
     this.getData().then((data) => (this.roomValue = data.roomTypeId));
-    this.getData().then((data) => (this.status = data.status))
     this.getData().then((data) => (this.tempRoomNumber = data.roomNumber));
   },
 
@@ -199,7 +160,6 @@ export default defineComponent({
 
     async save(): Promise<void> {
       this.result.roomTypeId = this.roomValue || 0;
-      this.result.status = this.status || 0;
       this.result.roomNumber = this.tempRoomNumber;
       try {
         await RoomsServices.update(this.getId(), this.result);

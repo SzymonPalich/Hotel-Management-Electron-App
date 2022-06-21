@@ -5,7 +5,6 @@ import com.spurvago.database.Room;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.client.ClientRepository;
 import com.spurvago.server.room.RoomRepository;
-import com.spurvago.server.room.RoomStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
