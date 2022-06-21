@@ -12,7 +12,6 @@ export default class AccommodationServices {
             roomId: 0,
             roomNumber: 0,
             roomType: "",
-            roomStatus: 0,
             startDate: new Date(),
             endDate: new Date(),
             reservationOnly: false,
@@ -82,7 +81,6 @@ export interface IAccommodation {
     roomId: number;
     roomNumber: number;
     roomType: string;
-    roomStatus: number;
     startDate: Date;
     endDate: Date;
     reservationOnly: boolean;
