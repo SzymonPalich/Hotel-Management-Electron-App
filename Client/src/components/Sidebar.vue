@@ -44,13 +44,13 @@
             <span class="links_name ml-3">Pokoje</span>
           </router-link>
         </li>
-        <li v-if="this.isActive('room_types') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN')" class="router-link-active">
+        <li v-if="this.isActive('room_types') && (this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST')" class="router-link-active">
           <router-link to="/room_types">
             <img class="material-icons ml-3" src="../../public/css/fonts/icons8-home-25.png"/>
             <span class="links_name ml-3">Typy pokoi</span>
           </router-link>
         </li>
-        <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST' || this.result.role=='ROLE_TECHNICIAN'">
+        <li v-else-if="this.result.role=='ROLE_MANAGER' || this.result.role=='ROLE_RECEPTIONIST'">
           <router-link to="/room_types">
             <img class="material-icons ml-3" src="../../public/css/fonts/icons8-home-25.png"/>
             <span class="links_name ml-3">Typy pokoi</span>
@@ -144,7 +144,7 @@ export default defineComponent({
     },
     logout(){
       localStorage.removeItem('token');
-      this.$router.push('login');
+      this.$router.push({ name: "login" });
     },
 
    async getData(): Promise<ILogin> {

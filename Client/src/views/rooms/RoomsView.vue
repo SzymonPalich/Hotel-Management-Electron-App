@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="pr-6 flex items-center">
-        <img
+        <img v-if="this.loginResult.role !='ROLE_TECHNICIAN'"
           class="px-2 py-1 rounded-xl text-white bg-gray-800"
           src="../../../public/css/fonts/icons8-plus-25.png"
           @click="$router.push({ name: 'rooms-create' })"
@@ -75,10 +75,13 @@
                 <router-link
                   :to="{ name: 'rooms-edit', params: { id: room.id } }"
                   ><img class="material-icons align-middle"
+                  v-if="this.loginResult.role !='ROLE_TECHNICIAN'"
                     src="../../../public/css/fonts/icons8-edit-25.png"
                   />
                 </router-link>
-                <img @click="alertDisplay(room.id)" class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
+                <img @click="alertDisplay(room.id)" 
+                v-if="this.loginResult.role !='ROLE_TECHNICIAN'"
+                class="material-icons align-middle" src="../../../public/css/fonts/icons8-delete-25.png"/>
               </td>
             </tr>
           </tbody>
@@ -101,6 +104,7 @@ import { Options, Vue } from "vue-class-component";
 import RoomsServices, { IRoom } from "../../services/RoomsService";
 import Pagination from "../../components/Pagination.vue";
 import SearchBar from "../../components/SearchBar.vue";
+import LoginServices, { ILogin } from "../../services/LoginService";
 import Utils, { IPager, IList } from "../../Utils";
 import { defineComponent } from "vue";
 
@@ -113,11 +117,14 @@ export default defineComponent({
       result: Utils.getBlankListTemplate<IRoom>(),
       pager: Utils.getDefaultPager(),
       search: "",
+      loginResult: LoginServices.getBlankLoginTemplate(),
     };
   },
   mounted() {
     console.log(this.getData());
+    this.getRank().then((data) => (this.loginResult = data));
     this.getData().then((data) => (this.result = data));
+    console.log(this.loginResult.role !='ROLE_TECHNICIAN');
   },
 
   methods: {
@@ -134,6 +141,11 @@ export default defineComponent({
       this.result.pager = Utils.getPager(page, "id");
       this.result.pager.search = this.search;
       this.result = await RoomsServices.getList(this.result.pager);
+    },
+
+    
+   async getRank(): Promise<ILogin> {
+      return await LoginServices.fetch();
     },
 
     setStatus(status: number): string {
