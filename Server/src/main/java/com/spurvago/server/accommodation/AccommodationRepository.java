@@ -46,7 +46,6 @@ public interface AccommodationRepository
                                 b.like(joinClient.get("lastName"), asLikeQuery(searchWord)),
                                 b.like(joinRoom.get("roomNumber").as(String.class), asLikeQuery(searchWord)),
                                 b.like(joinRoomType.get("type"), asLikeQuery(searchWord)),
-                                b.like(joinRoom.get("status").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("startDate").as(String.class), asLikeQuery(searchWord)),
                                 b.like(r.get("endDate").as(String.class), asLikeQuery(searchWord))
                         );

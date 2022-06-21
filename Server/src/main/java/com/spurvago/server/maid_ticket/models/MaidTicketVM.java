@@ -15,7 +15,6 @@ public class MaidTicketVM {
     private long accommodationId;
     private int roomNumber;
     private String roomType;
-    private int roomStatus;
     private Date finalizationDate;
     private Long employeeId;
     private String employeeFirstName;

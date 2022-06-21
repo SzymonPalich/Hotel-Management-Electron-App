@@ -16,7 +16,6 @@ public class MaintenanceTicketVM {
     private Long roomId;
     private int roomNumber;
     private String roomType;
-    private int roomStatus;
     private Long employeeId;
     private String employeeFirstName;
     private String employeeLastName;
