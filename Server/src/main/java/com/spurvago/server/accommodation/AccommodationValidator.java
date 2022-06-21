@@ -42,6 +42,9 @@ public class AccommodationValidator extends Validator {
         if (model.getStartDate().before(d)) {
             return false;
         }
+        if(model.getStartDate().equals(model.getEndDate())){
+            return false;
+        }
         return !model.getStartDate().after(model.getEndDate());
     }
 }

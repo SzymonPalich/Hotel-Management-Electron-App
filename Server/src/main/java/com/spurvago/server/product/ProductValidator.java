@@ -18,7 +18,7 @@ public class ProductValidator extends Validator {
     }
 
     public boolean validate(ProductFM model) {
-        if (!(haveLength(model.getProductName(), 50))) {
+        if (!(haveLength(model.getProductName(),1, 50))) {
             return false;
         }
         if (!(correctDecimal(model.getRetailPrice(), 8, 2))) {

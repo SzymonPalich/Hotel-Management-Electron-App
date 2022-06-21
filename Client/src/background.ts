@@ -50,7 +50,6 @@ async function createWindow() {
       win.loadURL('app://./index.html')
     }, 20000)
 
-    win.webContents.openDevTools()
   }
 
   win.on('closed', function () {
