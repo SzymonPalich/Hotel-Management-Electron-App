@@ -27,7 +27,6 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         dest.setId(src.getId());
         dest.setRoomNumber(src.getRoomNumber());
         dest.setRoomType(src.getRoomType().getType());
-        dest.setStatus(src.getStatus());
         dest.setRoomTypeId(src.getRoomType().getId());
 
         return dest;
@@ -51,7 +50,6 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         }
         entity = optionalRoomType.get();
         dest.setRoomType(entity);
-        dest.setStatus(src.getStatus());
     }
 
     Room mapToEntity(RoomFM src) {
@@ -64,7 +62,6 @@ public record RoomMapper(RoomTypeRepository roomTypeRepository) {
         }
         entity = optionalRoomType.get();
         dest.setRoomType(entity);
-        dest.setStatus(src.getStatus());
 
         return dest;
     }

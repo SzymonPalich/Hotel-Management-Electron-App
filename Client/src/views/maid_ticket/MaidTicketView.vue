@@ -73,7 +73,7 @@
               <td class="text-center py-2 px-4 w-36">
                 <router-link
                   :to="{ name: 'maid-ticket-finalize', params: { id: maid.id} }">
-                  <img v-if="maid.finalizationDate==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle" src="../../../public/css/fonts/icons8-cocktail-25.png"/>
+                  <img v-if="maid.employeeId==undefined && (this.loginResult.role=='ROLE_MANAGER' || this.loginResult.role=='ROLE_MAID')" class="material-icons align-middle" src="../../../public/css/fonts/icons8-cocktail-25.png"/>
                   </router-link>
                 <router-link
                   :to="{ name: 'maid_ticket-fetch', params: { id: maid.id } }"

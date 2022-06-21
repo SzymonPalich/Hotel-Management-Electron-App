@@ -66,7 +66,6 @@ public record MaidTicketMapper(EmployeeRepository employeeRepository, RoomReposi
         dest.setAccommodationId(src.getAccommodation().getId());
         dest.setRoomNumber(src.getAccommodation().getRoom().getRoomNumber());
         dest.setRoomType(src.getAccommodation().getRoom().getRoomType().getType());
-        dest.setRoomStatus(src.getAccommodation().getRoom().getStatus());
         dest.setFinalizationDate(src.getFinalizationDate());
         if (src.getEmployee() != null) {
             dest.setEmployeeId(src.getEmployee().getId());

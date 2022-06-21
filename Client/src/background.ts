@@ -48,7 +48,7 @@ async function createWindow() {
     // Load the index.html when not in development
     setTimeout(function () {
       win.loadURL('app://./index.html')
-    }, 10000)
+    }, 20000)
 
     win.webContents.openDevTools()
   }

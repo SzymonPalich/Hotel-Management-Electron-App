@@ -11,5 +11,4 @@ import lombok.Setter;
 public class RoomFM {
     private Long roomTypeId;
     private int roomNumber;
-    private int status;
 }
