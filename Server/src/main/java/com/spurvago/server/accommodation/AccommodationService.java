@@ -193,7 +193,7 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         List<Refill> refills = refillRepository.getRefillByMaidTicket(maidTicket);
         for (Refill refill : refills) {
             var amount = refill.getAmount();
-            var price = refill.getProduct().getWholesalePrice();
+            var price = refill.getProduct().getRetailPrice();
             sum = sum.add(price.multiply(BigDecimal.valueOf(amount)));
         }
         return sum;
