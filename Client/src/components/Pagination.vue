@@ -229,6 +229,7 @@ export default defineComponent({
   name: "PaginationComponent",
   methods: {
     getStartingPageNumber() {
+      if (this.totalElements == 0) return 0;
       return (this.index - 1) * this.size + 1;
     },
     getEndingPageNumber() {
