@@ -10,11 +10,9 @@ import com.spurvago.database.Room;
 import com.spurvago.server.accommodation.models.AccommodationFM;
 import com.spurvago.server.accommodation.models.AccommodationVM;
 import com.spurvago.server.maid_ticket.MaidTicketRepository;
-import com.spurvago.server.maid_ticket.MaidTicketService;
 import com.spurvago.server.product.ProductRepository;
 import com.spurvago.server.refill.RefillRepository;
 import com.spurvago.server.room.RoomRepository;
-import com.spurvago.server.room.RoomStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,11 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.spurvago.InvoiceGenerator.InvoiceGenerator;
 import com.spurvago.InvoiceGenerator.InvoiceDetails;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Ref;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,7 +95,6 @@ public record AccommodationService(AccommodationRepository accommodationReposito
             throw new ResponseStatusException(NOT_FOUND);
         }
         room = temp.get();
-        room.setStatus(RoomStatus.CLEANING.intValue);
         roomRepository.save(room);
 
         Accommodation entity = accommodationMapper.mapToEntity(newEntity);
@@ -151,8 +145,7 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         if (temp.isEmpty()) {
             throw new ResponseStatusException(NOT_FOUND);
         }
-        room = temp.get();
-        room.setStatus(RoomStatus.CLEANING.intValue);
+        room = temp.get();;
         roomRepository.save(room);
 
         accommodationRepository.delete(entity);

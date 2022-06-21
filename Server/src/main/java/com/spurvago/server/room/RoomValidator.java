@@ -25,6 +25,6 @@ public class RoomValidator extends Validator {
         if (!(model.getRoomNumber() > 0) || !(intOverflow(model.getRoomNumber()))) {
             return false;
         }
-        return model.getStatus() > 0 && model.getStatus() < 7;
+        return true;
     }
 }

@@ -13,7 +13,6 @@ public class RoomVM {
     private int roomNumber;
     private Long roomTypeId;
     private String roomType;
-    private int status;
 
     public RoomVM() {
     }
