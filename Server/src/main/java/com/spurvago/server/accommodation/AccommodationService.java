@@ -1,5 +1,7 @@
 package com.spurvago.server.accommodation;
 
+import com.spurvago.InvoiceGenerator.InvoiceDetails;
+import com.spurvago.InvoiceGenerator.InvoiceGenerator;
 import com.spurvago.components.ListPaginated;
 import com.spurvago.components.Pager;
 import com.spurvago.components.Utils;
@@ -18,8 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.spurvago.InvoiceGenerator.InvoiceGenerator;
-import com.spurvago.InvoiceGenerator.InvoiceDetails;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -167,12 +168,13 @@ public record AccommodationService(AccommodationRepository accommodationReposito
         LocalDate end = entity.getEndDate().toLocalDate();
         int days = Math.abs((int) ChronoUnit.DAYS.between(end, start));
         var minibar = getProductsPrice(entity);
+        var accommodationPrice = entity.getRoom().getRoomType().getPrice().multiply(new BigDecimal(days));
         InvoiceGenerator inv = new InvoiceGenerator();
         InvoiceDetails invoiceDetails = new InvoiceDetails(
                 entity.getClient().getFirstName() + " " + entity.getClient().getLastName(),
                 entity.getRoom().getRoomNumber() + " " + entity.getRoom().getRoomType().getType(),
-                days, entity.getStartDate(), entity.getEndDate(),
-                entity.getRoom().getRoomType().getPrice(), minibar
+                days, entity.getStartDate(), entity.getEndDate(), accommodationPrice
+                , minibar
         );
 
         try {
